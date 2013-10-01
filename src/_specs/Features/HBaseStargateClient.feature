@@ -86,21 +86,24 @@ Examples:
 
 Scenario: Create a scanner
 	Given I have set my context to a table called "test"
-	When I create a scanner
+	And I have set my context to a new scanner
+	When I create the scanner
 	Then a REST request should have been submitted with the following values:
 		| method | url                                  |
 		| POST   | http://test-server:9999/test/scanner |
 
 Scenario: Read a result from a scanner
 	Given I have set my context to a table called "test"
-	When I read a result from a scanner with an identifier of "abc123"
+	And I have set my context to a new scanner
+	When I read a result from the scanner
 	Then a REST request should have been submitted with the following values:
 		| method | url                                         |
 		| GET    | http://test-server:9999/test/scanner/abc123 |
 
 Scenario: Delete a scanner
 	Given I have set my context to a table called "test"
-	When I delete a scanner with an identifier of "abc123"
+	And I have set my context to a new scanner
+	When I delete the scanner
 	Then a REST request should have been submitted with the following values:
 		| method | url                                         |
 		| DELETE | http://test-server:9999/test/scanner/abc123 |

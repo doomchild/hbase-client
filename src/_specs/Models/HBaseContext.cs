@@ -18,6 +18,8 @@
 using HBase.Stargate.Client;
 using HBase.Stargate.Client.Api;
 
+using RestSharp.Injection;
+
 namespace _specs.Models
 {
 	public class HBaseContext
@@ -45,7 +47,7 @@ namespace _specs.Models
 
 		public void SetClient()
 		{
-			Stargate = new Stargate();
+			Stargate = new Stargate(Options.ServerUrl, (s, s1) => new StargateTable(s, s1, (s2, s3, arg3) => new StargateScanner(s2, s3, arg3, new DefaultRestSharpFactory())));
 		}
 	}
 }

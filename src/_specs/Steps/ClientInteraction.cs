@@ -56,6 +56,12 @@ namespace _specs.Steps
 			_hBase.Table = _hBase.Stargate.ForTable(tableName);
 		}
 
+		[Given(@"I have set my context to a new scanner")]
+		public void SetScannerContext()
+		{
+			_hBase.Scanner = _hBase.Table.ForScanner();
+		}
+
 		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
 		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
 		{

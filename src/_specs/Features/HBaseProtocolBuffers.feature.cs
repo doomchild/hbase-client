@@ -66,6 +66,14 @@ namespace _specs.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 6
+#line 7
+ testRunner.Given("I have everything I need to test a content converter for protobuf", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create protobuf for single cell")]
         [NUnit.Framework.TestCaseAttribute("1", "alpha", "", "", "hello world", "HBaseProtobuf_1Alpha_HelloWorld", null)]
@@ -75,14 +83,16 @@ namespace _specs.Features
         public virtual void CreateProtobufForSingleCell(string row, string column, string qualifier, string timestamp, string value, string expectedProtobuf, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create protobuf for single cell", exampleTags);
-#line 6
-this.ScenarioSetup(scenarioInfo);
-#line 7
- testRunner.Given(string.Format("I have a cell with a {0}, {1}, {2}, {3}, and {4}", row, column, qualifier, timestamp, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 8
- testRunner.When("I convert my cell to protobuf", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then(string.Format("my protobuf content should be equivalent to the resource called \"{0}\"", expectedProtobuf), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 10
+ testRunner.Given(string.Format("I have a cell with a {0}, {1}, {2}, {3}, and {4}", row, column, qualifier, timestamp, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 11
+ testRunner.When("I convert my cell to raw content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+ testRunner.Then(string.Format("my raw protobuf content should be equivalent to the resource called \"{0}\"", expectedProtobuf), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -96,13 +106,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ParseProtobufForSingleCell(string initialProtobuf, string row, string column, string qualifier, string timestamp, string value, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Parse protobuf for single cell", exampleTags);
-#line 17
-this.ScenarioSetup(scenarioInfo);
-#line 18
- testRunner.Given(string.Format("I have protobuf content equal to the resource called \"{0}\"", initialProtobuf), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 19
- testRunner.When("I convert my protobuf to a cell", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 21
+ testRunner.Given(string.Format("I have raw content equal to the resource called \"{0}\"", initialProtobuf), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 22
+ testRunner.When("I convert my raw content to a cell", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 23
  testRunner.Then(string.Format("my cell should have a {0}, {1}, {2}, {3}, and {4}", row, column, qualifier, timestamp, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -113,9 +125,11 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void CreateProtobufForASetOfCells()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create protobuf for a set of cells", ((string[])(null)));
-#line 28
+#line 31
 this.ScenarioSetup(scenarioInfo);
-#line 29
+#line 6
+this.FeatureBackground();
+#line 32
  testRunner.Given("I have created a set of cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -130,7 +144,7 @@ this.ScenarioSetup(scenarioInfo);
                         "",
                         "",
                         "hello world"});
-#line 30
+#line 33
  testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table1, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -145,7 +159,7 @@ this.ScenarioSetup(scenarioInfo);
                         "x",
                         "",
                         "hello world"});
-#line 33
+#line 36
  testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table2, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -160,7 +174,7 @@ this.ScenarioSetup(scenarioInfo);
                         "",
                         "4",
                         "hello world"});
-#line 36
+#line 39
  testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table3, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -175,13 +189,13 @@ this.ScenarioSetup(scenarioInfo);
                         "x",
                         "4",
                         "hello world"});
-#line 39
- testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table4, "And ");
 #line 42
- testRunner.When("I convert my set of cells to protobuf", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 43
- testRunner.Then("my protobuf content should be equivalent to the resource called \"HBaseProtobuf_Se" +
-                    "t_HelloWorld\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table4, "And ");
+#line 45
+ testRunner.When("I convert my set of cells to raw content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 46
+ testRunner.Then("my raw protobuf content should be equivalent to the resource called \"HBaseProtobu" +
+                    "f_Set_HelloWorld\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -191,14 +205,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ParseProtobufForASetOfCells()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Parse protobuf for a set of cells", ((string[])(null)));
-#line 45
-this.ScenarioSetup(scenarioInfo);
-#line 46
- testRunner.Given("I have protobuf content equal to the resource called \"HBaseProtobuf_Set_HelloWorl" +
-                    "d\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 47
- testRunner.When("I convert my protobuf to a set of cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 48
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 49
+ testRunner.Given("I have raw content equal to the resource called \"HBaseProtobuf_Set_HelloWorld\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 50
+ testRunner.When("I convert my raw content to a set of cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 51
  testRunner.Then("my set should contain 4 cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -213,7 +228,7 @@ this.ScenarioSetup(scenarioInfo);
                         "",
                         "",
                         "hello world"});
-#line 49
+#line 52
  testRunner.And("one of the cells in my set should have the following properties:", ((string)(null)), table5, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -228,7 +243,7 @@ this.ScenarioSetup(scenarioInfo);
                         "x",
                         "",
                         "hello world"});
-#line 52
+#line 55
  testRunner.And("one of the cells in my set should have the following properties:", ((string)(null)), table6, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -243,7 +258,7 @@ this.ScenarioSetup(scenarioInfo);
                         "",
                         "4",
                         "hello world"});
-#line 55
+#line 58
  testRunner.And("one of the cells in my set should have the following properties:", ((string)(null)), table7, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -258,7 +273,7 @@ this.ScenarioSetup(scenarioInfo);
                         "x",
                         "4",
                         "hello world"});
-#line 58
+#line 61
  testRunner.And("one of the cells in my set should have the following properties:", ((string)(null)), table8, "And ");
 #line hidden
             this.ScenarioCleanup();

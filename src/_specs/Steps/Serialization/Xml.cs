@@ -15,47 +15,43 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System.Xml.Linq;
+
+using FluentAssertions;
+
 using TechTalk.SpecFlow;
+
+using _specs.Models;
 
 namespace _specs.Steps.Serialization
 {
 	[Binding]
 	public class Xml
 	{
-		[When(@"I convert my cell to XML")]
-		public void ConvertCellToXml()
+		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
+		private readonly ContentConverter _converter;
+
+		public Xml(HBaseContext hBase, ResourceContext resources, ContentConverter converter)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase = hBase;
+			_resources = resources;
+			_converter = converter;
 		}
 
-		[When(@"I convert my XML to a cell")]
-		public void ConvertXmlToCell()
+		[Given(@"I have everything I need to test a content converter for XML")]
+		public void SetConversionToXml()
 		{
-			ScenarioContext.Current.Pending();
+			_converter.SetConversionToXml();
 		}
 
-		[When(@"I convert my set of cells to XML")]
-		public void ConvertCellSetToXml()
+		[Then(@"my raw XML content should be equivalent to the resource called ""(.*)""")]
+		public void CompareRawXmlToResource(string resourceName)
 		{
-			ScenarioContext.Current.Pending();
-		}
+			var left = XElement.Parse(_hBase.RawContent);
+			var right = XElement.Parse(_resources.GetString(resourceName));
 
-		[When(@"I convert my XML to a set of cells")]
-		public void ConvertXmlToCellSet()
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[Given(@"I have XML content equal to the resource called ""(.*)""")]
-		public void SetXmlToResource(string p0)
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[Then(@"my XML content should be equivalent to the resource called ""(.*)""")]
-		public void CompareXmlToResource(string resourceName)
-		{
-			ScenarioContext.Current.Pending();
+			left.ToString().Should().Be(right.ToString());
 		}
 	}
 }

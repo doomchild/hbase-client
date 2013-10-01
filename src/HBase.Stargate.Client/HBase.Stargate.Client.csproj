@@ -61,10 +61,19 @@
     <Compile Include="CellSet.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Identifier.cs" />
+    <Compile Include="MimeConversion\HBaseMimeTypes.cs" />
+    <Compile Include="MimeConversion\IMimeConverter.cs" />
+    <Compile Include="MimeConversion\IMimeConverterFactory.cs" />
+    <Compile Include="MimeConversion\MimeConverterBase.cs" />
+    <Compile Include="MimeConversion\MImeConverterFactory.cs" />
+    <Compile Include="MimeConversion\XmlMimeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rest\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -21,11 +21,20 @@
 
 using TechTalk.SpecFlow;
 
+using _specs.Models;
+
 namespace _specs.Steps
 {
 	[Binding]
 	public class Administration
 	{
+		private readonly HBaseContext _hBase;
+
+		public Administration(HBaseContext hBase)
+		{
+			_hBase = hBase;
+		}
+
 		[Given(@"I have added a column called ""(.*)"" to my table")]
 		public void AddColumn(string columnName)
 		{
@@ -38,16 +47,16 @@ namespace _specs.Steps
 			ScenarioContext.Current.Pending();
 		}
 
-		[When(@"I create a scanner")]
+		[When(@"I create the scanner")]
 		public void CreateScanner()
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Scanner.Create();
 		}
 
-		[When(@"I delete a scanner with an identifier of ""(.*)""")]
+		[When(@"I delete the scanner")]
 		public void DeleteScanner(string scannerId)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Scanner.Delete();
 		}
 
 		[When(@"I delete the table")]

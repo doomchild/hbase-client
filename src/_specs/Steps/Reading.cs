@@ -38,8 +38,8 @@ namespace _specs.Steps
 			ScenarioContext.Current.Pending();
 		}
 
-		[When(@"I read a result from a scanner with an identifier of ""(.*)""")]
-		public void ReadScanner(string scannerId)
+		[When(@"I read a result from the scanner")]
+		public void ReadScanner()
 		{
 			ScenarioContext.Current.Pending();
 		}

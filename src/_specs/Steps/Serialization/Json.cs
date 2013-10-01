@@ -17,44 +17,32 @@
 
 using TechTalk.SpecFlow;
 
+using _specs.Models;
+
 namespace _specs.Steps.Serialization
 {
 	[Binding]
 	public class Json
 	{
-		[When(@"I convert my cell to JSON")]
-		public void ConvertCellToJson()
+		private readonly ContentConverter _converter;
+
+		public Json(ContentConverter converter)
+		{
+			_converter = converter;
+		}
+
+		[Then(@"my raw JSON content should be equivalent to the resource called ""(.*)""")]
+		public void CompareJsonToResource(string resourceName)
 		{
 			ScenarioContext.Current.Pending();
 		}
 
-		[Then(@"my JSON content should be equivalent to the resource called ""(.*)""")]
-		public void CompareJsonToResource(string p0)
+		[Given(@"I have everything I need to test a content converter for JSON")]
+		public void SetConversionToJson()
 		{
-			ScenarioContext.Current.Pending();
-		}
+			_converter.SetConversionToJson();
 
-		[Given(@"I have JSON content equal to the resource called ""(.*)""")]
-		public void SetJsonToResource(string p0)
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I convert my JSON to a cell")]
-		public void ConvertJsonToCell()
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I convert my set of cells to JSON")]
-		public void ConvertCellSetToJson()
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I convert my JSON to a set of cells")]
-		public void ConvertJsonToCellSet()
-		{
+			//TODO: remove the next line once JSON is plugged in
 			ScenarioContext.Current.Pending();
 		}
 	}
