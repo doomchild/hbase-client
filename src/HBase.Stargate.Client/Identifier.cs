@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,49 +15,58 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
-using HBase.Stargate.Client;
-
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Defines an identifier in the HBase system.
+	/// </summary>
+	public class Identifier
 	{
-		private readonly HBaseContext _hBase;
-
-		public ClientInteraction(HBaseContext hBase)
+		/// <summary>
+		///    Initializes a new instance of the <see cref="Identifier" /> class.
+		/// </summary>
+		/// <param name="row">The row.</param>
+		/// <param name="column">The column.</param>
+		/// <param name="qualifier">The qualifier.</param>
+		/// <param name="timestamp">The timestamp.</param>
+		public Identifier(string row, string column = null, string qualifier = null, long? timestamp = null)
 		{
-			_hBase = hBase;
+			Row = row;
+			Column = column;
+			Qualifier = qualifier;
+			Timestamp = timestamp;
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
+		/// <summary>
+		///    Gets the row.
+		/// </summary>
+		/// <value>
+		///    The row.
+		/// </value>
+		public string Row { get; private set; }
 
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
+		/// <summary>
+		///    Gets the column.
+		/// </summary>
+		/// <value>
+		///    The column.
+		/// </value>
+		public string Column { get; private set; }
 
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
+		/// <summary>
+		///    Gets the qualifier.
+		/// </summary>
+		/// <value>
+		///    The qualifier.
+		/// </value>
+		public string Qualifier { get; private set; }
 
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
-		}
+		/// <summary>
+		///    Gets the timestamp.
+		/// </summary>
+		/// <value>
+		///    The timestamp.
+		/// </value>
+		public long? Timestamp { get; private set; }
 	}
 }

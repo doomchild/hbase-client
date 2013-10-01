@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,49 +15,38 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
-using HBase.Stargate.Client;
-
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Defines a cell in HBase.
+	/// </summary>
+	public class Cell
 	{
-		private readonly HBaseContext _hBase;
-
-		public ClientInteraction(HBaseContext hBase)
+		/// <summary>
+		///    Initializes a new instance of the <see cref="Cell" /> class.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		/// <param name="value">The value.</param>
+		public Cell(Identifier identifier, string value)
 		{
-			_hBase = hBase;
+			Identifier = identifier;
+			Value = value;
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
+		/// <summary>
+		///    Gets the identifier.
+		/// </summary>
+		/// <value>
+		///    The identifier.
+		/// </value>
+		public Identifier Identifier { get; private set; }
 
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
-		}
+		/// <summary>
+		///    Gets the value.
+		/// </summary>
+		/// <value>
+		///    The value.
+		/// </value>
+		public string Value { get; private set; }
 	}
 }

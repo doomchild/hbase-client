@@ -7,8 +7,8 @@
     <ProjectGuid>{98C9F30C-4EC9-4BE0-BD1C-120F05D37117}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HBase.Client</RootNamespace>
-    <AssemblyName>HBase.Client</AssemblyName>
+    <RootNamespace>HBase.Stargate.Client</RootNamespace>
+    <AssemblyName>HBase.Stargate.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -22,6 +22,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\HBase.Stargate.Client.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +37,9 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp.Injection">
+      <HintPath>..\packages\RestSharp.Injection.1.0.0.0\lib\net45\RestSharp.Injection.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IStargate.cs" />
+    <Compile Include="Api\IStargateScanner.cs" />
+    <Compile Include="Api\IStargateTable.cs" />
+    <Compile Include="Api\RestConstants.cs" />
+    <Compile Include="Api\Stargate.cs" />
+    <Compile Include="Api\StargateBase.cs" />
+    <Compile Include="Api\StargateScanner.cs" />
+    <Compile Include="Api\StargateTable.cs" />
+    <Compile Include="Cell.cs" />
+    <Compile Include="CellSet.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Identifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
