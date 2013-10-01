@@ -43,6 +43,15 @@ namespace HBase.Stargate.Client.Api
 			_client = _restSharp.CreateClient(serverUrl);
 		}
 
+		/// <summary>
+		/// Sends the request.
+		/// </summary>
+		/// <param name="method">The method.</param>
+		/// <param name="resource">The resource.</param>
+		/// <param name="acceptType">Type of the accept.</param>
+		/// <param name="contentType">Type of the content.</param>
+		/// <param name="content">The content.</param>
+		/// <returns></returns>
 		protected IRestResponse SendRequest(Method method, string resource, string acceptType, string contentType = null, string content = null)
 		{
 			var request = _restSharp.CreateRequest(resource, method)

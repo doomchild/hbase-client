@@ -319,7 +319,9 @@ this.FeatureBackground();
 #line 88
  testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 89
- testRunner.When("I create a scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I have set my context to a new scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 90
+ testRunner.When("I create the scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "method",
@@ -327,7 +329,7 @@ this.FeatureBackground();
             table10.AddRow(new string[] {
                         "POST",
                         "http://test-server:9999/test/scanner"});
-#line 90
+#line 91
  testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table10, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -338,14 +340,16 @@ this.FeatureBackground();
         public virtual void ReadAResultFromAScanner()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Read a result from a scanner", ((string[])(null)));
-#line 94
+#line 95
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 95
- testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 96
- testRunner.When("I read a result from a scanner with an identifier of \"abc123\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 97
+ testRunner.And("I have set my context to a new scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 98
+ testRunner.When("I read a result from the scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "method",
@@ -353,7 +357,7 @@ this.FeatureBackground();
             table11.AddRow(new string[] {
                         "GET",
                         "http://test-server:9999/test/scanner/abc123"});
-#line 97
+#line 99
  testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table11, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -364,14 +368,16 @@ this.FeatureBackground();
         public virtual void DeleteAScanner()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete a scanner", ((string[])(null)));
-#line 101
+#line 103
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 102
+#line 104
  testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 103
- testRunner.When("I delete a scanner with an identifier of \"abc123\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 105
+ testRunner.And("I have set my context to a new scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 106
+ testRunner.When("I delete the scanner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                         "method",
@@ -379,7 +385,7 @@ this.FeatureBackground();
             table12.AddRow(new string[] {
                         "DELETE",
                         "http://test-server:9999/test/scanner/abc123"});
-#line 104
+#line 107
  testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table12, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -390,11 +396,11 @@ this.FeatureBackground();
         public virtual void EnumerateAllTables()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Enumerate all tables", ((string[])(null)));
-#line 108
+#line 111
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 109
+#line 112
  testRunner.When("I read the names of all tables", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -403,7 +409,7 @@ this.FeatureBackground();
             table13.AddRow(new string[] {
                         "GET",
                         "http://test-server:9999"});
-#line 110
+#line 113
  testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table13, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -419,17 +425,17 @@ this.FeatureBackground();
         public virtual void DeleteARowColummOrCell(string row, string column, string qualifier, string timestamp, string method, string url, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete a row, columm, or cell", exampleTags);
-#line 114
+#line 117
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 115
- testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 116
- testRunner.And(string.Format("I have an identifier consisting of a {0}, a {1}, a {2}, and a {3}", row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 117
- testRunner.When("I delete an item using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 118
+ testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 119
+ testRunner.And(string.Format("I have an identifier consisting of a {0}, a {1}, a {2}, and a {3}", row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 120
+ testRunner.When("I delete an item using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 121
  testRunner.Then(string.Format("a REST request should have been submitted with the correct {0} and {1}", method, url), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -440,13 +446,13 @@ this.FeatureBackground();
         public virtual void DeleteATable()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete a table", ((string[])(null)));
-#line 127
+#line 130
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 128
+#line 131
  testRunner.Given("I have set my context to a table called \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 129
+#line 132
  testRunner.When("I delete the table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -455,7 +461,7 @@ this.FeatureBackground();
             table14.AddRow(new string[] {
                         "DELETE",
                         "http://test-server:9999/test/schema"});
-#line 130
+#line 133
  testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table14, "Then ");
 #line hidden
             this.ScenarioCleanup();

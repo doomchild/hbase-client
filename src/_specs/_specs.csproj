@@ -44,6 +44,9 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp.Injection">
+      <HintPath>..\packages\RestSharp.Injection.1.0.0.0\lib\net45\RestSharp.Injection.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,6 +79,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HBaseXml.feature</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContentConverter.cs" />
     <Compile Include="Models\HBaseContext.cs" />
     <Compile Include="Models\HBaseOptions.cs" />
     <Compile Include="Models\ResourceContext.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="Steps\ClientInteraction.cs" />
     <Compile Include="Steps\Reading.cs" />
     <Compile Include="Steps\RequestVerification.cs" />
+    <Compile Include="Steps\Serialization\ContentConversion.cs" />
     <Compile Include="Steps\Serialization\Json.cs" />
     <Compile Include="Steps\Serialization\Protobuf.cs" />
     <Compile Include="Steps\Serialization\Xml.cs" />
@@ -116,6 +121,16 @@
       <LastGenOutput>HBaseXml.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\HBaseJson_1Alpha4_HelloWorld.json" />
+    <None Include="Resources\HBaseJson_1AlphaX4_HelloWorld.json" />
+    <None Include="Resources\HBaseJson_1AlphaX_HelloWorld.json" />
+    <None Include="Resources\HBaseJson_1Alpha_HelloWorld.json" />
+    <None Include="Resources\HBaseJson_Set_HelloWorld.json" />
+    <None Include="Resources\HBaseProtobuf_1Alpha4_HelloWorld.proto" />
+    <None Include="Resources\HBaseProtobuf_1AlphaX4_HelloWorld.proto" />
+    <None Include="Resources\HBaseProtobuf_1AlphaX_HelloWorld.proto" />
+    <None Include="Resources\HBaseProtobuf_1Alpha_HelloWorld.proto" />
+    <None Include="Resources\HBaseProtobuf_Set_HelloWorld.proto" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HBase.Stargate.Client\HBase.Stargate.Client.csproj">
@@ -130,7 +145,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <None Include="Resources\HBaseXml_1Alpha_HelloWorld.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HBaseXml_1Alpha4_HelloWorld.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HBaseXml_1AlphaX_HelloWorld.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HBaseXml_1AlphaX4_HelloWorld.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HBaseXml_Set_HelloWorld.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

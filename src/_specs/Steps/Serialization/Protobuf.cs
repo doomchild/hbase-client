@@ -17,44 +17,32 @@
 
 using TechTalk.SpecFlow;
 
+using _specs.Models;
+
 namespace _specs.Steps.Serialization
 {
 	[Binding]
 	public class Protobuf
 	{
-		[When(@"I convert my cell to protobuf")]
-		public void ConvertCellToProtobuf()
+		private readonly ContentConverter _converter;
+
+		public Protobuf(ContentConverter converter)
 		{
-			ScenarioContext.Current.Pending();
+			_converter = converter;
 		}
 
-		[Then(@"my protobuf content should be equivalent to the resource called ""(.*)""")]
+		[Then(@"my raw protobuf content should be equivalent to the resource called ""(.*)""")]
 		public void CompareProtobufToResource(string resourceName)
 		{
 			ScenarioContext.Current.Pending();
 		}
 
-		[Given(@"I have protobuf content equal to the resource called ""(.*)""")]
-		public void SetProtobufToResource(string p0)
+		[Given(@"I have everything I need to test a content converter for protobuf")]
+		public void SetConversionToJson()
 		{
-			ScenarioContext.Current.Pending();
-		}
+			_converter.SetConversionToProtobuf();
 
-		[When(@"I convert my protobuf to a cell")]
-		public void ConvertProtobufToCell()
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I convert my set of cells to protobuf")]
-		public void ConvertCellSetToProtobuf()
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I convert my protobuf to a set of cells")]
-		public void ConvertProtobufToCellSet()
-		{
+			//TODO: remove the next line once protobuf is plugged in
 			ScenarioContext.Current.Pending();
 		}
 	}
