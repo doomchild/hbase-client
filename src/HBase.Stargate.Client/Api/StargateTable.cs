@@ -19,47 +19,39 @@
 
 #endregion
 
-using HBase.Stargate.Client;
+using System;
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client.Api
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Defines a default implementation of <see cref="IStargateTable" />.
+	/// </summary>
+	public class StargateTable : IStargateTable
 	{
-		private readonly HBaseContext _hBase;
+		private readonly string _serverUrl;
+		private readonly string _tableName;
+		private readonly Func<string, string, string, IStargateScanner> _scannerFactory;
 
-		public ClientInteraction(HBaseContext hBase)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StargateTable" /> class.
+		/// </summary>
+		/// <param name="serverUrl">The server URL.</param>
+		/// <param name="tableName">Name of the table.</param>
+		/// <param name="scannerFactory">The scanner factory.</param>
+		public StargateTable(string serverUrl, string tableName, Func<string, string, string, IStargateScanner> scannerFactory)
 		{
-			_hBase = hBase;
+			_serverUrl = serverUrl;
+			_tableName = tableName;
+			_scannerFactory = scannerFactory;
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
+		/// <summary>
+		/// Creates a scanner context for the current table.
+		/// </summary>
+		/// <param name="scannerId"></param>
+		public IStargateScanner ForScanner(string scannerId = null)
 		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
+			return _scannerFactory(_serverUrl, _tableName, scannerId);
 		}
 	}
 }

@@ -19,47 +19,21 @@
 
 #endregion
 
-using HBase.Stargate.Client;
-
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client.Api
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Defines constants for use in RESTful operations.
+	/// </summary>
+	public static class RestConstants
 	{
-		private readonly HBaseContext _hBase;
+		/// <summary>
+		///    The accept header.
+		/// </summary>
+		public const string AcceptHeader = "Accept";
 
-		public ClientInteraction(HBaseContext hBase)
-		{
-			_hBase = hBase;
-		}
-
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
-		}
+		/// <summary>
+		///    The content type header.
+		/// </summary>
+		public const string ContentTypeHeader = "Content-Type";
 	}
 }

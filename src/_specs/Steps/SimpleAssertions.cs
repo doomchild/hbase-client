@@ -15,29 +15,62 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System.Linq;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client;
+
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
 
 namespace _specs.Steps
 {
 	[Binding]
 	public class SimpleAssertions
 	{
+		private readonly HBaseContext _cells;
+
+		public SimpleAssertions(HBaseContext cells)
+		{
+			_cells = cells;
+		}
+
 		[Then(@"my cell should have a (.+), (.+), (.*), (.*), and (.*)")]
 		public void CheckCellContents(string row, string column, string qualifier, string timestamp, string value)
 		{
-			ScenarioContext.Current.Pending();
+			CellMatchesTestValue(_cells.Cell, new TestCell
+			{
+				Row = row,
+				Column = column,
+				Qualifier = qualifier,
+				Timestamp = timestamp.ToNullableLong(),
+				Value = value
+			}).Should().BeTrue();
 		}
 
 		[Then(@"my set should contain (\d+) cells?")]
 		public void CheckCellSetCount(int count)
 		{
-			ScenarioContext.Current.Pending();
+			_cells.CellSet.Should().HaveCount(count);
 		}
 
 		[Then(@"one of the cells in my set should have the following properties:")]
 		public void CheckAnyCellInSet(Table values)
 		{
-			ScenarioContext.Current.Pending();
+			var testCell = values.CreateInstance<TestCell>();
+			_cells.CellSet.Any(cell => CellMatchesTestValue(cell, testCell)).Should().BeTrue();
+		}
+
+		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
+		{
+			return cell.Identifier.Row == testCell.Row
+				&& cell.Identifier.Column == testCell.Column
+				&& cell.Identifier.Qualifier == testCell.Qualifier
+				&& cell.Identifier.Timestamp == testCell.Timestamp
+				&& cell.Value == testCell.Value;
 		}
 	}
 }

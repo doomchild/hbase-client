@@ -19,47 +19,12 @@
 
 #endregion
 
-using HBase.Stargate.Client;
-
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace _specs.Models
 {
-	[Binding]
-	public class ClientInteraction
+	public class HBaseOptions
 	{
-		private readonly HBaseContext _hBase;
-
-		public ClientInteraction(HBaseContext hBase)
-		{
-			_hBase = hBase;
-		}
-
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
-		}
+		public string ServerUrl { get; set; }
+		public string ContentType { get; set; }
+		public string FalseRowKey { get; set; }
 	}
 }

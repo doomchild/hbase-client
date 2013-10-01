@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,49 +15,19 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using System.Resources;
 
-using HBase.Stargate.Client;
+using _specs.Properties;
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace _specs.Models
 {
-	[Binding]
-	public class ClientInteraction
+	public class ResourceContext
 	{
-		private readonly HBaseContext _hBase;
+		private static readonly ResourceManager _resources = new ResourceManager(typeof (Resources));
 
-		public ClientInteraction(HBaseContext hBase)
+		public string GetString(string name)
 		{
-			_hBase = hBase;
-		}
-
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
+			return _resources.GetString(name);
 		}
 	}
 }

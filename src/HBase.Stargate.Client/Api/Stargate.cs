@@ -19,47 +19,37 @@
 
 #endregion
 
-using HBase.Stargate.Client;
+using System;
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client.Api
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Provides a default implementation <see cref="IStargate" />.
+	/// </summary>
+	public class Stargate : IStargate
 	{
-		private readonly HBaseContext _hBase;
+		private readonly string _serverUrl;
+		private readonly Func<string, string, IStargateTable> _tableFactory;
 
-		public ClientInteraction(HBaseContext hBase)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Stargate" /> class.
+		/// </summary>
+		/// <param name="serverUrl">The server URL.</param>
+		/// <param name="tableFactory">The table factory.</param>
+		public Stargate(string serverUrl, Func<string, string, IStargateTable> tableFactory)
 		{
-			_hBase = hBase;
+			_serverUrl = serverUrl;
+			_tableFactory = tableFactory;
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
+		/// <summary>
+		/// Creates a table context for a table with the specified name.
+		/// </summary>
+		/// <param name="tableName">Name of the table.</param>
+		/// <returns></returns>
+		public IStargateTable ForTable(string tableName)
 		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
+			return _tableFactory(_serverUrl, tableName);
 		}
 	}
 }

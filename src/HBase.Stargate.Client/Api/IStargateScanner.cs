@@ -19,47 +19,34 @@
 
 #endregion
 
-using HBase.Stargate.Client;
+using System;
+using System.Collections.Generic;
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client.Api
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Provides operations for Stargate scanners.
+	/// </summary>
+	public interface IStargateScanner
 	{
-		private readonly HBaseContext _hBase;
+		/// <summary>
+		///    Creates the current scanner.
+		/// </summary>
+		void Create();
 
-		public ClientInteraction(HBaseContext hBase)
-		{
-			_hBase = hBase;
-		}
+		/// <summary>
+		///    Reads the records returned by the current scanner.
+		/// </summary>
+		IEnumerable<CellSet> Read();
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
+		/// <summary>
+		///    Emits each record returned by the current scanner into an observable sequence.
+		/// </summary>
+		IObservable<CellSet> Results();
 
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
-		}
+		/// <summary>
+		///    Deletes the current scanner.
+		/// </summary>
+		void Delete();
 	}
 }

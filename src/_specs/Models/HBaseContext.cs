@@ -1,5 +1,3 @@
-﻿#region FreeBSD
-
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
@@ -17,49 +15,37 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
 using HBase.Stargate.Client;
+using HBase.Stargate.Client.Api;
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace _specs.Models
 {
-	[Binding]
-	public class ClientInteraction
+	public class HBaseContext
 	{
-		private readonly HBaseContext _hBase;
+		public CellSet CellSet { get; set; }
 
-		public ClientInteraction(HBaseContext hBase)
+		public Cell Cell { get; set; }
+
+		public string RawContent { get; set; }
+
+		public HBaseOptions Options { get; set; }
+
+		public IStargate Stargate { get; private set; }
+
+		public IStargateTable Table { get; set; }
+
+		public Identifier Identifier { get; set; }
+
+		public IStargateScanner Scanner { get; set; }
+
+		public void SetupClientInIsolation()
 		{
-			_hBase = hBase;
+			//TODO: setup anything needed?
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
+		public void SetClient()
 		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
+			Stargate = new Stargate();
 		}
 	}
 }

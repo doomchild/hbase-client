@@ -19,47 +19,41 @@
 
 #endregion
 
-using HBase.Stargate.Client;
+using RestSharp;
+using RestSharp.Injection;
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client.Api
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Provides a base type for Stargate components.
+	/// </summary>
+	public abstract class StargateBase
 	{
-		private readonly HBaseContext _hBase;
+		private readonly IRestSharpFactory _restSharp;
+		private readonly IRestClient _client;
 
-		public ClientInteraction(HBaseContext hBase)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StargateBase"/> class.
+		/// </summary>
+		/// <param name="serverUrl">The server URL.</param>
+		/// <param name="restSharp">The rest sharp factory.</param>
+		protected StargateBase(string serverUrl, IRestSharpFactory restSharp)
 		{
-			_hBase = hBase;
+			_restSharp = restSharp;
+			_client = _restSharp.CreateClient(serverUrl);
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
+		protected IRestResponse SendRequest(Method method, string resource, string acceptType, string contentType = null, string content = null)
 		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
+			var request = _restSharp.CreateRequest(resource, method)
+				.AddHeader(RestConstants.AcceptHeader, acceptType);
 
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
+			if (!string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(contentType))
+			{
+				request.AddParameter(contentType, content, ParameterType.RequestBody);
+			}
 
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
+			return _client.Execute(request);
 		}
 	}
 }

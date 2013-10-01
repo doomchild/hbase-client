@@ -15,29 +15,56 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using HBase.Stargate.Client;
+
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
 
 namespace _specs.Steps
 {
 	[Binding]
 	public class SimpleConstruction
 	{
+		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
+
+		public SimpleConstruction(HBaseContext hBase, ResourceContext resources)
+		{
+			_hBase = hBase;
+			_resources = resources;
+		}
+
 		[Given(@"I have created a set of cells")]
 		public void CreateCellSet()
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.CellSet = new CellSet();
+		}
+
+		[Given(@"I have raw content equal to the resource called ""(.*)""")]
+		public void SetRawContentToResource(string resourceName)
+		{
+			_hBase.RawContent = _resources.GetString(resourceName);
 		}
 
 		[Given(@"I have added a cell to my set with the following properties:")]
 		public void AddToCellSet(Table values)
 		{
-			ScenarioContext.Current.Pending();
+			var testCell = values.CreateInstance<TestCell>();
+			_hBase.CellSet.Add(ConvertToCell(testCell));
 		}
 
 		[Given(@"I have a cell with a (.+), (.+), (.*), (.*), and (.*)")]
 		public void CreateCell(string row, string column, string qualifier, string timestamp, string value)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Cell = new Cell(new Identifier(row, column, qualifier, timestamp.ToNullableLong()), value);
+		}
+
+		private static Cell ConvertToCell(TestCell testCell)
+		{
+			var identifier = new Identifier(testCell.Row, testCell.Column, testCell.Qualifier, testCell.Timestamp);
+			return new Cell(identifier, testCell.Value);
 		}
 	}
 }

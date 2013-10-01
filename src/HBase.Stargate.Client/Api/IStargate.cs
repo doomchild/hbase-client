@@ -1,4 +1,4 @@
-﻿#region FreeBSD
+#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,47 +19,17 @@
 
 #endregion
 
-using HBase.Stargate.Client;
-
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace HBase.Stargate.Client.Api
 {
-	[Binding]
-	public class ClientInteraction
+	/// <summary>
+	///    Provides operations against a Stargate server.
+	/// </summary>
+	public interface IStargate
 	{
-		private readonly HBaseContext _hBase;
-
-		public ClientInteraction(HBaseContext hBase)
-		{
-			_hBase = hBase;
-		}
-
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
-		public void SetupClient(Table options)
-		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
-		}
-
-		[Given(@"I have an HBase client")]
-		public void CreateClient()
-		{
-			_hBase.SetClient();
-		}
-
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
-		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
-		}
+		/// <summary>
+		///    Creates a table context for a table with the specified name.
+		/// </summary>
+		/// <param name="tableName">Name of the table.</param>
+		IStargateTable ForTable(string tableName);
 	}
 }
