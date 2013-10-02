@@ -19,6 +19,8 @@ namespace _specs.Models
 {
 	public class TestCell
 	{
+		public string Table { get; set; }
+
 		public string Row { get; set; }
 
 		public string Column { get; set; }

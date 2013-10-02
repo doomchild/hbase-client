@@ -26,26 +26,14 @@ namespace _specs.Steps
 	[Binding]
 	public class Writing
 	{
-		[Given(@"I have used my table to create a cell with my identifier and the value ""(.*)""")]
-		public void CreateCell(string value)
+		[When(@"I write the value ""(.*)"" using my identifier")]
+		public void WriteValue(string value)
 		{
 			ScenarioContext.Current.Pending();
 		}
 
-		[Given(@"I have used my table to create a cell with the following values:")]
-		public void CreateCell(Table values)
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I save the cell")]
-		public void SaveCell()
-		{
-			ScenarioContext.Current.Pending();
-		}
-
-		[When(@"I save the table")]
-		public void SaveTable()
+		[When(@"I write the set of cells")]
+		public void WriteCellSet()
 		{
 			ScenarioContext.Current.Pending();
 		}

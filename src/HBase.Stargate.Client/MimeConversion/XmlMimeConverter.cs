@@ -109,7 +109,13 @@ namespace HBase.Stargate.Client.MimeConversion
 			long? timestamp = timestampAttribute != null ? timestampAttribute.Value.ToNullableLong() : null;
 			string value = Decode(cell.Value);
 
-			return new Cell(new Identifier(row, parsedColumn.Column, parsedColumn.Qualifier, timestamp), value);
+			return new Cell(new Identifier
+			{
+				Row = row,
+				Column = parsedColumn.Column,
+				Qualifier = parsedColumn.Qualifier,
+				Timestamp = timestamp
+			}, value);
 		}
 
 		private static ParsedColumn ParseColumn(XElement cell)

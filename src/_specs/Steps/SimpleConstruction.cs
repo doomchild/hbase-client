@@ -42,12 +42,6 @@ namespace _specs.Steps
 			_hBase.CellSet = new CellSet();
 		}
 
-		[Given(@"I have raw content equal to the resource called ""(.*)""")]
-		public void SetRawContentToResource(string resourceName)
-		{
-			_hBase.RawContent = _resources.GetString(resourceName);
-		}
-
 		[Given(@"I have added a cell to my set with the following properties:")]
 		public void AddToCellSet(Table values)
 		{
@@ -55,16 +49,34 @@ namespace _specs.Steps
 			_hBase.CellSet.Add(ConvertToCell(testCell));
 		}
 
+		[Given(@"I have raw content equal to the resource called ""(.*)""")]
+		public void SetRawContentToResource(string resourceName)
+		{
+			_hBase.RawContent = _resources.GetString(resourceName);
+		}
+
 		[Given(@"I have a cell with a (.+), (.+), (.*), (.*), and (.*)")]
 		public void CreateCell(string row, string column, string qualifier, string timestamp, string value)
 		{
-			_hBase.Cell = new Cell(new Identifier(row, column, qualifier, timestamp.ToNullableLong()), value);
+			_hBase.Cell = new Cell(new Identifier
+			{
+				Row = row,
+				Column = column,
+				Qualifier = qualifier,
+				Timestamp = timestamp.ToNullableLong()
+			}, value);
 		}
 
 		private static Cell ConvertToCell(TestCell testCell)
 		{
-			var identifier = new Identifier(testCell.Row, testCell.Column, testCell.Qualifier, testCell.Timestamp);
-			return new Cell(identifier, testCell.Value);
+			return new Cell(new Identifier
+			{
+				Table = testCell.Table,
+				Row = testCell.Row,
+				Column = testCell.Column,
+				Qualifier = testCell.Qualifier,
+				Timestamp = testCell.Timestamp
+			}, testCell.Value);
 		}
 	}
 }

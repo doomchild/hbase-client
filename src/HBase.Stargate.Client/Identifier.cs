@@ -23,50 +23,43 @@ namespace HBase.Stargate.Client
 	public class Identifier
 	{
 		/// <summary>
-		///    Initializes a new instance of the <see cref="Identifier" /> class.
-		/// </summary>
-		/// <param name="row">The row.</param>
-		/// <param name="column">The column.</param>
-		/// <param name="qualifier">The qualifier.</param>
-		/// <param name="timestamp">The timestamp.</param>
-		public Identifier(string row, string column = null, string qualifier = null, long? timestamp = null)
-		{
-			Row = row;
-			Column = column;
-			Qualifier = qualifier;
-			Timestamp = timestamp;
-		}
-
-		/// <summary>
-		///    Gets the row.
+		/// Gets or sets the table.
 		/// </summary>
 		/// <value>
-		///    The row.
+		/// The table.
 		/// </value>
-		public string Row { get; private set; }
+		public string Table { get; set; }
 
 		/// <summary>
-		///    Gets the column.
+		/// Gets or sets the row.
 		/// </summary>
 		/// <value>
-		///    The column.
+		/// The row.
 		/// </value>
-		public string Column { get; private set; }
+		public string Row { get; set; }
 
 		/// <summary>
-		///    Gets the qualifier.
+		/// Gets or sets the column.
 		/// </summary>
 		/// <value>
-		///    The qualifier.
+		/// The column.
 		/// </value>
-		public string Qualifier { get; private set; }
+		public string Column { get; set; }
 
 		/// <summary>
-		///    Gets the timestamp.
+		/// Gets or sets the qualifier.
 		/// </summary>
 		/// <value>
-		///    The timestamp.
+		/// The qualifier.
 		/// </value>
-		public long? Timestamp { get; private set; }
+		public string Qualifier { get; set; }
+
+		/// <summary>
+		/// Gets or sets the timestamp.
+		/// </summary>
+		/// <value>
+		/// The timestamp.
+		/// </value>
+		public long? Timestamp { get; set; }
 	}
 }
