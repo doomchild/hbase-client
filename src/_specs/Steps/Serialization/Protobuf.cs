@@ -38,7 +38,7 @@ namespace _specs.Steps.Serialization
 		}
 
 		[Given(@"I have everything I need to test a content converter for protobuf")]
-		public void SetConversionToJson()
+		public void SetConversionToProtobuf()
 		{
 			_converter.SetConversionToProtobuf();
 

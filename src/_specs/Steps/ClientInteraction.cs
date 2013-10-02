@@ -62,10 +62,17 @@ namespace _specs.Steps
 			_hBase.Scanner = _hBase.Table.ForScanner();
 		}
 
-		[Given(@"I have an identifier consisting of a (.+), a (.*), a (.*), and a (.*)")]
-		public void SetIdentifier(string row, string column, string qualifier, string timestamp)
+		[Given(@"I have an identifier consisting of a (.+), a (.+), a (.*), a (.*), and a (.*)")]
+		public void SetIdentifier(string table, string row, string column, string qualifier, string timestamp)
 		{
-			_hBase.Identifier = new Identifier(row, column, qualifier, timestamp.ToNullableLong());
+			_hBase.Identifier = new Identifier
+			{
+				Table = table,
+				Row = row,
+				Column = column,
+				Qualifier = qualifier,
+				Timestamp = timestamp.ToNullableLong()
+			};
 		}
 	}
 }
