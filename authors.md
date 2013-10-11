@@ -1,0 +1,2 @@
+## John Batte and David Brandon ##
+[![jbatte47](https://gravatar.com/avatar/b1899db8787beae16722d2e482808fe7?s=200)](https://github.com/jbatte47) [![binaryberserker](https://gravatar.com/avatar/7a22c79f12b1da23ef8c1aaef07733a9?s=200)](https://github.com/binaryberserker)
