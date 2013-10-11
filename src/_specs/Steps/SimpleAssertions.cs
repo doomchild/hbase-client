@@ -67,10 +67,11 @@ namespace _specs.Steps
 		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
 		{
 			return cell.Identifier.Row == testCell.Row
-				&& cell.Identifier.Column == testCell.Column
-				&& cell.Identifier.Qualifier == testCell.Qualifier
-				&& cell.Identifier.Timestamp == testCell.Timestamp
-				&& cell.Value == testCell.Value;
+			       && cell.Identifier.Cell != null
+			       && cell.Identifier.Cell.Column == testCell.Column
+			       && cell.Identifier.Cell.Qualifier == testCell.Qualifier
+			       && cell.Identifier.Timestamp == testCell.Timestamp
+			       && cell.Value == testCell.Value;
 		}
 	}
 }

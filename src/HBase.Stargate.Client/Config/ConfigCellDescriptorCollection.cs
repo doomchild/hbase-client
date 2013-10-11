@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,39 +17,34 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System.Configuration;
+
+namespace HBase.Stargate.Client.Config
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	/// Provides a collection of <see cref="ConfigCellDescriptor"/> elements.
 	/// </summary>
-	public interface IMimeConverter
+	public class ConfigCellDescriptorCollection : ConfigurationElementCollection
 	{
 		/// <summary>
-		/// Gets the current MIME type.
+		/// Creates a new <see cref="ConfigCellDescriptor" />.
 		/// </summary>
-		/// <value>
-		/// The MIME type.
-		/// </value>
-		string MimeType { get; }
+		protected override ConfigurationElement CreateNewElement()
+		{
+			return new ConfigCellDescriptor();
+		}
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		/// Gets the element key for a specified configuration element.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
+		/// <param name="element">The <see cref="ConfigurationElement" /> to return the key for.</param>
+		protected override object GetElementKey(ConfigurationElement element)
+		{
+			var descriptor = element as ConfigCellDescriptor;
 
-		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+			return descriptor == null ? new object() : string.Format("{0}:{1}", descriptor.Column, descriptor.Qualifier);
+		}
 	}
 }

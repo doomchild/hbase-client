@@ -19,50 +19,27 @@
 
 #endregion
 
-using RestSharp;
-using RestSharp.Injection;
-
-namespace HBase.Stargate.Client.Api
+namespace HBase.Stargate.Client
 {
 	/// <summary>
-	///    Provides a base type for Stargate components.
+	///    Describes a record or set of records in HBase.
 	/// </summary>
-	public abstract class StargateBase
+	public class HBaseDescriptor
 	{
-		private readonly IRestSharpFactory _restSharp;
-		private readonly IRestClient _client;
+		/// <summary>
+		///    Gets or sets the table.
+		/// </summary>
+		/// <value>
+		///    The table.
+		/// </value>
+		public string Table { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="StargateBase"/> class.
+		///    Gets or sets the row.
 		/// </summary>
-		/// <param name="serverUrl">The server URL.</param>
-		/// <param name="restSharp">The rest sharp factory.</param>
-		protected StargateBase(string serverUrl, IRestSharpFactory restSharp)
-		{
-			_restSharp = restSharp;
-			_client = _restSharp.CreateClient(serverUrl);
-		}
-
-		/// <summary>
-		/// Sends the request.
-		/// </summary>
-		/// <param name="method">The method.</param>
-		/// <param name="resource">The resource.</param>
-		/// <param name="acceptType">Type of the accept.</param>
-		/// <param name="contentType">Type of the content.</param>
-		/// <param name="content">The content.</param>
-		/// <returns></returns>
-		protected IRestResponse SendRequest(Method method, string resource, string acceptType, string contentType = null, string content = null)
-		{
-			var request = _restSharp.CreateRequest(resource, method)
-				.AddHeader(RestConstants.AcceptHeader, acceptType);
-
-			if (!string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(contentType))
-			{
-				request.AddParameter(contentType, content, ParameterType.RequestBody);
-			}
-
-			return _client.Execute(request);
-		}
+		/// <value>
+		///    The row.
+		/// </value>
+		public string Row { get; set; }
 	}
 }

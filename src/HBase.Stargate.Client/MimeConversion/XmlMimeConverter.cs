@@ -53,7 +53,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified cells to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public override string Convert(CellSet cells)
+		public override string Convert(IEnumerable<Cell> cells)
 		{
 			IDictionary<string, Cell[]> rows = cells
 				.GroupBy(cell => cell.Identifier.Row)
@@ -61,7 +61,7 @@ namespace HBase.Stargate.Client.MimeConversion
 
 			XElement xml = XmlForCellSet(rows.Keys
 				.Select(row => XmlForRow(row, rows[row]
-					.Select(cell => XmlForCell(cell.Identifier.Column, cell.Identifier.Qualifier, cell.Identifier.Timestamp, cell.Value)))));
+					.Select(cell => XmlForCell(cell.Identifier.Cell.Column, cell.Identifier.Cell.Qualifier, cell.Identifier.Timestamp, cell.Value)))));
 
 			return xml.ToString();
 		}
@@ -76,7 +76,7 @@ namespace HBase.Stargate.Client.MimeConversion
 			{
 				XmlForRow(cell.Identifier.Row, new[]
 				{
-					XmlForCell(cell.Identifier.Column, cell.Identifier.Qualifier, cell.Identifier.Timestamp, cell.Value)
+					XmlForCell(cell.Identifier.Cell.Column, cell.Identifier.Cell.Qualifier, cell.Identifier.Timestamp, cell.Value)
 				})
 			});
 
@@ -87,11 +87,13 @@ namespace HBase.Stargate.Client.MimeConversion
 		/// Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public override CellSet Convert(string data)
+		public override IEnumerable<Cell> Convert(string data)
 		{
-			return new CellSet(XElement.Parse(data).Elements(_rowName)
+			if (string.IsNullOrEmpty(data)) return new CellSet(Enumerable.Empty<Cell>());
+
+			return XElement.Parse(data).Elements(_rowName)
 				.SelectMany(row => row.Elements(_cellName))
-				.Select(CellForXml));
+				.Select(CellForXml);
 		}
 
 		private static Cell CellForXml(XElement cell)
@@ -112,8 +114,11 @@ namespace HBase.Stargate.Client.MimeConversion
 			return new Cell(new Identifier
 			{
 				Row = row,
-				Column = parsedColumn.Column,
-				Qualifier = parsedColumn.Qualifier,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = parsedColumn.Column,
+					Qualifier = parsedColumn.Qualifier
+				},
 				Timestamp = timestamp
 			}, value);
 		}
@@ -159,8 +164,8 @@ namespace HBase.Stargate.Client.MimeConversion
 				Qualifier = qualifier;
 			}
 
-			public string Column { get; set; }
-			public string Qualifier { get; set; }
+			public string Column { get; private set; }
+			public string Qualifier { get; private set; }
 		}
 	}
 }

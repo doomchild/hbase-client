@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,39 +17,44 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System.Configuration;
+
+namespace HBase.Stargate.Client.Config
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	///    Provides a base type for XML configuration-based <see cref="HBaseDescriptor" /> implementations.
 	/// </summary>
-	public interface IMimeConverter
+	public abstract class ConfigDescriptor : ConfigurationElement
 	{
+		private const string _tableName = "table";
+		private const string _rowName = "row";
+
 		/// <summary>
-		/// Gets the current MIME type.
+		///    Gets or sets the table.
 		/// </summary>
 		/// <value>
-		/// The MIME type.
+		///    The table.
 		/// </value>
-		string MimeType { get; }
+		[ConfigurationProperty(_tableName, IsRequired = true)]
+		public string Table
+		{
+			get { return this[_tableName] as string; }
+			set { this[_tableName] = value; }
+		}
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Gets or sets the row.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
-
-		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		/// <value>
+		///    The row.
+		/// </value>
+		[ConfigurationProperty(_rowName, IsRequired = true)]
+		public string Row
+		{
+			get { return this[_rowName] as string; }
+			set { this[_rowName] = value; }
+		}
 	}
 }

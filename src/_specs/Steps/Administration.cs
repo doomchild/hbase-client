@@ -50,13 +50,13 @@ namespace _specs.Steps
 		[When(@"I create the scanner")]
 		public void CreateScanner()
 		{
-			_hBase.Scanner.Create();
+			ScenarioContext.Current.Pending();
 		}
 
 		[When(@"I delete the scanner")]
 		public void DeleteScanner(string scannerId)
 		{
-			_hBase.Scanner.Delete();
+			ScenarioContext.Current.Pending();
 		}
 
 		[When(@"I delete the table")]

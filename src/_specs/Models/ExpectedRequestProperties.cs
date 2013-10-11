@@ -15,39 +15,13 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+using RestSharp;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace _specs.Models
 {
-	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
-	/// </summary>
-	public interface IMimeConverter
+	public class ExpectedRequestProperties
 	{
-		/// <summary>
-		/// Gets the current MIME type.
-		/// </summary>
-		/// <value>
-		/// The MIME type.
-		/// </value>
-		string MimeType { get; }
-
-		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
-
-		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		public Method Method { get; set; }
+		public string Resource { get; set; }
 	}
 }

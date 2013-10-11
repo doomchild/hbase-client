@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,50 +17,28 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
 namespace HBase.Stargate.Client
 {
 	/// <summary>
 	///    Defines an identifier in the HBase system.
 	/// </summary>
-	public class Identifier
+	public class Identifier : HBaseDescriptor
 	{
 		/// <summary>
-		/// Gets or sets the table.
+		/// Gets or sets the cell descriptor.
 		/// </summary>
 		/// <value>
-		/// The table.
+		/// The cell.
 		/// </value>
-		public string Table { get; set; }
+		public HBaseCellDescriptor Cell { get; set; }
 
 		/// <summary>
-		/// Gets or sets the row.
+		///    Gets or sets the timestamp.
 		/// </summary>
 		/// <value>
-		/// The row.
-		/// </value>
-		public string Row { get; set; }
-
-		/// <summary>
-		/// Gets or sets the column.
-		/// </summary>
-		/// <value>
-		/// The column.
-		/// </value>
-		public string Column { get; set; }
-
-		/// <summary>
-		/// Gets or sets the qualifier.
-		/// </summary>
-		/// <value>
-		/// The qualifier.
-		/// </value>
-		public string Qualifier { get; set; }
-
-		/// <summary>
-		/// Gets or sets the timestamp.
-		/// </summary>
-		/// <value>
-		/// The timestamp.
+		///    The timestamp.
 		/// </value>
 		public long? Timestamp { get; set; }
 	}

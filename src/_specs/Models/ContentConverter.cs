@@ -15,6 +15,8 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System.Collections.Generic;
+
 using HBase.Stargate.Client;
 using HBase.Stargate.Client.MimeConversion;
 
@@ -50,7 +52,7 @@ namespace _specs.Models
 
 		public string MimeType { get; private set; }
 
-		public string Convert(CellSet cells)
+		public string Convert(IEnumerable<Cell> cells)
 		{
 			if (_converter != null) return _converter.Convert(cells);
 
@@ -64,7 +66,7 @@ namespace _specs.Models
 			throw new System.NotImplementedException();
 		}
 
-		public CellSet Convert(string data)
+		public IEnumerable<Cell> Convert(string data)
 		{
 			if (_converter != null) return _converter.Convert(data);
 

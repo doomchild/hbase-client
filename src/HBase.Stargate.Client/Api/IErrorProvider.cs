@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,39 +17,29 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System;
+
+using RestSharp;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	///    Defines a provider for <see cref="Exception" /> instances based on <see cref="IRestResponse" /> instances.
 	/// </summary>
-	public interface IMimeConverter
+	public interface IErrorProvider
 	{
 		/// <summary>
-		/// Gets the current MIME type.
+		///    Creates an exception from the response.
 		/// </summary>
-		/// <value>
-		/// The MIME type.
-		/// </value>
-		string MimeType { get; }
+		/// <param name="response">The response.</param>
+		Exception CreateFromResponse(IRestResponse response);
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		/// Throws an exception from the response.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
-
-		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		/// <param name="response">The response.</param>
+		void ThrowFromResponse(IRestResponse response);
 	}
 }

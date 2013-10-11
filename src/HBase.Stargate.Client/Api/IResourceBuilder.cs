@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,18 +15,35 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Provides access to operations for a table in Stargate.
+	///    Defines a URI builder for HBase resources.
 	/// </summary>
-	public interface IStargateTable
+	public interface IResourceBuilder
 	{
 		/// <summary>
-		///    Creates a scanner context for the current table.
+		/// Builds a cell or row query URI.
 		/// </summary>
-		IStargateScanner ForScanner(string scannerId = null);
+		/// <param name="query"></param>
+		string BuildCellOrRowQuery(CellQuery query);
+
+		/// <summary>
+		/// Builds a single value storage URI.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		string BuildSingleValueAccess(Identifier identifier);
+
+		/// <summary>
+		/// Builds a delete-item URI.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		string BuildDeleteItem(Identifier identifier);
+
+		/// <summary>
+		/// Builds a batch insert URI.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		string BuildBatchInsert(Identifier identifier);
 	}
 }

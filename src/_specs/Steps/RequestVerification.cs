@@ -19,41 +19,106 @@
 
 #endregion
 
+using System.Collections.Generic;
+using System.Linq;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.MimeConversion;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
 
 namespace _specs.Steps
 {
 	[Binding]
 	public class RequestVerification
 	{
+		private readonly IMimeConverterFactory _converterFactory;
+		private readonly RestContext _rest;
+
+		public RequestVerification(RestContext rest, IMoqContainer container)
+		{
+			_rest = rest;
+			_converterFactory = container.Create<IMimeConverterFactory>();
+		}
+
 		[Then(@"a REST request should have been submitted with the following values:")]
 		public void CheckRequest(Table values)
 		{
-			ScenarioContext.Current.Pending();
+			var properties = values.CreateInstance<ExpectedRequestProperties>();
+			_rest.Request.Method.Should().Be(properties.Method);
+			_rest.Request.Resource.Should().Be(properties.Resource);
 		}
 
 		[Then(@"a REST request should have been submitted with the correct (.+) and (.+)")]
-		public void CheckRequest(string method, string url)
+		public void CheckRequest(Method method, string resource)
 		{
-			ScenarioContext.Current.Pending();
+			_rest.Request.Method.Should().Be(method);
+			_rest.Request.Resource.Should().Be(resource);
 		}
 
 		[Then(@"the REST request should have contained (.*) cells?")]
 		public void CheckRequestCellCount(int count)
 		{
-			ScenarioContext.Current.Pending();
+			IEnumerable<Cell> row = GetRowFromRequest();
+			row.Should().HaveCount(count);
 		}
 
 		[Then(@"one of the cells in the REST request should have had the value ""(.*)""")]
 		public void CheckAnyCellValue(string value)
 		{
-			ScenarioContext.Current.Pending();
+			IEnumerable<Cell> row = GetRowFromRequest();
+			row.SingleOrDefault(cell => cell.Value == value).Should().NotBeNull();
 		}
 
 		[Then(@"one of the cells in the REST request should have had the following values:")]
 		public void CheckAnyCellValues(Table values)
 		{
-			ScenarioContext.Current.Pending();
+			IEnumerable<Cell> row = GetRowFromRequest();
+			var expected = values.CreateInstance<TestCell>();
+			row.SingleOrDefault(cell => cell.Identifier.Row == expected.Row
+				&& cell.Identifier.Cell.Column == expected.Column
+				&& cell.Identifier.Cell.Qualifier == expected.Qualifier
+				&& cell.Value == expected.Value).Should().NotBeNull();
+		}
+
+		private IEnumerable<Cell> GetRowFromRequest()
+		{
+			IMimeConverter converter = CreateRequestConverter();
+			string content = _rest.Request.Parameters
+				.Where(cell => cell.Type == ParameterType.RequestBody)
+				.Select(cell => cell.Value.ToString())
+				.FirstOrDefault();
+			IEnumerable<Cell> row = converter.Convert(content).ToArray();
+			row.Should().NotBeNull();
+			return row;
+		}
+
+		private IMimeConverter CreateRequestConverter()
+		{
+			string mimeType = _rest.Request.Parameters
+				.Where(parameter => parameter.Type == ParameterType.HttpHeader && IsAcceptOrContentType(parameter.Name))
+				.Select(parameter => parameter.Value.ToString())
+				.FirstOrDefault();
+
+			mimeType.Should().NotBeEmpty();
+
+			return _converterFactory.CreateConverter(mimeType);
+		}
+
+		private static bool IsAcceptOrContentType(string name)
+		{
+			return name == RestConstants.ContentTypeHeader
+				|| name == RestConstants.AcceptHeader;
 		}
 	}
 }
