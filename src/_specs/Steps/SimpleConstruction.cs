@@ -42,6 +42,12 @@ namespace _specs.Steps
 			_hBase.CellSet = new CellSet();
 		}
 
+		[Given(@"I have created a set of cells for the ""(.+)"" table")]
+		public void CreateCellSet(string table)
+		{
+			_hBase.CellSet = new CellSet {Table = table};
+		}
+
 		[Given(@"I have added a cell to my set with the following properties:")]
 		public void AddToCellSet(Table values)
 		{
@@ -61,8 +67,11 @@ namespace _specs.Steps
 			_hBase.Cell = new Cell(new Identifier
 			{
 				Row = row,
-				Column = column,
-				Qualifier = qualifier,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
 				Timestamp = timestamp.ToNullableLong()
 			}, value);
 		}
@@ -73,8 +82,11 @@ namespace _specs.Steps
 			{
 				Table = testCell.Table,
 				Row = testCell.Row,
-				Column = testCell.Column,
-				Qualifier = testCell.Qualifier,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = testCell.Column,
+					Qualifier = testCell.Qualifier
+				},
 				Timestamp = testCell.Timestamp
 			}, testCell.Value);
 		}

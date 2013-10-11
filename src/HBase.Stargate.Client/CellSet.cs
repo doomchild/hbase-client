@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,17 +17,19 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
 using System.Collections.Generic;
 
 namespace HBase.Stargate.Client
 {
 	/// <summary>
-	///    Defines a set of cells for transmission to/from HBase.
+	///    Defines a set of cells associated with a table.
 	/// </summary>
 	public class CellSet : List<Cell>
 	{
 		/// <summary>
-		///    Initializes a new instance of the <see cref="CellSet" /> class.
+		/// Initializes a new instance of the <see cref="CellSet"/> class.
 		/// </summary>
 		public CellSet() {}
 
@@ -34,5 +38,13 @@ namespace HBase.Stargate.Client
 		/// </summary>
 		/// <param name="cells">The cells.</param>
 		public CellSet(IEnumerable<Cell> cells) : base(cells) {}
+
+		/// <summary>
+		///    Gets or sets the name of the table.
+		/// </summary>
+		/// <value>
+		///    The name of the table.
+		/// </value>
+		public string Table { get; set; }
 	}
 }

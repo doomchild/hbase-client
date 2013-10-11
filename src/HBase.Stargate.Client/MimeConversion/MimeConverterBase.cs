@@ -15,6 +15,7 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -37,7 +38,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		/// Converts the specified cells to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public abstract string Convert(CellSet cells);
+		public abstract string Convert(IEnumerable<Cell> cells);
 
 		/// <summary>
 		/// Converts the specified cell to text according to the current MIME type.
@@ -50,7 +51,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		/// Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public abstract CellSet Convert(string data);
+		public abstract IEnumerable<Cell> Convert(string data);
 
 		/// <summary>
 		///    Encodes the specified text.

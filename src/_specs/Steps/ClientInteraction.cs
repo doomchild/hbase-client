@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,9 +15,16 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
 using HBase.Stargate.Client;
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.MimeConversion;
+
+using Moq;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+using RestSharp.Injection;
 
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -31,47 +36,102 @@ namespace _specs.Steps
 	[Binding]
 	public class ClientInteraction
 	{
+		private readonly IMoqContainer _container;
 		private readonly HBaseContext _hBase;
+		private readonly RestContext _rest;
 
-		public ClientInteraction(HBaseContext hBase)
+		public ClientInteraction(HBaseContext hBase, RestContext rest, IMoqContainer container)
 		{
 			_hBase = hBase;
+			_rest = rest;
+			_container = container;
 		}
 
-		[Given(@"I have everything I need to test an HBase client in isolation, with the following options:")]
+		[Given(@"I have everything I need to test a disconnected HBase client, with the following options:")]
 		public void SetupClient(Table options)
 		{
-			_hBase.Options = options.CreateInstance<HBaseOptions>();
+			Mock<IRestSharpFactory> factoryMock = _container.Mock<IRestSharpFactory>();
+
+			factoryMock.Setup(factory => factory.CreateRequest(It.IsAny<string>(), It.IsAny<Method>()))
+				.Returns<string, Method>((resource, method) => (_rest.Request = new RestRequest(resource, method)));
+
+			Mock<IRestClient> clientMock = _container.Mock<IRestClient>();
+
+			clientMock.Setup(client => client.Execute(It.IsAny<IRestRequest>()))
+				.Returns(() => _container.Mock<IRestResponse>().Object);
+
+			factoryMock.Setup(factory => factory.CreateClient(It.IsAny<string>()))
+				.Returns(() => clientMock.Object);
+
+			_container.Update<IStargateOptions>(options.CreateInstance<StargateOptions>());
+
+			_container.Update<IMimeConverter, XmlMimeConverter>();
+			_container.Update<IMimeConverterFactory, MimeConverterFactory>();
+			_container.Update<IResourceBuilder, ResourceBuilder>();
+
+			_container.Update<IStargate, Stargate>();
 		}
 
 		[Given(@"I have an HBase client")]
 		public void CreateClient()
 		{
-			_hBase.SetClient();
+			_hBase.Stargate = _container.Create<IStargate>();
 		}
 
-		[Given(@"I have set my context to a table called ""(.*)""")]
-		public void SetTableContextTo(string tableName)
+		[Given(@"I have an identifier consisting of a ([^,]*)")]
+		public void SetIdentifier(string table)
 		{
-			_hBase.Table = _hBase.Stargate.ForTable(tableName);
+			_hBase.Identifier = new Identifier {Table = table};
 		}
 
-		[Given(@"I have set my context to a new scanner")]
-		public void SetScannerContext()
-		{
-			_hBase.Scanner = _hBase.Table.ForScanner();
-		}
-
-		[Given(@"I have an identifier consisting of a (.+), a (.+), a (.*), a (.*), and a (.*)")]
+		[Given(@"I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)")]
 		public void SetIdentifier(string table, string row, string column, string qualifier, string timestamp)
 		{
 			_hBase.Identifier = new Identifier
 			{
 				Table = table,
 				Row = row,
-				Column = column,
-				Qualifier = qualifier,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
 				Timestamp = timestamp.ToNullableLong()
+			};
+		}
+
+		[Given(@"I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)")]
+		public void SetIdentifier(string table, string row, string column, string qualifier)
+		{
+			_hBase.Identifier = new Identifier
+			{
+				Table = table,
+				Row = row,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				}
+			};
+		}
+
+		[Given(@"I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, and a (.*) timestamp")]
+		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp)
+		{
+			_hBase.Query = new CellQuery
+			{
+				Table = table,
+				Row = row,
+				Cells = new[]
+				{
+					new HBaseCellDescriptor
+					{
+						Column = column,
+						Qualifier = qualifier
+					}
+				},
+				BeginTimestamp = beginTimestamp.ToNullableLong(),
+				EndTimestamp = endTimestamp.ToNullableLong()
 			};
 		}
 	}

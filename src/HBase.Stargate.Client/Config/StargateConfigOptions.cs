@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,39 +17,60 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System.Configuration;
+
+using HBase.Stargate.Client.Api;
+
+namespace HBase.Stargate.Client.Config
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	///    Provides an XML configuration-based implementation of <see cref="IStargateOptions" />.
 	/// </summary>
-	public interface IMimeConverter
+	public class StargateConfigOptions : ConfigurationElement, IStargateOptions
 	{
+		private const string _serverUrlName = "serverUrl";
+		private const string _contentTypeName = "contentType";
+		private const string _falseRowKeyName = "falseRowKey";
+
 		/// <summary>
-		/// Gets the current MIME type.
+		///    Gets or sets the server URL.
 		/// </summary>
 		/// <value>
-		/// The MIME type.
+		///    The server URL.
 		/// </value>
-		string MimeType { get; }
+		[ConfigurationProperty(_serverUrlName, IsRequired = true)]
+		public string ServerUrl
+		{
+			get { return this[_serverUrlName] as string; }
+			set { this[_serverUrlName] = value; }
+		}
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Gets or sets the type of the content.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
+		/// <value>
+		///    The type of the content.
+		/// </value>
+		[ConfigurationProperty(_contentTypeName, IsRequired = false, DefaultValue = Api.Stargate.DefaultContentType)]
+		public string ContentType
+		{
+			get { return this[_contentTypeName] as string; }
+			set { this[_contentTypeName] = value; }
+		}
 
 		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
+		///    Gets or sets the false row key.
 		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		/// <value>
+		///    The false row key.
+		/// </value>
+		[ConfigurationProperty(_falseRowKeyName, IsRequired = false, DefaultValue = Api.Stargate.DefaultFalseRowKey)]
+		public string FalseRowKey
+		{
+			get { return this[_falseRowKeyName] as string; }
+			set { this[_falseRowKeyName] = value; }
+		}
 	}
 }

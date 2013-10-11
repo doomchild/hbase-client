@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,41 +15,51 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using System.Linq;
 
-using System;
+using FluentAssertions;
 
-namespace HBase.Stargate.Client.Api
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
 {
-	/// <summary>
-	///    Defines a default implementation of <see cref="IStargateTable" />.
-	/// </summary>
-	public class StargateTable : IStargateTable
+	[Binding]
+	public class ErrorChecking
 	{
-		private readonly string _serverUrl;
-		private readonly string _tableName;
-		private readonly Func<string, string, string, IStargateScanner> _scannerFactory;
+		private readonly ErrorContext _errors;
+		private readonly ResourceContext _resources;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StargateTable" /> class.
-		/// </summary>
-		/// <param name="serverUrl">The server URL.</param>
-		/// <param name="tableName">Name of the table.</param>
-		/// <param name="scannerFactory">The scanner factory.</param>
-		public StargateTable(string serverUrl, string tableName, Func<string, string, string, IStargateScanner> scannerFactory)
+		public ErrorChecking(ErrorContext errors, ResourceContext resources)
 		{
-			_serverUrl = serverUrl;
-			_tableName = tableName;
-			_scannerFactory = scannerFactory;
+			_errors = errors;
+			_resources = resources;
 		}
 
-		/// <summary>
-		/// Creates a scanner context for the current table.
-		/// </summary>
-		/// <param name="scannerId"></param>
-		public IStargateScanner ForScanner(string scannerId = null)
+		[Then(@"the operation should( not)? have succeeded")]
+		public void CheckExceptionExists(string modifier)
 		{
-			return _scannerFactory(_serverUrl, _tableName, scannerId);
+			if (string.IsNullOrEmpty(modifier)) _errors.CaughtErrors.Should().BeEmpty();
+			else _errors.CaughtErrors.Should().NotBeEmpty();
+		}
+
+		[Then(@"if there was an exception, it should have been the expected (.*) type")]
+		public void CheckExceptionType(string type)
+		{
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).GetType().Name.Should().Be(type);
+		}
+
+		[Then(@"if there was an exception, it should have had the expected exception (.*)")]
+		public void CheckExceptionMessage(string messageResource)
+		{
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).Message.Should().Be(_resources.GetString(messageResource));
 		}
 	}
 }

@@ -21,21 +21,30 @@
 
 using TechTalk.SpecFlow;
 
+using _specs.Models;
+
 namespace _specs.Steps
 {
 	[Binding]
 	public class Reading
 	{
-		[When(@"I read a cell using my identifier")]
-		public void ReadCell()
+		private readonly HBaseContext _context;
+
+		public Reading(HBaseContext context)
 		{
-			ScenarioContext.Current.Pending();
+			_context = context;
 		}
 
-		[When(@"I read a row using my identifier")]
+		[When(@"I read a single value using my identifier")]
+		public void ReadSingleValue()
+		{
+			_context.CellValue = _context.Stargate.ReadValue(_context.Identifier);
+		}
+
+		[When(@"I read a row using my query")]
 		public void ReadRow()
 		{
-			ScenarioContext.Current.Pending();
+			_context.CellSet = _context.Stargate.FindCells(_context.Query);
 		}
 
 		[When(@"I read a result from the scanner")]

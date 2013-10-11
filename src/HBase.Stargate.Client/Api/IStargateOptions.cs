@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,36 +15,35 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
-using System;
-using System.Collections.Generic;
-
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Provides operations for Stargate scanners.
+	///    Defines options for communicating with a Stargate instance.
 	/// </summary>
-	public interface IStargateScanner
+	public interface IStargateOptions
 	{
 		/// <summary>
-		///    Creates the current scanner.
+		///    Gets or sets the server URL.
 		/// </summary>
-		void Create();
+		/// <value>
+		///    The server URL.
+		/// </value>
+		string ServerUrl { get; set; }
 
 		/// <summary>
-		///    Reads the records returned by the current scanner.
+		///    Gets or sets the type of the content.
 		/// </summary>
-		IEnumerable<CellSet> Read();
+		/// <value>
+		///    The type of the content.
+		/// </value>
+		string ContentType { get; set; }
 
 		/// <summary>
-		///    Emits each record returned by the current scanner into an observable sequence.
+		///    Gets or sets the false row key.
 		/// </summary>
-		IObservable<CellSet> Results();
-
-		/// <summary>
-		///    Deletes the current scanner.
-		/// </summary>
-		void Delete();
+		/// <value>
+		///    The false row key.
+		/// </value>
+		string FalseRowKey { get; set; }
 	}
 }

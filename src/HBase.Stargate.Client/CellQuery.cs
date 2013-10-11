@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,39 +17,47 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
 using System.Collections.Generic;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	///    Defines a query targeting one or more cells in HBase.
 	/// </summary>
-	public interface IMimeConverter
+	public class CellQuery : HBaseDescriptor
 	{
 		/// <summary>
-		/// Gets the current MIME type.
+		///    Gets or sets the additional criteria.
 		/// </summary>
 		/// <value>
-		/// The MIME type.
+		///    The additional criteria.
 		/// </value>
-		string MimeType { get; }
+		public IEnumerable<HBaseCellDescriptor> Cells { get; set; }
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Gets or sets the begin timestamp (exclusive).
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
+		/// <value>
+		///    The begin timestamp (exclusive).
+		/// </value>
+		public long? BeginTimestamp { get; set; }
 
 		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
+		///    Gets or sets the end timestamp (exclusive).
 		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
+		/// <value>
+		///    The end timestamp (exclusive).
+		/// </value>
+		public long? EndTimestamp { get; set; }
 
 		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
+		///    Gets or sets the maximum allowed results.
 		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		/// <value>
+		///    The maximum allowed results.
+		/// </value>
+		public int? MaxResults { get; set; }
 	}
 }

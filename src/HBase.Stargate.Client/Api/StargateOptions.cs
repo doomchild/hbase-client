@@ -15,39 +15,35 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
-
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	///    Defines options for communicating with a Stargate instance.
 	/// </summary>
-	public interface IMimeConverter
+	public class StargateOptions : IStargateOptions
 	{
 		/// <summary>
-		/// Gets the current MIME type.
+		///    Gets or sets the server URL.
 		/// </summary>
 		/// <value>
-		/// The MIME type.
+		///    The server URL.
 		/// </value>
-		string MimeType { get; }
+		public string ServerUrl { get; set; }
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Gets or sets the type of the content.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
+		/// <value>
+		///    The type of the content.
+		/// </value>
+		public string ContentType { get; set; }
 
 		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
+		///    Gets or sets the false row key.
 		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		/// <value>
+		///    The false row key.
+		/// </value>
+		public string FalseRowKey { get; set; }
 	}
 }

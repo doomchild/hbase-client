@@ -15,39 +15,31 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+using BoDi;
 
-namespace HBase.Stargate.Client.MimeConversion
+using Patterns.Testing.Autofac.Moq;
+using Patterns.Testing.Moq;
+
+using TechTalk.SpecFlow;
+
+namespace _specs.Steps
 {
-	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
-	/// </summary>
-	public interface IMimeConverter
+	[Binding]
+	public class ContainerSetup
 	{
-		/// <summary>
-		/// Gets the current MIME type.
-		/// </summary>
-		/// <value>
-		/// The MIME type.
-		/// </value>
-		string MimeType { get; }
+		private readonly IObjectContainer _container;
 
-		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
+		public ContainerSetup(IObjectContainer container)
+		{
+			_container = container;
+		}
 
-		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
-		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		[BeforeScenario]
+		public void InitializeMoqContainer()
+		{
+			var container = new AutofacMoqContainer();
+			_container.RegisterInstanceAs(container, typeof (IMoqContainer));
+			_container.RegisterInstanceAs(container, typeof (IAutofacMoqContainer));
+		}
 	}
 }

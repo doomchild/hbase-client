@@ -21,27 +21,36 @@
 
 using TechTalk.SpecFlow;
 
+using _specs.Models;
+
 namespace _specs.Steps
 {
 	[Binding]
 	public class Writing
 	{
+		private readonly HBaseContext _context;
+
+		public Writing(HBaseContext context)
+		{
+			_context = context;
+		}
+
 		[When(@"I write the value ""(.*)"" using my identifier")]
 		public void WriteValue(string value)
 		{
-			ScenarioContext.Current.Pending();
+			_context.Stargate.WriteValue(_context.Identifier, value);
 		}
 
 		[When(@"I write the set of cells")]
 		public void WriteCellSet()
 		{
-			ScenarioContext.Current.Pending();
+			_context.Stargate.WriteCells(_context.CellSet);
 		}
 
 		[When(@"I delete an item using my identifier")]
 		public void DeleteItem()
 		{
-			ScenarioContext.Current.Pending();
+			_context.Stargate.DeleteItem(_context.Identifier);
 		}
 	}
 }

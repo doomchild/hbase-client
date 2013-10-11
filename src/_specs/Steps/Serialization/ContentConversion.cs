@@ -15,6 +15,9 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System.Collections.Generic;
+using System.Linq;
+
 using FluentAssertions;
 
 using HBase.Stargate.Client;
@@ -40,13 +43,13 @@ namespace _specs.Steps.Serialization
 		[When(@"I convert my raw content to a set of cells")]
 		public void ConvertRawContentToCellSet()
 		{
-			_hBase.CellSet = _converter.Convert(_hBase.RawContent);
+			_hBase.CellSet = new CellSet(_converter.Convert(_hBase.RawContent));
 		}
 
 		[When(@"I convert my raw content to a cell")]
 		public void ConvertRawContentToCell()
 		{
-			CellSet set = _converter.Convert(_hBase.RawContent);
+			IList<Cell> set = _converter.Convert(_hBase.RawContent).ToList();
 			set.Should().HaveCount(1);
 			_hBase.Cell = set[0];
 		}

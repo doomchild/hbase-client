@@ -19,68 +19,75 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
+using System.Configuration;
 
-using RestSharp.Injection;
-
-namespace HBase.Stargate.Client.Api
+namespace HBase.Stargate.Client.Config
 {
 	/// <summary>
-	///    Defines the default implementation of <see cref="IStargateScanner" />.
+	///    Provides an XML configuration-based <see cref="Identifier" />.
 	/// </summary>
-	public class StargateScanner : StargateBase, IStargateScanner
+	public class ConfigIdentifier : ConfigDescriptor
 	{
-		private readonly string _tableName;
-		private string _scannerId;
+		private const string _columName = "column";
+		private const string _qualifierName = "qualifier";
+		private const string _timestampName = "timestamp";
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="StargateScanner" /> class.
+		///    Gets or sets the column.
 		/// </summary>
-		/// <param name="serverUrl">The server URL.</param>
-		/// <param name="tableName">Name of the table.</param>
-		/// <param name="scannerId">The scanner id.</param>
-		/// <param name="restFactory">The rest factory.</param>
-		public StargateScanner(string serverUrl, string tableName, string scannerId, IRestSharpFactory restFactory)
-			: base(serverUrl, restFactory)
+		/// <value>
+		///    The column.
+		/// </value>
+		[ConfigurationProperty(_columName, IsRequired = true)]
+		public string Column
 		{
-			_tableName = tableName;
-			_scannerId = scannerId;
+			get { return this[_columName] as string; }
+			set { this[_columName] = value; }
 		}
 
 		/// <summary>
-		///    Creates the current scanner.
+		///    Gets or sets the qualifier.
 		/// </summary>
-		public void Create()
+		/// <value>
+		///    The qualifier.
+		/// </value>
+		[ConfigurationProperty(_qualifierName, IsRequired = false)]
+		public string Qualifier
 		{
-
+			get { return this[_qualifierName] as string; }
+			set { this[_qualifierName] = value; }
 		}
 
 		/// <summary>
-		///    Reads the records returned by the current scanner.
+		///    Gets or sets the timestamp.
 		/// </summary>
-		/// <exception cref="System.NotImplementedException"></exception>
-		public IEnumerable<CellSet> Read()
+		/// <value>
+		///    The timestamp.
+		/// </value>
+		[ConfigurationProperty(_timestampName, IsRequired = false)]
+		public long? Timestamp
 		{
-			throw new NotImplementedException();
+			get { return this[_timestampName] as long?; }
+			set { this[_timestampName] = value; }
 		}
 
 		/// <summary>
-		///    Emits each record returned by the current scanner into an observable sequence.
+		///    Converts the config-based identifier to a normal one.
 		/// </summary>
-		/// <exception cref="System.NotImplementedException"></exception>
-		public IObservable<CellSet> Results()
+		/// <param name="identifier">The identifier.</param>
+		public static implicit operator Identifier(ConfigIdentifier identifier)
 		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		///    Deletes the current scanner.
-		/// </summary>
-		/// <exception cref="System.NotImplementedException"></exception>
-		public void Delete()
-		{
-			throw new NotImplementedException();
+			return new Identifier
+			{
+				Table = identifier.Table,
+				Row = identifier.Row,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = identifier.Column,
+					Qualifier = identifier.Qualifier
+				},
+				Timestamp = identifier.Timestamp
+			};
 		}
 	}
 }

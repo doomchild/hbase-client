@@ -23,7 +23,7 @@ namespace HBase.Stargate.Client
 	public static class Extensions
 	{
 		/// <summary>
-		/// Converts the current text to a nullable long value.
+		///    Converts the current text to a nullable long value.
 		/// </summary>
 		/// <param name="text">The text.</param>
 		public static long? ToNullableLong(this string text)
@@ -32,6 +32,56 @@ namespace HBase.Stargate.Client
 
 			long value;
 			return long.TryParse(text, out value) ? value : (long?) null;
+		}
+
+		/// <summary>
+		/// Determines whether the descriptor can describe a table.
+		/// </summary>
+		/// <param name="descriptor">The descriptor.</param>
+		public static bool CanDescribeTable(this HBaseDescriptor descriptor)
+		{
+			return descriptor != null && !string.IsNullOrEmpty(descriptor.Table);
+		}
+
+		/// <summary>
+		/// Determines whether the descriptor can describe a row.
+		/// </summary>
+		/// <param name="descriptor">The descriptor.</param>
+		public static bool CanDescribeRow(this HBaseDescriptor descriptor)
+		{
+			return descriptor.CanDescribeTable() && !string.IsNullOrEmpty(descriptor.Row);
+		}
+
+		/// <summary>
+		/// Determines whether the identifier can describe a cell.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		public static bool CanDescribeCell(this Identifier identifier)
+		{
+			return identifier.CanDescribeRow() && identifier.Cell != null && !string.IsNullOrEmpty(identifier.Cell.Column);
+		}
+
+		/// <summary>
+		/// Converts the identifier into a cell query.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		public static CellQuery ToQuery(this Identifier identifier)
+		{
+			return new CellQuery
+			{
+				Table = identifier.Table,
+				Row = identifier.Row,
+				Cells = new[]
+				{
+					new HBaseCellDescriptor
+					{
+						Column = identifier.Cell != null ? identifier.Cell.Column : null,
+						Qualifier = identifier.Cell != null ? identifier.Cell.Qualifier : null
+					}
+				},
+				BeginTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp - 1 : null,
+				EndTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp + 1 : null
+			};
 		}
 	}
 }

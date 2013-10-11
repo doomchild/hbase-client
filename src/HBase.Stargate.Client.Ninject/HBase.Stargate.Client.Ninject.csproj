@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{98C9F30C-4EC9-4BE0-BD1C-120F05D37117}</ProjectGuid>
+    <ProjectGuid>{E8C82375-ABFB-4EBA-A5F3-F12006AC8F9B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HBase.Stargate.Client</RootNamespace>
-    <AssemblyName>HBase.Stargate.Client</AssemblyName>
+    <RootNamespace>HBase.Stargate.Client.Ninject</RootNamespace>
+    <AssemblyName>HBase.Stargate.Client.Ninject</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -22,8 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\HBase.Stargate.Client.XML</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,15 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp.Injection, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="RestSharp.Injection">
       <HintPath>..\packages\RestSharp.Injection.1.1.0-beta1\lib\net45\RestSharp.Injection.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp.Injection.Ninject">
+      <HintPath>..\packages\RestSharp.Injection.Ninject.1.1.0-beta1\lib\net45\RestSharp.Injection.Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,52 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\ErrorProvider.cs" />
-    <Compile Include="Api\Extensions.cs" />
-    <Compile Include="Api\IErrorProvider.cs" />
-    <Compile Include="Api\IResourceBuilder.cs" />
-    <Compile Include="Api\IStargate.cs" />
-    <Compile Include="Api\IStargateOptions.cs" />
-    <Compile Include="Api\ResourceBuilder.cs" />
-    <Compile Include="Api\RestConstants.cs" />
-    <Compile Include="Api\Stargate.cs" />
-    <Compile Include="Cell.cs" />
-    <Compile Include="CellQuery.cs" />
-    <Compile Include="CellSet.cs" />
-    <Compile Include="Config\ConfigCellDescriptor.cs" />
-    <Compile Include="Config\ConfigCellDescriptorCollection.cs" />
-    <Compile Include="Config\ConfigCellQuery.cs" />
-    <Compile Include="Config\ConfigDescriptor.cs" />
-    <Compile Include="Config\ConfigIdentifier.cs" />
-    <Compile Include="Config\StargateConfigOptions.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Api\StargateOptions.cs" />
-    <Compile Include="HBaseCellDescriptor.cs" />
-    <Compile Include="HBaseDescriptor.cs" />
-    <Compile Include="Identifier.cs" />
-    <Compile Include="MimeConversion\HBaseMimeTypes.cs" />
-    <Compile Include="MimeConversion\IMimeConverter.cs" />
-    <Compile Include="MimeConversion\IMimeConverterFactory.cs" />
-    <Compile Include="MimeConversion\MimeConverterBase.cs" />
-    <Compile Include="MimeConversion\MImeConverterFactory.cs" />
-    <Compile Include="MimeConversion\XmlMimeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

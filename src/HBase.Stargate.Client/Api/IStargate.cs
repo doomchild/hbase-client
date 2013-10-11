@@ -19,6 +19,8 @@
 
 #endregion
 
+using System.Threading.Tasks;
+
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
@@ -27,9 +29,65 @@ namespace HBase.Stargate.Client.Api
 	public interface IStargate
 	{
 		/// <summary>
-		///    Creates a table context for a table with the specified name.
+		///    Writes the value to HBase using the identifier.
 		/// </summary>
-		/// <param name="tableName">Name of the table.</param>
-		IStargateTable ForTable(string tableName);
+		/// <param name="identifier">The identifier.</param>
+		/// <param name="value">The value.</param>
+		Task WriteValueAsync(Identifier identifier, string value);
+
+		/// <summary>
+		///    Writes the value to HBase using the identifier.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		/// <param name="value">The value.</param>
+		void WriteValue(Identifier identifier, string value);
+
+		/// <summary>
+		///    Writes the cells to HBase.
+		/// </summary>
+		/// <param name="cells">The cells.</param>
+		Task WriteCellsAsync(CellSet cells);
+
+		/// <summary>
+		///    Writes the cells to HBase.
+		/// </summary>
+		/// <param name="cells">The cells.</param>
+		void WriteCells(CellSet cells);
+
+		/// <summary>
+		///    Deletes the item with the matching identifier from HBase.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		Task DeleteItemAsync(Identifier identifier);
+
+		/// <summary>
+		///    Deletes the item with the matching identifier from HBase.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		void DeleteItem(Identifier identifier);
+
+		/// <summary>
+		///    Reads the value with the matching identifier.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		Task<string> ReadValueAsync(Identifier identifier);
+
+		/// <summary>
+		///    Reads the value with the matching identifier.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		string ReadValue(Identifier identifier);
+
+		/// <summary>
+		///    Finds the cells matching the query.
+		/// </summary>
+		/// <param name="query"></param>
+		Task<CellSet> FindCellsAsync(CellQuery query);
+
+		/// <summary>
+		///    Finds the cells matching the query.
+		/// </summary>
+		/// <param name="query"></param>
+		CellSet FindCells(CellQuery query);
 	}
 }
