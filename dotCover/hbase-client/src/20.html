@@ -1,0 +1,189 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_20 = [
+   [48,3,48,72,'dccv']
+, [49,3,49,4,'dccv']
+, [50,4,50,17,'dccv']
+, [51,4,51,66,'dccv']
+, [52,3,52,4,'dccv']
+, [56,3,56,4,'dccv']
+, [57,4,57,72,'dccv']
+, [58,4,58,56,'dccv']
+, [59,4,59,60,'dccv']
+, [60,3,60,4,'dccv']
+, [64,3,64,4,'dccv']
+, [65,4,65,45,'dccv']
+, [66,4,66,49,'dccv']
+, [67,3,67,4,'dccv']
+, [71,3,71,4,'dccv']
+, [72,4,72,48,'dccv']
+, [73,4,73,34,'dccv']
+, [74,3,74,4,'dccv']
+, [78,3,78,4,'dccv']
+, [79,4,79,48,'dccv']
+, [80,4,80,32,'dccv']
+, [80,51,80,74,'dccv']
+, [81,3,81,4,'dccv']
+, [85,3,85,4,'dccv']
+, [86,4,86,48,'dccv']
+, [87,4,87,53,'dccv']
+, [88,4,88,32,'dccv']
+, [91,36,91,59,'dccv']
+, [92,3,92,4,'dccv']
+, [95,3,95,4,'dccv']
+, [96,4,96,56,'dccv']
+, [97,4,98,20,'dccv']
+, [99,42,100,23,'dccv']
+, [101,4,101,65,'dccv']
+, [102,4,102,29,'dccv']
+, [103,4,103,15,'dccv']
+, [104,3,104,4,'dccv']
+, [107,3,107,4,'dccv']
+, [108,4,109,25,'dccv']
+, [110,52,111,23,'dccv']
+, [113,4,113,35,'dccv']
+, [115,4,115,55,'dccv']
+, [116,3,116,4,'dccv']
+, [119,3,119,4,'dccv']
+, [120,4,121,43,'dccv']
+, [122,3,122,4,'dccv']
+, [98,20,98,58,'dccv']
+, [99,21,99,42,'dccv']
+, [109,25,109,108,'dccv']
+, [110,26,110,52,'dccv']
+, [80,32,80,51,'dccv']
+, [88,32,91,36,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src20" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Collections.Generic;
+using System.Linq;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.MimeConversion;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class RequestVerification
+	{
+		private readonly IMimeConverterFactory _converterFactory;
+		private readonly RestContext _rest;
+
+		public RequestVerification(RestContext rest, IMoqContainer container)
+		{
+			_rest = rest;
+			_converterFactory = container.Create&lt;IMimeConverterFactory&gt;();
+		}
+
+		[Then(@&quot;a REST request should have been submitted with the following values:&quot;)]
+		public void CheckRequest(Table values)
+		{
+			var properties = values.CreateInstance&lt;ExpectedRequestProperties&gt;();
+			_rest.Request.Method.Should().Be(properties.Method);
+			_rest.Request.Resource.Should().Be(properties.Resource);
+		}
+
+		[Then(@&quot;a REST request should have been submitted with the correct (.+) and (.+)&quot;)]
+		public void CheckRequest(Method method, string resource)
+		{
+			_rest.Request.Method.Should().Be(method);
+			_rest.Request.Resource.Should().Be(resource);
+		}
+
+		[Then(@&quot;the REST request should have contained (.*) cells?&quot;)]
+		public void CheckRequestCellCount(int count)
+		{
+			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
+			row.Should().HaveCount(count);
+		}
+
+		[Then(@&quot;one of the cells in the REST request should have had the value &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CheckAnyCellValue(string value)
+		{
+			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
+			row.SingleOrDefault(cell =&gt; cell.Value == value).Should().NotBeNull();
+		}
+
+		[Then(@&quot;one of the cells in the REST request should have had the following values:&quot;)]
+		public void CheckAnyCellValues(Table values)
+		{
+			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
+			var expected = values.CreateInstance&lt;TestCell&gt;();
+			row.SingleOrDefault(cell =&gt; cell.Identifier.Row == expected.Row
+				&amp;&amp; cell.Identifier.Cell.Column == expected.Column
+				&amp;&amp; cell.Identifier.Cell.Qualifier == expected.Qualifier
+				&amp;&amp; cell.Value == expected.Value).Should().NotBeNull();
+		}
+
+		private IEnumerable&lt;Cell&gt; GetRowFromRequest()
+		{
+			IMimeConverter converter = CreateRequestConverter();
+			string content = _rest.Request.Parameters
+				.Where(cell =&gt; cell.Type == ParameterType.RequestBody)
+				.Select(cell =&gt; cell.Value.ToString())
+				.FirstOrDefault();
+			IEnumerable&lt;Cell&gt; row = converter.Convert(content).ToArray();
+			row.Should().NotBeNull();
+			return row;
+		}
+
+		private IMimeConverter CreateRequestConverter()
+		{
+			string mimeType = _rest.Request.Parameters
+				.Where(parameter =&gt; parameter.Type == ParameterType.HttpHeader &amp;&amp; IsAcceptOrContentType(parameter.Name))
+				.Select(parameter =&gt; parameter.Value.ToString())
+				.FirstOrDefault();
+
+			mimeType.Should().NotBeEmpty();
+
+			return _converterFactory.CreateConverter(mimeType);
+		}
+
+		private static bool IsAcceptOrContentType(string name)
+		{
+			return name == RestConstants.ContentTypeHeader
+				|| name == RestConstants.AcceptHeader;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src20', RANGES_20)
+		</script>
+	</body>
+</html>

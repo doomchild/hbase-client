@@ -1,0 +1,301 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_31 = [
+   [45,3,45,51,'dccv']
+, [46,3,46,4,'dccv']
+, [47,4,47,23,'dccv']
+, [48,3,48,4,'dccv']
+, [55,3,55,4,'dccv']
+, [56,4,56,34,'dccv']
+, [57,4,57,5,'dccv']
+, [58,5,58,91,'dccv']
+, [61,4,61,48,'dccv']
+, [62,3,62,4,'dccv']
+, [69,3,69,4,'dccv']
+, [70,4,70,38,'dccv']
+, [71,4,71,5,'dccv']
+, [72,5,72,94,'dccv']
+, [75,4,75,54,'dccv']
+, [76,3,76,4,'dccv']
+, [83,3,83,4,'dccv']
+, [84,4,84,37,'dccv']
+, [85,4,85,5,'dccv']
+, [86,5,86,87,'dccv']
+, [89,4,89,54,'dccv']
+, [90,3,90,4,'dccv']
+, [99,3,99,4,'dccv']
+, [100,4,100,39,'dccv']
+, [101,4,101,5,'dccv']
+, [102,5,102,88,'dccv']
+, [105,4,105,115,'dccv']
+, [106,3,106,4,'dccv']
+, [109,3,109,4,'dccv']
+, [110,4,110,54,'dccv']
+, [111,4,111,53,'dccv']
+, [113,4,113,97,'dccv']
+, [114,4,114,39,'dccv']
+, [115,4,115,5,'dccv']
+, [116,5,116,23,'dccv']
+, [119,4,119,102,'dccv']
+, [121,4,121,75,'dccv']
+, [122,4,122,5,'dccv']
+, [123,5,123,80,'dccv']
+, [124,4,124,5,'dccv']
+, [126,4,126,21,'dccv']
+, [127,4,127,5,'dccv']
+, [128,5,128,73,'dccv']
+, [129,4,129,5,'dccv']
+, [131,4,131,22,'dccv']
+, [132,3,132,4,'dccv']
+, [135,3,135,4,'dccv']
+, [136,4,137,98,'dccv']
+, [139,4,139,48,'dccv']
+, [141,4,141,73,'dccv']
+, [141,106,141,108,'dccv']
+, [142,4,142,40,'dccv']
+, [142,41,142,59,'dccv']
+, [144,4,144,24,'dccv']
+, [145,4,145,5,'dccv']
+, [146,5,146,48,'dccv']
+, [146,82,146,94,'dccv']
+, [148,5,148,40,'dccv']
+, [149,5,149,69,'dccv']
+, [151,5,151,52,'dccv']
+, [152,5,152,6,'dccv']
+, [153,6,153,75,'dccv']
+, [154,5,154,6,'dccv']
+, [156,5,156,12,'dccv']
+, [156,42,156,60,'dccv']
+, [156,39,156,41,'dccv']
+, [164,4,164,5,'dccv']
+, [166,4,166,5,'dccv']
+, [167,5,167,62,'dccv']
+, [168,4,168,5,'dccv']
+, [170,4,170,21,'dccv']
+, [171,4,171,5,'dccv']
+, [172,5,172,39,'dccv']
+, [173,5,173,6,'dccv']
+, [174,6,174,74,'dccv']
+, [175,6,175,70,'dccv']
+, [176,5,176,6,'dccv']
+, [178,5,178,6,'dccv']
+, [179,6,179,72,'dccv']
+, [180,5,180,6,'dccv']
+, [181,4,181,5,'dccv']
+, [183,4,183,22,'dccv']
+, [184,3,184,4,'dccv']
+, [187,3,187,4,'dccv']
+, [188,4,189,108,'dccv']
+, [190,3,190,4,'dccv']
+, [141,73,141,106,'dccv']
+, [146,48,146,82,'dccv']
+, [156,14,156,38,'dcuc']
+, [157,5,157,6,'dcuc']
+, [158,6,158,63,'dcuc']
+, [159,6,159,48,'dcuc']
+, [160,6,160,7,'dcuc']
+, [161,7,161,71,'dcuc']
+, [162,6,162,7,'dcuc']
+, [163,5,163,6,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src31" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System;
+using System.Linq;
+using System.Text;
+
+using HBase.Stargate.Client.Properties;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Provides a basic implementation of &lt;see cref=&quot;IResourceBuilder&quot; /&gt;.
+	/// &lt;/summary&gt;
+	public class ResourceBuilder : IResourceBuilder
+	{
+		private readonly IStargateOptions _options;
+		private const string _wildCard = &quot;*&quot;;
+		private const string _appendSegmentFormat = &quot;/{0}&quot;;
+		private const string _appendQualifierFormat = &quot;:{0}&quot;;
+		private const string _appendRangeFormat = &quot;,{0}&quot;;
+
+		/// &lt;summary&gt;
+		/// Initializes a new instance of the &lt;see cref=&quot;ResourceBuilder&quot;/&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;options&quot;&gt;The HBase Stargate options.&lt;/param&gt;
+		public ResourceBuilder(IStargateOptions options)
+		{
+			_options = options;
+		}
+
+		/// &lt;summary&gt;
+		///    Builds a cell or row query URI.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;query&quot;&gt;&lt;/param&gt;
+		public string BuildCellOrRowQuery(CellQuery query)
+		{
+			if (!query.CanDescribeTable())
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForCellOrRowQueryNotMet);
+			}
+
+			return BuildFromCellQuery(query).ToString();
+		}
+
+		/// &lt;summary&gt;
+		///    Builds a single value storage URI.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public string BuildSingleValueAccess(Identifier identifier)
+		{
+			if (!identifier.CanDescribeCell())
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForSingleValueAccessNotMet);
+			}
+
+			return BuildFromIdentifier(identifier).ToString();
+		}
+
+		/// &lt;summary&gt;
+		///    Builds a delete-item URI.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public string BuildDeleteItem(Identifier identifier)
+		{
+			if (!identifier.CanDescribeRow())
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForDeleteItemNotMet);
+			}
+
+			return BuildFromIdentifier(identifier).ToString();
+		}
+
+		/// &lt;summary&gt;
+		/// Builds a batch insert URI.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		/// &lt;returns&gt;&lt;/returns&gt;
+		/// &lt;exception cref=&quot;System.NotImplementedException&quot;&gt;&lt;/exception&gt;
+		public string BuildBatchInsert(Identifier identifier)
+		{
+			if (!identifier.CanDescribeTable())
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForBatchInsertNotMet);
+			}
+
+			return new StringBuilder(identifier.Table).AppendFormat(_appendSegmentFormat, _options.FalseRowKey).ToString();
+		}
+
+		private static StringBuilder BuildFromIdentifier(Identifier identifier)
+		{
+			bool hasTimestamp = identifier.Timestamp.HasValue;
+			var uriBuilder = BuildFromDescriptor(identifier);
+
+			bool columnMissing = identifier.Cell == null || string.IsNullOrEmpty(identifier.Cell.Column);
+			if (columnMissing &amp;&amp; !hasTimestamp)
+			{
+				return uriBuilder;
+			}
+
+			uriBuilder.AppendFormat(_appendSegmentFormat, columnMissing ? _wildCard : identifier.Cell.Column);
+
+			if (!columnMissing &amp;&amp; !string.IsNullOrEmpty(identifier.Cell.Qualifier))
+			{
+				uriBuilder.AppendFormat(_appendQualifierFormat, identifier.Cell.Qualifier);
+			}
+
+			if (hasTimestamp)
+			{
+				uriBuilder.AppendFormat(_appendSegmentFormat, identifier.Timestamp);
+			}
+
+			return uriBuilder;
+		}
+
+		private static StringBuilder BuildFromCellQuery(CellQuery query)
+		{
+			bool hasTimestamp = query.EndTimestamp.HasValue
+				&amp;&amp; (!query.BeginTimestamp.HasValue || query.BeginTimestamp.Value &lt; query.EndTimestamp.Value);
+
+			var uriBuilder = BuildFromDescriptor(query);
+
+			bool columnsMissing = query.Cells == null || query.Cells.All(cell =&gt; string.IsNullOrEmpty(cell.Column));
+			if (columnsMissing &amp;&amp; !hasTimestamp) return uriBuilder;
+
+			if (!columnsMissing)
+			{
+				var validCells = query.Cells.Where(cell =&gt; !string.IsNullOrEmpty(cell.Column)).ToArray();
+
+				var firstCell = validCells.First();
+				uriBuilder.AppendFormat(_appendSegmentFormat, firstCell.Column);
+
+				if (!string.IsNullOrEmpty(firstCell.Qualifier))
+				{
+					uriBuilder.AppendFormat(_appendQualifierFormat, firstCell.Qualifier);
+				}
+
+				foreach (HBaseCellDescriptor cell in validCells.Skip(1))
+				{
+					uriBuilder.AppendFormat(_appendRangeFormat, cell.Column);
+					if (!string.IsNullOrEmpty(cell.Qualifier))
+					{
+						uriBuilder.AppendFormat(_appendQualifierFormat, cell.Qualifier);
+					}
+				}
+			}
+			else
+			{
+				uriBuilder.AppendFormat(_appendSegmentFormat, _wildCard);
+			}
+
+			if (hasTimestamp)
+			{
+				if (query.BeginTimestamp.HasValue)
+				{
+					uriBuilder.AppendFormat(_appendSegmentFormat, query.BeginTimestamp);
+					uriBuilder.AppendFormat(_appendRangeFormat, query.EndTimestamp);
+				}
+				else
+				{
+					uriBuilder.AppendFormat(_appendSegmentFormat, query.EndTimestamp);
+				}
+			}
+
+			return uriBuilder;
+		}
+
+		private static StringBuilder BuildFromDescriptor(HBaseDescriptor identifier)
+		{
+			return new StringBuilder(identifier.Table)
+				.AppendFormat(_appendSegmentFormat, string.IsNullOrEmpty(identifier.Row) ? _wildCard : identifier.Row);
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src31', RANGES_31)
+		</script>
+	</body>
+</html>

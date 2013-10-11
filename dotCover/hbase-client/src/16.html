@@ -1,0 +1,190 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_16 = [
+   [43,3,43,90,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,45,19,'dccv']
+, [46,4,46,17,'dccv']
+, [47,4,47,27,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,79,'dccv']
+, [55,4,56,52,'dccv']
+, [56,103,56,105,'dccv']
+, [58,4,58,66,'dccv']
+, [60,4,61,20,'dccv']
+, [61,59,61,61,'dccv']
+, [63,4,64,20,'dccv']
+, [64,37,64,39,'dccv']
+, [66,4,66,83,'dccv']
+, [68,4,68,58,'dccv']
+, [69,4,69,69,'dccv']
+, [70,4,70,59,'dccv']
+, [72,4,72,45,'dccv']
+, [73,3,73,4,'dccv']
+, [77,3,77,4,'dccv']
+, [78,4,78,53,'dccv']
+, [79,3,79,4,'dccv']
+, [83,3,83,4,'dccv']
+, [84,4,84,55,'dccv']
+, [85,3,85,4,'dccv']
+, [89,3,89,4,'dccv']
+, [90,4,100,6,'dccv']
+, [101,3,101,4,'dccv']
+, [105,3,105,4,'dccv']
+, [106,4,115,6,'dccv']
+, [116,3,116,4,'dccv']
+, [120,3,120,4,'dccv']
+, [121,4,135,6,'dccv']
+, [136,3,136,4,'dccv']
+, [56,52,56,103,'dccv']
+, [61,20,61,59,'dccv']
+, [64,20,64,37,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src16" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.MimeConversion;
+
+using Moq;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+using RestSharp.Injection;
+
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class ClientInteraction
+	{
+		private readonly IMoqContainer _container;
+		private readonly HBaseContext _hBase;
+		private readonly RestContext _rest;
+
+		public ClientInteraction(HBaseContext hBase, RestContext rest, IMoqContainer container)
+		{
+			_hBase = hBase;
+			_rest = rest;
+			_container = container;
+		}
+
+		[Given(@&quot;I have everything I need to test a disconnected HBase client, with the following options:&quot;)]
+		public void SetupClient(Table options)
+		{
+			Mock&lt;IRestSharpFactory&gt; factoryMock = _container.Mock&lt;IRestSharpFactory&gt;();
+
+			factoryMock.Setup(factory =&gt; factory.CreateRequest(It.IsAny&lt;string&gt;(), It.IsAny&lt;Method&gt;()))
+				.Returns&lt;string, Method&gt;((resource, method) =&gt; (_rest.Request = new RestRequest(resource, method)));
+
+			Mock&lt;IRestClient&gt; clientMock = _container.Mock&lt;IRestClient&gt;();
+
+			clientMock.Setup(client =&gt; client.Execute(It.IsAny&lt;IRestRequest&gt;()))
+				.Returns(() =&gt; _container.Mock&lt;IRestResponse&gt;().Object);
+
+			factoryMock.Setup(factory =&gt; factory.CreateClient(It.IsAny&lt;string&gt;()))
+				.Returns(() =&gt; clientMock.Object);
+
+			_container.Update&lt;IStargateOptions&gt;(options.CreateInstance&lt;StargateOptions&gt;());
+
+			_container.Update&lt;IMimeConverter, XmlMimeConverter&gt;();
+			_container.Update&lt;IMimeConverterFactory, MimeConverterFactory&gt;();
+			_container.Update&lt;IResourceBuilder, ResourceBuilder&gt;();
+
+			_container.Update&lt;IStargate, Stargate&gt;();
+		}
+
+		[Given(@&quot;I have an HBase client&quot;)]
+		public void CreateClient()
+		{
+			_hBase.Stargate = _container.Create&lt;IStargate&gt;();
+		}
+
+		[Given(@&quot;I have an identifier consisting of a ([^,]*)&quot;)]
+		public void SetIdentifier(string table)
+		{
+			_hBase.Identifier = new Identifier {Table = table};
+		}
+
+		[Given(@&quot;I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)&quot;)]
+		public void SetIdentifier(string table, string row, string column, string qualifier, string timestamp)
+		{
+			_hBase.Identifier = new Identifier
+			{
+				Table = table,
+				Row = row,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
+				Timestamp = timestamp.ToNullableLong()
+			};
+		}
+
+		[Given(@&quot;I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)&quot;)]
+		public void SetIdentifier(string table, string row, string column, string qualifier)
+		{
+			_hBase.Identifier = new Identifier
+			{
+				Table = table,
+				Row = row,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				}
+			};
+		}
+
+		[Given(@&quot;I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, and a (.*) timestamp&quot;)]
+		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp)
+		{
+			_hBase.Query = new CellQuery
+			{
+				Table = table,
+				Row = row,
+				Cells = new[]
+				{
+					new HBaseCellDescriptor
+					{
+						Column = column,
+						Qualifier = qualifier
+					}
+				},
+				BeginTimestamp = beginTimestamp.ToNullableLong(),
+				EndTimestamp = endTimestamp.ToNullableLong()
+			};
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src16', RANGES_16)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,105 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_4 = [
+   [7,2,7,151,'dccv']
+, [9,1,9,34,'dccv']
+, [6,1,6,26,'dccv']
+, [10,2,10,191,'dccv']
+, [11,2,11,116,'dccv']
+, [12,2,12,192,'dccv']
+, [20,1,20,34,'dccv']
+, [6,1,6,26,'dccv']
+, [21,2,21,173,'dccv']
+, [22,2,22,118,'dccv']
+, [23,2,23,190,'dccv']
+, [31,1,31,34,'dccv']
+, [6,1,6,26,'dccv']
+, [32,2,32,115,'dccv']
+, [33,2,33,115,'dccv']
+, [36,2,36,115,'dccv']
+, [39,2,39,115,'dccv']
+, [42,2,42,115,'dccv']
+, [45,2,45,124,'dccv']
+, [46,2,47,105,'dccv']
+, [48,1,48,34,'dccv']
+, [6,1,6,26,'dccv']
+, [49,2,49,166,'dccv']
+, [50,2,50,126,'dccv']
+, [51,2,51,113,'dccv']
+, [52,2,52,119,'dccv']
+, [55,2,55,119,'dccv']
+, [58,2,58,119,'dccv']
+, [61,2,61,119,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src4" class="dotCoverSource"><pre>Feature: HBase Protocol Buffers (protobuf)
+	In order to work with HBase content in the protobuf format
+	As an application developer
+	I want to be able to create and parse HBase protobuf content using basic information
+
+Background: 
+	Given I have everything I need to test a content converter for protobuf
+
+Scenario Outline: Create protobuf for single cell
+	Given I have a cell with a &lt;row&gt;, &lt;column&gt;, &lt;qualifier&gt;, &lt;timestamp&gt;, and &lt;value&gt;
+	When I convert my cell to raw content
+	Then my raw protobuf content should be equivalent to the resource called &quot;&lt;expected protobuf&gt;&quot;
+Examples:
+	| row | column | qualifier | timestamp | value       | expected protobuf                 |
+	| 1   | alpha  |           |           | hello world | HBaseProtobuf_1Alpha_HelloWorld   |
+	| 1   | alpha  | x         |           | hello world | HBaseProtobuf_1AlphaX_HelloWorld  |
+	| 1   | alpha  |           | 4         | hello world | HBaseProtobuf_1Alpha4_HelloWorld  |
+	| 1   | alpha  | x         | 4         | hello world | HBaseProtobuf_1AlphaX4_HelloWorld |
+
+Scenario Outline: Parse protobuf for single cell
+	Given I have raw content equal to the resource called &quot;&lt;initial protobuf&gt;&quot;
+	When I convert my raw content to a cell
+	Then my cell should have a &lt;row&gt;, &lt;column&gt;, &lt;qualifier&gt;, &lt;timestamp&gt;, and &lt;value&gt;
+Examples:
+	| initial protobuf                  | row | column | qualifier | timestamp | value       |
+	| HBaseProtobuf_1Alpha_HelloWorld   | 1   | alpha  |           |           | hello world |
+	| HBaseProtobuf_1AlphaX_HelloWorld  | 1   | alpha  | x         |           | hello world |
+	| HBaseProtobuf_1Alpha4_HelloWorld  | 1   | alpha  |           | 4         | hello world |
+	| HBaseProtobuf_1AlphaX4_HelloWorld | 1   | alpha  | x         | 4         | hello world |
+
+Scenario: Create protobuf for a set of cells
+	Given I have created a set of cells
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  |           |           | hello world |
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  | x         |           | hello world |
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  |           | 4         | hello world |
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  | x         | 4         | hello world |
+	When I convert my set of cells to raw content
+	Then my raw protobuf content should be equivalent to the resource called &quot;HBaseProtobuf_Set_HelloWorld&quot;
+
+Scenario: Parse protobuf for a set of cells
+	Given I have raw content equal to the resource called &quot;HBaseProtobuf_Set_HelloWorld&quot;
+	When I convert my raw content to a set of cells
+	Then my set should contain 4 cells
+	And one of the cells in my set should have the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  |           |           | hello world |
+	And one of the cells in my set should have the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  | x         |           | hello world |
+	And one of the cells in my set should have the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  |           | 4         | hello world |
+	And one of the cells in my set should have the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  | x         | 4         | hello world |</pre></code><script type="text/javascript">
+			applyranges('src4', RANGES_4)
+		</script>
+	</body>
+</html>

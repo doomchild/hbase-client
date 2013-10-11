@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_15 = [
+   [33,3,33,44,'dcuc']
+, [34,3,34,4,'dcuc']
+, [35,4,35,19,'dcuc']
+, [36,3,36,4,'dcuc']
+, [40,3,40,4,'dcuc']
+, [41,4,41,38,'dcuc']
+, [42,3,42,4,'dcuc']
+, [46,3,46,4,'dcuc']
+, [47,4,47,38,'dcuc']
+, [48,3,48,4,'dcuc']
+, [52,3,52,4,'dcuc']
+, [53,4,53,38,'dcuc']
+, [54,3,54,4,'dcuc']
+, [58,3,58,4,'dcuc']
+, [59,4,59,38,'dcuc']
+, [60,3,60,4,'dcuc']
+, [64,3,64,4,'dcuc']
+, [65,4,65,38,'dcuc']
+, [66,3,66,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src15" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class Administration
+	{
+		private readonly HBaseContext _hBase;
+
+		public Administration(HBaseContext hBase)
+		{
+			_hBase = hBase;
+		}
+
+		[Given(@&quot;I have added a column called &quot;&quot;(.*)&quot;&quot; to my table&quot;)]
+		public void AddColumn(string columnName)
+		{
+			ScenarioContext.Current.Pending();
+		}
+
+		[When(@&quot;I create the table&quot;)]
+		public void CreateTable()
+		{
+			ScenarioContext.Current.Pending();
+		}
+
+		[When(@&quot;I create the scanner&quot;)]
+		public void CreateScanner()
+		{
+			ScenarioContext.Current.Pending();
+		}
+
+		[When(@&quot;I delete the scanner&quot;)]
+		public void DeleteScanner(string scannerId)
+		{
+			ScenarioContext.Current.Pending();
+		}
+
+		[When(@&quot;I delete the table&quot;)]
+		public void DeleteTable()
+		{
+			ScenarioContext.Current.Pending();
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src15', RANGES_15)
+		</script>
+	</body>
+</html>

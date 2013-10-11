@@ -1,0 +1,355 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_32 = [
+   [62,3,62,177,'dccv']
+, [63,3,63,4,'dccv']
+, [64,4,64,39,'dccv']
+, [65,4,65,27,'dccv']
+, [66,4,66,35,'dccv']
+, [67,4,67,57,'dccv']
+, [68,4,68,71,'dccv']
+, [69,4,69,22,'dccv']
+, [70,3,70,4,'dccv']
+, [100,3,100,4,'dccv']
+, [101,4,101,46,'dccv']
+, [102,3,102,4,'dccv']
+, [122,3,122,4,'dccv']
+, [123,4,123,34,'dccv']
+, [124,3,124,4,'dccv']
+, [142,3,142,4,'dccv']
+, [143,4,143,39,'dccv']
+, [144,3,144,4,'dccv']
+, [169,3,169,4,'dccv']
+, [170,4,170,45,'dccv']
+, [171,3,171,4,'dccv']
+, [194,3,194,4,'dccv']
+, [195,4,195,40,'dccv']
+, [196,3,196,4,'dccv']
+, [244,3,244,4,'dccv']
+, [245,4,246,4,'dccv']
+, [255,37,256,7,'dccv']
+, [257,3,257,4,'dccv']
+, [86,3,86,4,'dccv']
+, [87,4,87,45,'dccv']
+, [88,4,88,74,'dccv']
+, [89,4,89,69,'dccv']
+, [90,4,90,105,'dccv']
+, [91,4,91,70,'dccv']
+, [92,3,92,4,'dccv']
+, [109,3,109,4,'dccv']
+, [110,4,110,45,'dccv']
+, [111,4,111,63,'dccv']
+, [112,4,112,73,'dccv']
+, [113,4,113,123,'dccv']
+, [114,4,114,70,'dccv']
+, [115,3,115,4,'dccv']
+, [131,3,131,4,'dccv']
+, [132,4,132,67,'dccv']
+, [133,4,133,93,'dccv']
+, [134,4,134,70,'dccv']
+, [135,3,135,4,'dccv']
+, [151,3,151,4,'dccv']
+, [152,4,154,59,'dccv']
+, [156,4,156,97,'dccv']
+, [157,4,157,95,'dccv']
+, [159,4,160,21,'dccv']
+, [160,31,161,23,'dccv']
+, [162,3,162,4,'dccv']
+, [178,3,178,4,'dccv']
+, [179,4,179,66,'dccv']
+, [180,4,180,90,'dccv']
+, [181,4,181,95,'dccv']
+, [183,4,186,6,'dccv']
+, [187,3,187,4,'dccv']
+, [246,4,246,5,'dccv']
+, [247,5,248,57,'dccv']
+, [250,5,250,78,'dccv']
+, [251,5,251,6,'dccv']
+, [252,6,252,76,'dccv']
+, [253,5,253,6,'dccv']
+, [255,5,255,37,'dccv']
+, [205,3,205,4,'dcuc']
+, [206,4,206,117,'dcuc']
+, [207,3,207,4,'dcuc']
+, [214,3,214,4,'dcuc']
+, [215,4,215,55,'dcuc']
+, [216,4,216,48,'dcuc']
+, [216,124,216,126,'dcuc']
+, [217,4,220,7,'dcuc']
+, [221,4,221,37,'dcuc']
+, [223,4,225,27,'dcuc']
+, [227,4,229,27,'dcuc']
+, [231,4,231,85,'dcuc']
+, [232,3,232,4,'dcuc']
+, [160,21,160,31,'dcuc']
+, [216,48,216,67,'dcuc']
+, [216,91,216,124,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src32" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+
+using HBase.Stargate.Client.MimeConversion;
+
+using RestSharp;
+using RestSharp.Injection;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Provides a default implementation &lt;see cref=&quot;IStargate&quot; /&gt;.
+	/// &lt;/summary&gt;
+	public class Stargate : IStargate
+	{
+		/// &lt;summary&gt;
+		///    The default false row key
+		/// &lt;/summary&gt;
+		public const string DefaultFalseRowKey = &quot;row&quot;;
+
+		/// &lt;summary&gt;
+		///    The default content type
+		/// &lt;/summary&gt;
+		public const string DefaultContentType = HBaseMimeTypes.Xml;
+
+		private readonly IRestClient _client;
+		private readonly IMimeConverter _converter;
+		private readonly IResourceBuilder _resourceBuilder;
+		private readonly IRestSharpFactory _restSharp;
+		private readonly IErrorProvider _errorProvider;
+
+		/// &lt;summary&gt;
+		/// Initializes a new instance of the &lt;see cref=&quot;Stargate&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+		/// &lt;param name=&quot;resourceBuilder&quot;&gt;The resource builder.&lt;/param&gt;
+		/// &lt;param name=&quot;restSharp&quot;&gt;The RestSharp factory.&lt;/param&gt;
+		/// &lt;param name=&quot;converterFactory&quot;&gt;The converter factory.&lt;/param&gt;
+		/// &lt;param name=&quot;errorProvider&quot;&gt;The error provider.&lt;/param&gt;
+		public Stargate(IStargateOptions options, IResourceBuilder resourceBuilder, IRestSharpFactory restSharp, IMimeConverterFactory converterFactory, IErrorProvider errorProvider)
+		{
+			_resourceBuilder = resourceBuilder;
+			_restSharp = restSharp;
+			_errorProvider = errorProvider;
+			_client = _restSharp.CreateClient(options.ServerUrl);
+			_converter = converterFactory.CreateConverter(options.ContentType);
+			Options = options;
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the options.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The options.
+		/// &lt;/value&gt;
+		protected virtual IStargateOptions Options { get; private set; }
+
+		/// &lt;summary&gt;
+		///    Writes the value to HBase using the identifier.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
+		public virtual async Task WriteValueAsync(Identifier identifier, string value)
+		{
+			string contentType = Options.ContentType;
+			string resource = _resourceBuilder.BuildSingleValueAccess(identifier);
+			string content = _converter.Convert(new Cell(identifier, value));
+			IRestResponse response = await SendRequest(Method.POST, resource, contentType, contentType, content);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
+		}
+
+		/// &lt;summary&gt;
+		///    Writes the value to HBase using the identifier.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
+		public void WriteValue(Identifier identifier, string value)
+		{
+			WriteValueAsync(identifier, value).Wait();
+		}
+
+		/// &lt;summary&gt;
+		///    Writes the cells to HBase.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;cells&quot;&gt;The cells.&lt;/param&gt;
+		public async Task WriteCellsAsync(CellSet cells)
+		{
+			string contentType = Options.ContentType;
+			var tableIdentifier = new Identifier {Table = cells.Table};
+			string resource = _resourceBuilder.BuildBatchInsert(tableIdentifier);
+			IRestResponse response = await SendRequest(Method.POST, resource, contentType, contentType, _converter.Convert(cells));
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
+		}
+
+		/// &lt;summary&gt;
+		///    Writes the cells to HBase.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;cells&quot;&gt;The cells.&lt;/param&gt;
+		public void WriteCells(CellSet cells)
+		{
+			WriteCellsAsync(cells).Wait();
+		}
+
+		/// &lt;summary&gt;
+		///    Deletes the item with the matching identifier from HBase.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public async Task DeleteItemAsync(Identifier identifier)
+		{
+			string resource = _resourceBuilder.BuildDeleteItem(identifier);
+			IRestResponse response = await SendRequest(Method.DELETE, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
+		}
+
+		/// &lt;summary&gt;
+		///    Deletes the item with the matching identifier from HBase.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public void DeleteItem(Identifier identifier)
+		{
+			DeleteItemAsync(identifier).Wait();
+		}
+
+		/// &lt;summary&gt;
+		///    Reads the value with the matching identifier.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public async Task&lt;string&gt; ReadValueAsync(Identifier identifier)
+		{
+			string hbaseIdentifier = identifier.Timestamp.HasValue
+				? _resourceBuilder.BuildCellOrRowQuery(identifier.ToQuery())
+				: _resourceBuilder.BuildSingleValueAccess(identifier);
+
+			IRestResponse response = await SendRequest(Method.GET, hbaseIdentifier, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
+
+			return _converter.Convert(response.Content)
+				.Select(cell =&gt; cell.Value)
+				.FirstOrDefault();
+		}
+
+		/// &lt;summary&gt;
+		///    Reads the value with the matching identifier.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public string ReadValue(Identifier identifier)
+		{
+			return ReadValueAsync(identifier).Result;
+		}
+
+		/// &lt;summary&gt;
+		///    Finds the cells matching the query.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;query&quot;&gt;&lt;/param&gt;
+		public async Task&lt;CellSet&gt; FindCellsAsync(CellQuery query)
+		{
+			string resource = _resourceBuilder.BuildCellOrRowQuery(query);
+			IRestResponse response = await SendRequest(Method.GET, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
+
+			return new CellSet(_converter.Convert(response.Content))
+			{
+				Table = query.Table
+			};
+		}
+
+		/// &lt;summary&gt;
+		///    Finds the cells matching the query.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;query&quot;&gt;&lt;/param&gt;
+		public CellSet FindCells(CellQuery query)
+		{
+			return FindCellsAsync(query).Result;
+		}
+
+		/// &lt;summary&gt;
+		///    Creates a new stargate with the specified options.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;serverUrl&quot;&gt;The server URL.&lt;/param&gt;
+		/// &lt;param name=&quot;contentType&quot;&gt;Type of the content.&lt;/param&gt;
+		/// &lt;param name=&quot;falseRowKey&quot;&gt;The false row key.&lt;/param&gt;
+		public static IStargate Create(string serverUrl, string contentType = DefaultContentType, string falseRowKey = DefaultFalseRowKey)
+		{
+			return Create(new StargateOptions {ServerUrl = serverUrl, ContentType = contentType, FalseRowKey = falseRowKey});
+		}
+
+		/// &lt;summary&gt;
+		///    Creates a new stargate with the specified options.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+		public static IStargate Create(IStargateOptions options)
+		{
+			var resourceBuilder = new ResourceBuilder(options);
+			var restSharp = new RestSharpFactory(url =&gt; new RestClient(url), (resource, method) =&gt; new RestRequest(resource, method));
+			var mimeConverters = new MimeConverterFactory(new[]
+			{
+				new XmlMimeConverter()
+			});
+			var errors = new ErrorProvider();
+
+			options.ContentType = string.IsNullOrEmpty(options.ContentType)
+				? DefaultContentType
+				: options.ContentType;
+
+			options.FalseRowKey = string.IsNullOrEmpty(options.FalseRowKey)
+				? DefaultFalseRowKey
+				: options.FalseRowKey;
+
+			return new Stargate(options, resourceBuilder, restSharp, mimeConverters, errors);
+		}
+
+		/// &lt;summary&gt;
+		///    Sends the request.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;method&quot;&gt;The method.&lt;/param&gt;
+		/// &lt;param name=&quot;resource&quot;&gt;The resource.&lt;/param&gt;
+		/// &lt;param name=&quot;acceptType&quot;&gt;Type of the accept.&lt;/param&gt;
+		/// &lt;param name=&quot;contentType&quot;&gt;Type of the content.&lt;/param&gt;
+		/// &lt;param name=&quot;content&quot;&gt;The content.&lt;/param&gt;
+		protected virtual Task&lt;IRestResponse&gt; SendRequest(Method method, string resource, string acceptType,
+			string contentType = null, string content = null)
+		{
+			return Task.Run(() =&gt;
+			{
+				IRestRequest request = _restSharp.CreateRequest(resource, method)
+					.AddHeader(RestConstants.AcceptHeader, acceptType);
+
+				if (!string.IsNullOrEmpty(content) &amp;&amp; !string.IsNullOrEmpty(contentType))
+				{
+					request.AddParameter(contentType, content, ParameterType.RequestBody);
+				}
+
+				return _client.Execute(request);
+			});
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src32', RANGES_32)
+		</script>
+	</body>
+</html>

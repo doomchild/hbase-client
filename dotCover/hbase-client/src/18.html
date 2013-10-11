@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_18 = [
+   [34,3,34,71,'dccv']
+, [35,3,35,4,'dccv']
+, [36,4,36,21,'dccv']
+, [37,4,37,27,'dccv']
+, [38,3,38,4,'dccv']
+, [42,3,42,4,'dccv']
+, [43,4,43,39,'dccv']
+, [43,40,43,80,'dccv']
+, [44,9,44,52,'dccv']
+, [45,3,45,4,'dccv']
+, [49,3,49,4,'dccv']
+, [50,4,50,59,'dccv']
+, [50,60,50,67,'dccv']
+, [52,4,52,47,'dccv']
+, [53,4,53,71,'dccv']
+, [54,3,54,4,'dccv']
+, [58,3,58,4,'dccv']
+, [59,4,59,59,'dccv']
+, [59,60,59,67,'dccv']
+, [61,4,61,47,'dccv']
+, [62,4,62,97,'dccv']
+, [63,3,63,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src18" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+using System.Linq;
+
+using FluentAssertions;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class ErrorChecking
+	{
+		private readonly ErrorContext _errors;
+		private readonly ResourceContext _resources;
+
+		public ErrorChecking(ErrorContext errors, ResourceContext resources)
+		{
+			_errors = errors;
+			_resources = resources;
+		}
+
+		[Then(@&quot;the operation should( not)? have succeeded&quot;)]
+		public void CheckExceptionExists(string modifier)
+		{
+			if (string.IsNullOrEmpty(modifier)) _errors.CaughtErrors.Should().BeEmpty();
+			else _errors.CaughtErrors.Should().NotBeEmpty();
+		}
+
+		[Then(@&quot;if there was an exception, it should have been the expected (.*) type&quot;)]
+		public void CheckExceptionType(string type)
+		{
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).GetType().Name.Should().Be(type);
+		}
+
+		[Then(@&quot;if there was an exception, it should have had the expected exception (.*)&quot;)]
+		public void CheckExceptionMessage(string messageResource)
+		{
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).Message.Should().Be(_resources.GetString(messageResource));
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src18', RANGES_18)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,98 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_42 = [
+   [61,3,61,4,'dccv']
+, [62,4,62,71,'dccv']
+, [63,3,63,4,'dccv']
+, [70,3,70,4,'dccv']
+, [71,11,71,97,'dccv']
+, [72,4,72,5,'dccv']
+, [73,5,73,31,'dccv']
+, [75,3,75,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src42" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+namespace HBase.Stargate.Client.MimeConversion
+{
+	/// &lt;summary&gt;
+	///    Provides a base type for HBase MIME converters.
+	/// &lt;/summary&gt;
+	public abstract class MimeConverterBase : IMimeConverter
+	{
+		/// &lt;summary&gt;
+		/// Gets the current MIME type.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		/// The MIME type.
+		/// &lt;/value&gt;
+		public abstract string MimeType { get; }
+
+		/// &lt;summary&gt;
+		/// Converts the specified cells to text according to the current MIME type.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;cells&quot;&gt;The cells.&lt;/param&gt;
+		public abstract string Convert(IEnumerable&lt;Cell&gt; cells);
+
+		/// &lt;summary&gt;
+		/// Converts the specified cell to text according to the current MIME type.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;cell&quot;&gt;&lt;/param&gt;
+		/// &lt;returns&gt;&lt;/returns&gt;
+		public abstract string Convert(Cell cell);
+
+		/// &lt;summary&gt;
+		/// Converts the specified data to a set of cells according to the current MIME type.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;data&quot;&gt;The data.&lt;/param&gt;
+		public abstract IEnumerable&lt;Cell&gt; Convert(string data);
+
+		/// &lt;summary&gt;
+		///    Encodes the specified text.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		protected static string Encode(string text)
+		{
+			return System.Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+		}
+
+		/// &lt;summary&gt;
+		///    Decodes the specified text.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		protected static string Decode(string text)
+		{
+			using (var reader = new StreamReader(new MemoryStream(System.Convert.FromBase64String(text))))
+			{
+				return reader.ReadToEnd();
+			}
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src42', RANGES_42)
+		</script>
+	</body>
+</html>

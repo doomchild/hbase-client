@@ -1,0 +1,191 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_6 = [
+   [7,2,8,69,'dccv']
+, [10,2,10,142,'dccv']
+, [11,2,11,104,'dccv']
+, [22,1,22,34,'dccv']
+, [6,1,6,26,'dccv']
+, [23,2,23,215,'dccv']
+, [24,2,24,137,'dccv']
+, [25,2,25,187,'dccv']
+, [26,2,26,127,'dccv']
+, [27,2,27,160,'dccv']
+, [35,1,35,34,'dccv']
+, [6,1,6,26,'dccv']
+, [36,2,36,138,'dccv']
+, [37,2,37,115,'dccv']
+, [40,2,40,115,'dccv']
+, [43,2,43,115,'dccv']
+, [46,2,46,108,'dccv']
+, [47,2,47,125,'dccv']
+, [50,2,50,128,'dccv']
+, [51,2,51,129,'dccv']
+, [54,2,54,129,'dccv']
+, [57,2,57,129,'dccv']
+, [61,1,61,34,'dccv']
+, [6,1,6,26,'dccv']
+, [62,2,63,2,'dccv']
+, [63,111,63,153,'dccv']
+, [63,2,63,111,'dccv']
+, [64,2,64,187,'dccv']
+, [84,1,84,34,'dccv']
+, [6,1,6,26,'dccv']
+, [85,2,85,197,'dccv']
+, [86,2,86,125,'dccv']
+, [87,2,87,187,'dccv']
+, [123,1,123,34,'dccv']
+, [6,1,6,26,'dccv']
+, [124,2,124,211,'dccv']
+, [125,2,125,120,'dccv']
+, [126,2,126,187,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src6" class="dotCoverSource"><pre>Feature: HBase Stargate Client
+	In order to read and write HBase data
+	As an application developer
+	I want access to all available REST operations on HBase Stargate via a managed client API
+
+Background:
+	Given I have everything I need to test a disconnected HBase client, with the following options:
+		| server URL              | content type | false row key |
+		| http://test-server:9999 | text/xml     | row           |
+	And I have everything I need to test a content converter for XML
+	And I have an HBase client
+
+#Scenario: Create a table
+#	Given I have created a new table definition
+#	And I have set my table definition&#39;s name to &quot;test&quot;
+#	And I have added a column named &quot;alpha&quot; to my table definition
+#	When I create a table using my table definition
+#	Then a REST request should have been submitted with the following values:
+#		| method | url                                 | table | column |
+#		| POST   | http://test-server:9999/test/schema | test  | alpha  |
+
+Scenario Outline: Write a single value
+	Given I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;
+	When I write the value &quot;hello world&quot; using my identifier
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+	And the REST request should have contained 1 cell
+	And one of the cells in the REST request should have had the value &quot;hello world&quot;
+Examples:
+	| table | row | column | qualifier | timestamp | method | resource         |
+	| test  | 1   | alpha  |           |           | POST   | test/1/alpha     |
+	| test  | 1   | alpha  | x         |           | POST   | test/1/alpha:x   |
+	| test  | 1   | alpha  |           | 4         | POST   | test/1/alpha/4   |
+	| test  | 1   | alpha  | x         | 4         | POST   | test/1/alpha:x/4 |
+
+Scenario: Write multiple values
+	Given I have created a set of cells for the &quot;test&quot; table
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | value       |
+		| 1   | beta   | x         | hello world |
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | value       |
+		| 1   | beta   | y         | dlrow olleh |
+	And I have added a cell to my set with the following properties:
+		| row | column | qualifier | value       |
+		| 1   | beta   | z         | lorum ipsum |
+	When I write the set of cells
+	Then a REST request should have been submitted with the following values:
+		| method | resource |
+		| POST   | test/row |
+	And the REST request should have contained 3 cells
+	And one of the cells in the REST request should have had the following values:
+		| row | column | qualifier | value       |
+		| 1   | beta   | x         | hello world |
+	And one of the cells in the REST request should have had the following values:
+		| row | column | qualifier | value       |
+		| 1   | beta   | y         | dlrow olleh |
+	And one of the cells in the REST request should have had the following values:
+		| row | column | qualifier | value       |
+		| 1   | beta   | z         | lorum ipsum |
+
+Scenario Outline: Read a row
+	Given I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, and a &lt;end&gt; timestamp
+	When I read a row using my query
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+Examples:
+	| table | row | column | qualifier | begin | end | method | resource           |
+	| test  | 1   |        |           |       |     | GET    | test/1             |
+	| test  | 1   |        |           |       | 5   | GET    | test/1/*/5         |
+	| test  | 1   |        |           | 4     |     | GET    | test/1             |
+	| test  | 1   |        |           | 4     | 5   | GET    | test/1/*/4,5       |
+	| test  | 1   |        | x         |       |     | GET    | test/1             |
+	| test  | 1   |        | x         |       | 5   | GET    | test/1/*/5         |
+	| test  | 1   |        | x         | 4     |     | GET    | test/1             |
+	| test  | 1   |        | x         | 4     | 5   | GET    | test/1/*/4,5       |
+	| test  | 1   | alpha  |           |       |     | GET    | test/1/alpha       |
+	| test  | 1   | alpha  |           |       | 5   | GET    | test/1/alpha/5     |
+	| test  | 1   | alpha  |           | 4     |     | GET    | test/1/alpha       |
+	| test  | 1   | alpha  |           | 4     | 5   | GET    | test/1/alpha/4,5   |
+	| test  | 1   | alpha  | x         |       |     | GET    | test/1/alpha:x     |
+	| test  | 1   | alpha  | x         |       | 5   | GET    | test/1/alpha:x/5   |
+	| test  | 1   | alpha  | x         | 4     |     | GET    | test/1/alpha:x     |
+	| test  | 1   | alpha  | x         | 4     | 5   | GET    | test/1/alpha:x/4,5 |
+	
+Scenario Outline: Read a single value
+	Given I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, and a &lt;qualifier&gt;
+	When I read a single value using my identifier
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+Examples:
+	| table | row | column | qualifier | method | resource           |
+	| test  | 1   | alpha  |           | GET    | test/1/alpha       |
+	| test  | 1   | alpha  | x         | GET    | test/1/alpha:x     |
+
+#Scenario: Create a scanner
+#	Given I have set my context to a table called &quot;test&quot;
+#	And I have set my context to a new scanner
+#	When I create the scanner
+#	Then a REST request should have been submitted with the following values:
+#		| method | resource     |
+#		| POST   | test/scanner |
+#
+#Scenario: Read a result from a scanner
+#	Given I have set my context to a table called &quot;test&quot;
+#	And I have set my context to a new scanner
+#	When I read a result from the scanner
+#	Then a REST request should have been submitted with the following values:
+#		| method | resource            |
+#		| GET    | test/scanner/abc123 |
+#
+#Scenario: Delete a scanner
+#	Given I have set my context to a table called &quot;test&quot;
+#	And I have set my context to a new scanner
+#	When I delete the scanner
+#	Then a REST request should have been submitted with the following values:
+#		| method | resource            |
+#		| DELETE | test/scanner/abc123 |
+
+#Scenario: Enumerate all tables
+#	When I read the names of all tables
+#	Then a REST request should have been submitted with the following values:
+#		| method | resource |
+#		| GET    |          |
+
+Scenario Outline: Delete a row, columm, or cell
+	And I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;
+	When I delete an item using my identifier
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+Examples:
+	| table | row | column | qualifier | timestamp | method | resource         |
+	| test  | 1   |        |           |           | DELETE | test/1           |
+	| test  | 1   | alpha  |           |           | DELETE | test/1/alpha     |
+	| test  | 1   | alpha  | x         |           | DELETE | test/1/alpha:x   |
+	| test  | 1   | alpha  |           | 4         | DELETE | test/1/alpha/4   |
+	| test  | 1   | alpha  | x         | 4         | DELETE | test/1/alpha:x/4 |
+
+#Scenario: Delete a table
+#	Given I have set my context to a table called &quot;test&quot;
+#	When I delete the table
+#	Then a REST request should have been submitted with the following values:
+#		| method | url                                 |
+#		| DELETE | http://test-server:9999/test/schema |</pre></code><script type="text/javascript">
+			applyranges('src6', RANGES_6)
+		</script>
+	</body>
+</html>
