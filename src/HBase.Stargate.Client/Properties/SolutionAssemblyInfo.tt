@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("<#= Settings.Company #>")]
 [assembly: AssemblyProduct("<#= Settings.Product #>")]
-[assembly: AssemblyCopyright("Copyright © <#= Settings.Company #> <#= DateTime.Now.Year #>")]
+[assembly: AssemblyCopyright("Copyright © <#= DateTime.Now.Year #> <#= Settings.Company #>")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("<#= version #>")]
 <# if(buildLevel != BuildLevels.None){ #>
