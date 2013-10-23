@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,10 +17,15 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+
+using HBase.Stargate.Client.Models;
 
 namespace HBase.Stargate.Client.MimeConversion
 {
@@ -35,8 +42,35 @@ namespace HBase.Stargate.Client.MimeConversion
 		private const string _qualifierName = "qualifier";
 		private const string _timestampName = "timestamp";
 		private const string _cellName = "Cell";
+		private const string _tableSchemaName = "TableSchema";
+		private const string _nameName = "name";
+		private const string _isMetaName = "IS_META";
+		private const string _isRootName = "IS_ROOT";
+		private const string _columnSchemaName = "ColumnSchema";
+		private const string _blockSizeName = "BLOCKSIZE";
+		private const string _bloomFilterName = "BLOOMFILTER";
+		private const string _blockCacheName = "BLOCKCACHE";
+		private const string _compressionName = "COMPRESSION";
+		private const string _versionsName = "VERSIONS";
+		private const string _ttlName = "TTL";
+		private const string _inMemoryName = "IN_MEMORY";
 		private const string _columnParserFormat = "(?<{0}>[^:]+):(?<{1}>.+)?";
+		private const string _keepDeletedCellsName = "KEEP_DELETED_CELLS";
+		private const string _minVersionsName = "MIN_VERSIONS";
+		private const string _dataBlockEncodingName = "DATA_BLOCK_ENCODING";
+		private const string _replicationScopeName = "REPLICATION_SCOPE";
+		private const string _encodeOnDiskName = "ENCODE_ON_DISK";
 		private static readonly Regex _columnParser = new Regex(string.Format(_columnParserFormat, _columnName, _qualifierName));
+		private readonly ISimpleValueConverter _valueConverter;
+
+		/// <summary>
+		///    Initializes a new instance of the <see cref="XmlMimeConverter" /> class.
+		/// </summary>
+		/// <param name="valueConverter">The value converter.</param>
+		public XmlMimeConverter(ISimpleValueConverter valueConverter)
+		{
+			_valueConverter = valueConverter;
+		}
 
 		/// <summary>
 		///    Gets the current MIME type.
@@ -53,15 +87,13 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified cells to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public override string Convert(IEnumerable<Cell> cells)
+		public override string ConvertCells(IEnumerable<Cell> cells)
 		{
 			IDictionary<string, Cell[]> rows = cells
-				.GroupBy(cell => cell.Identifier.Row)
+				.GroupBy(cell => cell.Identifier != null ? cell.Identifier.Row : string.Empty)
 				.ToDictionary(group => group.Key, group => group.ToArray());
 
-			XElement xml = XmlForCellSet(rows.Keys
-				.Select(row => XmlForRow(row, rows[row]
-					.Select(cell => XmlForCell(cell.Identifier.Cell.Column, cell.Identifier.Cell.Qualifier, cell.Identifier.Timestamp, cell.Value)))));
+			XElement xml = XmlForCellSet(rows.Keys.Select(row => XmlForRow(row, rows[row].Select(XmlForCell))));
 
 			return xml.ToString();
 		}
@@ -70,13 +102,14 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified cell to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cell"></param>
-		public override string Convert(Cell cell)
+		public override string ConvertCell(Cell cell)
 		{
+			string row = cell.Identifier != null ? cell.Identifier.Row : null;
 			XElement xml = XmlForCellSet(new[]
 			{
-				XmlForRow(cell.Identifier.Row, new[]
+				XmlForRow(row, new[]
 				{
-					XmlForCell(cell.Identifier.Cell.Column, cell.Identifier.Cell.Qualifier, cell.Identifier.Timestamp, cell.Value)
+					XmlForCell(cell)
 				})
 			});
 
@@ -84,31 +117,130 @@ namespace HBase.Stargate.Client.MimeConversion
 		}
 
 		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
+		///    Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public override IEnumerable<Cell> Convert(string data)
+		public override IEnumerable<Cell> ConvertCells(string data)
 		{
-			if (string.IsNullOrEmpty(data)) return new CellSet(Enumerable.Empty<Cell>());
+			return string.IsNullOrEmpty(data)
+				? Enumerable.Empty<Cell>()
+				: XElement.Parse(data).Elements(_rowName)
+					.SelectMany(row => row.Elements(_cellName))
+					.Select(CellForXml);
+		}
 
-			return XElement.Parse(data).Elements(_rowName)
-				.SelectMany(row => row.Elements(_cellName))
-				.Select(CellForXml);
+		/// <summary>
+		///    Converts the specified data to a table schema according to the current MIME type.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		public override TableSchema ConvertSchema(string data)
+		{
+			return string.IsNullOrEmpty(data) ? null : SchemaForXml(XElement.Parse(data));
+		}
+
+		/// <summary>
+		///    Converts the specified table schema to text according to the current MIME type.
+		/// </summary>
+		/// <param name="schema">The schema.</param>
+		public override string ConvertSchema(TableSchema schema)
+		{
+			var xml = new XElement(_tableSchemaName,
+				new XAttribute(_nameName, schema.Name),
+				schema.Columns.Select(XmlForColumnSchema));
+
+			AddConditionalAttribute(xml, _isMetaName, schema.IsMeta);
+			AddConditionalAttribute(xml, _isRootName, schema.IsRoot);
+
+			return xml.ToString();
+		}
+
+		private TableSchema SchemaForXml(XElement xml)
+		{
+			var schema = new TableSchema
+			{
+				Name = xml.Attribute(_nameName).Value,
+				IsMeta = ParseAttributeValue(xml.Attribute(_isMetaName), bool.Parse),
+				IsRoot = ParseAttributeValue(xml.Attribute(_isRootName), bool.Parse)
+			};
+
+			schema.Columns.AddRange(xml.Elements(_columnSchemaName).Select(ColumnSchemaForXml));
+
+			return schema;
+		}
+
+		private XElement XmlForColumnSchema(ColumnSchema schema)
+		{
+			var xml = new XElement(_columnSchemaName, new XAttribute(_nameName, schema.Name));
+			AddConditionalAttribute(xml, _blockSizeName, schema.BlockSize);
+			AddConditionalAttribute(xml, _bloomFilterName, schema.BloomFilter, _valueConverter.ConvertBloomFilter);
+			AddConditionalAttribute(xml, _minVersionsName, schema.MinVersions);
+			AddConditionalAttribute(xml, _keepDeletedCellsName, schema.KeepDeletedCells);
+			AddConditionalAttribute(xml, _encodeOnDiskName, schema.EncodeOnDisk);
+			AddConditionalAttribute(xml, _blockCacheName, schema.BlockCache);
+			AddConditionalAttribute(xml, _compressionName, schema.Compression, _valueConverter.ConvertCompressionType);
+			AddConditionalAttribute(xml, _versionsName, schema.Versions);
+			AddConditionalAttribute(xml, _replicationScopeName, schema.ReplicationScope);
+			AddConditionalAttribute(xml, _ttlName, schema.TimeToLive);
+			AddConditionalAttribute(xml, _dataBlockEncodingName, schema.DataBlockEncoding, _valueConverter.ConvertDataBlockEncoding);
+			AddConditionalAttribute(xml, _inMemoryName, schema.InMemory);
+			return xml;
+		}
+
+		private ColumnSchema ColumnSchemaForXml(XElement xml)
+		{
+			return new ColumnSchema
+			{
+				Name = xml.Attribute(_nameName).Value,
+				BlockSize = ParseAttributeValue(xml.Attribute(_blockSizeName), int.Parse),
+				BloomFilter = ParseAttributeValue(xml.Attribute(_bloomFilterName), _valueConverter.ConvertBloomFilter),
+				MinVersions = ParseAttributeValue(xml.Attribute(_minVersionsName), int.Parse),
+				KeepDeletedCells = ParseAttributeValue(xml.Attribute(_keepDeletedCellsName), bool.Parse),
+				EncodeOnDisk = ParseAttributeValue(xml.Attribute(_encodeOnDiskName), bool.Parse),
+				BlockCache = ParseAttributeValue(xml.Attribute(_blockCacheName), bool.Parse),
+				Compression = ParseAttributeValue(xml.Attribute(_compressionName), _valueConverter.ConvertCompressionType),
+				Versions = ParseAttributeValue(xml.Attribute(_versionsName), int.Parse),
+				ReplicationScope = ParseAttributeValue(xml.Attribute(_replicationScopeName), int.Parse),
+				TimeToLive = ParseAttributeValue(xml.Attribute(_ttlName), int.Parse),
+				DataBlockEncoding = ParseAttributeValue(xml.Attribute(_dataBlockEncodingName), _valueConverter.ConvertDataBlockEncoding),
+				InMemory = ParseAttributeValue(xml.Attribute(_inMemoryName), bool.Parse)
+			};
+		}
+
+		private static TValue? ParseAttributeValue<TValue>(XAttribute attribute, Func<string, TValue> converter) where TValue : struct
+		{
+			return attribute == null ? (TValue?) null : converter(attribute.Value);
+		}
+
+		private static void AddConditionalAttribute<TValue>(XContainer xml, string name, TValue value, Func<TValue, string> valueExtractor = null)
+		{
+			if(ReferenceEquals(null, value))
+			{
+				return;
+			}
+
+			valueExtractor = valueExtractor ?? (current => ((object)current) != null ? current.ToString() : null);
+			xml.Add(new XAttribute(name, valueExtractor(value)));
 		}
 
 		private static Cell CellForXml(XElement cell)
 		{
 			XElement parent = cell.Parent;
-			if (parent == null) return null;
+			if (parent == null)
+			{
+				return null;
+			}
 
 			XAttribute keyAttribute = parent.Attribute(_keyName);
-			if (keyAttribute == null) return null;
+			if (keyAttribute == null)
+			{
+				return null;
+			}
 
 			string row = Decode(keyAttribute.Value);
 			ParsedColumn parsedColumn = ParseColumn(cell);
 
 			XAttribute timestampAttribute = cell.Attribute(_timestampName);
-			long? timestamp = timestampAttribute != null ? timestampAttribute.Value.ToNullableLong() : null;
+			long? timestamp = timestampAttribute != null ? timestampAttribute.Value.ToNullableInt64() : null;
 			string value = Decode(cell.Value);
 
 			return new Cell(new Identifier
@@ -126,11 +258,17 @@ namespace HBase.Stargate.Client.MimeConversion
 		private static ParsedColumn ParseColumn(XElement cell)
 		{
 			XAttribute columnAttribute = cell.Attribute(_columnName);
-			if (columnAttribute == null) return new ParsedColumn();
+			if (columnAttribute == null)
+			{
+				return new ParsedColumn();
+			}
 
 			string columnValue = Decode(columnAttribute.Value);
 			Match match = _columnParser.Match(columnValue);
-			if (!match.Success) return new ParsedColumn();
+			if (!match.Success)
+			{
+				return new ParsedColumn();
+			}
 
 			string column = match.Groups[_columnName].Value;
 			string qualifier = match.Groups[_qualifierName].Value;
@@ -145,15 +283,34 @@ namespace HBase.Stargate.Client.MimeConversion
 
 		private static XElement XmlForRow(string row, IEnumerable<XElement> cells)
 		{
-			return new XElement(_rowName, new XAttribute(_keyName, Encode(row)), cells);
+			var xml = new XElement(_rowName, cells);
+			if (!string.IsNullOrEmpty(row))
+			{
+				xml.Add(new XAttribute(_keyName, Encode(row)));
+			}
+			return xml;
 		}
 
-		private static XElement XmlForCell(string column, string qualifier, long? timestamp, string value)
+		private static XElement XmlForCell(Cell cell)
 		{
-			var cell = new XElement(_cellName, new XText(Encode(value)));
-			if (!string.IsNullOrEmpty(column)) cell.Add(new XAttribute(_columnName, Encode(string.Format(_columnFormat, column, qualifier))));
-			if (timestamp.HasValue) cell.Add(new XAttribute(_timestampName, timestamp.Value));
-			return cell;
+			Identifier identifier = cell.Identifier;
+			HBaseCellDescriptor cellDescriptor = identifier != null ? identifier.Cell : null;
+			string column = cellDescriptor != null ? cellDescriptor.Column : null;
+			string qualifier = cellDescriptor != null ? cellDescriptor.Qualifier : null;
+			long? timestamp = identifier != null ? identifier.Timestamp : null;
+
+			var cellXml = new XElement(_cellName, new XText(Encode(cell.Value)));
+
+			if (!string.IsNullOrEmpty(column))
+			{
+				cellXml.Add(new XAttribute(_columnName, Encode(string.Format(_columnFormat, column, qualifier))));
+			}
+			if (timestamp.HasValue)
+			{
+				cellXml.Add(new XAttribute(_timestampName, timestamp.Value));
+			}
+
+			return cellXml;
 		}
 
 		private struct ParsedColumn

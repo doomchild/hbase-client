@@ -16,6 +16,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -72,7 +73,7 @@ namespace _specs.Steps
 					Column = column,
 					Qualifier = qualifier
 				},
-				Timestamp = timestamp.ToNullableLong()
+				Timestamp = timestamp.ToNullableInt64()
 			}, value);
 		}
 

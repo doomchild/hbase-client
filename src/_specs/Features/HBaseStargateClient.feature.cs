@@ -88,6 +88,41 @@ namespace _specs.Features
         }
         
         [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Create a table")]
+        public virtual void CreateATable()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a table", ((string[])(null)));
+#line 13
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 14
+ testRunner.Given("I have created a new table schema", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 15
+ testRunner.And("I have set my table schema\'s name to \"test\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.And("I have added a column named \"alpha\" to my table schema", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.When("I create a table using my table schema", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "method",
+                        "resource",
+                        "table",
+                        "column"});
+            table2.AddRow(new string[] {
+                        "PUT",
+                        "test/schema",
+                        "test",
+                        "alpha"});
+#line 18
+ testRunner.Then("a REST request for schema updates should have been submitted with the following v" +
+                    "alues:", ((string)(null)), table2, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Write a single value")]
         [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "POST", "test/1/alpha", null)]
         [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "POST", "test/1/alpha:x", null)]
@@ -126,19 +161,6 @@ this.FeatureBackground();
 #line 36
  testRunner.Given("I have created a set of cells for the \"test\" table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "row",
-                        "column",
-                        "qualifier",
-                        "value"});
-            table2.AddRow(new string[] {
-                        "1",
-                        "beta",
-                        "x",
-                        "hello world"});
-#line 37
- testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table2, "And ");
-#line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "row",
                         "column",
@@ -147,9 +169,9 @@ this.FeatureBackground();
             table3.AddRow(new string[] {
                         "1",
                         "beta",
-                        "y",
-                        "dlrow olleh"});
-#line 40
+                        "x",
+                        "hello world"});
+#line 37
  testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table3, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -160,36 +182,36 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "1",
                         "beta",
-                        "z",
-                        "lorum ipsum"});
-#line 43
+                        "y",
+                        "dlrow olleh"});
+#line 40
  testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table4, "And ");
-#line 46
- testRunner.When("I write the set of cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "method",
-                        "resource"});
-            table5.AddRow(new string[] {
-                        "POST",
-                        "test/row"});
-#line 47
- testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table5, "Then ");
-#line 50
- testRunner.And("the REST request should have contained 3 cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "row",
                         "column",
                         "qualifier",
                         "value"});
-            table6.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "1",
                         "beta",
-                        "x",
-                        "hello world"});
-#line 51
- testRunner.And("one of the cells in the REST request should have had the following values:", ((string)(null)), table6, "And ");
+                        "z",
+                        "lorum ipsum"});
+#line 43
+ testRunner.And("I have added a cell to my set with the following properties:", ((string)(null)), table5, "And ");
+#line 46
+ testRunner.When("I write the set of cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "method",
+                        "resource"});
+            table6.AddRow(new string[] {
+                        "POST",
+                        "test/row"});
+#line 47
+ testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table6, "Then ");
+#line 50
+ testRunner.And("the REST request should have contained 3 cells", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "row",
@@ -199,9 +221,9 @@ this.FeatureBackground();
             table7.AddRow(new string[] {
                         "1",
                         "beta",
-                        "y",
-                        "dlrow olleh"});
-#line 54
+                        "x",
+                        "hello world"});
+#line 51
  testRunner.And("one of the cells in the REST request should have had the following values:", ((string)(null)), table7, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -212,33 +234,62 @@ this.FeatureBackground();
             table8.AddRow(new string[] {
                         "1",
                         "beta",
+                        "y",
+                        "dlrow olleh"});
+#line 54
+ testRunner.And("one of the cells in the REST request should have had the following values:", ((string)(null)), table8, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "row",
+                        "column",
+                        "qualifier",
+                        "value"});
+            table9.AddRow(new string[] {
+                        "1",
+                        "beta",
                         "z",
                         "lorum ipsum"});
 #line 57
- testRunner.And("one of the cells in the REST request should have had the following values:", ((string)(null)), table8, "And ");
+ testRunner.And("one of the cells in the REST request should have had the following values:", ((string)(null)), table9, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Read a row")]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "", "GET", "test/1", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "5", "GET", "test/1/*/5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "", "GET", "test/1", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "5", "GET", "test/1/*/4,5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "", "GET", "test/1", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "5", "GET", "test/1/*/5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "", "GET", "test/1", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "5", "GET", "test/1/*/4,5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "", "GET", "test/1/alpha", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "5", "GET", "test/1/alpha/5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "", "GET", "test/1/alpha", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "5", "GET", "test/1/alpha/4,5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "", "GET", "test/1/alpha:x", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "5", "GET", "test/1/alpha:x/5", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "", "GET", "test/1/alpha:x", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "5", "GET", "test/1/alpha:x/4,5", null)]
-        public virtual void ReadARow(string table, string row, string column, string qualifier, string begin, string end, string method, string resource, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "", "", "GET", "test/1", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "", "2", "GET", "test/1?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "5", "", "GET", "test/1/*/5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "5", "2", "GET", "test/1/*/5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "", "", "GET", "test/1", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "", "2", "GET", "test/1?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "5", "", "GET", "test/1/*/4,5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "5", "2", "GET", "test/1/*/4,5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "", "", "GET", "test/1", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "", "2", "GET", "test/1?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "5", "", "GET", "test/1/*/5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "5", "2", "GET", "test/1/*/5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "", "", "GET", "test/1", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "", "2", "GET", "test/1?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "5", "", "GET", "test/1/*/4,5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "5", "2", "GET", "test/1/*/4,5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "", "", "GET", "test/1/alpha", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "", "2", "GET", "test/1/alpha?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "5", "", "GET", "test/1/alpha/5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "5", "2", "GET", "test/1/alpha/5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "", "", "GET", "test/1/alpha", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "", "2", "GET", "test/1/alpha?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "5", "", "GET", "test/1/alpha/4,5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "5", "2", "GET", "test/1/alpha/4,5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "", "", "GET", "test/1/alpha:x", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "", "2", "GET", "test/1/alpha:x?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "5", "", "GET", "test/1/alpha:x/5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "5", "2", "GET", "test/1/alpha:x/5?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "", "", "GET", "test/1/alpha:x", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "", "2", "GET", "test/1/alpha:x?v=2", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "5", "", "GET", "test/1/alpha:x/4,5", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "5", "2", "GET", "test/1/alpha:x/4,5?v=2", null)]
+        public virtual void ReadARow(string table, string row, string column, string qualifier, string begin, string end, string max, string method, string resource, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Read a row", exampleTags);
 #line 61
@@ -246,8 +297,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 62
- testRunner.Given(string.Format("I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, an" +
-                        "d a {5} timestamp", table, row, column, qualifier, begin, end), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, a " +
+                        "{5} timestamp, and a {6} number of results", table, row, column, qualifier, begin, end, max), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 63
  testRunner.When("I read a row using my query", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 64
@@ -258,21 +309,72 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Read a single value")]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "GET", "test/1/alpha", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "GET", "test/1/alpha:x", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "GET", "test/1/alpha?v=1", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "GET", "test/1/alpha:x?v=1", null)]
         public virtual void ReadASingleValue(string table, string row, string column, string qualifier, string method, string resource, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Read a single value", exampleTags);
-#line 84
+#line 100
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 85
+#line 101
  testRunner.Given(string.Format("I have an identifier consisting of a {0}, a {1}, a {2}, and a {3}", table, row, column, qualifier), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 86
+#line 102
  testRunner.When("I read a single value using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 87
+#line 103
  testRunner.Then(string.Format("a REST request should have been submitted with the correct {0} and {1}", method, resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Enumerate all tables")]
+        public virtual void EnumerateAllTables()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Enumerate all tables", ((string[])(null)));
+#line 133
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 134
+ testRunner.When("I read the names of all tables", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "method",
+                        "resource"});
+            table10.AddRow(new string[] {
+                        "GET",
+                        ""});
+#line 135
+ testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table10, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get table schema")]
+        public virtual void GetTableSchema()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get table schema", ((string[])(null)));
+#line 139
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 140
+ testRunner.Given("I will always get a response with a status of \"OK\" and content equivalent to the " +
+                    "resource called \"HBaseXml_TableSchema1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 141
+ testRunner.When("I get the schema of the \"test\" table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "method",
+                        "resource"});
+            table11.AddRow(new string[] {
+                        "GET",
+                        "test/schema"});
+#line 142
+ testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table11, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -287,16 +389,40 @@ this.FeatureBackground();
         public virtual void DeleteARowColummOrCell(string table, string row, string column, string qualifier, string timestamp, string method, string resource, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete a row, columm, or cell", exampleTags);
-#line 123
+#line 146
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 124
+#line 147
  testRunner.And(string.Format("I have an identifier consisting of a {0}, a {1}, a {2}, a {3}, and a {4}", table, row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 125
+#line 148
  testRunner.When("I delete an item using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 126
+#line 149
  testRunner.Then(string.Format("a REST request should have been submitted with the correct {0} and {1}", method, resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Delete a table")]
+        public virtual void DeleteATable()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete a table", ((string[])(null)));
+#line 158
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 159
+ testRunner.When("I delete the \"test\" table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "method",
+                        "resource"});
+            table12.AddRow(new string[] {
+                        "DELETE",
+                        "test/schema"});
+#line 160
+ testRunner.Then("a REST request should have been submitted with the following values:", ((string)(null)), table12, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

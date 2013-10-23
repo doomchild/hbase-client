@@ -1,5 +1,3 @@
-﻿#region FreeBSD
-
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
@@ -17,38 +15,38 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Describes the MIME types supported by HBase Stargate.
+	///    Defines a cell in HBase.
 	/// </summary>
-	public static class HBaseMimeTypes
+	public class Cell
 	{
 		/// <summary>
-		///    The plain text MIME type.
+		///    Initializes a new instance of the <see cref="Cell" /> class.
 		/// </summary>
-		public const string Text = "text/plain";
+		/// <param name="identifier">The identifier.</param>
+		/// <param name="value">The value.</param>
+		public Cell(Identifier identifier, string value)
+		{
+			Identifier = identifier;
+			Value = value;
+		}
 
 		/// <summary>
-		///    The XML MIME type.
+		///    Gets the identifier.
 		/// </summary>
-		public const string Xml = "text/xml";
+		/// <value>
+		///    The identifier.
+		/// </value>
+		public Identifier Identifier { get; private set; }
 
 		/// <summary>
-		///    The json MIME type.
+		///    Gets the value.
 		/// </summary>
-		public const string Json = "application/json";
-
-		/// <summary>
-		///    The protobuf MIME type.
-		/// </summary>
-		public const string Protobuf = "application/x-protobuf";
-
-		/// <summary>
-		///    The binary stream MIME type.
-		/// </summary>
-		public const string Stream = "application/octet-stream";
+		/// <value>
+		///    The value.
+		/// </value>
+		public string Value { get; private set; }
 	}
 }

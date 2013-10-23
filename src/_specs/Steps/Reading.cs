@@ -19,6 +19,8 @@
 
 #endregion
 
+using System.Collections.Generic;
+
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -56,7 +58,7 @@ namespace _specs.Steps
 		[When(@"I read the names of all tables")]
 		public void ReadTableNames()
 		{
-			ScenarioContext.Current.Pending();
+			_context.TableNames = _context.Stargate.GetTableNames();
 		}
 	}
 }

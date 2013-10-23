@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using HBase.Stargate.Client.Models;
+
 namespace HBase.Stargate.Client.MimeConversion
 {
 	/// <summary>
@@ -38,20 +40,32 @@ namespace HBase.Stargate.Client.MimeConversion
 		/// Converts the specified cells to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public abstract string Convert(IEnumerable<Cell> cells);
+		public abstract string ConvertCells(IEnumerable<Cell> cells);
 
 		/// <summary>
 		/// Converts the specified cell to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cell"></param>
 		/// <returns></returns>
-		public abstract string Convert(Cell cell);
+		public abstract string ConvertCell(Cell cell);
 
 		/// <summary>
 		/// Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public abstract IEnumerable<Cell> Convert(string data);
+		public abstract IEnumerable<Cell> ConvertCells(string data);
+
+		/// <summary>
+		/// Converts the specified data to a table schema.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		public abstract TableSchema ConvertSchema(string data);
+
+		/// <summary>
+		/// Converts the specified table schema to text according to the current MIME type.
+		/// </summary>
+		/// <param name="schema">The schema.</param>
+		public abstract string ConvertSchema(TableSchema schema);
 
 		/// <summary>
 		///    Encodes the specified text.

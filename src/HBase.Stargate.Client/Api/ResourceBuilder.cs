@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Text;
 
+using HBase.Stargate.Client.Models;
 using HBase.Stargate.Client.Properties;
 
 namespace HBase.Stargate.Client.Api
@@ -32,14 +33,16 @@ namespace HBase.Stargate.Client.Api
 	/// </summary>
 	public class ResourceBuilder : IResourceBuilder
 	{
-		private readonly IStargateOptions _options;
 		private const string _wildCard = "*";
 		private const string _appendSegmentFormat = "/{0}";
 		private const string _appendQualifierFormat = ":{0}";
 		private const string _appendRangeFormat = ",{0}";
+		private const string _appendMaxVersionsFormat = "?v={0}";
+		private const string _schemaInsertName = "schema";
+		private readonly IStargateOptions _options;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ResourceBuilder"/> class.
+		///    Initializes a new instance of the <see cref="ResourceBuilder" /> class.
 		/// </summary>
 		/// <param name="options">The HBase Stargate options.</param>
 		public ResourceBuilder(IStargateOptions options)
@@ -62,20 +65,6 @@ namespace HBase.Stargate.Client.Api
 		}
 
 		/// <summary>
-		///    Builds a single value storage URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		public string BuildSingleValueAccess(Identifier identifier)
-		{
-			if (!identifier.CanDescribeCell())
-			{
-				throw new ArgumentException(Resources.ResourceBuilder_MinimumForSingleValueAccessNotMet);
-			}
-
-			return BuildFromIdentifier(identifier).ToString();
-		}
-
-		/// <summary>
 		///    Builds a delete-item URI.
 		/// </summary>
 		/// <param name="identifier">The identifier.</param>
@@ -90,7 +79,7 @@ namespace HBase.Stargate.Client.Api
 		}
 
 		/// <summary>
-		/// Builds a batch insert URI.
+		///    Builds a batch insert URI.
 		/// </summary>
 		/// <param name="identifier">The identifier.</param>
 		/// <returns></returns>
@@ -105,10 +94,42 @@ namespace HBase.Stargate.Client.Api
 			return new StringBuilder(identifier.Table).AppendFormat(_appendSegmentFormat, _options.FalseRowKey).ToString();
 		}
 
+		/// <summary>
+		///    Builds a table creation URI.
+		/// </summary>
+		/// <param name="tableSchema">The table schema.</param>
+		public string BuildTableSchemaAccess(TableSchema tableSchema)
+		{
+			if (tableSchema == null || string.IsNullOrEmpty(tableSchema.Name))
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForSchemaUpdateNotMet);
+			}
+
+			return new StringBuilder(tableSchema.Name).AppendFormat(_appendSegmentFormat, _schemaInsertName).ToString();
+		}
+
+		/// <summary>
+		///    Builds a single value storage URI.
+		/// </summary>
+		/// <param name="identifier">The identifier.</param>
+		/// <param name="forReading">
+		///    if set to <c>true</c> this resource will be used for reading.
+		/// </param>
+		public string BuildSingleValueAccess(Identifier identifier, bool forReading = false)
+		{
+			if (!identifier.CanDescribeCell())
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForSingleValueAccessNotMet);
+			}
+
+			StringBuilder builder = BuildFromIdentifier(identifier);
+			return (forReading ? SetMaxResults(1, builder) : builder).ToString();
+		}
+
 		private static StringBuilder BuildFromIdentifier(Identifier identifier)
 		{
 			bool hasTimestamp = identifier.Timestamp.HasValue;
-			var uriBuilder = BuildFromDescriptor(identifier);
+			StringBuilder uriBuilder = BuildFromDescriptor(identifier);
 
 			bool columnMissing = identifier.Cell == null || string.IsNullOrEmpty(identifier.Cell.Column);
 			if (columnMissing && !hasTimestamp)
@@ -136,16 +157,19 @@ namespace HBase.Stargate.Client.Api
 			bool hasTimestamp = query.EndTimestamp.HasValue
 				&& (!query.BeginTimestamp.HasValue || query.BeginTimestamp.Value < query.EndTimestamp.Value);
 
-			var uriBuilder = BuildFromDescriptor(query);
+			StringBuilder uriBuilder = BuildFromDescriptor(query);
 
 			bool columnsMissing = query.Cells == null || query.Cells.All(cell => string.IsNullOrEmpty(cell.Column));
-			if (columnsMissing && !hasTimestamp) return uriBuilder;
+			if (columnsMissing && !hasTimestamp)
+			{
+				return SetMaxResults(query.MaxResults, uriBuilder);
+			}
 
 			if (!columnsMissing)
 			{
-				var validCells = query.Cells.Where(cell => !string.IsNullOrEmpty(cell.Column)).ToArray();
+				HBaseCellDescriptor[] validCells = query.Cells.Where(cell => !string.IsNullOrEmpty(cell.Column)).ToArray();
 
-				var firstCell = validCells.First();
+				HBaseCellDescriptor firstCell = validCells.First();
 				uriBuilder.AppendFormat(_appendSegmentFormat, firstCell.Column);
 
 				if (!string.IsNullOrEmpty(firstCell.Qualifier))
@@ -178,6 +202,16 @@ namespace HBase.Stargate.Client.Api
 				{
 					uriBuilder.AppendFormat(_appendSegmentFormat, query.EndTimestamp);
 				}
+			}
+
+			return SetMaxResults(query.MaxResults, uriBuilder);
+		}
+
+		private static StringBuilder SetMaxResults(int? maxResults, StringBuilder uriBuilder)
+		{
+			if (maxResults.HasValue)
+			{
+				uriBuilder.AppendFormat(_appendMaxVersionsFormat, maxResults);
 			}
 
 			return uriBuilder;

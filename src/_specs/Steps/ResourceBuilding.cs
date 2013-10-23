@@ -52,7 +52,7 @@ namespace _specs.Steps
 			_container.Update<IResourceBuilder, ResourceBuilder>();
 		}
 
-		[When(@"I build a resource name for Cell or Row queries using my identifier")]
+		[When(@"I build a resource name for Cell or Row queries using my query")]
 		public void BuildCellOrRowQuery()
 		{
 			try

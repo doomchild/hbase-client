@@ -19,27 +19,62 @@
 
 #endregion
 
-namespace HBase.Stargate.Client
+using System.Collections.Generic;
+
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Defines an identifier in the HBase system.
+	///    Encapsulates the options available for new table creation.
 	/// </summary>
-	public class Identifier : HBaseDescriptor
+	public class TableSchema
 	{
 		/// <summary>
-		/// Gets or sets the cell descriptor.
+		/// Initializes a new instance of the <see cref="TableSchema"/> class.
 		/// </summary>
-		/// <value>
-		/// The cell.
-		/// </value>
-		public HBaseCellDescriptor Cell { get; set; }
+		/// <param name="columns">The columns.</param>
+		public TableSchema(IEnumerable<ColumnSchema> columns)
+		{
+			Columns = new List<ColumnSchema>(columns);
+		}
 
 		/// <summary>
-		///    Gets or sets the timestamp.
+		///    Initializes a new instance of the <see cref="TableSchema" /> class.
+		/// </summary>
+		public TableSchema()
+		{
+			Columns = new List<ColumnSchema>();
+		}
+
+		/// <summary>
+		///    Gets or sets the name.
 		/// </summary>
 		/// <value>
-		///    The timestamp.
+		///    The name.
 		/// </value>
-		public long? Timestamp { get; set; }
+		public string Name { get; set; }
+
+		/// <summary>
+		///    Gets or sets a value indicating whether this instance describes a meta-table.
+		/// </summary>
+		/// <value>
+		///    <c>true</c> if this instance describes a meta-table; otherwise, <c>false</c>.
+		/// </value>
+		public bool? IsMeta { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is a root table.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this instance is a root table; otherwise, <c>false</c>.
+		/// </value>
+		public bool? IsRoot { get; set; }
+
+		/// <summary>
+		///    Gets or sets the columns.
+		/// </summary>
+		/// <value>
+		///    The columns.
+		/// </value>
+		public List<ColumnSchema> Columns { get; private set; }
 	}
 }

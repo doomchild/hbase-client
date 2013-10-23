@@ -77,71 +77,135 @@ namespace _specs.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Cell or Row query")]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "4", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "4", "5", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "", "", "test/*", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "", "5", "test/*/*/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "4", "", "test/*", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "4", "5", "test/*/*/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "", "", "test/*", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "", "5", "test/*/*/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "4", "", "test/*", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "4", "5", "test/*/*/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "", "", "test/*/alpha", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "", "5", "test/*/alpha/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "4", "", "test/*/alpha", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "4", "5", "test/*/alpha/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "", "", "test/*/alpha:x", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "", "5", "test/*/alpha:x/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "4", "", "test/*/alpha:x", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "4", "5", "test/*/alpha:x/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "", "test/1", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "5", "test/1/*/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "", "test/1", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "5", "test/1/*/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "", "test/1", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "5", "test/1/*/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "", "test/1", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "5", "test/1/*/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "", "test/1/alpha", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "5", "test/1/alpha/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "", "test/1/alpha", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "5", "test/1/alpha/4,5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "", "test/1/alpha:x", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "5", "test/1/alpha:x/5", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "", "test/1/alpha:x", "should", "", "", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "5", "test/1/alpha:x/4,5", "should", "", "", null)]
-        public virtual void CellOrRowQuery(string table, string row, string column, string qualifier, string begin, string end, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "", "x", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "", "alpha", "x", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "", "x", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "4", "", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "4", "", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "4", "5", "", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("", "1", "alpha", "x", "4", "5", "2", "", "should not", "ArgumentException", "ResourceBuilder_MinimumForCellOrRowQueryNotMet", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "", "", "", "test/*", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "", "", "2", "test/*?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "", "5", "", "test/*/*/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "", "5", "2", "test/*/*/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "4", "", "", "test/*", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "4", "", "2", "test/*?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "4", "5", "", "test/*/*/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "", "4", "5", "2", "test/*/*/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "", "", "", "test/*", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "", "", "2", "test/*?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "", "5", "", "test/*/*/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "", "5", "2", "test/*/*/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "4", "", "", "test/*", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "4", "", "2", "test/*?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "4", "5", "", "test/*/*/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "", "x", "4", "5", "2", "test/*/*/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "", "", "", "test/*/alpha", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "", "", "2", "test/*/alpha?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "", "5", "", "test/*/alpha/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "", "5", "2", "test/*/alpha/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "4", "", "", "test/*/alpha", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "4", "", "2", "test/*/alpha?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "4", "5", "", "test/*/alpha/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "", "4", "5", "2", "test/*/alpha/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "", "", "", "test/*/alpha:x", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "", "", "2", "test/*/alpha:x?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "", "5", "", "test/*/alpha:x/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "", "5", "2", "test/*/alpha:x/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "4", "", "", "test/*/alpha:x", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "4", "", "2", "test/*/alpha:x?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "4", "5", "", "test/*/alpha:x/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "", "alpha", "x", "4", "5", "2", "test/*/alpha:x/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "", "", "test/1", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "", "2", "test/1?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "5", "", "test/1/*/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "", "5", "2", "test/1/*/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "", "", "test/1", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "", "2", "test/1?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "5", "", "test/1/*/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "", "4", "5", "2", "test/1/*/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "", "", "test/1", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "", "2", "test/1?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "5", "", "test/1/*/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "", "5", "2", "test/1/*/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "", "", "test/1", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "", "2", "test/1?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "5", "", "test/1/*/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "", "x", "4", "5", "2", "test/1/*/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "", "", "test/1/alpha", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "", "2", "test/1/alpha?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "5", "", "test/1/alpha/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "", "5", "2", "test/1/alpha/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "", "", "test/1/alpha", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "", "2", "test/1/alpha?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "5", "", "test/1/alpha/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "", "4", "5", "2", "test/1/alpha/4,5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "", "", "test/1/alpha:x", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "", "2", "test/1/alpha:x?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "5", "", "test/1/alpha:x/5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "", "5", "2", "test/1/alpha:x/5?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "", "", "test/1/alpha:x", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "", "2", "test/1/alpha:x?v=2", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "5", "", "test/1/alpha:x/4,5", "should", "", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "1", "alpha", "x", "4", "5", "2", "test/1/alpha:x/4,5?v=2", "should", "", "", null)]
+        public virtual void CellOrRowQuery(string table, string row, string column, string qualifier, string begin, string end, string max, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cell or Row query", exampleTags);
 #line 9
@@ -149,10 +213,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 10
- testRunner.Given(string.Format("I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, an" +
-                        "d a {5} timestamp", table, row, column, qualifier, begin, end), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, a " +
+                        "{5} timestamp, and a {6} number of results", table, row, column, qualifier, begin, end, max), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 11
- testRunner.When("I build a resource name for Cell or Row queries using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I build a resource name for Cell or Row queries using my query", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 12
  testRunner.Then(string.Format("the resulting resource name should match the expected {0}", resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 13
@@ -202,21 +266,21 @@ this.FeatureBackground();
         public virtual void SingleValueStorage(string table, string row, string column, string qualifier, string timestamp, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Single value storage", exampleTags);
-#line 83
+#line 147
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 84
+#line 148
  testRunner.Given(string.Format("I have an identifier consisting of a {0}, a {1}, a {2}, a {3}, and a {4}", table, row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 85
+#line 149
  testRunner.When("I build a resource name for storing single values using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 86
+#line 150
  testRunner.Then(string.Format("the resulting resource name should match the expected {0}", resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 87
+#line 151
  testRunner.And(string.Format("the operation {0} have succeeded", shouldOrShouldNot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 88
+#line 152
  testRunner.And(string.Format("if there was an exception, it should have been the expected {0} type", exception), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 89
+#line 153
  testRunner.And(string.Format("if there was an exception, it should have had the expected exception {0}", message), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -229,21 +293,21 @@ this.FeatureBackground();
         public virtual void WriteMultipleValues(string table, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Write multiple values", exampleTags);
-#line 125
+#line 189
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 126
+#line 190
  testRunner.Given(string.Format("I have an identifier consisting of a {0}", table), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 127
+#line 191
  testRunner.When("I build a resource name for storing multiple values using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 128
+#line 192
  testRunner.Then(string.Format("the resulting resource name should match the expected {0}", resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 129
+#line 193
  testRunner.And(string.Format("the operation {0} have succeeded", shouldOrShouldNot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 130
+#line 194
  testRunner.And(string.Format("if there was an exception, it should have been the expected {0} type", exception), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 131
+#line 195
  testRunner.And(string.Format("if there was an exception, it should have had the expected exception {0}", message), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -286,21 +350,21 @@ this.FeatureBackground();
         public virtual void DeleteAnItem(string table, string row, string column, string qualifier, string timestamp, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete an item", exampleTags);
-#line 137
+#line 201
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 138
+#line 202
  testRunner.Given(string.Format("I have an identifier consisting of a {0}, a {1}, a {2}, a {3}, and a {4}", table, row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 139
+#line 203
  testRunner.When("I build a resource name for deleting items using my identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 140
+#line 204
  testRunner.Then(string.Format("the resulting resource name should match the expected {0}", resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 141
+#line 205
  testRunner.And(string.Format("the operation {0} have succeeded", shouldOrShouldNot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 142
+#line 206
  testRunner.And(string.Format("if there was an exception, it should have been the expected {0} type", exception), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 143
+#line 207
  testRunner.And(string.Format("if there was an exception, it should have had the expected exception {0}", message), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

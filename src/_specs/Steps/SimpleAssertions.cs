@@ -20,6 +20,7 @@ using System.Linq;
 using FluentAssertions;
 
 using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -46,7 +47,7 @@ namespace _specs.Steps
 				Row = row,
 				Column = column,
 				Qualifier = qualifier,
-				Timestamp = timestamp.ToNullableLong(),
+				Timestamp = timestamp.ToNullableInt64(),
 				Value = value
 			}).Should().BeTrue();
 		}

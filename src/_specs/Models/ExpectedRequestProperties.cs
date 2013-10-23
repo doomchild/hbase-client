@@ -24,4 +24,10 @@ namespace _specs.Models
 		public Method Method { get; set; }
 		public string Resource { get; set; }
 	}
+
+	public class ExpectedSchemaUpdateRequestProperties : ExpectedRequestProperties
+	{
+		public string Table { get; set; }
+		public string Column { get; set; }
+	}
 }

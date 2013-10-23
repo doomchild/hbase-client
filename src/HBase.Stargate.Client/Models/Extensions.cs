@@ -15,7 +15,7 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace HBase.Stargate.Client
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
 	/// Provides general extensions for Stargate Client components.
@@ -23,10 +23,22 @@ namespace HBase.Stargate.Client
 	public static class Extensions
 	{
 		/// <summary>
-		///    Converts the current text to a nullable long value.
+		///    Converts the text to a nullable 32-bit integer value.
 		/// </summary>
 		/// <param name="text">The text.</param>
-		public static long? ToNullableLong(this string text)
+		public static int? ToNullableInt32(this string text)
+		{
+			if (string.IsNullOrWhiteSpace(text)) return null;
+
+			int value;
+			return int.TryParse(text, out value) ? value : (int?) null;
+		}
+
+		/// <summary>
+		///    Converts the text to a nullable 64-bit integer value.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		public static long? ToNullableInt64(this string text)
 		{
 			if (string.IsNullOrWhiteSpace(text)) return null;
 
@@ -79,8 +91,9 @@ namespace HBase.Stargate.Client
 						Qualifier = identifier.Cell != null ? identifier.Cell.Qualifier : null
 					}
 				},
-				BeginTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp - 1 : null,
-				EndTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp + 1 : null
+				BeginTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp : null,
+				EndTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp + 1 : null,
+				MaxResults = 1
 			};
 		}
 	}

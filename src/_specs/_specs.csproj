@@ -88,6 +88,7 @@
       <HintPath>..\packages\RestSharp.Injection.1.1.0-beta1\lib\net45\RestSharp.Injection.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
@@ -201,6 +202,10 @@
     <None Include="Resources\HBaseProtobuf_Set_HelloWorld.proto" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HBase.Stargate.Client.Autofac\HBase.Stargate.Client.Autofac.csproj">
+      <Project>{75CC311D-9F8C-4098-AD58-FE717AEB7697}</Project>
+      <Name>HBase.Stargate.Client.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HBase.Stargate.Client\HBase.Stargate.Client.csproj">
       <Project>{98C9F30C-4EC9-4BE0-BD1C-120F05D37117}</Project>
       <Name>HBase.Stargate.Client</Name>
@@ -226,6 +231,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\HBaseXml_Set_HelloWorld.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\HBaseXml_TableSchema1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

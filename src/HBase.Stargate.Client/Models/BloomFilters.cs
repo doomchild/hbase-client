@@ -19,36 +19,26 @@
 
 #endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Describes the MIME types supported by HBase Stargate.
+	///    Describes the possible Bloom Filters that can be used with HBase.
 	/// </summary>
-	public static class HBaseMimeTypes
+	public enum BloomFilters
 	{
 		/// <summary>
-		///    The plain text MIME type.
+		///    No bloom filters (default).
 		/// </summary>
-		public const string Text = "text/plain";
+		None,
 
 		/// <summary>
-		///    The XML MIME type.
+		///    The hash of the row will be added to the bloom on each insert.
 		/// </summary>
-		public const string Xml = "text/xml";
+		Row,
 
 		/// <summary>
-		///    The json MIME type.
+		///    The hash of the row + column family + column family qualifier will be added to the bloom on each key insert.
 		/// </summary>
-		public const string Json = "application/json";
-
-		/// <summary>
-		///    The protobuf MIME type.
-		/// </summary>
-		public const string Protobuf = "application/x-protobuf";
-
-		/// <summary>
-		///    The binary stream MIME type.
-		/// </summary>
-		public const string Stream = "application/octet-stream";
+		RowColumn
 	}
 }

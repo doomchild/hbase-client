@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<TableSchema name="jb-test" IS_META="false" IS_ROOT="false">
+	<ColumnSchema name="d" BLOCKSIZE="65536" BLOOMFILTER="NONE" MIN_VERSIONS="0" KEEP_DELETED_CELLS="false"
+	              ENCODE_ON_DISK="true" BLOCKCACHE="true" COMPRESSION="NONE" VERSIONS="3" REPLICATION_SCOPE="0"
+	              TTL="2147483647" DATA_BLOCK_ENCODING="NONE" IN_MEMORY="false" />
+</TableSchema>
