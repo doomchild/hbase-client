@@ -1,4 +1,4 @@
-﻿#region FreeBSD
+#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,36 +19,27 @@
 
 #endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Describes the MIME types supported by HBase Stargate.
+	///    Describes a record or set of records in HBase.
 	/// </summary>
-	public static class HBaseMimeTypes
+	public class HBaseDescriptor
 	{
 		/// <summary>
-		///    The plain text MIME type.
+		///    Gets or sets the table.
 		/// </summary>
-		public const string Text = "text/plain";
+		/// <value>
+		///    The table.
+		/// </value>
+		public string Table { get; set; }
 
 		/// <summary>
-		///    The XML MIME type.
+		///    Gets or sets the row.
 		/// </summary>
-		public const string Xml = "text/xml";
-
-		/// <summary>
-		///    The json MIME type.
-		/// </summary>
-		public const string Json = "application/json";
-
-		/// <summary>
-		///    The protobuf MIME type.
-		/// </summary>
-		public const string Protobuf = "application/x-protobuf";
-
-		/// <summary>
-		///    The binary stream MIME type.
-		/// </summary>
-		public const string Stream = "application/octet-stream";
+		/// <value>
+		///    The row.
+		/// </value>
+		public string Row { get; set; }
 	}
 }

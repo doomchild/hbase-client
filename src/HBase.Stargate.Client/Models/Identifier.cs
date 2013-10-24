@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,38 +17,29 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace HBase.Stargate.Client
+#endregion
+
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Defines a cell in HBase.
+	///    Defines an identifier in the HBase system.
 	/// </summary>
-	public class Cell
+	public class Identifier : HBaseDescriptor
 	{
 		/// <summary>
-		///    Initializes a new instance of the <see cref="Cell" /> class.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="value">The value.</param>
-		public Cell(Identifier identifier, string value)
-		{
-			Identifier = identifier;
-			Value = value;
-		}
-
-		/// <summary>
-		///    Gets the identifier.
+		/// Gets or sets the cell descriptor.
 		/// </summary>
 		/// <value>
-		///    The identifier.
+		/// The cell.
 		/// </value>
-		public Identifier Identifier { get; private set; }
+		public HBaseCellDescriptor Cell { get; set; }
 
 		/// <summary>
-		///    Gets the value.
+		///    Gets or sets the timestamp.
 		/// </summary>
 		/// <value>
-		///    The value.
+		///    The timestamp.
 		/// </value>
-		public string Value { get; private set; }
+		public long? Timestamp { get; set; }
 	}
 }

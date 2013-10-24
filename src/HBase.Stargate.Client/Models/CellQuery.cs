@@ -1,4 +1,4 @@
-﻿#region FreeBSD
+#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,27 +19,45 @@
 
 #endregion
 
-namespace HBase.Stargate.Client
+using System.Collections.Generic;
+
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Describes a record or set of records in HBase.
+	///    Defines a query targeting one or more cells in HBase.
 	/// </summary>
-	public class HBaseDescriptor
+	public class CellQuery : HBaseDescriptor
 	{
 		/// <summary>
-		///    Gets or sets the table.
+		///    Gets or sets the additional criteria.
 		/// </summary>
 		/// <value>
-		///    The table.
+		///    The additional criteria.
 		/// </value>
-		public string Table { get; set; }
+		public IEnumerable<HBaseCellDescriptor> Cells { get; set; }
 
 		/// <summary>
-		///    Gets or sets the row.
+		///    Gets or sets the begin timestamp (exclusive).
 		/// </summary>
 		/// <value>
-		///    The row.
+		///    The begin timestamp (exclusive).
 		/// </value>
-		public string Row { get; set; }
+		public long? BeginTimestamp { get; set; }
+
+		/// <summary>
+		///    Gets or sets the end timestamp (exclusive).
+		/// </summary>
+		/// <value>
+		///    The end timestamp (exclusive).
+		/// </value>
+		public long? EndTimestamp { get; set; }
+
+		/// <summary>
+		///    Gets or sets the maximum allowed results.
+		/// </summary>
+		/// <value>
+		///    The maximum allowed results.
+		/// </value>
+		public int? MaxResults { get; set; }
 	}
 }

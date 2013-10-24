@@ -88,6 +88,15 @@ namespace HBase.Stargate.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Table name must be specified at a minimum for schema update/creation..
+        /// </summary>
+        internal static string ResourceBuilder_MinimumForSchemaUpdateNotMet {
+            get {
+                return ResourceManager.GetString("ResourceBuilder_MinimumForSchemaUpdateNotMet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Table name, row key, and column name must be specified at a minimum for single value access..
         /// </summary>
         internal static string ResourceBuilder_MinimumForSingleValueAccessNotMet {

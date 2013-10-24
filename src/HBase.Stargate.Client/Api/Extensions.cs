@@ -23,6 +23,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
+using HBase.Stargate.Client.Models;
+
 using RestSharp;
 
 namespace HBase.Stargate.Client.Api
@@ -45,17 +47,7 @@ namespace HBase.Stargate.Client.Api
 		public static Task WriteValueAsync(this IStargate gate, string value, string table, string row, string column, string qualifier = null,
 			long? timestamp = null)
 		{
-			return gate.WriteValueAsync(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			}, value);
+			return gate.WriteValueAsync(BuildIdentifier(table, row, column, qualifier, timestamp), value);
 		}
 
 		/// <summary>
@@ -71,17 +63,7 @@ namespace HBase.Stargate.Client.Api
 		public static void WriteValue(this IStargate gate, string value, string table, string row, string column, string qualifier = null,
 			long? timestamp = null)
 		{
-			gate.WriteValue(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			}, value);
+			gate.WriteValue(BuildIdentifier(table, row, column, qualifier, timestamp), value);
 		}
 
 		/// <summary>
@@ -96,17 +78,7 @@ namespace HBase.Stargate.Client.Api
 		public static Task DeleteItemAsync(this IStargate gate, string table, string row, string column = null, string qualifier = null,
 			long? timestamp = null)
 		{
-			return gate.DeleteItemAsync(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
+			return gate.DeleteItemAsync(BuildIdentifier(table, row, column, qualifier, timestamp));
 		}
 
 		/// <summary>
@@ -120,17 +92,7 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="timestamp">The timestamp.</param>
 		public static void DeleteItem(this IStargate gate, string table, string row, string column = null, string qualifier = null, long? timestamp = null)
 		{
-			gate.DeleteItem(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
+			gate.DeleteItem(BuildIdentifier(table, row, column, qualifier, timestamp));
 		}
 
 		/// <summary>
@@ -145,17 +107,7 @@ namespace HBase.Stargate.Client.Api
 		public static Task<string> ReadValueAsync(this IStargate gate, string table, string row, string column, string qualifier = null,
 			long? timestamp = null)
 		{
-			return gate.ReadValueAsync(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
+			return gate.ReadValueAsync(BuildIdentifier(table, row, column, qualifier, timestamp));
 		}
 
 		/// <summary>
@@ -169,51 +121,28 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="timestamp">The timestamp.</param>
 		public static string ReadValue(this IStargate gate, string table, string row, string column, string qualifier = null, long? timestamp = null)
 		{
-			return gate.ReadValue(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
+			return gate.ReadValue(BuildIdentifier(table, row, column, qualifier, timestamp));
 		}
 
 		/// <summary>
-		///    Finds the cells with the matching attributes.
+		/// Finds the cells with the matching attributes.
 		/// </summary>
 		/// <param name="gate">The gate.</param>
 		/// <param name="table">The table.</param>
 		/// <param name="row">The row.</param>
 		/// <param name="column">The column.</param>
 		/// <param name="qualifier">The qualifier.</param>
-		/// <param name="beginTimestamp">The begin timestamp (exclusive).</param>
+		/// <param name="beginTimestamp">The begin timestamp (inclusive).</param>
 		/// <param name="endTimestamp">The end timestamp (exclusive).</param>
+		/// <param name="maxResults">The maximum number of results to return.</param>
 		public static Task<CellSet> FindCellsAsync(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
-			long? beginTimestamp = null, long? endTimestamp = null)
+			long? beginTimestamp = null, long? endTimestamp = null, int? maxResults = null)
 		{
-			return gate.FindCellsAsync(new CellQuery
-			{
-				Table = table,
-				Row = row,
-				Cells = new[]
-				{
-					new HBaseCellDescriptor
-					{
-						Column = column,
-						Qualifier = qualifier
-					}
-				},
-				BeginTimestamp = beginTimestamp,
-				EndTimestamp = endTimestamp
-			});
+			return gate.FindCellsAsync(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxResults));
 		}
 
 		/// <summary>
-		///    Finds the cells with the matching attributes.
+		/// Finds the cells with the matching attributes.
 		/// </summary>
 		/// <param name="gate">The gate.</param>
 		/// <param name="table">The table.</param>
@@ -222,24 +151,11 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="qualifier">The qualifier.</param>
 		/// <param name="beginTimestamp">The begin timestamp (exclusive).</param>
 		/// <param name="endTimestamp">The end timestamp (exclusive).</param>
+		/// <param name="maxResults">The maximum versions to return.</param>
 		public static CellSet FindCells(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
-			long? beginTimestamp = null, long? endTimestamp = null)
+			long? beginTimestamp = null, long? endTimestamp = null, int? maxResults = null)
 		{
-			return gate.FindCells(new CellQuery
-			{
-				Table = table,
-				Row = row,
-				Cells = new[]
-				{
-					new HBaseCellDescriptor
-					{
-						Column = column,
-						Qualifier = qualifier
-					}
-				},
-				BeginTimestamp = beginTimestamp,
-				EndTimestamp = endTimestamp
-			});
+			return gate.FindCells(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxResults));
 		}
 
 		/// <summary>
@@ -255,6 +171,41 @@ namespace HBase.Stargate.Client.Api
 			{
 				errorProvider.ThrowFromResponse(response);
 			}
+		}
+
+		private static Identifier BuildIdentifier(string table, string row, string column, string qualifier, long? timestamp)
+		{
+			return new Identifier
+			{
+				Table = table,
+				Row = row,
+				Cell = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
+				Timestamp = timestamp
+			};
+		}
+
+		private static CellQuery BuildQuery(string table, string row, string column, string qualifier, long? beginTimestamp, long? endTimestamp, int? maxResults)
+		{
+			return new CellQuery
+			{
+				Table = table,
+				Row = row,
+				Cells = new[]
+				{
+					new HBaseCellDescriptor
+					{
+						Column = column,
+						Qualifier = qualifier
+					}
+				},
+				BeginTimestamp = beginTimestamp,
+				EndTimestamp = endTimestamp,
+				MaxResults = maxResults
+			};
 		}
 	}
 }

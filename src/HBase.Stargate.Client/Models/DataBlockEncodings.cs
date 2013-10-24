@@ -19,32 +19,31 @@
 
 #endregion
 
-using System.Collections.Generic;
-
-namespace HBase.Stargate.Client
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Defines a set of cells associated with a table.
+	///    Describes the data block encoding (key compression) algorithms that can be used with HBase.
 	/// </summary>
-	public class CellSet : List<Cell>
+	public enum DataBlockEncodings
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CellSet"/> class.
+		///    Data block encoding is disabled (default).
 		/// </summary>
-		public CellSet() {}
+		None,
 
 		/// <summary>
-		///    Initializes a new instance of the <see cref="CellSet" /> class.
+		///    The "DIFF" algorithm.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		public CellSet(IEnumerable<Cell> cells) : base(cells) {}
+		Diff,
 
 		/// <summary>
-		///    Gets or sets the name of the table.
+		///    The "FASTDIFF" algorithm.
 		/// </summary>
-		/// <value>
-		///    The name of the table.
-		/// </value>
-		public string Table { get; set; }
+		FastDiff,
+
+		/// <summary>
+		///    The "PREFIX" algorithm.
+		/// </summary>
+		Prefix
 	}
 }

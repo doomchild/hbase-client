@@ -1,4 +1,4 @@
-﻿#region FreeBSD
+#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,33 +19,20 @@
 
 #endregion
 
-using System.Configuration;
-
-using HBase.Stargate.Client.Models;
-
-namespace HBase.Stargate.Client.Config
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Provides an XML configuration-based <see cref="Identifier" />.
+	///    Describes a cell in HBase.
 	/// </summary>
-	public class ConfigIdentifier : ConfigDescriptor
+	public class HBaseCellDescriptor
 	{
-		private const string _columName = "column";
-		private const string _qualifierName = "qualifier";
-		private const string _timestampName = "timestamp";
-
 		/// <summary>
 		///    Gets or sets the column.
 		/// </summary>
 		/// <value>
 		///    The column.
 		/// </value>
-		[ConfigurationProperty(_columName, IsRequired = true)]
-		public string Column
-		{
-			get { return this[_columName] as string; }
-			set { this[_columName] = value; }
-		}
+		public string Column { get; set; }
 
 		/// <summary>
 		///    Gets or sets the qualifier.
@@ -53,43 +40,6 @@ namespace HBase.Stargate.Client.Config
 		/// <value>
 		///    The qualifier.
 		/// </value>
-		[ConfigurationProperty(_qualifierName, IsRequired = false)]
-		public string Qualifier
-		{
-			get { return this[_qualifierName] as string; }
-			set { this[_qualifierName] = value; }
-		}
-
-		/// <summary>
-		///    Gets or sets the timestamp.
-		/// </summary>
-		/// <value>
-		///    The timestamp.
-		/// </value>
-		[ConfigurationProperty(_timestampName, IsRequired = false)]
-		public long? Timestamp
-		{
-			get { return this[_timestampName] as long?; }
-			set { this[_timestampName] = value; }
-		}
-
-		/// <summary>
-		///    Converts the config-based identifier to a normal one.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		public static implicit operator Identifier(ConfigIdentifier identifier)
-		{
-			return new Identifier
-			{
-				Table = identifier.Table,
-				Row = identifier.Row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = identifier.Column,
-					Qualifier = identifier.Qualifier
-				},
-				Timestamp = identifier.Timestamp
-			};
-		}
+		public string Qualifier { get; set; }
 	}
 }

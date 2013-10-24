@@ -19,7 +19,10 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using HBase.Stargate.Client.Models;
 
 namespace HBase.Stargate.Client.Api
 {
@@ -89,5 +92,53 @@ namespace HBase.Stargate.Client.Api
 		/// </summary>
 		/// <param name="query"></param>
 		CellSet FindCells(CellQuery query);
+
+		/// <summary>
+		///    Creates the table.
+		/// </summary>
+		/// <param name="tableSchema">The table schema.</param>
+		void CreateTable(TableSchema tableSchema);
+
+		/// <summary>
+		///    Creates the table.
+		/// </summary>
+		/// <param name="tableSchema">The table schema.</param>
+		Task CreateTableAsync(TableSchema tableSchema);
+
+		/// <summary>
+		///    Gets the table names.
+		/// </summary>
+		/// <returns></returns>
+		IEnumerable<string> GetTableNames();
+
+		/// <summary>
+		///    Gets the table names.
+		/// </summary>
+		/// <returns></returns>
+		Task<IEnumerable<string>> GetTableNamesAsync();
+
+		/// <summary>
+		/// Deletes the table.
+		/// </summary>
+		/// <param name="tableName">Name of the table.</param>
+		void DeleteTable(string tableName);
+
+		/// <summary>
+		/// Deletes the table.
+		/// </summary>
+		/// <param name="tableName">Name of the table.</param>
+		Task DeleteTableAsync(string tableName);
+
+		/// <summary>
+		/// Gets the table schema.
+		/// </summary>
+		/// <param name="tableName">Name of the table.</param>
+		Task<TableSchema> GetTableSchemaAsync(string tableName);
+
+		/// <summary>
+		/// Gets the table schema.
+		/// </summary>
+		/// <param name="tableName">Name of the table.</param>
+		TableSchema GetTableSchema(string tableName);
 	}
 }

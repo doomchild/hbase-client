@@ -19,45 +19,51 @@
 
 #endregion
 
-using System.Collections.Generic;
+using HBase.Stargate.Client.Models;
 
-namespace HBase.Stargate.Client
+namespace HBase.Stargate.Client.MimeConversion
 {
 	/// <summary>
-	///    Defines a query targeting one or more cells in HBase.
+	///    Defines a converter for simple HBase-related values.
 	/// </summary>
-	public class CellQuery : HBaseDescriptor
+	public interface ISimpleValueConverter
 	{
 		/// <summary>
-		///    Gets or sets the additional criteria.
+		///    Converts the bloom filter.
 		/// </summary>
-		/// <value>
-		///    The additional criteria.
-		/// </value>
-		public IEnumerable<HBaseCellDescriptor> Cells { get; set; }
+		/// <param name="filter">The filter.</param>
+		/// <returns></returns>
+		string ConvertBloomFilter(BloomFilters? filter);
 
 		/// <summary>
-		///    Gets or sets the begin timestamp (exclusive).
+		///    Converts the bloom filter.
 		/// </summary>
-		/// <value>
-		///    The begin timestamp (exclusive).
-		/// </value>
-		public long? BeginTimestamp { get; set; }
+		/// <param name="filter">The filter.</param>
+		/// <returns></returns>
+		BloomFilters ConvertBloomFilter(string filter);
 
 		/// <summary>
-		///    Gets or sets the end timestamp (exclusive).
+		///    Converts the type of the compression.
 		/// </summary>
-		/// <value>
-		///    The end timestamp (exclusive).
-		/// </value>
-		public long? EndTimestamp { get; set; }
+		/// <param name="compressionType">Type of the compression.</param>
+		string ConvertCompressionType(CompressionTypes? compressionType);
 
 		/// <summary>
-		///    Gets or sets the maximum allowed results.
+		///    Converts the type of the compression.
 		/// </summary>
-		/// <value>
-		///    The maximum allowed results.
-		/// </value>
-		public int? MaxResults { get; set; }
+		/// <param name="compressionType">Type of the compression.</param>
+		CompressionTypes ConvertCompressionType(string compressionType);
+
+		/// <summary>
+		///    Converts the data block encoding.
+		/// </summary>
+		/// <param name="encoding">The encoding.</param>
+		string ConvertDataBlockEncoding(DataBlockEncodings? encoding);
+
+		/// <summary>
+		///    Converts the data block encoding.
+		/// </summary>
+		/// <param name="encoding">The encoding.</param>
+		DataBlockEncodings ConvertDataBlockEncoding(string encoding);
 	}
 }

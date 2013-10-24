@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,6 +17,10 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
+using HBase.Stargate.Client.Models;
+
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
@@ -23,27 +29,36 @@ namespace HBase.Stargate.Client.Api
 	public interface IResourceBuilder
 	{
 		/// <summary>
-		/// Builds a cell or row query URI.
+		///    Builds a cell or row query URI.
 		/// </summary>
 		/// <param name="query"></param>
 		string BuildCellOrRowQuery(CellQuery query);
 
 		/// <summary>
-		/// Builds a single value storage URI.
+		///    Builds a single value storage URI.
 		/// </summary>
 		/// <param name="identifier">The identifier.</param>
-		string BuildSingleValueAccess(Identifier identifier);
+		/// <param name="forReading">
+		///    if set to <c>true</c> this resource will be used for reading.
+		/// </param>
+		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
 
 		/// <summary>
-		/// Builds a delete-item URI.
+		///    Builds a delete-item URI.
 		/// </summary>
 		/// <param name="identifier">The identifier.</param>
 		string BuildDeleteItem(Identifier identifier);
 
 		/// <summary>
-		/// Builds a batch insert URI.
+		///    Builds a batch insert URI.
 		/// </summary>
 		/// <param name="identifier">The identifier.</param>
 		string BuildBatchInsert(Identifier identifier);
+
+		/// <summary>
+		///    Builds a table creation URI.
+		/// </summary>
+		/// <param name="tableSchema">The table schema.</param>
+		string BuildTableSchemaAccess(TableSchema tableSchema);
 	}
 }

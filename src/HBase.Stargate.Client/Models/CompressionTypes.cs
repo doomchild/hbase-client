@@ -19,36 +19,36 @@
 
 #endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Describes the MIME types supported by HBase Stargate.
+	///    Describes the possible compression types that can be used with HBase.
 	/// </summary>
-	public static class HBaseMimeTypes
+	public enum CompressionTypes
 	{
 		/// <summary>
-		///    The plain text MIME type.
+		///    No compression (default).
 		/// </summary>
-		public const string Text = "text/plain";
+		None,
 
 		/// <summary>
-		///    The XML MIME type.
+		///    Snappy compression.
 		/// </summary>
-		public const string Xml = "text/xml";
+		Snappy,
 
 		/// <summary>
-		///    The json MIME type.
+		///    Lempel–Ziv–Oberhumer compression.
 		/// </summary>
-		public const string Json = "application/json";
+		Lzo,
 
 		/// <summary>
-		///    The protobuf MIME type.
+		///    gzip compression.
 		/// </summary>
-		public const string Protobuf = "application/x-protobuf";
+		GZip,
 
 		/// <summary>
-		///    The binary stream MIME type.
+		///    LZ4 compression.
 		/// </summary>
-		public const string Stream = "application/octet-stream";
+		Lz4
 	}
 }

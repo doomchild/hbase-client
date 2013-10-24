@@ -21,6 +21,7 @@ using System.Linq;
 using FluentAssertions;
 
 using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
 
@@ -43,13 +44,13 @@ namespace _specs.Steps.Serialization
 		[When(@"I convert my raw content to a set of cells")]
 		public void ConvertRawContentToCellSet()
 		{
-			_hBase.CellSet = new CellSet(_converter.Convert(_hBase.RawContent));
+			_hBase.CellSet = new CellSet(_converter.ConvertCells(_hBase.RawContent));
 		}
 
 		[When(@"I convert my raw content to a cell")]
 		public void ConvertRawContentToCell()
 		{
-			IList<Cell> set = _converter.Convert(_hBase.RawContent).ToList();
+			IList<Cell> set = _converter.ConvertCells(_hBase.RawContent).ToList();
 			set.Should().HaveCount(1);
 			_hBase.Cell = set[0];
 		}
@@ -57,13 +58,13 @@ namespace _specs.Steps.Serialization
 		[When(@"I convert my set of cells to raw content")]
 		public void ConvertCellSetToRawContent()
 		{
-			_hBase.RawContent = _converter.Convert(_hBase.CellSet);
+			_hBase.RawContent = _converter.ConvertCells(_hBase.CellSet);
 		}
 
 		[When(@"I convert my cell to raw content")]
 		public void ConvertCellToRawContent()
 		{
-			_hBase.RawContent = _converter.Convert(_hBase.Cell);
+			_hBase.RawContent = _converter.ConvertCell(_hBase.Cell);
 		}
 	}
 }
