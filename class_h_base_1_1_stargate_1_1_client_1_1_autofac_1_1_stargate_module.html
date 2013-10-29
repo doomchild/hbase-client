@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hbase-client
-   &#160;<span id="projectnumber">1.0-beta.1</span>
+   &#160;<span id="projectnumber">1.0-beta.2</span>
    </div>
    <div id="projectbrief">A simple set of .NET client libraries for HBase</div>
   </td>
@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('class_h_base_1_1_stargate_1_1_client_1
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Properties</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -141,6 +141,59 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a9e94e6abba039df59eb98610c1c86919"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#a9e94e6abba039df59eb98610c1c86919">Load</a> (ContainerBuilder builder)</td></tr>
 <tr class="memdesc:a9e94e6abba039df59eb98610c1c86919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overridden to add IStargate-related registrations to the container.  <a href="#a9e94e6abba039df59eb98610c1c86919">More...</a><br/></td></tr>
 <tr class="separator:a9e94e6abba039df59eb98610c1c86919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7334ab8f571f6cad9247d29a7fef3f01"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#a7334ab8f571f6cad9247d29a7fef3f01">RegisterCodec</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:a7334ab8f571f6cad9247d29a7fef3f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the codec.  <a href="#a7334ab8f571f6cad9247d29a7fef3f01">More...</a><br/></td></tr>
+<tr class="separator:a7334ab8f571f6cad9247d29a7fef3f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c62a55064aa9cde420886642aa7a115"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#a2c62a55064aa9cde420886642aa7a115">RegisterScannerOptionsConverter</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:a2c62a55064aa9cde420886642aa7a115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the scanner options converter.  <a href="#a2c62a55064aa9cde420886642aa7a115">More...</a><br/></td></tr>
+<tr class="separator:a2c62a55064aa9cde420886642aa7a115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbe399161af43716f52f72a488fa4a3a"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ScanningActivatorData, <br class="typebreak"/>
+DynamicRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#adbe399161af43716f52f72a488fa4a3a">RegisterMimeConverters</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:adbe399161af43716f52f72a488fa4a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the MIME converters.  <a href="#adbe399161af43716f52f72a488fa4a3a">More...</a><br/></td></tr>
+<tr class="separator:adbe399161af43716f52f72a488fa4a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab9a6bd7dc541047791e7b798b6cece9"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#aab9a6bd7dc541047791e7b798b6cece9">RegisterStargate</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:aab9a6bd7dc541047791e7b798b6cece9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the stargate.  <a href="#aab9a6bd7dc541047791e7b798b6cece9">More...</a><br/></td></tr>
+<tr class="separator:aab9a6bd7dc541047791e7b798b6cece9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07e6ac86c573c234928c06048c9ea369"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#a07e6ac86c573c234928c06048c9ea369">RegisterSimpleValueConverter</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:a07e6ac86c573c234928c06048c9ea369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the simple value converter.  <a href="#a07e6ac86c573c234928c06048c9ea369">More...</a><br/></td></tr>
+<tr class="separator:a07e6ac86c573c234928c06048c9ea369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fead5cc4eb0ab64bc515d906c82df29"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#a1fead5cc4eb0ab64bc515d906c82df29">RegisterErrorProvider</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:a1fead5cc4eb0ab64bc515d906c82df29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the error provider.  <a href="#a1fead5cc4eb0ab64bc515d906c82df29">More...</a><br/></td></tr>
+<tr class="separator:a1fead5cc4eb0ab64bc515d906c82df29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fc8e829a8e9f58625daccf6a73e56a7"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#a6fc8e829a8e9f58625daccf6a73e56a7">RegisterMimeConverterFactory</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:a6fc8e829a8e9f58625daccf6a73e56a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the MIME converter factory.  <a href="#a6fc8e829a8e9f58625daccf6a73e56a7">More...</a><br/></td></tr>
+<tr class="separator:a6fc8e829a8e9f58625daccf6a73e56a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa511b1e89ec2cfd05a503b970611ddab"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, <br class="typebreak"/>
+ConcreteReflectionActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#aa511b1e89ec2cfd05a503b970611ddab">RegisterResourceBuilder</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:aa511b1e89ec2cfd05a503b970611ddab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the resource builder.  <a href="#aa511b1e89ec2cfd05a503b970611ddab">More...</a><br/></td></tr>
+<tr class="separator:aa511b1e89ec2cfd05a503b970611ddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8e2467dc3b67d00cf9ff0f8c5165f7a"><td class="memItemLeft" align="right" valign="top">virtual IRegistrationBuilder<br class="typebreak"/>
+&lt; object, SimpleActivatorData, <br class="typebreak"/>
+SingleRegistrationStyle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html#ab8e2467dc3b67d00cf9ff0f8c5165f7a">RegisterOptions</a> (ContainerBuilder builder)</td></tr>
+<tr class="memdesc:ab8e2467dc3b67d00cf9ff0f8c5165f7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the options.  <a href="#ab8e2467dc3b67d00cf9ff0f8c5165f7a">More...</a><br/></td></tr>
+<tr class="separator:ab8e2467dc3b67d00cf9ff0f8c5165f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides <a class="el" href="namespace_h_base_1_1_stargate_1_1_client_1_1_autofac.html">Autofac</a> registrations for IStargate and surrounding services. </p>
@@ -244,13 +297,301 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7334ab8f571f6cad9247d29a7fef3f01"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterCodec </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the codec. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a1fead5cc4eb0ab64bc515d906c82df29"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterErrorProvider </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the error provider. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a6fc8e829a8e9f58625daccf6a73e56a7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterMimeConverterFactory </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the MIME converter factory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="adbe399161af43716f52f72a488fa4a3a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ScanningActivatorData, DynamicRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterMimeConverters </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the MIME converters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab8e2467dc3b67d00cf9ff0f8c5165f7a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, SimpleActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterOptions </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the options. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa511b1e89ec2cfd05a503b970611ddab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterResourceBuilder </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the resource builder. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2c62a55064aa9cde420886642aa7a115"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterScannerOptionsConverter </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the scanner options converter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a07e6ac86c573c234928c06048c9ea369"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterSimpleValueConverter </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the simple value converter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aab9a6bd7dc541047791e7b798b6cece9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual IRegistrationBuilder&lt;object, ConcreteReflectionActivatorData, SingleRegistrationStyle&gt; HBase.Stargate.Client.Autofac.StargateModule.RegisterStargate </td>
+          <td>(</td>
+          <td class="paramtype">ContainerBuilder&#160;</td>
+          <td class="paramname"><em>builder</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers the stargate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builder</td><td>The builder.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_h_base.html">HBase</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate.html">Stargate</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client.html">Client</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client_1_1_autofac.html">Autofac</a></li><li class="navelem"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html">StargateModule</a></li>
-    <li class="footer">Generated on Fri Oct 11 2013 10:22:44 for hbase-client by
+    <li class="footer">Generated on Tue Oct 29 2013 10:06:12 for hbase-client by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

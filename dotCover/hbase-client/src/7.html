@@ -86,71 +86,135 @@ namespace _specs.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute(&quot;Cell or Row query&quot;)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/*/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/*/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/*/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/*/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/*/alpha/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/*/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/*/alpha/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/*/alpha:x/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/*/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/*/alpha:x/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/1/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/1/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/1/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/1/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/1/alpha/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/1/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/1/alpha/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;test/1/alpha:x/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;test/1/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;test/1/alpha:x/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
-        public virtual void CellOrRowQuery(string table, string row, string column, string qualifier, string begin, string end, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;&quot;, &quot;should not&quot;, &quot;ArgumentException&quot;, &quot;ResourceBuilder_MinimumForCellOrRowQueryNotMet&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/*/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/*/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/*/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/*/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*/alpha?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/alpha/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/alpha/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*/alpha?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/alpha/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/alpha/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*/alpha:x?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/alpha:x/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/alpha:x/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/*/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/*/alpha:x?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/*/alpha:x/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/*/alpha:x/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/*/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/*/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/*/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/*/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/*/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/*/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1/alpha?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/alpha/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/alpha/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1/alpha&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1/alpha?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/alpha/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/alpha/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1/alpha:x?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/alpha:x/5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/alpha:x/5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;, &quot;test/1/alpha:x&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;&quot;, &quot;2&quot;, &quot;test/1/alpha:x?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;&quot;, &quot;test/1/alpha:x/4,5&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        [NUnit.Framework.TestCaseAttribute(&quot;test&quot;, &quot;1&quot;, &quot;alpha&quot;, &quot;x&quot;, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;test/1/alpha:x/4,5?v=2&quot;, &quot;should&quot;, &quot;&quot;, &quot;&quot;, null)]
+        public virtual void CellOrRowQuery(string table, string row, string column, string qualifier, string begin, string end, string max, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(&quot;Cell or Row query&quot;, exampleTags);
 #line 9
@@ -158,10 +222,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 10
- testRunner.Given(string.Format(&quot;I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, an&quot; +
-                        &quot;d a {5} timestamp&quot;, table, row, column, qualifier, begin, end), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Given &quot;);
+ testRunner.Given(string.Format(&quot;I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, a &quot; +
+                        &quot;{5} timestamp, and a {6} number of results&quot;, table, row, column, qualifier, begin, end, max), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Given &quot;);
 #line 11
- testRunner.When(&quot;I build a resource name for Cell or Row queries using my identifier&quot;, ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;When &quot;);
+ testRunner.When(&quot;I build a resource name for Cell or Row queries using my query&quot;, ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;When &quot;);
 #line 12
  testRunner.Then(string.Format(&quot;the resulting resource name should match the expected {0}&quot;, resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Then &quot;);
 #line 13
@@ -211,21 +275,21 @@ this.FeatureBackground();
         public virtual void SingleValueStorage(string table, string row, string column, string qualifier, string timestamp, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(&quot;Single value storage&quot;, exampleTags);
-#line 83
+#line 147
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 84
+#line 148
  testRunner.Given(string.Format(&quot;I have an identifier consisting of a {0}, a {1}, a {2}, a {3}, and a {4}&quot;, table, row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Given &quot;);
-#line 85
+#line 149
  testRunner.When(&quot;I build a resource name for storing single values using my identifier&quot;, ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;When &quot;);
-#line 86
+#line 150
  testRunner.Then(string.Format(&quot;the resulting resource name should match the expected {0}&quot;, resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Then &quot;);
-#line 87
+#line 151
  testRunner.And(string.Format(&quot;the operation {0} have succeeded&quot;, shouldOrShouldNot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
-#line 88
+#line 152
  testRunner.And(string.Format(&quot;if there was an exception, it should have been the expected {0} type&quot;, exception), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
-#line 89
+#line 153
  testRunner.And(string.Format(&quot;if there was an exception, it should have had the expected exception {0}&quot;, message), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
 #line hidden
             this.ScenarioCleanup();
@@ -238,21 +302,21 @@ this.FeatureBackground();
         public virtual void WriteMultipleValues(string table, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(&quot;Write multiple values&quot;, exampleTags);
-#line 125
+#line 189
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 126
+#line 190
  testRunner.Given(string.Format(&quot;I have an identifier consisting of a {0}&quot;, table), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Given &quot;);
-#line 127
+#line 191
  testRunner.When(&quot;I build a resource name for storing multiple values using my identifier&quot;, ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;When &quot;);
-#line 128
+#line 192
  testRunner.Then(string.Format(&quot;the resulting resource name should match the expected {0}&quot;, resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Then &quot;);
-#line 129
+#line 193
  testRunner.And(string.Format(&quot;the operation {0} have succeeded&quot;, shouldOrShouldNot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
-#line 130
+#line 194
  testRunner.And(string.Format(&quot;if there was an exception, it should have been the expected {0} type&quot;, exception), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
-#line 131
+#line 195
  testRunner.And(string.Format(&quot;if there was an exception, it should have had the expected exception {0}&quot;, message), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
 #line hidden
             this.ScenarioCleanup();
@@ -295,21 +359,21 @@ this.FeatureBackground();
         public virtual void DeleteAnItem(string table, string row, string column, string qualifier, string timestamp, string resource, string shouldOrShouldNot, string exception, string message, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(&quot;Delete an item&quot;, exampleTags);
-#line 137
+#line 201
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 138
+#line 202
  testRunner.Given(string.Format(&quot;I have an identifier consisting of a {0}, a {1}, a {2}, a {3}, and a {4}&quot;, table, row, column, qualifier, timestamp), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Given &quot;);
-#line 139
+#line 203
  testRunner.When(&quot;I build a resource name for deleting items using my identifier&quot;, ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;When &quot;);
-#line 140
+#line 204
  testRunner.Then(string.Format(&quot;the resulting resource name should match the expected {0}&quot;, resource), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;Then &quot;);
-#line 141
+#line 205
  testRunner.And(string.Format(&quot;the operation {0} have succeeded&quot;, shouldOrShouldNot), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
-#line 142
+#line 206
  testRunner.And(string.Format(&quot;if there was an exception, it should have been the expected {0} type&quot;, exception), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
-#line 143
+#line 207
  testRunner.And(string.Format(&quot;if there was an exception, it should have had the expected exception {0}&quot;, message), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), &quot;And &quot;);
 #line hidden
             this.ScenarioCleanup();

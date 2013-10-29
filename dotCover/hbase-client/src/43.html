@@ -4,19 +4,19 @@
 
 		</script><script type="text/javascript">
 			RANGES_43 = [
-   [35,3,35,70,'dccv']
-, [36,3,36,4,'dccv']
-, [37,4,37,29,'dccv']
-, [38,3,38,4,'dccv']
-, [45,3,45,4,'dccv']
-, [46,4,46,51,'dccv']
-, [46,120,46,122,'dccv']
-, [47,3,47,4,'dccv']
-, [46,51,46,120,'dccv']
+   [43,3,43,35,'dcuc']
+, [44,3,44,4,'dcuc']
+, [45,4,45,25,'dcuc']
+, [46,3,46,4,'dcuc']
+, [53,3,53,4,'dcuc']
+, [54,4,54,33,'dcuc']
+, [55,3,55,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src43" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+		<code id="src43" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -33,35 +33,41 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Defines an IoC-driven implementation of &lt;see cref=&quot;IMimeConverterFactory&quot; /&gt;.
+	///    Implementation of Filter interface that limits results to a specific page size. It terminates
+	///    scanning once the number of filter-passed rows is &gt; the given page size. Note that this filter
+	///    cannot guarantee that the number of results returned to a client are &amp;lt;= page size. This is
+	///    because the filter is applied separately on different region servers. It does however optimize
+	///    the scan of individual HRegions by making sure that the page size is never exceeded locally.
 	/// &lt;/summary&gt;
-	public class MimeConverterFactory : IMimeConverterFactory
+	public class PageFilter : TypeValueFilterBase
 	{
-		private readonly IEnumerable&lt;IMimeConverter&gt; _converters;
+		private readonly long _pageSize;
 
 		/// &lt;summary&gt;
-		/// Initializes a new instance of the &lt;see cref=&quot;MimeConverterFactory&quot;/&gt; class.
+		///    Initializes a new instance of the &lt;see cref=&quot;PageFilter&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;converters&quot;&gt;The converters.&lt;/param&gt;
-		public MimeConverterFactory(IEnumerable&lt;IMimeConverter&gt; converters)
+		/// &lt;param name=&quot;pageSize&quot;&gt;Size of the page.&lt;/param&gt;
+		public PageFilter(long pageSize)
 		{
-			_converters = converters;
+			_pageSize = pageSize;
 		}
 
 		/// &lt;summary&gt;
-		/// Creates the converter appropriate for the specified MIME type.
+		/// Gets the token to use as the value.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;mimeType&quot;&gt;The MIME type.&lt;/param&gt;
-		public IMimeConverter CreateConverter(string mimeType)
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		protected override JToken GetValueJToken(ICodec codec)
 		{
-			return _converters.FirstOrDefault(converter =&gt; StringComparer.OrdinalIgnoreCase.Equals(converter.MimeType, mimeType));
+			return new JValue(_pageSize);
 		}
 	}
 }</pre></code><script type="text/javascript">

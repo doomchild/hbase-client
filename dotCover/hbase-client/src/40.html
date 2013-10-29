@@ -4,24 +4,26 @@
 
 		</script><script type="text/javascript">
 			RANGES_40 = [
-   [46,8,46,9,'dcuc']
-, [46,10,46,48,'dcuc']
-, [46,49,46,50,'dcuc']
-, [47,8,47,9,'dcuc']
-, [47,10,47,39,'dcuc']
-, [47,40,47,41,'dcuc']
-, [59,8,59,9,'dcuc']
-, [59,10,59,50,'dcuc']
-, [59,51,59,52,'dcuc']
-, [60,8,60,9,'dcuc']
-, [60,10,60,41,'dcuc']
-, [60,42,60,43,'dcuc']
-, [72,8,72,9,'dcuc']
-, [72,10,72,50,'dcuc']
-, [72,51,72,52,'dcuc']
-, [73,8,73,9,'dcuc']
-, [73,10,73,41,'dcuc']
-, [73,42,73,43,'dcuc']
+   [52,3,52,68,'dcuc']
+, [53,3,53,4,'dcuc']
+, [54,4,54,25,'dcuc']
+, [55,3,55,4,'dcuc']
+, [62,3,62,121,'dcuc']
+, [63,3,63,4,'dcuc']
+, [64,4,64,25,'dcuc']
+, [65,3,65,4,'dcuc']
+, [72,3,72,4,'dcuc']
+, [73,4,73,45,'dcuc']
+, [74,4,74,71,'dcuc']
+, [76,4,76,20,'dcuc']
+, [77,4,77,5,'dcuc']
+, [78,5,78,17,'dcuc']
+, [81,4,81,62,'dcuc']
+, [81,89,81,91,'dcuc']
+, [83,4,83,16,'dcuc']
+, [84,3,84,4,'dcuc']
+, [39,3,44,6,'dcuc']
+, [81,62,81,89,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -46,58 +48,68 @@
 
 #endregion
 
-using System.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 
-using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.TypeConversion;
 
-namespace HBase.Stargate.Client.Config
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides an XML configuration-based implementation of &lt;see cref=&quot;IStargateOptions&quot; /&gt;.
+	///    Represents a list of filters.
 	/// &lt;/summary&gt;
-	public class StargateConfigOptions : ConfigurationElement, IStargateOptions
+	public class FilterList : FilterListBase&lt;IScannerFilter&gt;
 	{
-		private const string _serverUrlName = &quot;serverUrl&quot;;
-		private const string _contentTypeName = &quot;contentType&quot;;
-		private const string _falseRowKeyName = &quot;falseRowKey&quot;;
+		private const string _operationPropertyName = &quot;op&quot;;
+		private const string _filtersPropertyName = &quot;filters&quot;;
+
+		private static readonly IDictionary&lt;FilterListTypes, string&gt; _filterTypes
+			= new Dictionary&lt;FilterListTypes, string&gt;
+			{
+				{FilterListTypes.All, &quot;MUST_PASS_ALL&quot;},
+				{FilterListTypes.One, &quot;MUST_PASS_ONE&quot;}
+			};
+
+		private readonly FilterListTypes _listType;
 
 		/// &lt;summary&gt;
-		///    Gets or sets the server URL.
+		///    Initializes a new instance of the &lt;see cref=&quot;FilterList&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The server URL.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_serverUrlName, IsRequired = true)]
-		public string ServerUrl
+		/// &lt;param name=&quot;listType&quot;&gt;Type of the list.&lt;/param&gt;
+		public FilterList(FilterListTypes listType = FilterListTypes.All)
 		{
-			get { return this[_serverUrlName] as string; }
-			set { this[_serverUrlName] = value; }
+			_listType = listType;
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the type of the content.
+		///    Initializes a new instance of the &lt;see cref=&quot;FilterList&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The type of the content.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_contentTypeName, IsRequired = false, DefaultValue = Api.Stargate.DefaultContentType)]
-		public string ContentType
+		/// &lt;param name=&quot;filters&quot;&gt;The filters.&lt;/param&gt;
+		/// &lt;param name=&quot;listType&quot;&gt;Type of the list.&lt;/param&gt;
+		public FilterList(IEnumerable&lt;IScannerFilter&gt; filters, FilterListTypes listType = FilterListTypes.All) : base(filters)
 		{
-			get { return this[_contentTypeName] as string; }
-			set { this[_contentTypeName] = value; }
+			_listType = listType;
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the false row key.
+		///    Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The false row key.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_falseRowKeyName, IsRequired = false, DefaultValue = Api.Stargate.DefaultFalseRowKey)]
-		public string FalseRowKey
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
 		{
-			get { return this[_falseRowKeyName] as string; }
-			set { this[_falseRowKeyName] = value; }
+			JObject json = base.ConvertToJson(codec);
+			json[_operationPropertyName] = new JValue(_filterTypes[_listType]);
+
+			if (!this.Any())
+			{
+				return json;
+			}
+
+			json[_filtersPropertyName] = ConvertToJsonArray(filter =&gt; filter.ConvertToJson(codec));
+
+			return json;
 		}
 	}
 }</pre></code><script type="text/javascript">

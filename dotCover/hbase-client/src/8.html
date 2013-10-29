@@ -8,36 +8,36 @@
 , [9,1,9,34,'dccv']
 , [6,1,6,26,'dccv']
 , [10,2,11,2,'dccv']
-, [11,151,11,153,'dccv']
-, [11,2,11,151,'dccv']
+, [11,146,11,183,'dccv']
+, [11,2,11,146,'dccv']
 , [12,2,12,166,'dccv']
 , [13,2,13,148,'dccv']
 , [14,2,14,176,'dccv']
 , [15,2,15,178,'dccv']
-, [83,1,83,34,'dccv']
+, [147,1,147,34,'dccv']
 , [6,1,6,26,'dccv']
-, [84,2,84,215,'dccv']
-, [85,2,85,153,'dccv']
-, [86,2,86,166,'dccv']
-, [87,2,87,148,'dccv']
-, [88,2,88,176,'dccv']
-, [89,2,89,178,'dccv']
-, [125,1,125,34,'dccv']
+, [148,2,148,215,'dccv']
+, [149,2,149,153,'dccv']
+, [150,2,150,166,'dccv']
+, [151,2,151,148,'dccv']
+, [152,2,152,176,'dccv']
+, [153,2,153,178,'dccv']
+, [189,1,189,34,'dccv']
 , [6,1,6,26,'dccv']
-, [126,2,126,148,'dccv']
-, [127,2,127,155,'dccv']
-, [128,2,128,166,'dccv']
-, [129,2,129,148,'dccv']
-, [130,2,130,176,'dccv']
-, [131,2,131,178,'dccv']
-, [137,1,137,34,'dccv']
+, [190,2,190,148,'dccv']
+, [191,2,191,155,'dccv']
+, [192,2,192,166,'dccv']
+, [193,2,193,148,'dccv']
+, [194,2,194,176,'dccv']
+, [195,2,195,178,'dccv']
+, [201,1,201,34,'dccv']
 , [6,1,6,26,'dccv']
-, [138,2,138,215,'dccv']
-, [139,2,139,146,'dccv']
-, [140,2,140,166,'dccv']
-, [141,2,141,148,'dccv']
-, [142,2,142,176,'dccv']
-, [143,2,143,178,'dccv']
+, [202,2,202,215,'dccv']
+, [203,2,203,146,'dccv']
+, [204,2,204,166,'dccv']
+, [205,2,205,148,'dccv']
+, [206,2,206,176,'dccv']
+, [207,2,207,178,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -50,78 +50,142 @@ Background:
 	Given I have everything I need to test a resource builder in isolation, assuming a false-row-key of &quot;newRow&quot;
 
 Scenario Outline: Cell or Row query
-	Given I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, and a &lt;end&gt; timestamp
-	When I build a resource name for Cell or Row queries using my identifier
+	Given I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, a &lt;end&gt; timestamp, and a &lt;max&gt; number of results
+	When I build a resource name for Cell or Row queries using my query
 	Then the resulting resource name should match the expected &lt;resource&gt;
 	And the operation &lt;should or should not&gt; have succeeded
 	And if there was an exception, it should have been the expected &lt;exception&gt; type
 	And if there was an exception, it should have had the expected exception &lt;message&gt;
 Examples:
-	| table | row | column | qualifier | begin | end | resource           | should or should not | exception         | message                                        |
-	|       |     |        |           |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        |           |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        |           | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        |           | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        | x         |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        | x         |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        | x         | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     |        | x         | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  |           |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  |           |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  |           | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  |           | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  | x         |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  | x         |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  | x         | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       |     | alpha  | x         | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        |           |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        |           |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        |           | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        |           | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        | x         |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        | x         |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        | x         | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   |        | x         | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  |           |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  |           |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  |           | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  |           | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  | x         |       |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  | x         |       | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  | x         | 4     |     |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	|       | 1   | alpha  | x         | 4     | 5   |                    | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
-	| test  |     |        |           |       |     | test/*             | should               |                   |                                                |
-	| test  |     |        |           |       | 5   | test/*/*/5         | should               |                   |                                                |
-	| test  |     |        |           | 4     |     | test/*             | should               |                   |                                                |
-	| test  |     |        |           | 4     | 5   | test/*/*/4,5       | should               |                   |                                                |
-	| test  |     |        | x         |       |     | test/*             | should               |                   |                                                |
-	| test  |     |        | x         |       | 5   | test/*/*/5         | should               |                   |                                                |
-	| test  |     |        | x         | 4     |     | test/*             | should               |                   |                                                |
-	| test  |     |        | x         | 4     | 5   | test/*/*/4,5       | should               |                   |                                                |
-	| test  |     | alpha  |           |       |     | test/*/alpha       | should               |                   |                                                |
-	| test  |     | alpha  |           |       | 5   | test/*/alpha/5     | should               |                   |                                                |
-	| test  |     | alpha  |           | 4     |     | test/*/alpha       | should               |                   |                                                |
-	| test  |     | alpha  |           | 4     | 5   | test/*/alpha/4,5   | should               |                   |                                                |
-	| test  |     | alpha  | x         |       |     | test/*/alpha:x     | should               |                   |                                                |
-	| test  |     | alpha  | x         |       | 5   | test/*/alpha:x/5   | should               |                   |                                                |
-	| test  |     | alpha  | x         | 4     |     | test/*/alpha:x     | should               |                   |                                                |
-	| test  |     | alpha  | x         | 4     | 5   | test/*/alpha:x/4,5 | should               |                   |                                                |
-	| test  | 1   |        |           |       |     | test/1             | should               |                   |                                                |
-	| test  | 1   |        |           |       | 5   | test/1/*/5         | should               |                   |                                                |
-	| test  | 1   |        |           | 4     |     | test/1             | should               |                   |                                                |
-	| test  | 1   |        |           | 4     | 5   | test/1/*/4,5       | should               |                   |                                                |
-	| test  | 1   |        | x         |       |     | test/1             | should               |                   |                                                |
-	| test  | 1   |        | x         |       | 5   | test/1/*/5         | should               |                   |                                                |
-	| test  | 1   |        | x         | 4     |     | test/1             | should               |                   |                                                |
-	| test  | 1   |        | x         | 4     | 5   | test/1/*/4,5       | should               |                   |                                                |
-	| test  | 1   | alpha  |           |       |     | test/1/alpha       | should               |                   |                                                |
-	| test  | 1   | alpha  |           |       | 5   | test/1/alpha/5     | should               |                   |                                                |
-	| test  | 1   | alpha  |           | 4     |     | test/1/alpha       | should               |                   |                                                |
-	| test  | 1   | alpha  |           | 4     | 5   | test/1/alpha/4,5   | should               |                   |                                                |
-	| test  | 1   | alpha  | x         |       |     | test/1/alpha:x     | should               |                   |                                                |
-	| test  | 1   | alpha  | x         |       | 5   | test/1/alpha:x/5   | should               |                   |                                                |
-	| test  | 1   | alpha  | x         | 4     |     | test/1/alpha:x     | should               |                   |                                                |
-	| test  | 1   | alpha  | x         | 4     | 5   | test/1/alpha:x/4,5 | should               |                   |                                                |
+	| table | row | column | qualifier | begin | end | max | resource               | should or should not | exception         | message                                        |
+	|       |     |        |           |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        |           | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     |        | x         | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  |           | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       |     | alpha  | x         | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        |           | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   |        | x         | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  |           | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         |       |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         |       |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         |       | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         |       | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         | 4     |     |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         | 4     |     | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         | 4     | 5   |     |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	|       | 1   | alpha  | x         | 4     | 5   | 2   |                        | should not           | ArgumentException | ResourceBuilder_MinimumForCellOrRowQueryNotMet |
+	| test  |     |        |           |       |     |     | test/*                 | should               |                   |                                                |
+	| test  |     |        |           |       |     | 2   | test/*?v=2             | should               |                   |                                                |
+	| test  |     |        |           |       | 5   |     | test/*/*/5             | should               |                   |                                                |
+	| test  |     |        |           |       | 5   | 2   | test/*/*/5?v=2         | should               |                   |                                                |
+	| test  |     |        |           | 4     |     |     | test/*                 | should               |                   |                                                |
+	| test  |     |        |           | 4     |     | 2   | test/*?v=2             | should               |                   |                                                |
+	| test  |     |        |           | 4     | 5   |     | test/*/*/4,5           | should               |                   |                                                |
+	| test  |     |        |           | 4     | 5   | 2   | test/*/*/4,5?v=2       | should               |                   |                                                |
+	| test  |     |        | x         |       |     |     | test/*                 | should               |                   |                                                |
+	| test  |     |        | x         |       |     | 2   | test/*?v=2             | should               |                   |                                                |
+	| test  |     |        | x         |       | 5   |     | test/*/*/5             | should               |                   |                                                |
+	| test  |     |        | x         |       | 5   | 2   | test/*/*/5?v=2         | should               |                   |                                                |
+	| test  |     |        | x         | 4     |     |     | test/*                 | should               |                   |                                                |
+	| test  |     |        | x         | 4     |     | 2   | test/*?v=2             | should               |                   |                                                |
+	| test  |     |        | x         | 4     | 5   |     | test/*/*/4,5           | should               |                   |                                                |
+	| test  |     |        | x         | 4     | 5   | 2   | test/*/*/4,5?v=2       | should               |                   |                                                |
+	| test  |     | alpha  |           |       |     |     | test/*/alpha           | should               |                   |                                                |
+	| test  |     | alpha  |           |       |     | 2   | test/*/alpha?v=2       | should               |                   |                                                |
+	| test  |     | alpha  |           |       | 5   |     | test/*/alpha/5         | should               |                   |                                                |
+	| test  |     | alpha  |           |       | 5   | 2   | test/*/alpha/5?v=2     | should               |                   |                                                |
+	| test  |     | alpha  |           | 4     |     |     | test/*/alpha           | should               |                   |                                                |
+	| test  |     | alpha  |           | 4     |     | 2   | test/*/alpha?v=2       | should               |                   |                                                |
+	| test  |     | alpha  |           | 4     | 5   |     | test/*/alpha/4,5       | should               |                   |                                                |
+	| test  |     | alpha  |           | 4     | 5   | 2   | test/*/alpha/4,5?v=2   | should               |                   |                                                |
+	| test  |     | alpha  | x         |       |     |     | test/*/alpha:x         | should               |                   |                                                |
+	| test  |     | alpha  | x         |       |     | 2   | test/*/alpha:x?v=2     | should               |                   |                                                |
+	| test  |     | alpha  | x         |       | 5   |     | test/*/alpha:x/5       | should               |                   |                                                |
+	| test  |     | alpha  | x         |       | 5   | 2   | test/*/alpha:x/5?v=2   | should               |                   |                                                |
+	| test  |     | alpha  | x         | 4     |     |     | test/*/alpha:x         | should               |                   |                                                |
+	| test  |     | alpha  | x         | 4     |     | 2   | test/*/alpha:x?v=2     | should               |                   |                                                |
+	| test  |     | alpha  | x         | 4     | 5   |     | test/*/alpha:x/4,5     | should               |                   |                                                |
+	| test  |     | alpha  | x         | 4     | 5   | 2   | test/*/alpha:x/4,5?v=2 | should               |                   |                                                |
+	| test  | 1   |        |           |       |     |     | test/1                 | should               |                   |                                                |
+	| test  | 1   |        |           |       |     | 2   | test/1?v=2             | should               |                   |                                                |
+	| test  | 1   |        |           |       | 5   |     | test/1/*/5             | should               |                   |                                                |
+	| test  | 1   |        |           |       | 5   | 2   | test/1/*/5?v=2         | should               |                   |                                                |
+	| test  | 1   |        |           | 4     |     |     | test/1                 | should               |                   |                                                |
+	| test  | 1   |        |           | 4     |     | 2   | test/1?v=2             | should               |                   |                                                |
+	| test  | 1   |        |           | 4     | 5   |     | test/1/*/4,5           | should               |                   |                                                |
+	| test  | 1   |        |           | 4     | 5   | 2   | test/1/*/4,5?v=2       | should               |                   |                                                |
+	| test  | 1   |        | x         |       |     |     | test/1                 | should               |                   |                                                |
+	| test  | 1   |        | x         |       |     | 2   | test/1?v=2             | should               |                   |                                                |
+	| test  | 1   |        | x         |       | 5   |     | test/1/*/5             | should               |                   |                                                |
+	| test  | 1   |        | x         |       | 5   | 2   | test/1/*/5?v=2         | should               |                   |                                                |
+	| test  | 1   |        | x         | 4     |     |     | test/1                 | should               |                   |                                                |
+	| test  | 1   |        | x         | 4     |     | 2   | test/1?v=2             | should               |                   |                                                |
+	| test  | 1   |        | x         | 4     | 5   |     | test/1/*/4,5           | should               |                   |                                                |
+	| test  | 1   |        | x         | 4     | 5   | 2   | test/1/*/4,5?v=2       | should               |                   |                                                |
+	| test  | 1   | alpha  |           |       |     |     | test/1/alpha           | should               |                   |                                                |
+	| test  | 1   | alpha  |           |       |     | 2   | test/1/alpha?v=2       | should               |                   |                                                |
+	| test  | 1   | alpha  |           |       | 5   |     | test/1/alpha/5         | should               |                   |                                                |
+	| test  | 1   | alpha  |           |       | 5   | 2   | test/1/alpha/5?v=2     | should               |                   |                                                |
+	| test  | 1   | alpha  |           | 4     |     |     | test/1/alpha           | should               |                   |                                                |
+	| test  | 1   | alpha  |           | 4     |     | 2   | test/1/alpha?v=2       | should               |                   |                                                |
+	| test  | 1   | alpha  |           | 4     | 5   |     | test/1/alpha/4,5       | should               |                   |                                                |
+	| test  | 1   | alpha  |           | 4     | 5   | 2   | test/1/alpha/4,5?v=2   | should               |                   |                                                |
+	| test  | 1   | alpha  | x         |       |     |     | test/1/alpha:x         | should               |                   |                                                |
+	| test  | 1   | alpha  | x         |       |     | 2   | test/1/alpha:x?v=2     | should               |                   |                                                |
+	| test  | 1   | alpha  | x         |       | 5   |     | test/1/alpha:x/5       | should               |                   |                                                |
+	| test  | 1   | alpha  | x         |       | 5   | 2   | test/1/alpha:x/5?v=2   | should               |                   |                                                |
+	| test  | 1   | alpha  | x         | 4     |     |     | test/1/alpha:x         | should               |                   |                                                |
+	| test  | 1   | alpha  | x         | 4     |     | 2   | test/1/alpha:x?v=2     | should               |                   |                                                |
+	| test  | 1   | alpha  | x         | 4     | 5   |     | test/1/alpha:x/4,5     | should               |                   |                                                |
+	| test  | 1   | alpha  | x         | 4     | 5   | 2   | test/1/alpha:x/4,5?v=2 | should               |                   |                                                |
 
 Scenario Outline: Single value storage
 	Given I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;

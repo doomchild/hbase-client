@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hbase-client
-   &#160;<span id="projectnumber">1.0-beta.1</span>
+   &#160;<span id="projectnumber">1.0-beta.2</span>
    </div>
    <div id="projectbrief">A simple set of .NET client libraries for HBase</div>
   </td>
@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('class_h_base_1_1_stargate_1_1_client_1
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Properties</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -114,14 +114,16 @@ $(document).ready(function(){initNavTree('class_h_base_1_1_stargate_1_1_client_1
   <tr class="even"><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#a9748afb50bfebea1551200fadd9199cc">BuildBatchInsert</a>(Identifier identifier)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#a20ada1cf979cdd9a53dd1b7897234786">BuildCellOrRowQuery</a>(CellQuery query)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#ab9ceb6b5f41d8a18f620c7c26eb035da">BuildDeleteItem</a>(Identifier identifier)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#acb4cbd27240519448dcec618a3ca9c51">BuildSingleValueAccess</a>(Identifier identifier)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#adf44fbb98c69c6465fa8a9d19ac4e34b">BuildScannerCreate</a>(ScannerOptions scannerOptions)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#a641b2e586a210e0035572f07b7dfedce">BuildSingleValueAccess</a>(Identifier identifier, bool forReading=false)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#a58fe1bd52899c5bf81dc5d7da88d50a7">BuildTableSchemaAccess</a>(TableSchema tableSchema)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html#ae9ba7c8843c67890dfec7fa611978b28">ResourceBuilder</a>(IStargateOptions options)</td><td class="entry"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_resource_builder.html">HBase.Stargate.Client.Api.ResourceBuilder</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Oct 11 2013 10:22:44 for hbase-client by
+    <li class="footer">Generated on Tue Oct 29 2013 10:06:12 for hbase-client by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

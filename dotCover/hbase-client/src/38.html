@@ -4,35 +4,9 @@
 
 		</script><script type="text/javascript">
 			RANGES_38 = [
-   [49,8,49,9,'dcuc']
-, [49,10,49,52,'dcuc']
-, [49,53,49,54,'dcuc']
-, [50,8,50,9,'dcuc']
-, [50,10,50,44,'dcuc']
-, [50,45,50,46,'dcuc']
-, [62,8,62,9,'dcuc']
-, [62,10,62,50,'dcuc']
-, [62,51,62,52,'dcuc']
-, [63,8,63,9,'dcuc']
-, [63,10,63,42,'dcuc']
-, [63,43,63,44,'dcuc']
-, [75,8,75,9,'dcuc']
-, [75,10,75,47,'dcuc']
-, [75,48,75,49,'dcuc']
-, [76,8,76,9,'dcuc']
-, [76,10,76,40,'dcuc']
-, [76,41,76,42,'dcuc']
-, [90,8,90,9,'dcuc']
-, [90,10,90,68,'dcuc']
-, [90,69,90,70,'dcuc']
-, [91,8,91,9,'dcuc']
-, [91,10,91,35,'dcuc']
-, [91,36,91,37,'dcuc']
-, [99,3,99,4,'dcuc']
-, [100,4,107,69,'dcuc']
-, [107,95,108,6,'dcuc']
-, [109,3,109,4,'dcuc']
-, [107,69,107,95,'dcuc']
+   [34,3,34,106,'dcuc']
+, [34,107,34,108,'dcuc']
+, [34,108,34,109,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -57,94 +31,19 @@
 
 #endregion
 
-using System.Configuration;
-using System.Linq;
-
-namespace HBase.Stargate.Client.Config
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides an XML configuration-based &lt;see cref=&quot;CellQuery&quot; /&gt; implementation.
+	///    This filter is used to filter based on the column family.
 	/// &lt;/summary&gt;
-	public class ConfigCellQuery : ConfigDescriptor
+	public class FamilyFilter : ComparisonScannerFilterBase
 	{
-		private const string _beginTimestampName = &quot;beginTimestamp&quot;;
-		private const string _endTimestampName = &quot;endTimestamp&quot;;
-		private const string _maxResultsName = &quot;maxResults&quot;;
-		private const string _cellsName = &quot;filters&quot;;
-		private const string _addCellName = &quot;filter&quot;;
-		private const string _removeCellName = &quot;remove&quot;;
-		private const string _clearCellsName = &quot;clear&quot;;
-
 		/// &lt;summary&gt;
-		///    Gets or sets the begin timestamp (exclusive).
+		///    Initializes a new instance of the &lt;see cref=&quot;FamilyFilter&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The timestamp.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_beginTimestampName, IsRequired = false)]
-		public long? BeginTimestamp
-		{
-			get { return this[_beginTimestampName] as long?; }
-			set { this[_beginTimestampName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Gets or sets the end timestamp (exclusive).
-		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The timestamp.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_endTimestampName, IsRequired = false)]
-		public long? EndTimestamp
-		{
-			get { return this[_endTimestampName] as long?; }
-			set { this[_endTimestampName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Gets or sets the max results.
-		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The max results.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_endTimestampName, IsRequired = false)]
-		public int? MaxResults
-		{
-			get { return this[_maxResultsName] as int?; }
-			set { this[_maxResultsName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Gets or sets the cells used as filters in the query.
-		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The cells to use as filters in the query.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_cellsName)]
-		[ConfigurationCollection(typeof (ConfigCellDescriptor), AddItemName = _addCellName, RemoveItemName = _removeCellName,
-			ClearItemsName = _clearCellsName)]
-		public ConfigCellDescriptorCollection Cells
-		{
-			get { return this[_cellsName] as ConfigCellDescriptorCollection; }
-			set { this[_cellsName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Converts the config-based cell query to a normal one.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;query&quot;&gt;The query.&lt;/param&gt;
-		public static implicit operator CellQuery(ConfigCellQuery query)
-		{
-			return new CellQuery
-			{
-				Table = query.Table,
-				Row = query.Row,
-				BeginTimestamp = query.BeginTimestamp,
-				EndTimestamp = query.EndTimestamp,
-				MaxResults = query.MaxResults,
-				Cells = query.Cells.Cast&lt;ConfigCellDescriptor&gt;().Select(cell =&gt; (HBaseCellDescriptor) cell)
-			};
-		}
+		/// &lt;param name=&quot;columnFamily&quot;&gt;The column family.&lt;/param&gt;
+		/// &lt;param name=&quot;comparison&quot;&gt;The comparison.&lt;/param&gt;
+		public FamilyFilter(string columnFamily, FilterComparisons comparison) : base(columnFamily, comparison) {}
 	}
 }</pre></code><script type="text/javascript">
 			applyranges('src38', RANGES_38)

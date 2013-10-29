@@ -4,25 +4,20 @@
 
 		</script><script type="text/javascript">
 			RANGES_26 = [
-   [36,3,36,46,'dccv']
-, [37,3,37,4,'dccv']
-, [38,4,38,19,'dccv']
-, [39,3,39,4,'dccv']
-, [43,3,43,4,'dccv']
-, [44,4,51,25,'dccv']
-, [52,3,52,4,'dccv']
-, [56,3,56,4,'dccv']
-, [57,4,57,45,'dccv']
-, [58,3,58,4,'dccv']
-, [62,3,62,4,'dccv']
-, [63,4,63,53,'dccv']
-, [64,4,64,31,'dccv']
-, [64,67,64,87,'dccv']
-, [65,3,65,4,'dccv']
-, [68,3,68,4,'dccv']
-, [69,4,74,43,'dccv']
-, [75,3,75,4,'dccv']
-, [64,31,64,67,'dccv']
+   [35,3,35,88,'dccv']
+, [36,3,36,4,'dccv']
+, [37,4,37,19,'dccv']
+, [38,4,38,27,'dccv']
+, [39,4,39,27,'dccv']
+, [40,3,40,4,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,45,36,'dccv']
+, [46,3,46,4,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,49,'dccv']
+, [52,4,52,67,'dccv']
+, [54,4,54,50,'dccv']
+, [55,3,55,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -43,63 +38,43 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Linq;
+using System.Xml.Linq;
 
 using FluentAssertions;
 
-using HBase.Stargate.Client;
-
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
 using _specs.Models;
 
-namespace _specs.Steps
+namespace _specs.Steps.Serialization
 {
 	[Binding]
-	public class SimpleAssertions
+	public class Xml
 	{
-		private readonly HBaseContext _cells;
+		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
+		private readonly ContentConverter _converter;
 
-		public SimpleAssertions(HBaseContext cells)
+		public Xml(HBaseContext hBase, ResourceContext resources, ContentConverter converter)
 		{
-			_cells = cells;
+			_hBase = hBase;
+			_resources = resources;
+			_converter = converter;
 		}
 
-		[Then(@&quot;my cell should have a (.+), (.+), (.*), (.*), and (.*)&quot;)]
-		public void CheckCellContents(string row, string column, string qualifier, string timestamp, string value)
+		[Given(@&quot;I have everything I need to test a content converter for XML&quot;)]
+		public void SetConversionToXml()
 		{
-			CellMatchesTestValue(_cells.Cell, new TestCell
-			{
-				Row = row,
-				Column = column,
-				Qualifier = qualifier,
-				Timestamp = timestamp.ToNullableLong(),
-				Value = value
-			}).Should().BeTrue();
+			_converter.SetConversionToXml();
 		}
 
-		[Then(@&quot;my set should contain (\d+) cells?&quot;)]
-		public void CheckCellSetCount(int count)
+		[Then(@&quot;my raw XML content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CompareRawXmlToResource(string resourceName)
 		{
-			_cells.CellSet.Should().HaveCount(count);
-		}
+			var left = XElement.Parse(_hBase.RawContent);
+			var right = XElement.Parse(_resources.GetString(resourceName));
 
-		[Then(@&quot;one of the cells in my set should have the following properties:&quot;)]
-		public void CheckAnyCellInSet(Table values)
-		{
-			var testCell = values.CreateInstance&lt;TestCell&gt;();
-			_cells.CellSet.Any(cell =&gt; CellMatchesTestValue(cell, testCell)).Should().BeTrue();
-		}
-
-		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
-		{
-			return cell.Identifier.Row == testCell.Row
-			       &amp;&amp; cell.Identifier.Cell != null
-			       &amp;&amp; cell.Identifier.Cell.Column == testCell.Column
-			       &amp;&amp; cell.Identifier.Cell.Qualifier == testCell.Qualifier
-			       &amp;&amp; cell.Identifier.Timestamp == testCell.Timestamp
-			       &amp;&amp; cell.Value == testCell.Value;
+			left.ToString().Should().Be(right.ToString());
 		}
 	}
 }</pre></code><script type="text/javascript">

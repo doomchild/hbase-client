@@ -4,18 +4,18 @@
 
 		</script><script type="text/javascript">
 			RANGES_37 = [
-   [43,8,43,9,'dcuc']
-, [43,10,43,44,'dcuc']
-, [43,45,43,46,'dcuc']
-, [44,8,44,9,'dcuc']
-, [44,10,44,35,'dcuc']
-, [44,36,44,37,'dcuc']
-, [56,8,56,9,'dcuc']
-, [56,10,56,42,'dcuc']
-, [56,43,56,44,'dcuc']
-, [57,8,57,9,'dcuc']
-, [57,10,57,33,'dcuc']
-, [57,34,57,35,'dcuc']
+   [56,3,56,84,'dcuc']
+, [57,3,57,4,'dcuc']
+, [58,4,58,29,'dcuc']
+, [59,4,59,19,'dcuc']
+, [60,3,60,4,'dcuc']
+, [67,3,67,4,'dcuc']
+, [68,4,68,45,'dcuc']
+, [70,4,70,77,'dcuc']
+, [71,4,71,86,'dcuc']
+, [73,4,73,16,'dcuc']
+, [74,3,74,4,'dcuc']
+, [38,3,48,6,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -40,42 +40,58 @@
 
 #endregion
 
-using System.Configuration;
+using System.Collections.Generic;
 
-namespace HBase.Stargate.Client.Config
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides a base type for XML configuration-based &lt;see cref=&quot;HBaseDescriptor&quot; /&gt; implementations.
+	///    Provides base functionality for scanner filters that represent comparisons.
 	/// &lt;/summary&gt;
-	public abstract class ConfigDescriptor : ConfigurationElement
+	public abstract class ComparisonScannerFilterBase : ScannerFilterBase
 	{
-		private const string _tableName = &quot;table&quot;;
-		private const string _rowName = &quot;row&quot;;
+		private const string _operationPropertyName = &quot;op&quot;;
+		private const string _comparatorPropertyName = &quot;comparator&quot;;
+
+		private static readonly IDictionary&lt;FilterComparisons, string&gt; _comparisonTypes
+			= new Dictionary&lt;FilterComparisons, string&gt;
+			{
+				{FilterComparisons.Equal, &quot;EQUAL&quot;},
+				{FilterComparisons.NotEqual, &quot;NOT_EQUAL&quot;},
+				{FilterComparisons.GreaterThan, &quot;GREATER&quot;},
+				{FilterComparisons.GreaterThanOrEqual, &quot;GREATER_OR_EQUAL&quot;},
+				{FilterComparisons.LessThan, &quot;LESS&quot;},
+				{FilterComparisons.LessThanOrEqual, &quot;LESS_OR_EQUAL&quot;},
+				{FilterComparisons.None, &quot;NO_OP&quot;}
+			};
+
+		private readonly FilterComparisons _comparison;
+		private readonly string _value;
 
 		/// &lt;summary&gt;
-		///    Gets or sets the table.
+		///    Initializes a new instance of the &lt;see cref=&quot;ComparisonScannerFilterBase&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The table.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_tableName, IsRequired = true)]
-		public string Table
+		protected ComparisonScannerFilterBase(string value, FilterComparisons comparison)
 		{
-			get { return this[_tableName] as string; }
-			set { this[_tableName] = value; }
+			_comparison = comparison;
+			_value = value;
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the row.
+		///    Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The row.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_rowName, IsRequired = true)]
-		public string Row
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
 		{
-			get { return this[_rowName] as string; }
-			set { this[_rowName] = value; }
+			JObject json = base.ConvertToJson(codec);
+
+			json[_operationPropertyName] = new JValue(_comparisonTypes[_comparison]);
+			json[_comparatorPropertyName] = new BinaryComparator(_value).ConvertToJson(codec);
+
+			return json;
 		}
 	}
 }</pre></code><script type="text/javascript">

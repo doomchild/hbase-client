@@ -4,33 +4,19 @@
 
 		</script><script type="text/javascript">
 			RANGES_29 = [
-   [52,3,52,4,'dcuc']
-, [53,4,55,52,'dcuc']
-, [56,3,56,4,'dcuc']
-, [63,3,63,4,'dcuc']
-, [64,4,64,51,'dcuc']
-, [65,4,65,22,'dcuc']
-, [65,23,65,35,'dcuc']
-, [66,3,66,4,'dcuc']
-, [69,3,69,4,'dcuc']
-, [71,4,71,5,'dcuc']
-, [72,5,72,58,'dcuc']
-, [73,5,73,6,'dcuc']
-, [74,6,74,53,'dcuc']
-, [75,6,75,69,'dcuc']
-, [75,139,75,142,'dcuc']
-, [78,5,78,29,'dcuc']
-, [80,4,80,9,'dcuc']
-, [81,4,81,5,'dcuc']
-, [82,5,82,29,'dcuc']
-, [84,3,84,4,'dcuc']
-, [39,3,42,45,'dcuc']
-, [44,108,45,6,'dcuc']
-, [75,69,75,102,'dcuc']
-, [75,119,75,139,'dcuc']
-, [42,45,42,76,'dcuc']
-, [43,43,43,69,'dcuc']
-, [44,54,44,108,'dcuc']
+   [33,3,33,39,'dccv']
+, [34,3,34,4,'dccv']
+, [35,4,35,23,'dccv']
+, [36,3,36,4,'dccv']
+, [40,3,40,4,'dccv']
+, [41,4,41,61,'dccv']
+, [42,3,42,4,'dccv']
+, [46,3,46,4,'dccv']
+, [47,4,47,51,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,54,'dccv']
+, [54,3,54,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -55,68 +41,38 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Xml;
-using System.Xml.Linq;
+using TechTalk.SpecFlow;
 
-using RestSharp;
+using _specs.Models;
 
-namespace HBase.Stargate.Client.Api
+namespace _specs.Steps
 {
-	/// &lt;summary&gt;
-	/// Provides a default &lt;see cref=&quot;IErrorProvider&quot;/&gt;.
-	/// &lt;/summary&gt;
-	public class ErrorProvider : IErrorProvider
+	[Binding]
+	public class Writing
 	{
-		private readonly IDictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt; _cannedErrors
-			= new Dictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt;
-			{
-				{HttpStatusCode.BadRequest, response =&gt; new InvalidOperationException()},
-				{HttpStatusCode.NotFound, response =&gt; new KeyNotFoundException()},
-				{HttpStatusCode.InternalServerError, response =&gt; new ApplicationException(GetResponseContent(response))}
-			};
+		private readonly HBaseContext _context;
 
-		/// &lt;summary&gt;
-		/// Creates an exception from the response.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
-		public Exception CreateFromResponse(IRestResponse response)
+		public Writing(HBaseContext context)
 		{
-			return !_cannedErrors.ContainsKey(response.StatusCode)
-				? null
-				: _cannedErrors[response.StatusCode](response);
+			_context = context;
 		}
 
-		/// &lt;summary&gt;
-		/// Throws an exception from the response.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
-		public void ThrowFromResponse(IRestResponse response)
+		[When(@&quot;I write the value &quot;&quot;(.*)&quot;&quot; using my identifier&quot;)]
+		public void WriteValue(string value)
 		{
-			Exception error = CreateFromResponse(response);
-			if (error != null) throw error;
+			_context.Stargate.WriteValue(_context.Identifier, value);
 		}
 
-		private static string GetResponseContent(IRestResponse response)
+		[When(@&quot;I write the set of cells&quot;)]
+		public void WriteCellSet()
 		{
-			try
-			{
-				if (response.ContentType == MediaTypeNames.Text.Html)
-				{
-					var markup = XDocument.Parse(response.Content);
-					return string.Join(&quot; &quot;, markup.DescendantNodes().Where(node =&gt; node.NodeType == XmlNodeType.Text).Select(node =&gt; ((XText) node).Value));
-				}
+			_context.Stargate.WriteCells(_context.CellSet);
+		}
 
-				return response.Content;
-			}
-			catch
-			{
-				return response.Content;
-			}
+		[When(@&quot;I delete an item using my identifier&quot;)]
+		public void DeleteItem()
+		{
+			_context.Stargate.DeleteItem(_context.Identifier);
 		}
 	}
 }</pre></code><script type="text/javascript">

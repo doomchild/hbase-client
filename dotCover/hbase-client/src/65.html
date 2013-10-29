@@ -1,0 +1,135 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_65 = [
+   [30,3,30,4,'dccv']
+, [31,4,31,40,'dccv']
+, [31,41,31,53,'dccv']
+, [34,4,34,63,'dccv']
+, [35,3,35,4,'dccv']
+, [42,3,42,4,'dccv']
+, [43,4,43,40,'dccv']
+, [43,41,43,53,'dccv']
+, [46,4,46,65,'dccv']
+, [47,3,47,4,'dccv']
+, [54,3,54,4,'dccv']
+, [55,4,55,73,'dccv']
+, [56,3,56,4,'dccv']
+, [63,3,63,4,'dccv']
+, [64,4,64,82,'dccv']
+, [65,3,65,4,'dccv']
+, [72,3,72,4,'dccv']
+, [73,4,73,115,'dccv']
+, [74,3,74,4,'dccv']
+, [81,3,81,4,'dcuc']
+, [82,4,97,6,'dcuc']
+, [98,3,98,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src65" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+namespace HBase.Stargate.Client.Models
+{
+	/// &lt;summary&gt;
+	/// Provides general extensions for Stargate Client components.
+	/// &lt;/summary&gt;
+	public static class Extensions
+	{
+		/// &lt;summary&gt;
+		///    Converts the text to a nullable 32-bit integer value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		public static int? ToNullableInt32(this string text)
+		{
+			if (string.IsNullOrWhiteSpace(text)) return null;
+
+			int value;
+			return int.TryParse(text, out value) ? value : (int?) null;
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the text to a nullable 64-bit integer value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		public static long? ToNullableInt64(this string text)
+		{
+			if (string.IsNullOrWhiteSpace(text)) return null;
+
+			long value;
+			return long.TryParse(text, out value) ? value : (long?) null;
+		}
+
+		/// &lt;summary&gt;
+		/// Determines whether the descriptor can describe a table.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;descriptor&quot;&gt;The descriptor.&lt;/param&gt;
+		public static bool CanDescribeTable(this HBaseDescriptor descriptor)
+		{
+			return descriptor != null &amp;&amp; !string.IsNullOrEmpty(descriptor.Table);
+		}
+
+		/// &lt;summary&gt;
+		/// Determines whether the descriptor can describe a row.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;descriptor&quot;&gt;The descriptor.&lt;/param&gt;
+		public static bool CanDescribeRow(this HBaseDescriptor descriptor)
+		{
+			return descriptor.CanDescribeTable() &amp;&amp; !string.IsNullOrEmpty(descriptor.Row);
+		}
+
+		/// &lt;summary&gt;
+		/// Determines whether the identifier can describe a cell.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static bool CanDescribeCell(this Identifier identifier)
+		{
+			return identifier.CanDescribeRow() &amp;&amp; identifier.Cell != null &amp;&amp; !string.IsNullOrEmpty(identifier.Cell.Column);
+		}
+
+		/// &lt;summary&gt;
+		/// Converts the identifier into a cell query.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static CellQuery ToQuery(this Identifier identifier)
+		{
+			return new CellQuery
+			{
+				Table = identifier.Table,
+				Row = identifier.Row,
+				Cells = new[]
+				{
+					new HBaseCellDescriptor
+					{
+						Column = identifier.Cell != null ? identifier.Cell.Column : null,
+						Qualifier = identifier.Cell != null ? identifier.Cell.Qualifier : null
+					}
+				},
+				BeginTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp : null,
+				EndTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp + 1 : null,
+				MaxResults = 1
+			};
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src65', RANGES_65)
+		</script>
+	</body>
+</html>

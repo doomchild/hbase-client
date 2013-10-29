@@ -4,21 +4,33 @@
 
 		</script><script type="text/javascript">
 			RANGES_35 = [
-   [43,8,43,9,'dcuc']
-, [43,10,43,44,'dcuc']
-, [43,45,43,46,'dcuc']
-, [44,8,44,9,'dcuc']
-, [44,10,44,35,'dcuc']
-, [44,36,44,37,'dcuc']
-, [56,8,56,9,'dcuc']
-, [56,10,56,48,'dcuc']
-, [56,49,56,50,'dcuc']
-, [57,8,57,9,'dcuc']
-, [57,10,57,39,'dcuc']
-, [57,40,57,41,'dcuc']
-, [65,3,65,4,'dcuc']
-, [66,4,70,6,'dcuc']
-, [71,3,71,4,'dcuc']
+   [52,3,52,4,'dcuc']
+, [53,4,55,52,'dcuc']
+, [56,3,56,4,'dcuc']
+, [63,3,63,4,'dcuc']
+, [64,4,64,51,'dcuc']
+, [65,4,65,22,'dcuc']
+, [65,23,65,35,'dcuc']
+, [66,3,66,4,'dcuc']
+, [69,3,69,4,'dcuc']
+, [71,4,71,5,'dcuc']
+, [72,5,72,58,'dcuc']
+, [73,5,73,6,'dcuc']
+, [74,6,74,53,'dcuc']
+, [75,6,75,69,'dcuc']
+, [75,139,75,142,'dcuc']
+, [78,5,78,29,'dcuc']
+, [80,4,80,9,'dcuc']
+, [81,4,81,5,'dcuc']
+, [82,5,82,29,'dcuc']
+, [84,3,84,4,'dcuc']
+, [39,3,42,45,'dcuc']
+, [44,108,45,6,'dcuc']
+, [75,69,75,102,'dcuc']
+, [75,119,75,139,'dcuc']
+, [42,45,42,76,'dcuc']
+, [43,43,43,69,'dcuc']
+, [44,54,44,108,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -43,55 +55,68 @@
 
 #endregion
 
-using System.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using System.Xml;
+using System.Xml.Linq;
 
-namespace HBase.Stargate.Client.Config
+using RestSharp;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides an XML configuration-based implementation &lt;see cref=&quot;ConfigurationElement&quot; /&gt;.
+	/// Provides a default &lt;see cref=&quot;IErrorProvider&quot;/&gt;.
 	/// &lt;/summary&gt;
-	public class ConfigCellDescriptor : ConfigurationElement
+	public class ErrorProvider : IErrorProvider
 	{
-		private const string _columName = &quot;column&quot;;
-		private const string _qualifierName = &quot;qualifier&quot;;
-
-		/// &lt;summary&gt;
-		///    Gets or sets the column.
-		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The column.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_columName, IsRequired = true)]
-		public string Column
-		{
-			get { return this[_columName] as string; }
-			set { this[_columName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Gets or sets the qualifier.
-		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The qualifier.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_qualifierName, IsRequired = false)]
-		public string Qualifier
-		{
-			get { return this[_qualifierName] as string; }
-			set { this[_qualifierName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Converts the config-based cell descriptor to a normal one.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;descriptor&quot;&gt;The cell descriptor.&lt;/param&gt;
-		public static implicit operator HBaseCellDescriptor(ConfigCellDescriptor descriptor)
-		{
-			return new HBaseCellDescriptor
+		private readonly IDictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt; _cannedErrors
+			= new Dictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt;
 			{
-				Column = descriptor.Column,
-				Qualifier = descriptor.Qualifier
+				{HttpStatusCode.BadRequest, response =&gt; new InvalidOperationException()},
+				{HttpStatusCode.NotFound, response =&gt; new KeyNotFoundException()},
+				{HttpStatusCode.InternalServerError, response =&gt; new ApplicationException(GetResponseContent(response))}
 			};
+
+		/// &lt;summary&gt;
+		/// Creates an exception from the response.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
+		public Exception CreateFromResponse(IRestResponse response)
+		{
+			return !_cannedErrors.ContainsKey(response.StatusCode)
+				? null
+				: _cannedErrors[response.StatusCode](response);
+		}
+
+		/// &lt;summary&gt;
+		/// Throws an exception from the response.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
+		public void ThrowFromResponse(IRestResponse response)
+		{
+			Exception error = CreateFromResponse(response);
+			if (error != null) throw error;
+		}
+
+		private static string GetResponseContent(IRestResponse response)
+		{
+			try
+			{
+				if (response.ContentType == MediaTypeNames.Text.Html)
+				{
+					var markup = XDocument.Parse(response.Content);
+					return string.Join(&quot; &quot;, markup.DescendantNodes().Where(node =&gt; node.NodeType == XmlNodeType.Text).Select(node =&gt; ((XText) node).Value));
+				}
+
+				return response.Content;
+			}
+			catch
+			{
+				return response.Content;
+			}
 		}
 	}
 }</pre></code><script type="text/javascript">

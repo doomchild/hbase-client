@@ -4,38 +4,55 @@
 
 		</script><script type="text/javascript">
 			RANGES_11 = [
-   [30,3,30,4,'dccv']
-, [31,4,31,34,'dccv']
-, [32,4,32,40,'dccv']
-, [33,3,33,4,'dccv']
-, [36,3,36,4,'dccv']
-, [37,4,37,35,'dccv']
-, [39,3,39,4,'dccv']
-, [42,3,42,4,'dccv']
-, [43,4,43,39,'dccv']
+   [38,3,38,4,'dccv']
+, [39,4,39,27,'dccv']
+, [40,4,40,5,'dccv']
+, [41,5,41,43,'dccv']
 , [45,3,45,4,'dccv']
-, [56,3,56,4,'dccv']
-, [57,4,57,27,'dccv']
-, [57,28,57,61,'dccv']
-, [60,3,60,4,'dccv']
-, [63,3,63,4,'dccv']
-, [64,4,64,27,'dccv']
-, [64,28,64,60,'dccv']
-, [67,3,67,4,'dccv']
-, [70,3,70,4,'dccv']
-, [71,4,71,27,'dccv']
-, [71,28,71,60,'dccv']
-, [74,3,74,4,'dccv']
-, [48,3,48,4,'dcuc']
-, [49,4,49,37,'dcuc']
-, [51,3,51,4,'dcuc']
-, [59,4,59,47,'dcuc']
-, [66,4,66,47,'dcuc']
-, [73,4,73,47,'dcuc']
+, [48,3,48,4,'dccv']
+, [49,4,49,27,'dccv']
+, [50,4,50,5,'dccv']
+, [51,5,51,41,'dccv']
+, [55,3,55,4,'dccv']
+, [58,3,58,4,'dccv']
+, [59,4,59,27,'dccv']
+, [60,4,60,5,'dccv']
+, [61,5,61,42,'dccv']
+, [65,3,65,4,'dccv']
+, [88,3,88,4,'dccv']
+, [89,4,89,34,'dccv']
+, [90,4,90,85,'dccv']
+, [91,3,91,4,'dccv']
+, [94,3,94,4,'dccv']
+, [95,4,95,35,'dccv']
+, [97,3,97,4,'dccv']
+, [100,3,100,4,'dccv']
+, [101,4,101,39,'dccv']
+, [103,3,103,4,'dccv']
+, [44,4,44,40,'dcuc']
+, [54,4,54,40,'dcuc']
+, [64,4,64,40,'dcuc']
+, [68,3,68,4,'dcuc']
+, [69,4,69,27,'dcuc']
+, [70,4,70,5,'dcuc']
+, [71,5,71,43,'dcuc']
+, [74,4,74,40,'dcuc']
+, [75,3,75,4,'dcuc']
+, [78,3,78,4,'dcuc']
+, [79,4,79,27,'dcuc']
+, [80,4,80,5,'dcuc']
+, [81,5,81,45,'dcuc']
+, [84,4,84,40,'dcuc']
+, [85,3,85,4,'dcuc']
+, [106,3,106,4,'dcuc']
+, [107,4,107,37,'dcuc']
+, [109,3,109,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src11" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+		<code id="src11" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -52,10 +69,14 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
+using System;
 using System.Collections.Generic;
 
 using HBase.Stargate.Client;
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 namespace _specs.Models
 {
@@ -63,10 +84,62 @@ namespace _specs.Models
 	{
 		private IMimeConverter _converter;
 
+		public string MimeType { get; private set; }
+
+		public string ConvertCells(IEnumerable&lt;Cell&gt; cells)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCells(cells);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public string ConvertCell(Cell cell)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCell(cell);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable&lt;Cell&gt; ConvertCells(string data)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCells(data);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public TableSchema ConvertSchema(string data)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertSchema(data);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public string ConvertSchema(TableSchema schema)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertSchema(schema);
+			}
+
+			throw new NotImplementedException();
+		}
+
 		public void SetConversionToXml()
 		{
 			MimeType = HBaseMimeTypes.Xml;
-			_converter = new XmlMimeConverter();
+			_converter = new XmlMimeConverter(new SimpleValueConverter(), new Base64Codec());
 		}
 
 		public void SetConversionToJson()
@@ -85,29 +158,6 @@ namespace _specs.Models
 		{
 			MimeType = HBaseMimeTypes.Stream;
 			//TODO: _converter = new BinaryMimeConverter();
-		}
-
-		public string MimeType { get; private set; }
-
-		public string Convert(IEnumerable&lt;Cell&gt; cells)
-		{
-			if (_converter != null) return _converter.Convert(cells);
-
-			throw new System.NotImplementedException();
-		}
-
-		public string Convert(Cell cell)
-		{
-			if (_converter != null) return _converter.Convert(cell);
-
-			throw new System.NotImplementedException();
-		}
-
-		public IEnumerable&lt;Cell&gt; Convert(string data)
-		{
-			if (_converter != null) return _converter.Convert(data);
-
-			throw new System.NotImplementedException();
 		}
 	}
 }</pre></code><script type="text/javascript">

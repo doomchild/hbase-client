@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hbase-client
-   &#160;<span id="projectnumber">1.0-beta.1</span>
+   &#160;<span id="projectnumber">1.0-beta.2</span>
    </div>
    <div id="projectbrief">A simple set of .NET client libraries for HBase</div>
   </td>
@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('interface_h_base_1_1_stargate_1_1_clie
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Properties</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Properties</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -126,40 +126,186 @@ Inheritance diagram for HBase.Stargate.Client.Api.IStargate:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aef480c9c5c4b7940c712b19aa6a03a26"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#aef480c9c5c4b7940c712b19aa6a03a26">WriteValueAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a> identifier, string value)</td></tr>
+<tr class="memitem:aef480c9c5c4b7940c712b19aa6a03a26"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#aef480c9c5c4b7940c712b19aa6a03a26">WriteValueAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a> identifier, string value)</td></tr>
 <tr class="memdesc:aef480c9c5c4b7940c712b19aa6a03a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the value to <a class="el" href="namespace_h_base.html">HBase</a> using the identifier.  <a href="#aef480c9c5c4b7940c712b19aa6a03a26">More...</a><br/></td></tr>
 <tr class="separator:aef480c9c5c4b7940c712b19aa6a03a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1efd7ac14907dec7eb75be392cd57697"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a1efd7ac14907dec7eb75be392cd57697">WriteValue</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a> identifier, string value)</td></tr>
+<tr class="memitem:a1efd7ac14907dec7eb75be392cd57697"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a1efd7ac14907dec7eb75be392cd57697">WriteValue</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a> identifier, string value)</td></tr>
 <tr class="memdesc:a1efd7ac14907dec7eb75be392cd57697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the value to <a class="el" href="namespace_h_base.html">HBase</a> using the identifier.  <a href="#a1efd7ac14907dec7eb75be392cd57697">More...</a><br/></td></tr>
 <tr class="separator:a1efd7ac14907dec7eb75be392cd57697"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd8794c180e5417341462890d6eab582"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#abd8794c180e5417341462890d6eab582">WriteCellsAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a> cells)</td></tr>
+<tr class="memitem:abd8794c180e5417341462890d6eab582"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#abd8794c180e5417341462890d6eab582">WriteCellsAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a> cells)</td></tr>
 <tr class="memdesc:abd8794c180e5417341462890d6eab582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the cells to <a class="el" href="namespace_h_base.html">HBase</a>.  <a href="#abd8794c180e5417341462890d6eab582">More...</a><br/></td></tr>
 <tr class="separator:abd8794c180e5417341462890d6eab582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fc33b2347fda46c1dbbf4e11067e9e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a0fc33b2347fda46c1dbbf4e11067e9e3">WriteCells</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a> cells)</td></tr>
+<tr class="memitem:a0fc33b2347fda46c1dbbf4e11067e9e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a0fc33b2347fda46c1dbbf4e11067e9e3">WriteCells</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a> cells)</td></tr>
 <tr class="memdesc:a0fc33b2347fda46c1dbbf4e11067e9e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the cells to <a class="el" href="namespace_h_base.html">HBase</a>.  <a href="#a0fc33b2347fda46c1dbbf4e11067e9e3">More...</a><br/></td></tr>
 <tr class="separator:a0fc33b2347fda46c1dbbf4e11067e9e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1267f61e97df56427c1b120b93bf9681"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a1267f61e97df56427c1b120b93bf9681">DeleteItemAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a> identifier)</td></tr>
+<tr class="memitem:a1267f61e97df56427c1b120b93bf9681"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a1267f61e97df56427c1b120b93bf9681">DeleteItemAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a> identifier)</td></tr>
 <tr class="memdesc:a1267f61e97df56427c1b120b93bf9681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the item with the matching identifier from <a class="el" href="namespace_h_base.html">HBase</a>.  <a href="#a1267f61e97df56427c1b120b93bf9681">More...</a><br/></td></tr>
 <tr class="separator:a1267f61e97df56427c1b120b93bf9681"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2949a47c3206fad545c23f71cccc86e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a2949a47c3206fad545c23f71cccc86e3">DeleteItem</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a> identifier)</td></tr>
+<tr class="memitem:a2949a47c3206fad545c23f71cccc86e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a2949a47c3206fad545c23f71cccc86e3">DeleteItem</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a> identifier)</td></tr>
 <tr class="memdesc:a2949a47c3206fad545c23f71cccc86e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the item with the matching identifier from <a class="el" href="namespace_h_base.html">HBase</a>.  <a href="#a2949a47c3206fad545c23f71cccc86e3">More...</a><br/></td></tr>
 <tr class="separator:a2949a47c3206fad545c23f71cccc86e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91bc5a8838e9e6dc887fa78420eabac5"><td class="memItemLeft" align="right" valign="top">Task&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a91bc5a8838e9e6dc887fa78420eabac5">ReadValueAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a> identifier)</td></tr>
+<tr class="memitem:a91bc5a8838e9e6dc887fa78420eabac5"><td class="memItemLeft" align="right" valign="top">Task&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a91bc5a8838e9e6dc887fa78420eabac5">ReadValueAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a> identifier)</td></tr>
 <tr class="memdesc:a91bc5a8838e9e6dc887fa78420eabac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the value with the matching identifier.  <a href="#a91bc5a8838e9e6dc887fa78420eabac5">More...</a><br/></td></tr>
 <tr class="separator:a91bc5a8838e9e6dc887fa78420eabac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2624cdba224d828e28c017efd87dcf7a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a2624cdba224d828e28c017efd87dcf7a">ReadValue</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a> identifier)</td></tr>
+<tr class="memitem:a2624cdba224d828e28c017efd87dcf7a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a2624cdba224d828e28c017efd87dcf7a">ReadValue</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a> identifier)</td></tr>
 <tr class="memdesc:a2624cdba224d828e28c017efd87dcf7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the value with the matching identifier.  <a href="#a2624cdba224d828e28c017efd87dcf7a">More...</a><br/></td></tr>
 <tr class="separator:a2624cdba224d828e28c017efd87dcf7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa76daeb819c3c511a5b850f1cccccb0"><td class="memItemLeft" align="right" valign="top">Task&lt; <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#afa76daeb819c3c511a5b850f1cccccb0">FindCellsAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_query.html">CellQuery</a> query)</td></tr>
+<tr class="memitem:afa76daeb819c3c511a5b850f1cccccb0"><td class="memItemLeft" align="right" valign="top">Task&lt; <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#afa76daeb819c3c511a5b850f1cccccb0">FindCellsAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_query.html">CellQuery</a> query)</td></tr>
 <tr class="memdesc:afa76daeb819c3c511a5b850f1cccccb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the cells matching the query.  <a href="#afa76daeb819c3c511a5b850f1cccccb0">More...</a><br/></td></tr>
 <tr class="separator:afa76daeb819c3c511a5b850f1cccccb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a127c877c7f482a455430e1cb6ed9334d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a127c877c7f482a455430e1cb6ed9334d">FindCells</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_query.html">CellQuery</a> query)</td></tr>
+<tr class="memitem:a127c877c7f482a455430e1cb6ed9334d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a127c877c7f482a455430e1cb6ed9334d">FindCells</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_query.html">CellQuery</a> query)</td></tr>
 <tr class="memdesc:a127c877c7f482a455430e1cb6ed9334d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the cells matching the query.  <a href="#a127c877c7f482a455430e1cb6ed9334d">More...</a><br/></td></tr>
 <tr class="separator:a127c877c7f482a455430e1cb6ed9334d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace76530004b0b060c63b84d18ff53ee6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#ace76530004b0b060c63b84d18ff53ee6">CreateTable</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a> tableSchema)</td></tr>
+<tr class="memdesc:ace76530004b0b060c63b84d18ff53ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the table.  <a href="#ace76530004b0b060c63b84d18ff53ee6">More...</a><br/></td></tr>
+<tr class="separator:ace76530004b0b060c63b84d18ff53ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc19b60aa0024203a7d3fd85588c4db0"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#adc19b60aa0024203a7d3fd85588c4db0">CreateTableAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a> tableSchema)</td></tr>
+<tr class="memdesc:adc19b60aa0024203a7d3fd85588c4db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the table.  <a href="#adc19b60aa0024203a7d3fd85588c4db0">More...</a><br/></td></tr>
+<tr class="separator:adc19b60aa0024203a7d3fd85588c4db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86fdaeba781d2ecf5816334e2adda5ac"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a86fdaeba781d2ecf5816334e2adda5ac">GetTableNames</a> ()</td></tr>
+<tr class="memdesc:a86fdaeba781d2ecf5816334e2adda5ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the table names.  <a href="#a86fdaeba781d2ecf5816334e2adda5ac">More...</a><br/></td></tr>
+<tr class="separator:a86fdaeba781d2ecf5816334e2adda5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33d71b613971d8aadb4a5c62a58fb06d"><td class="memItemLeft" align="right" valign="top">Task&lt; IEnumerable&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a33d71b613971d8aadb4a5c62a58fb06d">GetTableNamesAsync</a> ()</td></tr>
+<tr class="memdesc:a33d71b613971d8aadb4a5c62a58fb06d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the table names.  <a href="#a33d71b613971d8aadb4a5c62a58fb06d">More...</a><br/></td></tr>
+<tr class="separator:a33d71b613971d8aadb4a5c62a58fb06d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515d56f3750636b2c2ad5e4c5d2c83b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a515d56f3750636b2c2ad5e4c5d2c83b9">DeleteTable</a> (string tableName)</td></tr>
+<tr class="memdesc:a515d56f3750636b2c2ad5e4c5d2c83b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the table.  <a href="#a515d56f3750636b2c2ad5e4c5d2c83b9">More...</a><br/></td></tr>
+<tr class="separator:a515d56f3750636b2c2ad5e4c5d2c83b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06f456515e535dec152b5f52519e5f56"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a06f456515e535dec152b5f52519e5f56">DeleteTableAsync</a> (string tableName)</td></tr>
+<tr class="memdesc:a06f456515e535dec152b5f52519e5f56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the table.  <a href="#a06f456515e535dec152b5f52519e5f56">More...</a><br/></td></tr>
+<tr class="separator:a06f456515e535dec152b5f52519e5f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8321f6e31efa0a572917c54942d6b5"><td class="memItemLeft" align="right" valign="top">Task&lt; <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a5b8321f6e31efa0a572917c54942d6b5">GetTableSchemaAsync</a> (string tableName)</td></tr>
+<tr class="memdesc:a5b8321f6e31efa0a572917c54942d6b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the table schema.  <a href="#a5b8321f6e31efa0a572917c54942d6b5">More...</a><br/></td></tr>
+<tr class="separator:a5b8321f6e31efa0a572917c54942d6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad191a7fe9ab3d51309ea32cae6cd0758"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#ad191a7fe9ab3d51309ea32cae6cd0758">GetTableSchema</a> (string tableName)</td></tr>
+<tr class="memdesc:ad191a7fe9ab3d51309ea32cae6cd0758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the table schema.  <a href="#ad191a7fe9ab3d51309ea32cae6cd0758">More...</a><br/></td></tr>
+<tr class="separator:ad191a7fe9ab3d51309ea32cae6cd0758"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af503c969367309b86337d201a9ef00d8"><td class="memItemLeft" align="right" valign="top">Task&lt; <a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#af503c969367309b86337d201a9ef00d8">CreateScannerAsync</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html">ScannerOptions</a> options)</td></tr>
+<tr class="memdesc:af503c969367309b86337d201a9ef00d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the scanner.  <a href="#af503c969367309b86337d201a9ef00d8">More...</a><br/></td></tr>
+<tr class="separator:af503c969367309b86337d201a9ef00d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67dca74090d545add0bcc473f757841b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a67dca74090d545add0bcc473f757841b">CreateScanner</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html">ScannerOptions</a> options)</td></tr>
+<tr class="memdesc:a67dca74090d545add0bcc473f757841b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the scanner.  <a href="#a67dca74090d545add0bcc473f757841b">More...</a><br/></td></tr>
+<tr class="separator:a67dca74090d545add0bcc473f757841b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5f809c6c06c0c8ab1b99495db722ad6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#ab5f809c6c06c0c8ab1b99495db722ad6">DeleteScanner</a> (<a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a> scanner)</td></tr>
+<tr class="memdesc:ab5f809c6c06c0c8ab1b99495db722ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the scanner.  <a href="#ab5f809c6c06c0c8ab1b99495db722ad6">More...</a><br/></td></tr>
+<tr class="separator:ab5f809c6c06c0c8ab1b99495db722ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b574ab40fdf01fa38038239cc05eb7"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a55b574ab40fdf01fa38038239cc05eb7">DeleteScannerAsync</a> (<a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a> scanner)</td></tr>
+<tr class="memdesc:a55b574ab40fdf01fa38038239cc05eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the scanner.  <a href="#a55b574ab40fdf01fa38038239cc05eb7">More...</a><br/></td></tr>
+<tr class="separator:a55b574ab40fdf01fa38038239cc05eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f60e5f3146a4b7052698be41cb388b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a5f60e5f3146a4b7052698be41cb388b4">GetScannerResult</a> (<a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a> scanner)</td></tr>
+<tr class="memdesc:a5f60e5f3146a4b7052698be41cb388b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the scanner result.  <a href="#a5f60e5f3146a4b7052698be41cb388b4">More...</a><br/></td></tr>
+<tr class="separator:a5f60e5f3146a4b7052698be41cb388b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f3c2639c2b40c8a5f6c7130413d9fde"><td class="memItemLeft" align="right" valign="top">Task&lt; <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a0f3c2639c2b40c8a5f6c7130413d9fde">GetScannerResultAsync</a> (<a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a> scanner)</td></tr>
+<tr class="memdesc:a0f3c2639c2b40c8a5f6c7130413d9fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the scanner result.  <a href="#a0f3c2639c2b40c8a5f6c7130413d9fde">More...</a><br/></td></tr>
+<tr class="separator:a0f3c2639c2b40c8a5f6c7130413d9fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides operations against a <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html" title="Provides a default implementation IStargate. ">Stargate</a> server. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a67dca74090d545add0bcc473f757841b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a> HBase.Stargate.Client.Api.IStargate.CreateScanner </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html">ScannerOptions</a>&#160;</td>
+          <td class="paramname"><em>options</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the scanner. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options</td><td>The options.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a31cf1948a9a522c12ce2afee4281b3b3">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af503c969367309b86337d201a9ef00d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task&lt;<a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a>&gt; HBase.Stargate.Client.Api.IStargate.CreateScannerAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html">ScannerOptions</a>&#160;</td>
+          <td class="paramname"><em>options</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the scanner. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options</td><td>The options.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#ad86ad6bde0b66871b3bd5c24ee359d02">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ace76530004b0b060c63b84d18ff53ee6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HBase.Stargate.Client.Api.IStargate.CreateTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a>&#160;</td>
+          <td class="paramname"><em>tableSchema</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableSchema</td><td>The table schema.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#aa8f6bf5c2622390496423c799622dce2">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adc19b60aa0024203a7d3fd85588c4db0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task HBase.Stargate.Client.Api.IStargate.CreateTableAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a>&#160;</td>
+          <td class="paramname"><em>tableSchema</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableSchema</td><td>The table schema.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a60740a01f1bd71b991b7c17eb5241dd0">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2949a47c3206fad545c23f71cccc86e3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -167,7 +313,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void HBase.Stargate.Client.Api.IStargate.DeleteItem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a>&#160;</td>
           <td class="paramname"><em>identifier</em>)</td><td></td>
           <td></td>
         </tr>
@@ -193,7 +339,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Task HBase.Stargate.Client.Api.IStargate.DeleteItemAsync </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a>&#160;</td>
           <td class="paramname"><em>identifier</em>)</td><td></td>
           <td></td>
         </tr>
@@ -212,14 +358,118 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab5f809c6c06c0c8ab1b99495db722ad6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HBase.Stargate.Client.Api.IStargate.DeleteScanner </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a>&#160;</td>
+          <td class="paramname"><em>scanner</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes the scanner. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scanner</td><td>The scanner.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#af6353d1219cefe66efc80f6a89775852">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a55b574ab40fdf01fa38038239cc05eb7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task HBase.Stargate.Client.Api.IStargate.DeleteScannerAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a>&#160;</td>
+          <td class="paramname"><em>scanner</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes the scanner. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scanner</td><td>The scanner.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a0cfbe4e91f5e19519c5fae0b28a3fa35">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a515d56f3750636b2c2ad5e4c5d2c83b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HBase.Stargate.Client.Api.IStargate.DeleteTable </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>tableName</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes the table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>Name of the table.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a5d3ed678277d76e47340d3e42cc1386e">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a06f456515e535dec152b5f52519e5f56"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task HBase.Stargate.Client.Api.IStargate.DeleteTableAsync </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>tableName</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes the table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>Name of the table.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#adb3162fff50466a24041eaef1212cf8c">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a127c877c7f482a455430e1cb6ed9334d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a> HBase.Stargate.Client.Api.IStargate.FindCells </td>
+          <td class="memname"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a> HBase.Stargate.Client.Api.IStargate.FindCells </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_query.html">CellQuery</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_query.html">CellQuery</a>&#160;</td>
           <td class="paramname"><em>query</em>)</td><td></td>
           <td></td>
         </tr>
@@ -243,9 +493,9 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Task&lt;<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a>&gt; HBase.Stargate.Client.Api.IStargate.FindCellsAsync </td>
+          <td class="memname">Task&lt;<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a>&gt; HBase.Stargate.Client.Api.IStargate.FindCellsAsync </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_query.html">CellQuery</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_query.html">CellQuery</a>&#160;</td>
           <td class="paramname"><em>query</em>)</td><td></td>
           <td></td>
         </tr>
@@ -264,6 +514,150 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5f60e5f3146a4b7052698be41cb388b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a> HBase.Stargate.Client.Api.IStargate.GetScannerResult </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a>&#160;</td>
+          <td class="paramname"><em>scanner</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the scanner result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scanner</td><td>The scanner.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a5185b45392fcf7096326d823aa3661ca">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0f3c2639c2b40c8a5f6c7130413d9fde"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task&lt;<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a>&gt; HBase.Stargate.Client.Api.IStargate.GetScannerResultAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_scanner.html">IScanner</a>&#160;</td>
+          <td class="paramname"><em>scanner</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the scanner result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scanner</td><td>The scanner.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a9765e242850fd36b37ddaeea45833700">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86fdaeba781d2ecf5816334e2adda5ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerable&lt;string&gt; HBase.Stargate.Client.Api.IStargate.GetTableNames </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the table names. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#aae0e2bf3ea4e607539621c9626015dff">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a33d71b613971d8aadb4a5c62a58fb06d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task&lt;IEnumerable&lt;string&gt; &gt; HBase.Stargate.Client.Api.IStargate.GetTableNamesAsync </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the table names. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a440136988d3a02e35a9b50d5de4ace0b">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad191a7fe9ab3d51309ea32cae6cd0758"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a> HBase.Stargate.Client.Api.IStargate.GetTableSchema </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>tableName</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the table schema. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>Name of the table.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#aa31c2d038349dad5a1b4afa8b5c19057">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5b8321f6e31efa0a572917c54942d6b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task&lt;<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html">TableSchema</a>&gt; HBase.Stargate.Client.Api.IStargate.GetTableSchemaAsync </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>tableName</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the table schema. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>Name of the table.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a0b05ab0bc2036f24b432fb23249f7429">HBase.Stargate.Client.Api.Stargate</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2624cdba224d828e28c017efd87dcf7a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -271,7 +665,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">string HBase.Stargate.Client.Api.IStargate.ReadValue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a>&#160;</td>
           <td class="paramname"><em>identifier</em>)</td><td></td>
           <td></td>
         </tr>
@@ -297,7 +691,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Task&lt;string&gt; HBase.Stargate.Client.Api.IStargate.ReadValueAsync </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a>&#160;</td>
           <td class="paramname"><em>identifier</em>)</td><td></td>
           <td></td>
         </tr>
@@ -323,7 +717,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void HBase.Stargate.Client.Api.IStargate.WriteCells </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a>&#160;</td>
           <td class="paramname"><em>cells</em>)</td><td></td>
           <td></td>
         </tr>
@@ -349,7 +743,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Task HBase.Stargate.Client.Api.IStargate.WriteCellsAsync </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_cell_set.html">CellSet</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html">CellSet</a>&#160;</td>
           <td class="paramname"><em>cells</em>)</td><td></td>
           <td></td>
         </tr>
@@ -375,7 +769,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void HBase.Stargate.Client.Api.IStargate.WriteValue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a>&#160;</td>
           <td class="paramname"><em>identifier</em>, </td>
         </tr>
         <tr>
@@ -412,7 +806,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Task HBase.Stargate.Client.Api.IStargate.WriteValueAsync </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_identifier.html">Identifier</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html">Identifier</a>&#160;</td>
           <td class="paramname"><em>identifier</em>, </td>
         </tr>
         <tr>
@@ -448,7 +842,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_h_base.html">HBase</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate.html">Stargate</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client.html">Client</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client_1_1_api.html">Api</a></li><li class="navelem"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html">IStargate</a></li>
-    <li class="footer">Generated on Fri Oct 11 2013 10:22:44 for hbase-client by
+    <li class="footer">Generated on Tue Oct 29 2013 10:06:12 for hbase-client by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

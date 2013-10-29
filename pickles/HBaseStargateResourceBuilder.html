@@ -90,9 +90,9 @@ I want to be sure that the resource URI is correct for every situation</p>
             <div class="steps">
               <ul>
                 <li class="step">
-                  <span class="keyword">Given </span>I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, and a &lt;end&gt; timestamp</li>
+                  <span class="keyword">Given </span>I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, a &lt;end&gt; timestamp, and a &lt;max&gt; number of results</li>
                 <li class="step">
-                  <span class="keyword">When </span>I build a resource name for Cell or Row queries using my identifier</li>
+                  <span class="keyword">When </span>I build a resource name for Cell or Row queries using my query</li>
                 <li class="step">
                   <span class="keyword">Then </span>the resulting resource name should match the expected &lt;resource&gt;</li>
                 <li class="step">
@@ -116,6 +116,7 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <th>qualifier</th>
                         <th>begin</th>
                         <th>end</th>
+                        <th>max</th>
                         <th>resource</th>
                         <th>should or should not</th>
                         <th>exception</th>
@@ -131,6 +132,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -142,6 +157,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td>5</td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -155,6 +184,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -167,6 +210,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -178,6 +235,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -191,6 +262,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -202,6 +287,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td>4</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -215,6 +314,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -226,6 +339,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -239,6 +366,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -250,6 +391,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>4</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -263,6 +418,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -274,6 +443,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -287,6 +470,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -298,6 +495,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td>4</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -311,6 +522,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -322,6 +547,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -335,6 +574,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -346,6 +599,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>4</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -359,6 +626,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -370,6 +651,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -383,6 +678,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -394,6 +703,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td>4</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -407,6 +730,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -418,6 +755,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -431,6 +782,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -442,6 +807,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>4</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -455,6 +834,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>4</td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -466,6 +859,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -479,6 +886,20 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>5</td>
                         <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
                         <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
@@ -489,6 +910,33 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForCellOrRowQueryNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
                         <td></td>
                         <td></td>
                         <td>should not</td>
@@ -502,6 +950,7 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>x</td>
                         <td>4</td>
                         <td>5</td>
+                        <td>2</td>
                         <td></td>
                         <td>should not</td>
                         <td>ArgumentException</td>
@@ -509,6 +958,7 @@ I want to be sure that the resource URI is correct for every situation</p>
                       </tr>
                       <tr>
                         <td>test</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -525,7 +975,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/*/5</td>
                         <td>should</td>
                         <td></td>
@@ -536,7 +1000,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/*/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/*</td>
                         <td>should</td>
@@ -549,7 +1027,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/*/4,5</td>
                         <td>should</td>
                         <td></td>
@@ -559,7 +1051,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>test</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/*/4,5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
                         <td>x</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>test/*</td>
@@ -573,7 +1079,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>x</td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/*/5</td>
                         <td>should</td>
                         <td></td>
@@ -584,7 +1104,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/*/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/*</td>
                         <td>should</td>
@@ -597,7 +1131,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/*/4,5</td>
                         <td>should</td>
                         <td></td>
@@ -606,7 +1154,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                       <tr>
                         <td>test</td>
                         <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/*/4,5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
                         <td>alpha</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -621,7 +1183,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*/alpha?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/alpha/5</td>
                         <td>should</td>
                         <td></td>
@@ -632,7 +1208,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>alpha</td>
                         <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/alpha/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/*/alpha</td>
                         <td>should</td>
@@ -645,7 +1235,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td></td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*/alpha?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/alpha/4,5</td>
                         <td>should</td>
                         <td></td>
@@ -655,7 +1259,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>test</td>
                         <td></td>
                         <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/alpha/4,5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
                         <td>x</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>test/*/alpha:x</td>
@@ -669,7 +1287,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td>x</td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*/alpha:x?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/alpha:x/5</td>
                         <td>should</td>
                         <td></td>
@@ -680,7 +1312,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>alpha</td>
                         <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/alpha:x/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/*/alpha:x</td>
                         <td>should</td>
@@ -693,7 +1339,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/*/alpha:x?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/*/alpha:x/4,5</td>
                         <td>should</td>
                         <td></td>
@@ -701,7 +1361,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                       </tr>
                       <tr>
                         <td>test</td>
+                        <td></td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/*/alpha:x/4,5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
                         <td>1</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -717,7 +1391,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/*/5</td>
                         <td>should</td>
                         <td></td>
@@ -728,7 +1416,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>1</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/*/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/1</td>
                         <td>should</td>
@@ -741,7 +1443,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td></td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/*/4,5</td>
                         <td>should</td>
                         <td></td>
@@ -751,7 +1467,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>test</td>
                         <td>1</td>
                         <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/*/4,5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
                         <td>x</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>test/1</td>
@@ -765,7 +1495,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>x</td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/*/5</td>
                         <td>should</td>
                         <td></td>
@@ -776,7 +1520,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>1</td>
                         <td></td>
                         <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/*/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/1</td>
                         <td>should</td>
@@ -789,8 +1547,35 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td></td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/*/4,5</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/*/4,5?v=2</td>
                         <td>should</td>
                         <td></td>
                         <td></td>
@@ -799,6 +1584,7 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>test</td>
                         <td>1</td>
                         <td>alpha</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -813,7 +1599,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1/alpha?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/alpha/5</td>
                         <td>should</td>
                         <td></td>
@@ -824,7 +1624,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>1</td>
                         <td>alpha</td>
                         <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/alpha/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/1/alpha</td>
                         <td>should</td>
@@ -837,7 +1651,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td></td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1/alpha?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/alpha/4,5</td>
                         <td>should</td>
                         <td></td>
@@ -847,7 +1675,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>test</td>
                         <td>1</td>
                         <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/alpha/4,5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
                         <td>x</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>test/1/alpha:x</td>
@@ -861,7 +1703,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td>x</td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1/alpha:x?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/alpha:x/5</td>
                         <td>should</td>
                         <td></td>
@@ -872,7 +1728,21 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>1</td>
                         <td>alpha</td>
                         <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/alpha:x/5?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>test/1/alpha:x</td>
                         <td>should</td>
@@ -885,8 +1755,35 @@ I want to be sure that the resource URI is correct for every situation</p>
                         <td>alpha</td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>test/1/alpha:x?v=2</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>test/1/alpha:x/4,5</td>
+                        <td>should</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>test/1/alpha:x/4,5?v=2</td>
                         <td>should</td>
                         <td></td>
                         <td></td>
@@ -1758,7 +2655,7 @@ I want to be sure that the resource URI is correct for every situation</p>
         </ul>
       </div>
       <div id="footer">
-        <p>Pickled on: 11 October 2013 10:27:39</p>
+        <p>Pickled on: 29 October 2013 10:13:59</p>
         <p>Produced by Pickles, version 0.11.0.0</p>
       </div>
     </div>

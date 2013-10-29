@@ -89,6 +89,28 @@ I want access to all available REST operations on HBase Stargate via a managed c
               <i class="icon-ok passed" title="Successful"> </i>
             </div>
             <div class="scenario-heading">
+              <h2>Create a table</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have created a new table schema</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have set my table schema's name to "test"</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have added a column named "alpha" to my table schema</li>
+                <li class="step">
+                  <span class="keyword">When </span>I create a table using my table schema</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request for schema updates should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th><th>table</th><th>column</th></tr></thead><tbody><tr><td>PUT</td><td>test/schema</td><td>test</td><td>alpha</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
               <h2>Write a single value</h2>
             </div>
             <div class="steps">
@@ -206,7 +228,7 @@ I want access to all available REST operations on HBase Stargate via a managed c
             <div class="steps">
               <ul>
                 <li class="step">
-                  <span class="keyword">Given </span>I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, and a &lt;end&gt; timestamp</li>
+                  <span class="keyword">Given </span>I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, a &lt;end&gt; timestamp, and a &lt;max&gt; number of results</li>
                 <li class="step">
                   <span class="keyword">When </span>I read a row using my query</li>
                 <li class="step">
@@ -226,6 +248,7 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <th>qualifier</th>
                         <th>begin</th>
                         <th>end</th>
+                        <th>max</th>
                         <th>method</th>
                         <th>resource</th>
                       </tr>
@@ -238,6 +261,7 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1</td>
                       </tr>
@@ -247,7 +271,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/*/5</td>
                       </tr>
@@ -256,7 +292,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>1</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>GET</td>
                         <td>test/1</td>
@@ -267,7 +315,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td></td>
                         <td></td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/*/4,5</td>
                       </tr>
@@ -275,7 +335,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>test</td>
                         <td>1</td>
                         <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/4,5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
                         <td>x</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>GET</td>
@@ -287,7 +359,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td></td>
                         <td>x</td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/*/5</td>
                       </tr>
@@ -296,7 +380,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>1</td>
                         <td></td>
                         <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>GET</td>
                         <td>test/1</td>
@@ -307,14 +403,38 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td></td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/*/4,5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/4,5?v=2</td>
                       </tr>
                       <tr>
                         <td>test</td>
                         <td>1</td>
                         <td>alpha</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -327,7 +447,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>alpha</td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/alpha/5</td>
                       </tr>
@@ -336,7 +468,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>1</td>
                         <td>alpha</td>
                         <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>GET</td>
                         <td>test/1/alpha</td>
@@ -347,7 +491,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>alpha</td>
                         <td></td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/alpha/4,5</td>
                       </tr>
@@ -355,7 +511,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>test</td>
                         <td>1</td>
                         <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha/4,5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
                         <td>x</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td>GET</td>
@@ -367,7 +535,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>alpha</td>
                         <td>x</td>
                         <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/alpha:x/5</td>
                       </tr>
@@ -376,7 +556,19 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>1</td>
                         <td>alpha</td>
                         <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
                         <td>4</td>
+                        <td></td>
                         <td></td>
                         <td>GET</td>
                         <td>test/1/alpha:x</td>
@@ -387,9 +579,32 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>alpha</td>
                         <td>x</td>
                         <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
                         <td>5</td>
+                        <td></td>
                         <td>GET</td>
                         <td>test/1/alpha:x/4,5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x/4,5?v=2</td>
                       </tr>
                     </tbody>
                   </table>
@@ -436,7 +651,7 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>alpha</td>
                         <td></td>
                         <td>GET</td>
-                        <td>test/1/alpha</td>
+                        <td>test/1/alpha?v=1</td>
                       </tr>
                       <tr>
                         <td>test</td>
@@ -444,12 +659,102 @@ I want access to all available REST operations on HBase Stargate via a managed c
                         <td>alpha</td>
                         <td>x</td>
                         <td>GET</td>
-                        <td>test/1/alpha:x</td>
+                        <td>test/1/alpha:x?v=1</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Create a scanner</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a status of "OK" and a location header of "http://someurl.com/test/scanner/abc123"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I create a scanner for the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>PUT</td><td>test/scanner</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>my scanner should have a resource set to "test/scanner/abc123"</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Read a result from a scanner</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a scanner for the "test" table named "abc123"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I read a result from the scanner</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td>test/scanner/abc123</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Delete a scanner</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a scanner for the "test" table named "abc123"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I delete the scanner</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>DELETE</td><td>test/scanner/abc123</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Enumerate all tables</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">When </span>I read the names of all tables</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td></td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Get table schema</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_TableSchema1"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I get the schema of the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td>test/schema</td></tr></tbody></table></div></li>
+              </ul>
             </div>
           </li>
           <li class="scenario">
@@ -537,10 +842,26 @@ I want access to all available REST operations on HBase Stargate via a managed c
               </div>
             </div>
           </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Delete a table</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">When </span>I delete the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>DELETE</td><td>test/schema</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
       <div id="footer">
-        <p>Pickled on: 11 October 2013 10:27:39</p>
+        <p>Pickled on: 29 October 2013 10:13:59</p>
         <p>Produced by Pickles, version 0.11.0.0</p>
       </div>
     </div>

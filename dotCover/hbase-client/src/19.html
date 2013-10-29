@@ -4,22 +4,24 @@
 
 		</script><script type="text/javascript">
 			RANGES_19 = [
-   [33,3,33,39,'dccv']
-, [34,3,34,4,'dccv']
-, [35,4,35,23,'dccv']
+   [35,3,35,39,'dccv']
 , [36,3,36,4,'dccv']
-, [40,3,40,4,'dccv']
-, [41,4,41,74,'dccv']
+, [37,4,37,23,'dccv']
+, [38,3,38,4,'dccv']
 , [42,3,42,4,'dccv']
-, [46,3,46,4,'dccv']
-, [47,4,47,67,'dccv']
+, [43,4,43,74,'dccv']
+, [44,3,44,4,'dccv']
 , [48,3,48,4,'dccv']
-, [52,3,52,4,'dcuc']
-, [53,4,53,38,'dcuc']
-, [54,3,54,4,'dcuc']
-, [58,3,58,4,'dcuc']
-, [59,4,59,38,'dcuc']
-, [60,3,60,4,'dcuc']
+, [49,4,49,67,'dccv']
+, [50,3,50,4,'dccv']
+, [54,3,54,4,'dccv']
+, [55,4,55,47,'dccv']
+, [56,4,56,30,'dccv']
+, [58,4,58,48,'dccv']
+, [59,3,59,4,'dccv']
+, [63,3,63,4,'dccv']
+, [64,4,64,60,'dccv']
+, [65,3,65,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -43,6 +45,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #endregion
+
+using FluentAssertions;
 
 using TechTalk.SpecFlow;
 
@@ -75,13 +79,16 @@ namespace _specs.Steps
 		[When(@&quot;I read a result from the scanner&quot;)]
 		public void ReadScanner()
 		{
-			ScenarioContext.Current.Pending();
+			bool success = _context.Scanner.MoveNext();
+			success.Should().Be(true);
+
+			_context.CellSet = _context.Scanner.Current;
 		}
 
 		[When(@&quot;I read the names of all tables&quot;)]
 		public void ReadTableNames()
 		{
-			ScenarioContext.Current.Pending();
+			_context.TableNames = _context.Stargate.GetTableNames();
 		}
 	}
 }</pre></code><script type="text/javascript">

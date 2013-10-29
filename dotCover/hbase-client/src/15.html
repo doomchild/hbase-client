@@ -4,25 +4,42 @@
 
 		</script><script type="text/javascript">
 			RANGES_15 = [
-   [33,3,33,44,'dcuc']
-, [34,3,34,4,'dcuc']
-, [35,4,35,19,'dcuc']
-, [36,3,36,4,'dcuc']
-, [40,3,40,4,'dcuc']
-, [41,4,41,38,'dcuc']
-, [42,3,42,4,'dcuc']
-, [46,3,46,4,'dcuc']
-, [47,4,47,38,'dcuc']
-, [48,3,48,4,'dcuc']
-, [52,3,52,4,'dcuc']
-, [53,4,53,38,'dcuc']
-, [54,3,54,4,'dcuc']
-, [58,3,58,4,'dcuc']
-, [59,4,59,38,'dcuc']
-, [60,3,60,4,'dcuc']
-, [64,3,64,4,'dcuc']
-, [65,4,65,38,'dcuc']
-, [66,3,66,4,'dcuc']
+   [47,3,47,96,'dccv']
+, [48,3,48,4,'dccv']
+, [49,4,49,19,'dccv']
+, [50,4,50,27,'dccv']
+, [51,4,51,27,'dccv']
+, [52,3,52,4,'dccv']
+, [56,3,56,4,'dccv']
+, [57,4,57,43,'dccv']
+, [58,3,58,4,'dccv']
+, [62,3,62,4,'dccv']
+, [63,4,63,35,'dccv']
+, [64,3,64,4,'dccv']
+, [68,3,68,4,'dccv']
+, [69,4,69,119,'dccv']
+, [70,4,70,48,'dccv']
+, [71,3,71,4,'dccv']
+, [75,3,75,4,'dccv']
+, [76,4,76,52,'dccv']
+, [77,3,77,4,'dccv']
+, [81,3,81,4,'dccv']
+, [82,4,82,43,'dccv']
+, [83,3,83,4,'dccv']
+, [87,3,87,4,'dccv']
+, [88,4,88,46,'dccv']
+, [89,3,89,4,'dccv']
+, [93,3,93,4,'dccv']
+, [94,4,94,67,'dccv']
+, [95,4,95,72,'dccv']
+, [96,4,96,83,'dccv']
+, [97,4,97,73,'dccv']
+, [98,3,98,4,'dccv']
+, [102,3,102,4,'dccv']
+, [103,4,103,72,'dccv']
+, [104,4,104,83,'dccv']
+, [105,4,108,7,'dccv']
+, [109,3,109,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -47,6 +64,18 @@
 
 #endregion
 
+using System.Collections.Generic;
+using System.Net;
+
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.Models;
+
+using Moq;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -56,41 +85,72 @@ namespace _specs.Steps
 	[Binding]
 	public class Administration
 	{
+		private readonly IMoqContainer _container;
 		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
 
-		public Administration(HBaseContext hBase)
+		public Administration(HBaseContext hBase, ResourceContext resources, IMoqContainer container)
 		{
 			_hBase = hBase;
+			_resources = resources;
+			_container = container;
 		}
 
-		[Given(@&quot;I have added a column called &quot;&quot;(.*)&quot;&quot; to my table&quot;)]
-		public void AddColumn(string columnName)
+		[Given(@&quot;I have created a new table schema&quot;)]
+		public void CreateTableSchema()
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.TableSchema = new TableSchema();
 		}
 
-		[When(@&quot;I create the table&quot;)]
-		public void CreateTable()
+		[Given(@&quot;I have set my table schema&#39;s name to &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void SetTableSchemaName(string name)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.TableSchema.Name = name;
 		}
 
-		[When(@&quot;I create the scanner&quot;)]
-		public void CreateScanner()
+		[Given(@&quot;I have added a column named &quot;&quot;(.*)&quot;&quot; to my table schema&quot;)]
+		public void AddColumnSchema(string name)
 		{
-			ScenarioContext.Current.Pending();
+			List&lt;ColumnSchema&gt; columns = _hBase.TableSchema.Columns ?? (_hBase.TableSchema.Columns = new List&lt;ColumnSchema&gt;());
+			columns.Add(new ColumnSchema {Name = name});
 		}
 
-		[When(@&quot;I delete the scanner&quot;)]
-		public void DeleteScanner(string scannerId)
+		[When(@&quot;I create a table using my table schema&quot;)]
+		public void CreateTableUsingSchema()
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Stargate.CreateTable(_hBase.TableSchema);
 		}
 
-		[When(@&quot;I delete the table&quot;)]
-		public void DeleteTable()
+		[When(@&quot;I delete the &quot;&quot;(.*)&quot;&quot; table&quot;)]
+		public void DeleteTable(string tableName)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Stargate.DeleteTable(tableName);
+		}
+
+		[When(@&quot;I get the schema of the &quot;&quot;(.*)&quot;&quot; table&quot;)]
+		public void GetTableSchema(string tableName)
+		{
+			_hBase.Stargate.GetTableSchema(tableName);
+		}
+
+		[Given(@&quot;I will always get a response with a status of &quot;&quot;(.*)&quot;&quot; and content equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void SetupFakeResponseWithContent(HttpStatusCode responseStatus, string responseContentResource)
+		{
+			string content = _resources.GetString(responseContentResource);
+			Mock&lt;IRestResponse&gt; responseMock = _container.Mock&lt;IRestResponse&gt;();
+			responseMock.SetupGet(response =&gt; response.StatusCode).Returns(responseStatus);
+			responseMock.SetupGet(response =&gt; response.Content).Returns(content);
+		}
+
+		[Given(@&quot;I will always get a response with a status of &quot;&quot;(.*)&quot;&quot; and a location header of &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void SetupFakeResponseWithLocation(HttpStatusCode responseStatus, string location)
+		{
+			Mock&lt;IRestResponse&gt; responseMock = _container.Mock&lt;IRestResponse&gt;();
+			responseMock.SetupGet(response =&gt; response.StatusCode).Returns(responseStatus);
+			responseMock.SetupGet(response =&gt; response.Headers).Returns(new List&lt;Parameter&gt;
+			{
+				new Parameter {Name = RestConstants.LocationHeader, Type = ParameterType.HttpHeader, Value = location}
+			});
 		}
 	}
 }</pre></code><script type="text/javascript">

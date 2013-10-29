@@ -4,12 +4,12 @@
 
 		</script><script type="text/javascript">
 			RANGES_24 = [
-   [29,3,29,46,'dccv']
+   [29,3,29,42,'dccv']
 , [30,3,30,4,'dccv']
 , [31,4,31,27,'dccv']
 , [32,3,32,4,'dccv']
 , [42,3,42,4,'dccv']
-, [43,4,43,41,'dccv']
+, [43,4,43,37,'dccv']
 , [46,4,46,38,'dccv']
 , [36,3,36,4,'dcuc']
 , [37,4,37,38,'dcuc']
@@ -42,27 +42,27 @@ using _specs.Models;
 namespace _specs.Steps.Serialization
 {
 	[Binding]
-	public class Protobuf
+	public class Json
 	{
 		private readonly ContentConverter _converter;
 
-		public Protobuf(ContentConverter converter)
+		public Json(ContentConverter converter)
 		{
 			_converter = converter;
 		}
 
-		[Then(@&quot;my raw protobuf content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void CompareProtobufToResource(string resourceName)
+		[Then(@&quot;my raw JSON content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CompareJsonToResource(string resourceName)
 		{
 			ScenarioContext.Current.Pending();
 		}
 
-		[Given(@&quot;I have everything I need to test a content converter for protobuf&quot;)]
-		public void SetConversionToProtobuf()
+		[Given(@&quot;I have everything I need to test a content converter for JSON&quot;)]
+		public void SetConversionToJson()
 		{
-			_converter.SetConversionToProtobuf();
+			_converter.SetConversionToJson();
 
-			//TODO: remove the next line once protobuf is plugged in
+			//TODO: remove the next line once JSON is plugged in
 			ScenarioContext.Current.Pending();
 		}
 	}

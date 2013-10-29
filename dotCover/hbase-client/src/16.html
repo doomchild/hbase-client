@@ -4,49 +4,61 @@
 
 		</script><script type="text/javascript">
 			RANGES_16 = [
-   [43,3,43,90,'dccv']
-, [44,3,44,4,'dccv']
-, [45,4,45,19,'dccv']
-, [46,4,46,17,'dccv']
-, [47,4,47,27,'dccv']
-, [48,3,48,4,'dccv']
-, [52,3,52,4,'dccv']
-, [53,4,53,79,'dccv']
-, [55,4,56,52,'dccv']
-, [56,103,56,105,'dccv']
-, [58,4,58,66,'dccv']
-, [60,4,61,20,'dccv']
-, [61,59,61,61,'dccv']
-, [63,4,64,20,'dccv']
-, [64,37,64,39,'dccv']
-, [66,4,66,83,'dccv']
-, [68,4,68,58,'dccv']
-, [69,4,69,69,'dccv']
-, [70,4,70,59,'dccv']
-, [72,4,72,45,'dccv']
-, [73,3,73,4,'dccv']
-, [77,3,77,4,'dccv']
-, [78,4,78,53,'dccv']
-, [79,3,79,4,'dccv']
-, [83,3,83,4,'dccv']
-, [84,4,84,55,'dccv']
-, [85,3,85,4,'dccv']
-, [89,3,89,4,'dccv']
-, [90,4,100,6,'dccv']
+   [49,3,49,90,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,19,'dccv']
+, [52,4,52,17,'dccv']
+, [53,4,53,27,'dccv']
+, [54,3,54,4,'dccv']
+, [58,3,58,4,'dccv']
+, [59,4,59,79,'dccv']
+, [61,4,62,52,'dccv']
+, [62,103,62,105,'dccv']
+, [66,4,66,64,'dccv']
+, [68,4,68,69,'dccv']
+, [70,4,71,20,'dccv']
+, [71,28,71,30,'dccv']
+, [73,4,75,5,'dccv']
+, [78,20,79,8,'dccv']
+, [81,4,82,20,'dccv']
+, [82,37,82,39,'dccv']
+, [86,4,86,41,'dccv']
+, [88,4,88,83,'dccv']
+, [90,4,90,58,'dccv']
+, [91,4,91,69,'dccv']
+, [92,4,92,59,'dccv']
+, [93,4,93,69,'dccv']
+, [94,4,94,45,'dccv']
+, [96,4,96,45,'dccv']
+, [97,3,97,4,'dccv']
 , [101,3,101,4,'dccv']
-, [105,3,105,4,'dccv']
-, [106,4,115,6,'dccv']
-, [116,3,116,4,'dccv']
-, [120,3,120,4,'dccv']
-, [121,4,135,6,'dccv']
-, [136,3,136,4,'dccv']
-, [56,52,56,103,'dccv']
-, [61,20,61,59,'dccv']
-, [64,20,64,37,'dccv']
+, [102,4,102,53,'dccv']
+, [103,3,103,4,'dccv']
+, [107,3,107,4,'dccv']
+, [108,4,108,55,'dccv']
+, [109,3,109,4,'dccv']
+, [113,3,113,4,'dccv']
+, [114,4,124,6,'dccv']
+, [125,3,125,4,'dccv']
+, [129,3,129,4,'dccv']
+, [130,4,139,6,'dccv']
+, [140,3,140,4,'dccv']
+, [144,3,144,4,'dccv']
+, [145,4,160,6,'dccv']
+, [161,3,161,4,'dccv']
+, [62,52,62,103,'dccv']
+, [75,5,75,6,'dccv']
+, [76,6,76,48,'dccv']
+, [77,6,77,31,'dccv']
+, [78,6,78,20,'dccv']
+, [82,20,82,37,'dccv']
+, [71,20,71,28,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src16" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+		<code id="src16" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -63,9 +75,13 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using HBase.Stargate.Client;
+#endregion
+
+using System;
+
 using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 using Moq;
 
@@ -103,19 +119,37 @@ namespace _specs.Steps
 			factoryMock.Setup(factory =&gt; factory.CreateRequest(It.IsAny&lt;string&gt;(), It.IsAny&lt;Method&gt;()))
 				.Returns&lt;string, Method&gt;((resource, method) =&gt; (_rest.Request = new RestRequest(resource, method)));
 
-			Mock&lt;IRestClient&gt; clientMock = _container.Mock&lt;IRestClient&gt;();
+			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
+			//https://github.com/TheTribe/code-patterns/issues/125
+			var clientMock = new Mock&lt;IRestClient&gt;(MockBehavior.Strict);
+
+			IRestResponse response = _container.Mock&lt;IRestResponse&gt;().Object;
 
 			clientMock.Setup(client =&gt; client.Execute(It.IsAny&lt;IRestRequest&gt;()))
-				.Returns(() =&gt; _container.Mock&lt;IRestResponse&gt;().Object);
+				.Returns(() =&gt; response);
+
+			clientMock.Setup(client =&gt; client.ExecuteAsync(It.IsAny&lt;IRestRequest&gt;(), It.IsAny&lt;Action&lt;IRestResponse, RestRequestAsyncHandle&gt;&gt;()))
+				.Returns&lt;IRestRequest, Action&lt;IRestResponse, RestRequestAsyncHandle&gt;&gt;((request, action) =&gt;
+				{
+					var handle = new RestRequestAsyncHandle();
+					action(response, handle);
+					return handle;
+				});
 
 			factoryMock.Setup(factory =&gt; factory.CreateClient(It.IsAny&lt;string&gt;()))
 				.Returns(() =&gt; clientMock.Object);
+
+			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
+			//https://github.com/TheTribe/code-patterns/issues/125
+			_container.Update(clientMock.Object);
 
 			_container.Update&lt;IStargateOptions&gt;(options.CreateInstance&lt;StargateOptions&gt;());
 
 			_container.Update&lt;IMimeConverter, XmlMimeConverter&gt;();
 			_container.Update&lt;IMimeConverterFactory, MimeConverterFactory&gt;();
 			_container.Update&lt;IResourceBuilder, ResourceBuilder&gt;();
+			_container.Update&lt;ISimpleValueConverter, SimpleValueConverter&gt;();
+			_container.Update&lt;ICodec, Base64Codec&gt;();
 
 			_container.Update&lt;IStargate, Stargate&gt;();
 		}
@@ -144,7 +178,7 @@ namespace _specs.Steps
 					Column = column,
 					Qualifier = qualifier
 				},
-				Timestamp = timestamp.ToNullableLong()
+				Timestamp = timestamp.ToNullableInt64()
 			};
 		}
 
@@ -163,8 +197,8 @@ namespace _specs.Steps
 			};
 		}
 
-		[Given(@&quot;I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, and a (.*) timestamp&quot;)]
-		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp)
+		[Given(@&quot;I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, a (.*) timestamp, and a (.*) number of results&quot;)]
+		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp, string maxResults)
 		{
 			_hBase.Query = new CellQuery
 			{
@@ -178,8 +212,9 @@ namespace _specs.Steps
 						Qualifier = qualifier
 					}
 				},
-				BeginTimestamp = beginTimestamp.ToNullableLong(),
-				EndTimestamp = endTimestamp.ToNullableLong()
+				BeginTimestamp = beginTimestamp.ToNullableInt64(),
+				EndTimestamp = endTimestamp.ToNullableInt64(),
+				MaxResults = maxResults.ToNullableInt32()
 			};
 		}
 	}

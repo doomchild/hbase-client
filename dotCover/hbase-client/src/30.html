@@ -4,39 +4,14 @@
 
 		</script><script type="text/javascript">
 			RANGES_30 = [
-   [252,3,252,4,'dccv']
-, [253,4,253,48,'dccv']
-, [253,77,253,79,'dccv']
-, [254,4,254,17,'dccv']
-, [255,4,255,5,'dccv']
-, [256,5,256,47,'dccv']
-, [257,4,257,5,'dccv']
-, [258,3,258,4,'dccv']
-, [253,48,253,77,'dccv']
-, [47,3,47,4,'dcuc']
-, [48,4,58,14,'dcuc']
-, [59,3,59,4,'dcuc']
-, [73,3,73,4,'dcuc']
-, [74,4,84,14,'dcuc']
-, [85,3,85,4,'dcuc']
-, [98,3,98,4,'dcuc']
-, [99,4,109,7,'dcuc']
-, [110,3,110,4,'dcuc']
-, [122,3,122,4,'dcuc']
-, [123,4,133,7,'dcuc']
-, [134,3,134,4,'dcuc']
-, [147,3,147,4,'dcuc']
-, [148,4,158,7,'dcuc']
-, [159,3,159,4,'dcuc']
-, [171,3,171,4,'dcuc']
-, [172,4,182,7,'dcuc']
-, [183,3,183,4,'dcuc']
-, [197,3,197,4,'dcuc']
-, [198,4,212,7,'dcuc']
-, [213,3,213,4,'dcuc']
-, [227,3,227,4,'dcuc']
-, [228,4,242,7,'dcuc']
-, [243,3,243,4,'dcuc']
+   [40,3,40,4,'dcuc']
+, [41,4,41,29,'dcuc']
+, [43,4,43,58,'dcuc']
+, [45,4,45,16,'dcuc']
+, [46,3,46,4,'dcuc']
+, [52,3,52,4,'dcuc']
+, [53,4,53,26,'dcuc']
+, [54,3,54,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -61,242 +36,38 @@
 
 #endregion
 
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+using HBase.Stargate.Client.TypeConversion;
 
-using RestSharp;
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides Stargate API extensions.
+	///    Provides base functionality for scanner filters.
 	/// &lt;/summary&gt;
-	public static class Extensions
+	public abstract class ScannerFilterBase : IScannerFilter
 	{
+		private const string _typePropertyName = &quot;type&quot;;
+
 		/// &lt;summary&gt;
-		///    Writes the value to HBase using the identifier values.
+		/// Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
-		public static Task WriteValueAsync(this IStargate gate, string value, string table, string row, string column, string qualifier = null,
-			long? timestamp = null)
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public virtual JObject ConvertToJson(ICodec codec)
 		{
-			return gate.WriteValueAsync(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			}, value);
+			var json = new JObject();
+
+			json[_typePropertyName] = new JValue(GetFilterType());
+
+			return json;
 		}
 
 		/// &lt;summary&gt;
-		///    Writes the value to HBase using the identifier values.
+		/// Gets the type of the filter.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
-		public static void WriteValue(this IStargate gate, string value, string table, string row, string column, string qualifier = null,
-			long? timestamp = null)
+		protected virtual string GetFilterType()
 		{
-			gate.WriteValue(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			}, value);
-		}
-
-		/// &lt;summary&gt;
-		///    Deletes the item with matching values from HBase.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
-		public static Task DeleteItemAsync(this IStargate gate, string table, string row, string column = null, string qualifier = null,
-			long? timestamp = null)
-		{
-			return gate.DeleteItemAsync(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
-		}
-
-		/// &lt;summary&gt;
-		///    Deletes the item with matching values from HBase.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
-		public static void DeleteItem(this IStargate gate, string table, string row, string column = null, string qualifier = null, long? timestamp = null)
-		{
-			gate.DeleteItem(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
-		}
-
-		/// &lt;summary&gt;
-		///    Reads the value at the matching location.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
-		public static Task&lt;string&gt; ReadValueAsync(this IStargate gate, string table, string row, string column, string qualifier = null,
-			long? timestamp = null)
-		{
-			return gate.ReadValueAsync(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
-		}
-
-		/// &lt;summary&gt;
-		///    Reads the value at the matching location.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
-		public static string ReadValue(this IStargate gate, string table, string row, string column, string qualifier = null, long? timestamp = null)
-		{
-			return gate.ReadValue(new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp
-			});
-		}
-
-		/// &lt;summary&gt;
-		///    Finds the cells with the matching attributes.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;beginTimestamp&quot;&gt;The begin timestamp (exclusive).&lt;/param&gt;
-		/// &lt;param name=&quot;endTimestamp&quot;&gt;The end timestamp (exclusive).&lt;/param&gt;
-		public static Task&lt;CellSet&gt; FindCellsAsync(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
-			long? beginTimestamp = null, long? endTimestamp = null)
-		{
-			return gate.FindCellsAsync(new CellQuery
-			{
-				Table = table,
-				Row = row,
-				Cells = new[]
-				{
-					new HBaseCellDescriptor
-					{
-						Column = column,
-						Qualifier = qualifier
-					}
-				},
-				BeginTimestamp = beginTimestamp,
-				EndTimestamp = endTimestamp
-			});
-		}
-
-		/// &lt;summary&gt;
-		///    Finds the cells with the matching attributes.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
-		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
-		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
-		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
-		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
-		/// &lt;param name=&quot;beginTimestamp&quot;&gt;The begin timestamp (exclusive).&lt;/param&gt;
-		/// &lt;param name=&quot;endTimestamp&quot;&gt;The end timestamp (exclusive).&lt;/param&gt;
-		public static CellSet FindCells(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
-			long? beginTimestamp = null, long? endTimestamp = null)
-		{
-			return gate.FindCells(new CellQuery
-			{
-				Table = table,
-				Row = row,
-				Cells = new[]
-				{
-					new HBaseCellDescriptor
-					{
-						Column = column,
-						Qualifier = qualifier
-					}
-				},
-				BeginTimestamp = beginTimestamp,
-				EndTimestamp = endTimestamp
-			});
-		}
-
-		/// &lt;summary&gt;
-		///    Throws an exception for the response if none of the statuses match.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;errorProvider&quot;&gt;The error provider.&lt;/param&gt;
-		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
-		/// &lt;param name=&quot;validStatuses&quot;&gt;The valid statuses.&lt;/param&gt;
-		public static void ThrowIfStatusMismatch(this IErrorProvider errorProvider, IRestResponse response, params HttpStatusCode[] validStatuses)
-		{
-			bool mismatch = validStatuses.All(status =&gt; response.StatusCode != status);
-			if (mismatch)
-			{
-				errorProvider.ThrowFromResponse(response);
-			}
+			return GetType().Name;
 		}
 	}
 }</pre></code><script type="text/javascript">

@@ -4,18 +4,20 @@
 
 		</script><script type="text/javascript">
 			RANGES_42 = [
-   [61,3,61,4,'dccv']
-, [62,4,62,71,'dccv']
-, [63,3,63,4,'dccv']
-, [70,3,70,4,'dccv']
-, [71,11,71,97,'dccv']
-, [72,4,72,5,'dccv']
-, [73,5,73,31,'dccv']
-, [75,3,75,4,'dccv']
+   [44,3,44,4,'dcuc']
+, [45,4,45,45,'dcuc']
+, [47,4,47,11,'dcuc']
+, [49,4,49,63,'dcuc']
+, [49,95,49,97,'dcuc']
+, [51,4,51,16,'dcuc']
+, [52,3,52,4,'dcuc']
+, [49,63,49,95,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src42" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+		<code id="src42" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -32,63 +34,38 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System.Linq;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides a base type for HBase MIME converters.
+	///    This filter is used for selecting only those keys with columns that matches a particular
+	///    prefix. For example, if prefix is &#39;an&#39;, it will pass keys will columns like &#39;and&#39;/&#39;anti&#39;
+	///    but not keys with columns like &#39;ball&#39;/&#39;act&#39;.
 	/// &lt;/summary&gt;
-	public abstract class MimeConverterBase : IMimeConverter
+	public class MultipleColumnPrefixFilter : FilterListBase&lt;string&gt;
 	{
-		/// &lt;summary&gt;
-		/// Gets the current MIME type.
-		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		/// The MIME type.
-		/// &lt;/value&gt;
-		public abstract string MimeType { get; }
+		private const string _prefixesPropertyName = &quot;prefixes&quot;;
 
 		/// &lt;summary&gt;
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;cells&quot;&gt;The cells.&lt;/param&gt;
-		public abstract string Convert(IEnumerable&lt;Cell&gt; cells);
-
-		/// &lt;summary&gt;
-		/// Converts the specified cell to text according to the current MIME type.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;cell&quot;&gt;&lt;/param&gt;
-		/// &lt;returns&gt;&lt;/returns&gt;
-		public abstract string Convert(Cell cell);
-
-		/// &lt;summary&gt;
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;data&quot;&gt;The data.&lt;/param&gt;
-		public abstract IEnumerable&lt;Cell&gt; Convert(string data);
-
-		/// &lt;summary&gt;
-		///    Encodes the specified text.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
-		protected static string Encode(string text)
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
 		{
-			return System.Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
-		}
+			JObject json = base.ConvertToJson(codec);
 
-		/// &lt;summary&gt;
-		///    Decodes the specified text.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
-		protected static string Decode(string text)
-		{
-			using (var reader = new StreamReader(new MemoryStream(System.Convert.FromBase64String(text))))
-			{
-				return reader.ReadToEnd();
-			}
+			Sort();
+
+			json[_prefixesPropertyName] = ConvertToJsonArray(prefix =&gt; new JValue(codec.Encode(prefix)));
+
+			return json;
 		}
 	}
 }</pre></code><script type="text/javascript">

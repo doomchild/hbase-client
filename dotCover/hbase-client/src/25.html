@@ -4,20 +4,17 @@
 
 		</script><script type="text/javascript">
 			RANGES_25 = [
-   [35,3,35,88,'dccv']
-, [36,3,36,4,'dccv']
-, [37,4,37,19,'dccv']
-, [38,4,38,27,'dccv']
-, [39,4,39,27,'dccv']
-, [40,3,40,4,'dccv']
-, [44,3,44,4,'dccv']
-, [45,4,45,36,'dccv']
-, [46,3,46,4,'dccv']
-, [50,3,50,4,'dccv']
-, [51,4,51,49,'dccv']
-, [52,4,52,67,'dccv']
-, [54,4,54,50,'dccv']
-, [55,3,55,4,'dccv']
+   [29,3,29,46,'dccv']
+, [30,3,30,4,'dccv']
+, [31,4,31,27,'dccv']
+, [32,3,32,4,'dccv']
+, [42,3,42,4,'dccv']
+, [43,4,43,41,'dccv']
+, [46,4,46,38,'dccv']
+, [36,3,36,4,'dcuc']
+, [37,4,37,38,'dcuc']
+, [38,3,38,4,'dcuc']
+, [47,3,47,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -38,10 +35,6 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Xml.Linq;
-
-using FluentAssertions;
-
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -49,32 +42,28 @@ using _specs.Models;
 namespace _specs.Steps.Serialization
 {
 	[Binding]
-	public class Xml
+	public class Protobuf
 	{
-		private readonly HBaseContext _hBase;
-		private readonly ResourceContext _resources;
 		private readonly ContentConverter _converter;
 
-		public Xml(HBaseContext hBase, ResourceContext resources, ContentConverter converter)
+		public Protobuf(ContentConverter converter)
 		{
-			_hBase = hBase;
-			_resources = resources;
 			_converter = converter;
 		}
 
-		[Given(@&quot;I have everything I need to test a content converter for XML&quot;)]
-		public void SetConversionToXml()
+		[Then(@&quot;my raw protobuf content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CompareProtobufToResource(string resourceName)
 		{
-			_converter.SetConversionToXml();
+			ScenarioContext.Current.Pending();
 		}
 
-		[Then(@&quot;my raw XML content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void CompareRawXmlToResource(string resourceName)
+		[Given(@&quot;I have everything I need to test a content converter for protobuf&quot;)]
+		public void SetConversionToProtobuf()
 		{
-			var left = XElement.Parse(_hBase.RawContent);
-			var right = XElement.Parse(_resources.GetString(resourceName));
+			_converter.SetConversionToProtobuf();
 
-			left.ToString().Should().Be(right.ToString());
+			//TODO: remove the next line once protobuf is plugged in
+			ScenarioContext.Current.Pending();
 		}
 	}
 }</pre></code><script type="text/javascript">
