@@ -27,12 +27,12 @@ using System.Xml.Linq;
 
 using HBase.Stargate.Client.Models;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
 	///    Defines an XML implementation of <see cref="IMimeConverter" />.
 	/// </summary>
-	public class XmlMimeConverter : MimeConverterBase
+	public class XmlMimeConverter : IMimeConverter
 	{
 		private const string _cellSetName = "CellSet";
 		private const string _rowName = "Row";
@@ -62,14 +62,17 @@ namespace HBase.Stargate.Client.MimeConversion
 		private const string _encodeOnDiskName = "ENCODE_ON_DISK";
 		private static readonly Regex _columnParser = new Regex(string.Format(_columnParserFormat, _columnName, _qualifierName));
 		private readonly ISimpleValueConverter _valueConverter;
+		private readonly ICodec _codec;
 
 		/// <summary>
-		///    Initializes a new instance of the <see cref="XmlMimeConverter" /> class.
+		/// Initializes a new instance of the <see cref="XmlMimeConverter" /> class.
 		/// </summary>
 		/// <param name="valueConverter">The value converter.</param>
-		public XmlMimeConverter(ISimpleValueConverter valueConverter)
+		/// <param name="codec">The codec.</param>
+		public XmlMimeConverter(ISimpleValueConverter valueConverter, ICodec codec)
 		{
 			_valueConverter = valueConverter;
+			_codec = codec;
 		}
 
 		/// <summary>
@@ -78,7 +81,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		/// <value>
 		///    The MIME type.
 		/// </value>
-		public override string MimeType
+		public virtual string MimeType
 		{
 			get { return HBaseMimeTypes.Xml; }
 		}
@@ -87,7 +90,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified cells to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public override string ConvertCells(IEnumerable<Cell> cells)
+		public virtual string ConvertCells(IEnumerable<Cell> cells)
 		{
 			IDictionary<string, Cell[]> rows = cells
 				.GroupBy(cell => cell.Identifier != null ? cell.Identifier.Row : string.Empty)
@@ -102,7 +105,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified cell to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cell"></param>
-		public override string ConvertCell(Cell cell)
+		public virtual string ConvertCell(Cell cell)
 		{
 			string row = cell.Identifier != null ? cell.Identifier.Row : null;
 			XElement xml = XmlForCellSet(new[]
@@ -120,7 +123,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public override IEnumerable<Cell> ConvertCells(string data)
+		public virtual IEnumerable<Cell> ConvertCells(string data)
 		{
 			return string.IsNullOrEmpty(data)
 				? Enumerable.Empty<Cell>()
@@ -133,7 +136,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified data to a table schema according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public override TableSchema ConvertSchema(string data)
+		public virtual TableSchema ConvertSchema(string data)
 		{
 			return string.IsNullOrEmpty(data) ? null : SchemaForXml(XElement.Parse(data));
 		}
@@ -142,7 +145,7 @@ namespace HBase.Stargate.Client.MimeConversion
 		///    Converts the specified table schema to text according to the current MIME type.
 		/// </summary>
 		/// <param name="schema">The schema.</param>
-		public override string ConvertSchema(TableSchema schema)
+		public virtual string ConvertSchema(TableSchema schema)
 		{
 			var xml = new XElement(_tableSchemaName,
 				new XAttribute(_nameName, schema.Name),
@@ -160,10 +163,9 @@ namespace HBase.Stargate.Client.MimeConversion
 			{
 				Name = xml.Attribute(_nameName).Value,
 				IsMeta = ParseAttributeValue(xml.Attribute(_isMetaName), bool.Parse),
-				IsRoot = ParseAttributeValue(xml.Attribute(_isRootName), bool.Parse)
+				IsRoot = ParseAttributeValue(xml.Attribute(_isRootName), bool.Parse),
+				Columns = new List<ColumnSchema>(xml.Elements(_columnSchemaName).Select(ColumnSchemaForXml))
 			};
-
-			schema.Columns.AddRange(xml.Elements(_columnSchemaName).Select(ColumnSchemaForXml));
 
 			return schema;
 		}
@@ -222,7 +224,7 @@ namespace HBase.Stargate.Client.MimeConversion
 			xml.Add(new XAttribute(name, valueExtractor(value)));
 		}
 
-		private static Cell CellForXml(XElement cell)
+		private Cell CellForXml(XElement cell)
 		{
 			XElement parent = cell.Parent;
 			if (parent == null)
@@ -236,12 +238,12 @@ namespace HBase.Stargate.Client.MimeConversion
 				return null;
 			}
 
-			string row = Decode(keyAttribute.Value);
+			string row = _codec.Decode(keyAttribute.Value);
 			ParsedColumn parsedColumn = ParseColumn(cell);
 
 			XAttribute timestampAttribute = cell.Attribute(_timestampName);
 			long? timestamp = timestampAttribute != null ? timestampAttribute.Value.ToNullableInt64() : null;
-			string value = Decode(cell.Value);
+			string value = _codec.Decode(cell.Value);
 
 			return new Cell(new Identifier
 			{
@@ -255,7 +257,7 @@ namespace HBase.Stargate.Client.MimeConversion
 			}, value);
 		}
 
-		private static ParsedColumn ParseColumn(XElement cell)
+		private ParsedColumn ParseColumn(XElement cell)
 		{
 			XAttribute columnAttribute = cell.Attribute(_columnName);
 			if (columnAttribute == null)
@@ -263,7 +265,7 @@ namespace HBase.Stargate.Client.MimeConversion
 				return new ParsedColumn();
 			}
 
-			string columnValue = Decode(columnAttribute.Value);
+			string columnValue = _codec.Decode(columnAttribute.Value);
 			Match match = _columnParser.Match(columnValue);
 			if (!match.Success)
 			{
@@ -281,17 +283,17 @@ namespace HBase.Stargate.Client.MimeConversion
 			return new XElement(_cellSetName, rows);
 		}
 
-		private static XElement XmlForRow(string row, IEnumerable<XElement> cells)
+		private  XElement XmlForRow(string row, IEnumerable<XElement> cells)
 		{
 			var xml = new XElement(_rowName, cells);
 			if (!string.IsNullOrEmpty(row))
 			{
-				xml.Add(new XAttribute(_keyName, Encode(row)));
+				xml.Add(new XAttribute(_keyName, _codec.Encode(row)));
 			}
 			return xml;
 		}
 
-		private static XElement XmlForCell(Cell cell)
+		private XElement XmlForCell(Cell cell)
 		{
 			Identifier identifier = cell.Identifier;
 			HBaseCellDescriptor cellDescriptor = identifier != null ? identifier.Cell : null;
@@ -299,11 +301,11 @@ namespace HBase.Stargate.Client.MimeConversion
 			string qualifier = cellDescriptor != null ? cellDescriptor.Qualifier : null;
 			long? timestamp = identifier != null ? identifier.Timestamp : null;
 
-			var cellXml = new XElement(_cellName, new XText(Encode(cell.Value)));
+			var cellXml = new XElement(_cellName, new XText(_codec.Encode(cell.Value)));
 
 			if (!string.IsNullOrEmpty(column))
 			{
-				cellXml.Add(new XAttribute(_columnName, Encode(string.Format(_columnFormat, column, qualifier))));
+				cellXml.Add(new XAttribute(_columnName, _codec.Encode(string.Format(_columnFormat, column, qualifier))));
 			}
 			if (timestamp.HasValue)
 			{

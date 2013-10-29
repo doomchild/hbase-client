@@ -19,52 +19,46 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
-
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Describes the possible comparisons a scanner filter can make.
 	/// </summary>
-	public interface IResourceBuilder
+	public enum FilterComparisons
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    No comparison should be made.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		None,
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Values must be equal.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		Equal,
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		///    Values must not be equal.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
+		NotEqual,
 
 		/// <summary>
-		///    Builds a batch insert URI.
+		///    Value must be greater than the one specified.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
+		GreaterThan,
 
 		/// <summary>
-		///    Builds a table creation URI.
+		///    Value must be greater than or equal to the one specified.
 		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
+		GreaterThanOrEqual,
 
 		/// <summary>
-		/// Builds a scanner creation URI.
+		///    Value must be less than the one specified.
 		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		LessThan,
+
+		/// <summary>
+		///    Value must be less than or equal to the one specified.
+		/// </summary>
+		LessThanOrEqual
 	}
 }

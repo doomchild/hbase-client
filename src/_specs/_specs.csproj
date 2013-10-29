@@ -159,6 +159,7 @@
     <Compile Include="Steps\Reading.cs" />
     <Compile Include="Steps\RequestVerification.cs" />
     <Compile Include="Steps\ResourceBuilding.cs" />
+    <Compile Include="Steps\ScannerSteps.cs" />
     <Compile Include="Steps\Serialization\ContentConversion.cs" />
     <Compile Include="Steps\Serialization\Json.cs" />
     <Compile Include="Steps\Serialization\Protobuf.cs" />

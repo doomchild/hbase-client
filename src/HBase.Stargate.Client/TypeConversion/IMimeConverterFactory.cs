@@ -1,6 +1,4 @@
-#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,35 +15,17 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
-using System.Collections.Generic;
-
-using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.Models;
-
-namespace _specs.Models
+namespace HBase.Stargate.Client.TypeConversion
 {
-	public class HBaseContext
+	/// <summary>
+	///    Provides easy access to MIME-specific converter creation capabilities.
+	/// </summary>
+	public interface IMimeConverterFactory
 	{
-		public IStargate Stargate { get; set; }
-
-		public Identifier Identifier { get; set; }
-
-		public CellSet CellSet { get; set; }
-
-		public Cell Cell { get; set; }
-
-		public string CellValue { get; set; }
-
-		public string RawContent { get; set; }
-
-		public CellQuery Query { get; set; }
-
-		public TableSchema TableSchema { get; set; }
-
-		public IEnumerable<string> TableNames { get; set; }
-
-		public IScanner Scanner { get; set; }
+		/// <summary>
+		///    Creates the converter appropriate for the specified MIME type.
+		/// </summary>
+		/// <param name="mimeType">The MIME type.</param>
+		IMimeConverter CreateConverter(string mimeType);
 	}
 }

@@ -19,52 +19,36 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using System.Linq;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    This filter is used for selecting only those keys with columns that matches a particular
+	///    prefix. For example, if prefix is 'an', it will pass keys will columns like 'and'/'anti'
+	///    but not keys with columns like 'ball'/'act'.
 	/// </summary>
-	public interface IResourceBuilder
+	public class MultipleColumnPrefixFilter : FilterListBase<string>
 	{
-		/// <summary>
-		///    Builds a cell or row query URI.
-		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		private const string _prefixesPropertyName = "prefixes";
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Converts the filter to its JSON representation.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
 
-		/// <summary>
-		///    Builds a delete-item URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
+			Sort();
 
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
+			json[_prefixesPropertyName] = ConvertToJsonArray(prefix => new JValue(codec.Encode(prefix)));
 
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+			return json;
+		}
 	}
 }

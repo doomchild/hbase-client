@@ -19,54 +19,35 @@
 
 #endregion
 
-using System.Collections.Generic;
+using HBase.Stargate.Client.TypeConversion;
 
-using HBase.Stargate.Client.Models;
+using Newtonsoft.Json.Linq;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Provides HBase data conversion to a specific MIME type.
+	///    Pass results that have same row prefix.
 	/// </summary>
-	public interface IMimeConverter
+	public class PrefixFilter : TypeValueFilterBase
 	{
-		/// <summary>
-		///    Gets the current MIME type.
-		/// </summary>
-		/// <value>
-		///    The MIME type.
-		/// </value>
-		string MimeType { get; }
+		private readonly string _rowPrefix;
 
 		/// <summary>
-		///    Converts the specified cells to text according to the current MIME type.
+		///    Initializes a new instance of the <see cref="PrefixFilter" /> class.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string ConvertCells(IEnumerable<Cell> cells);
+		/// <param name="rowPrefix">The row prefix.</param>
+		public PrefixFilter(string rowPrefix)
+		{
+			_rowPrefix = rowPrefix;
+		}
 
 		/// <summary>
-		///    Converts the specified cell to text according to the current MIME type.
+		///    Gets the token to use as the value.
 		/// </summary>
-		/// <param name="cell"></param>
-		string ConvertCell(Cell cell);
-
-		/// <summary>
-		///    Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> ConvertCells(string data);
-
-		/// <summary>
-		///    Converts the specified data to a table schema according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		TableSchema ConvertSchema(string data);
-
-		/// <summary>
-		/// Converts the specified table schema to text according to the current MIME type.
-		/// </summary>
-		/// <param name="schema">The schema.</param>
-		/// <returns></returns>
-		string ConvertSchema(TableSchema schema);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_rowPrefix));
+		}
 	}
 }

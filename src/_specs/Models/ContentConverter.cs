@@ -22,8 +22,9 @@
 using System;
 using System.Collections.Generic;
 
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client;
 using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 namespace _specs.Models
 {
@@ -86,7 +87,7 @@ namespace _specs.Models
 		public void SetConversionToXml()
 		{
 			MimeType = HBaseMimeTypes.Xml;
-			_converter = new XmlMimeConverter(new SimpleValueConverter());
+			_converter = new XmlMimeConverter(new SimpleValueConverter(), new Base64Codec());
 		}
 
 		public void SetConversionToJson()

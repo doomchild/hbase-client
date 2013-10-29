@@ -1,6 +1,4 @@
-﻿#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+﻿// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -17,54 +15,35 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-using HBase.Stargate.Client.Models;
-
-namespace HBase.Stargate.Client.Api
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Defines an IoC-driven implementation of <see cref="IMimeConverterFactory" />.
 	/// </summary>
-	public interface IResourceBuilder
+	public class MimeConverterFactory : IMimeConverterFactory
 	{
-		/// <summary>
-		///    Builds a cell or row query URI.
-		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		private readonly IEnumerable<IMimeConverter> _converters;
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		/// Initializes a new instance of the <see cref="MimeConverterFactory"/> class.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="converters">The converters.</param>
+		public MimeConverterFactory(IEnumerable<IMimeConverter> converters)
+		{
+			_converters = converters;
+		}
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		/// Creates the converter appropriate for the specified MIME type.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="mimeType">The MIME type.</param>
+		public IMimeConverter CreateConverter(string mimeType)
+		{
+			return _converters.FirstOrDefault(converter => StringComparer.OrdinalIgnoreCase.Equals(converter.MimeType, mimeType));
+		}
 	}
 }

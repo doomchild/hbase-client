@@ -19,52 +19,38 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using System;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    A Filter that stops after the given row. There is no "RowStopFilter" because
+	///    <see cref="ScannerOptions" /> allows you to specify a stop row.
 	/// </summary>
-	public interface IResourceBuilder
+	public class InclusiveStopFilter : TypeValueFilterBase
 	{
-		/// <summary>
-		///    Builds a cell or row query URI.
-		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		private readonly string _row;
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Initializes a new instance of the <see cref="InclusiveStopFilter" /> class.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="row">The row.</param>
+		public InclusiveStopFilter(string row)
+		{
+			_row = row;
+		}
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		/// Gets the token to use as the value.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_row));
+		}
 	}
 }

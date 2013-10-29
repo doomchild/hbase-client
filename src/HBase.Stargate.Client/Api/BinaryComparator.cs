@@ -19,36 +19,37 @@
 
 #endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Describes the MIME types supported by HBase Stargate.
+	/// Provides a representation of the BinaryComparator filter value.
 	/// </summary>
-	public static class HBaseMimeTypes
+	public class BinaryComparator : TypeValueFilterBase
 	{
-		/// <summary>
-		///    The plain text MIME type.
-		/// </summary>
-		public const string Text = "text/plain";
+		private readonly string _value;
 
 		/// <summary>
-		///    The XML MIME type.
+		/// Initializes a new instance of the <see cref="BinaryComparator"/> class.
 		/// </summary>
-		public const string Xml = "text/xml";
+		/// <param name="value">The value.</param>
+		public BinaryComparator(string value)
+		{
+			_value = value;
+		}
 
 		/// <summary>
-		///    The json MIME type.
+		/// Gets the token to use as the value.
 		/// </summary>
-		public const string Json = "application/json";
-
-		/// <summary>
-		///    The protobuf MIME type.
-		/// </summary>
-		public const string Protobuf = "application/x-protobuf";
-
-		/// <summary>
-		///    The binary stream MIME type.
-		/// </summary>
-		public const string Stream = "application/octet-stream";
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_value));
+		}
 	}
 }

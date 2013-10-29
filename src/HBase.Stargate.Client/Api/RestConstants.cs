@@ -27,12 +27,17 @@ namespace HBase.Stargate.Client.Api
 	public static class RestConstants
 	{
 		/// <summary>
-		///    The accept header.
+		/// The Location header.
+		/// </summary>
+		public const string LocationHeader = "Location";
+
+		/// <summary>
+		///    The Accept header.
 		/// </summary>
 		public const string AcceptHeader = "Accept";
 
 		/// <summary>
-		///    The content type header.
+		///    The Content-Type header.
 		/// </summary>
 		public const string ContentTypeHeader = "Content-Type";
 	}

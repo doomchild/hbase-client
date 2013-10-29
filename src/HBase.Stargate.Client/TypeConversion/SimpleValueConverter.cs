@@ -25,7 +25,7 @@ using System.Linq;
 
 using HBase.Stargate.Client.Models;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
 	///    Provides a standard implementation of <see cref="ISimpleValueConverter" />.

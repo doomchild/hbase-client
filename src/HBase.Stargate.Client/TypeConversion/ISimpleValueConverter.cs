@@ -21,50 +21,49 @@
 
 using HBase.Stargate.Client.Models;
 
-namespace HBase.Stargate.Client.Api
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Defines a converter for simple HBase-related values.
 	/// </summary>
-	public interface IResourceBuilder
+	public interface ISimpleValueConverter
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    Converts the bloom filter.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		/// <param name="filter">The filter.</param>
+		/// <returns></returns>
+		string ConvertBloomFilter(BloomFilters? filter);
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Converts the bloom filter.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="filter">The filter.</param>
+		/// <returns></returns>
+		BloomFilters ConvertBloomFilter(string filter);
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		///    Converts the type of the compression.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
+		/// <param name="compressionType">Type of the compression.</param>
+		string ConvertCompressionType(CompressionTypes? compressionType);
 
 		/// <summary>
-		///    Builds a batch insert URI.
+		///    Converts the type of the compression.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
+		/// <param name="compressionType">Type of the compression.</param>
+		CompressionTypes ConvertCompressionType(string compressionType);
 
 		/// <summary>
-		///    Builds a table creation URI.
+		///    Converts the data block encoding.
 		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
+		/// <param name="encoding">The encoding.</param>
+		string ConvertDataBlockEncoding(DataBlockEncodings? encoding);
 
 		/// <summary>
-		/// Builds a scanner creation URI.
+		///    Converts the data block encoding.
 		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="encoding">The encoding.</param>
+		DataBlockEncodings ConvertDataBlockEncoding(string encoding);
 	}
 }

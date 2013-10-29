@@ -19,52 +19,39 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Implementation of Filter interface that limits results to a specific page size. It terminates
+	///    scanning once the number of filter-passed rows is > the given page size. Note that this filter
+	///    cannot guarantee that the number of results returned to a client are &lt;= page size. This is
+	///    because the filter is applied separately on different region servers. It does however optimize
+	///    the scan of individual HRegions by making sure that the page size is never exceeded locally.
 	/// </summary>
-	public interface IResourceBuilder
+	public class PageFilter : TypeValueFilterBase
 	{
-		/// <summary>
-		///    Builds a cell or row query URI.
-		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		private readonly long _pageSize;
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Initializes a new instance of the <see cref="PageFilter" /> class.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="pageSize">Size of the page.</param>
+		public PageFilter(long pageSize)
+		{
+			_pageSize = pageSize;
+		}
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		/// Gets the token to use as the value.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(_pageSize);
+		}
 	}
 }

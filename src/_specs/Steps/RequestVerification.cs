@@ -25,8 +25,8 @@ using System.Linq;
 using FluentAssertions;
 
 using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.MimeConversion;
 using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 using Patterns.Testing.Moq;
 

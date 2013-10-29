@@ -19,52 +19,18 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
-
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    This filter is used to filter based on the column qualifier.
 	/// </summary>
-	public interface IResourceBuilder
+	public class QualifierFilter : ComparisonScannerFilterBase
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    Initializes a new instance of the <see cref="QualifierFilter" /> class.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
-
-		/// <summary>
-		///    Builds a single value storage URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
-
-		/// <summary>
-		///    Builds a delete-item URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="columnQualifier">The column qualifier.</param>
+		/// <param name="comparison">The comparison.</param>
+		public QualifierFilter(string columnQualifier, FilterComparisons comparison) : base(columnQualifier, comparison) {}
 	}
 }

@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,17 +17,40 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace HBase.Stargate.Client.MimeConversion
+#endregion
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Provides easy access to MIME-specific converter creation capabilities.
+	///    Provides base functionality for scanner filters.
 	/// </summary>
-	public interface IMimeConverterFactory
+	public abstract class ScannerFilterBase : IScannerFilter
 	{
+		private const string _typePropertyName = "type";
+
 		/// <summary>
-		///    Creates the converter appropriate for the specified MIME type.
+		/// Converts the filter to its JSON representation.
 		/// </summary>
-		/// <param name="mimeType">The MIME type.</param>
-		IMimeConverter CreateConverter(string mimeType);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		public virtual JObject ConvertToJson(ICodec codec)
+		{
+			var json = new JObject();
+
+			json[_typePropertyName] = new JValue(GetFilterType());
+
+			return json;
+		}
+
+		/// <summary>
+		/// Gets the type of the filter.
+		/// </summary>
+		protected virtual string GetFilterType()
+		{
+			return GetType().Name;
+		}
 	}
 }
