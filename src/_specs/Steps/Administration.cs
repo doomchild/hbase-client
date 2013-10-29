@@ -19,6 +19,18 @@
 
 #endregion
 
+using System.Collections.Generic;
+using System.Net;
+
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.Models;
+
+using Moq;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -28,41 +40,72 @@ namespace _specs.Steps
 	[Binding]
 	public class Administration
 	{
+		private readonly IMoqContainer _container;
 		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
 
-		public Administration(HBaseContext hBase)
+		public Administration(HBaseContext hBase, ResourceContext resources, IMoqContainer container)
 		{
 			_hBase = hBase;
+			_resources = resources;
+			_container = container;
 		}
 
-		[Given(@"I have added a column called ""(.*)"" to my table")]
-		public void AddColumn(string columnName)
+		[Given(@"I have created a new table schema")]
+		public void CreateTableSchema()
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.TableSchema = new TableSchema();
 		}
 
-		[When(@"I create the table")]
-		public void CreateTable()
+		[Given(@"I have set my table schema's name to ""(.*)""")]
+		public void SetTableSchemaName(string name)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.TableSchema.Name = name;
 		}
 
-		[When(@"I create the scanner")]
-		public void CreateScanner()
+		[Given(@"I have added a column named ""(.*)"" to my table schema")]
+		public void AddColumnSchema(string name)
 		{
-			ScenarioContext.Current.Pending();
+			List<ColumnSchema> columns = _hBase.TableSchema.Columns ?? (_hBase.TableSchema.Columns = new List<ColumnSchema>());
+			columns.Add(new ColumnSchema {Name = name});
 		}
 
-		[When(@"I delete the scanner")]
-		public void DeleteScanner(string scannerId)
+		[When(@"I create a table using my table schema")]
+		public void CreateTableUsingSchema()
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Stargate.CreateTable(_hBase.TableSchema);
 		}
 
-		[When(@"I delete the table")]
-		public void DeleteTable()
+		[When(@"I delete the ""(.*)"" table")]
+		public void DeleteTable(string tableName)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Stargate.DeleteTable(tableName);
+		}
+
+		[When(@"I get the schema of the ""(.*)"" table")]
+		public void GetTableSchema(string tableName)
+		{
+			_hBase.Stargate.GetTableSchema(tableName);
+		}
+
+		[Given(@"I will always get a response with a status of ""(.*)"" and content equivalent to the resource called ""(.*)""")]
+		public void SetupFakeResponseWithContent(HttpStatusCode responseStatus, string responseContentResource)
+		{
+			string content = _resources.GetString(responseContentResource);
+			Mock<IRestResponse> responseMock = _container.Mock<IRestResponse>();
+			responseMock.SetupGet(response => response.StatusCode).Returns(responseStatus);
+			responseMock.SetupGet(response => response.Content).Returns(content);
+		}
+
+		[Given(@"I will always get a response with a status of ""(.*)"" and a location header of ""(.*)""")]
+		public void SetupFakeResponseWithLocation(HttpStatusCode responseStatus, string location)
+		{
+			Mock<IRestResponse> responseMock = _container.Mock<IRestResponse>();
+			responseMock.SetupGet(response => response.StatusCode).Returns(responseStatus);
+			responseMock.SetupGet(response => response.Headers).Returns(new List<Parameter>
+			{
+				new Parameter {Name = RestConstants.LocationHeader, Type = ParameterType.HttpHeader, Value = location}
+			});
 		}
 	}
 }

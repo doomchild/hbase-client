@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,39 +17,39 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	/// Provides HBase data conversion to a specific MIME type.
+	/// Provides a representation of the BinaryComparator filter value.
 	/// </summary>
-	public interface IMimeConverter
+	public class BinaryComparator : TypeValueFilterBase
 	{
-		/// <summary>
-		/// Gets the current MIME type.
-		/// </summary>
-		/// <value>
-		/// The MIME type.
-		/// </value>
-		string MimeType { get; }
+		private readonly string _value;
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		/// Initializes a new instance of the <see cref="BinaryComparator"/> class.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		string Convert(IEnumerable<Cell> cells);
+		/// <param name="value">The value.</param>
+		public BinaryComparator(string value)
+		{
+			_value = value;
+		}
 
 		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
+		/// Gets the token to use as the value.
 		/// </summary>
-		/// <param name="cell"></param>
-		string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		IEnumerable<Cell> Convert(string data);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_value));
+		}
 	}
 }

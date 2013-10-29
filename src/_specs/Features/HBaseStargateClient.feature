@@ -10,14 +10,14 @@ Background:
 	And I have everything I need to test a content converter for XML
 	And I have an HBase client
 
-#Scenario: Create a table
-#	Given I have created a new table definition
-#	And I have set my table definition's name to "test"
-#	And I have added a column named "alpha" to my table definition
-#	When I create a table using my table definition
-#	Then a REST request should have been submitted with the following values:
-#		| method | url                                 | table | column |
-#		| POST   | http://test-server:9999/test/schema | test  | alpha  |
+Scenario: Create a table
+	Given I have created a new table schema
+	And I have set my table schema's name to "test"
+	And I have added a column named "alpha" to my table schema
+	When I create a table using my table schema
+	Then a REST request for schema updates should have been submitted with the following values:
+		| method | resource    | table | column |
+		| PUT    | test/schema | test  | alpha  |
 
 Scenario Outline: Write a single value
 	Given I have an identifier consisting of a <table>, a <row>, a <column>, a <qualifier>, and a <timestamp>
@@ -59,27 +59,43 @@ Scenario: Write multiple values
 		| 1   | beta   | z         | lorum ipsum |
 
 Scenario Outline: Read a row
-	Given I have a cell query consisting of a <table>, a <row>, a <column>, a <qualifier>, a <begin> timestamp, and a <end> timestamp
+	Given I have a cell query consisting of a <table>, a <row>, a <column>, a <qualifier>, a <begin> timestamp, a <end> timestamp, and a <max> number of results
 	When I read a row using my query
 	Then a REST request should have been submitted with the correct <method> and <resource>
 Examples:
-	| table | row | column | qualifier | begin | end | method | resource           |
-	| test  | 1   |        |           |       |     | GET    | test/1             |
-	| test  | 1   |        |           |       | 5   | GET    | test/1/*/5         |
-	| test  | 1   |        |           | 4     |     | GET    | test/1             |
-	| test  | 1   |        |           | 4     | 5   | GET    | test/1/*/4,5       |
-	| test  | 1   |        | x         |       |     | GET    | test/1             |
-	| test  | 1   |        | x         |       | 5   | GET    | test/1/*/5         |
-	| test  | 1   |        | x         | 4     |     | GET    | test/1             |
-	| test  | 1   |        | x         | 4     | 5   | GET    | test/1/*/4,5       |
-	| test  | 1   | alpha  |           |       |     | GET    | test/1/alpha       |
-	| test  | 1   | alpha  |           |       | 5   | GET    | test/1/alpha/5     |
-	| test  | 1   | alpha  |           | 4     |     | GET    | test/1/alpha       |
-	| test  | 1   | alpha  |           | 4     | 5   | GET    | test/1/alpha/4,5   |
-	| test  | 1   | alpha  | x         |       |     | GET    | test/1/alpha:x     |
-	| test  | 1   | alpha  | x         |       | 5   | GET    | test/1/alpha:x/5   |
-	| test  | 1   | alpha  | x         | 4     |     | GET    | test/1/alpha:x     |
-	| test  | 1   | alpha  | x         | 4     | 5   | GET    | test/1/alpha:x/4,5 |
+	| table | row | column | qualifier | begin | end | max | method | resource               |
+	| test  | 1   |        |           |       |     |     | GET    | test/1                 |
+	| test  | 1   |        |           |       |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        |           |       | 5   |     | GET    | test/1/*/5             |
+	| test  | 1   |        |           |       | 5   | 2   | GET    | test/1/*/5?v=2         |
+	| test  | 1   |        |           | 4     |     |     | GET    | test/1                 |
+	| test  | 1   |        |           | 4     |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        |           | 4     | 5   |     | GET    | test/1/*/4,5           |
+	| test  | 1   |        |           | 4     | 5   | 2   | GET    | test/1/*/4,5?v=2       |
+	| test  | 1   |        | x         |       |     |     | GET    | test/1                 |
+	| test  | 1   |        | x         |       |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        | x         |       | 5   |     | GET    | test/1/*/5             |
+	| test  | 1   |        | x         |       | 5   | 2   | GET    | test/1/*/5?v=2         |
+	| test  | 1   |        | x         | 4     |     |     | GET    | test/1                 |
+	| test  | 1   |        | x         | 4     |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        | x         | 4     | 5   |     | GET    | test/1/*/4,5           |
+	| test  | 1   |        | x         | 4     | 5   | 2   | GET    | test/1/*/4,5?v=2       |
+	| test  | 1   | alpha  |           |       |     |     | GET    | test/1/alpha           |
+	| test  | 1   | alpha  |           |       |     | 2   | GET    | test/1/alpha?v=2       |
+	| test  | 1   | alpha  |           |       | 5   |     | GET    | test/1/alpha/5         |
+	| test  | 1   | alpha  |           |       | 5   | 2   | GET    | test/1/alpha/5?v=2     |
+	| test  | 1   | alpha  |           | 4     |     |     | GET    | test/1/alpha           |
+	| test  | 1   | alpha  |           | 4     |     | 2   | GET    | test/1/alpha?v=2       |
+	| test  | 1   | alpha  |           | 4     | 5   |     | GET    | test/1/alpha/4,5       |
+	| test  | 1   | alpha  |           | 4     | 5   | 2   | GET    | test/1/alpha/4,5?v=2   |
+	| test  | 1   | alpha  | x         |       |     |     | GET    | test/1/alpha:x         |
+	| test  | 1   | alpha  | x         |       |     | 2   | GET    | test/1/alpha:x?v=2     |
+	| test  | 1   | alpha  | x         |       | 5   |     | GET    | test/1/alpha:x/5       |
+	| test  | 1   | alpha  | x         |       | 5   | 2   | GET    | test/1/alpha:x/5?v=2   |
+	| test  | 1   | alpha  | x         | 4     |     |     | GET    | test/1/alpha:x         |
+	| test  | 1   | alpha  | x         | 4     |     | 2   | GET    | test/1/alpha:x?v=2     |
+	| test  | 1   | alpha  | x         | 4     | 5   |     | GET    | test/1/alpha:x/4,5     |
+	| test  | 1   | alpha  | x         | 4     | 5   | 2   | GET    | test/1/alpha:x/4,5?v=2 |
 	
 Scenario Outline: Read a single value
 	Given I have an identifier consisting of a <table>, a <row>, a <column>, and a <qualifier>
@@ -87,38 +103,43 @@ Scenario Outline: Read a single value
 	Then a REST request should have been submitted with the correct <method> and <resource>
 Examples:
 	| table | row | column | qualifier | method | resource           |
-	| test  | 1   | alpha  |           | GET    | test/1/alpha       |
-	| test  | 1   | alpha  | x         | GET    | test/1/alpha:x     |
+	| test  | 1   | alpha  |           | GET    | test/1/alpha?v=1   |
+	| test  | 1   | alpha  | x         | GET    | test/1/alpha:x?v=1 |
 
-#Scenario: Create a scanner
-#	Given I have set my context to a table called "test"
-#	And I have set my context to a new scanner
-#	When I create the scanner
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource     |
-#		| POST   | test/scanner |
-#
-#Scenario: Read a result from a scanner
-#	Given I have set my context to a table called "test"
-#	And I have set my context to a new scanner
-#	When I read a result from the scanner
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource            |
-#		| GET    | test/scanner/abc123 |
-#
-#Scenario: Delete a scanner
-#	Given I have set my context to a table called "test"
-#	And I have set my context to a new scanner
-#	When I delete the scanner
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource            |
-#		| DELETE | test/scanner/abc123 |
+Scenario: Create a scanner
+	Given I will always get a response with a status of "OK" and a location header of "http://someurl.com/test/scanner/abc123"
+	When I create a scanner for the "test" table
+	Then a REST request should have been submitted with the following values:
+		| method | resource     |
+		| PUT    | test/scanner |
+	And my scanner should have a resource set to "test/scanner/abc123"
 
-#Scenario: Enumerate all tables
-#	When I read the names of all tables
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource |
-#		| GET    |          |
+Scenario: Read a result from a scanner
+	Given I have a scanner for the "test" table named "abc123"
+	When I read a result from the scanner
+	Then a REST request should have been submitted with the following values:
+		| method | resource            |
+		| GET    | test/scanner/abc123 |
+
+Scenario: Delete a scanner
+	Given I have a scanner for the "test" table named "abc123"
+	When I delete the scanner
+	Then a REST request should have been submitted with the following values:
+		| method | resource            |
+		| DELETE | test/scanner/abc123 |
+
+Scenario: Enumerate all tables
+	When I read the names of all tables
+	Then a REST request should have been submitted with the following values:
+		| method | resource |
+		| GET    |          |
+
+Scenario: Get table schema
+	Given I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_TableSchema1"
+	When I get the schema of the "test" table
+	Then a REST request should have been submitted with the following values:
+		| method | resource    |
+		| GET    | test/schema |
 
 Scenario Outline: Delete a row, columm, or cell
 	And I have an identifier consisting of a <table>, a <row>, a <column>, a <qualifier>, and a <timestamp>
@@ -132,9 +153,8 @@ Examples:
 	| test  | 1   | alpha  |           | 4         | DELETE | test/1/alpha/4   |
 	| test  | 1   | alpha  | x         | 4         | DELETE | test/1/alpha:x/4 |
 
-#Scenario: Delete a table
-#	Given I have set my context to a table called "test"
-#	When I delete the table
-#	Then a REST request should have been submitted with the following values:
-#		| method | url                                 |
-#		| DELETE | http://test-server:9999/test/schema |
+Scenario: Delete a table
+	When I delete the "test" table
+	Then a REST request should have been submitted with the following values:
+		| method | resource    |
+		| DELETE | test/schema |

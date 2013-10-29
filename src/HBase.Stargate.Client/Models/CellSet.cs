@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,63 +17,34 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using System.Collections.Generic;
+
+namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
-	///    Provides a base type for HBase MIME converters.
+	///    Defines a set of cells associated with a table.
 	/// </summary>
-	public abstract class MimeConverterBase : IMimeConverter
+	public class CellSet : List<Cell>
 	{
 		/// <summary>
-		/// Gets the current MIME type.
+		/// Initializes a new instance of the <see cref="CellSet"/> class.
 		/// </summary>
-		/// <value>
-		/// The MIME type.
-		/// </value>
-		public abstract string MimeType { get; }
+		public CellSet() {}
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Initializes a new instance of the <see cref="CellSet" /> class.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public abstract string Convert(IEnumerable<Cell> cells);
+		public CellSet(IEnumerable<Cell> cells) : base(cells) {}
 
 		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
+		///    Gets or sets the name of the table.
 		/// </summary>
-		/// <param name="cell"></param>
-		/// <returns></returns>
-		public abstract string Convert(Cell cell);
-
-		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		public abstract IEnumerable<Cell> Convert(string data);
-
-		/// <summary>
-		///    Encodes the specified text.
-		/// </summary>
-		/// <param name="text">The text.</param>
-		protected static string Encode(string text)
-		{
-			return System.Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
-		}
-
-		/// <summary>
-		///    Decodes the specified text.
-		/// </summary>
-		/// <param name="text">The text.</param>
-		protected static string Decode(string text)
-		{
-			using (var reader = new StreamReader(new MemoryStream(System.Convert.FromBase64String(text))))
-			{
-				return reader.ReadToEnd();
-			}
-		}
+		/// <value>
+		///    The name of the table.
+		/// </value>
+		public string Table { get; set; }
 	}
 }

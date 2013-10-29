@@ -24,9 +24,9 @@ using System.Linq;
 
 using FluentAssertions;
 
-using HBase.Stargate.Client;
 using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 using Patterns.Testing.Moq;
 
@@ -54,16 +54,21 @@ namespace _specs.Steps
 		[Then(@"a REST request should have been submitted with the following values:")]
 		public void CheckRequest(Table values)
 		{
-			var properties = values.CreateInstance<ExpectedRequestProperties>();
-			_rest.Request.Method.Should().Be(properties.Method);
-			_rest.Request.Resource.Should().Be(properties.Resource);
+			AssertRequestValuesMatch(_rest.Request, values.CreateInstance<ExpectedRequestProperties>());
+		}
+
+		[Then(@"a REST request for schema updates should have been submitted with the following values:")]
+		public void CheckSchemaUpdateRequest(Table values)
+		{
+			var properties = values.CreateInstance<ExpectedSchemaUpdateRequestProperties>();
+			AssertRequestValuesMatch(_rest.Request, properties);
+			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
 		}
 
 		[Then(@"a REST request should have been submitted with the correct (.+) and (.+)")]
 		public void CheckRequest(Method method, string resource)
 		{
-			_rest.Request.Method.Should().Be(method);
-			_rest.Request.Resource.Should().Be(resource);
+			AssertRequestValuesMatch(_rest.Request, new ExpectedRequestProperties {Method = method, Resource = resource});
 		}
 
 		[Then(@"the REST request should have contained (.*) cells?")]
@@ -93,32 +98,58 @@ namespace _specs.Steps
 
 		private IEnumerable<Cell> GetRowFromRequest()
 		{
-			IMimeConverter converter = CreateRequestConverter();
 			string content = _rest.Request.Parameters
 				.Where(cell => cell.Type == ParameterType.RequestBody)
 				.Select(cell => cell.Value.ToString())
 				.FirstOrDefault();
-			IEnumerable<Cell> row = converter.Convert(content).ToArray();
+			IEnumerable<Cell> row = CreateRequestConverter(_rest.Request, _converterFactory).ConvertCells(content).ToArray();
 			row.Should().NotBeNull();
 			return row;
 		}
 
-		private IMimeConverter CreateRequestConverter()
+		private static IMimeConverter CreateRequestConverter(IRestRequest request, IMimeConverterFactory mimeConverterFactory)
 		{
-			string mimeType = _rest.Request.Parameters
+			string mimeType = request.Parameters
 				.Where(parameter => parameter.Type == ParameterType.HttpHeader && IsAcceptOrContentType(parameter.Name))
 				.Select(parameter => parameter.Value.ToString())
 				.FirstOrDefault();
 
 			mimeType.Should().NotBeEmpty();
 
-			return _converterFactory.CreateConverter(mimeType);
+			IMimeConverter converter = mimeConverterFactory.CreateConverter(mimeType);
+			converter.Should().NotBeNull();
+
+			return converter;
 		}
 
 		private static bool IsAcceptOrContentType(string name)
 		{
 			return name == RestConstants.ContentTypeHeader
 				|| name == RestConstants.AcceptHeader;
+		}
+
+		private static void AssertRequestValuesMatch(IRestRequest request, ExpectedRequestProperties properties)
+		{
+			request.Method.Should().Be(properties.Method);
+			request.Resource.Should().Be(properties.Resource);
+		}
+
+		private static void AssertSchemaValuesMatch(TableSchema requestedSchema, ExpectedSchemaUpdateRequestProperties properties)
+		{
+			requestedSchema.Name.Should().Be(properties.Table);
+			requestedSchema.Columns.Should().HaveCount(1);
+			requestedSchema.Columns[0].Name.Should().Be(properties.Column);
+		}
+
+		private TableSchema GetTableSchemaFromRequest()
+		{
+			string content = _rest.Request.Parameters
+				.Where(cell => cell.Type == ParameterType.RequestBody)
+				.Select(cell => cell.Value.ToString())
+				.FirstOrDefault();
+			TableSchema schema = CreateRequestConverter(_rest.Request, _converterFactory).ConvertSchema(content);
+			schema.Should().NotBeNull();
+			return schema;
 		}
 	}
 }

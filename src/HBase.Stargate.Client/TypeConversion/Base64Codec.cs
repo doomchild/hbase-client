@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,38 +17,46 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace HBase.Stargate.Client
+#endregion
+
+using System;
+using System.IO;
+using System.Text;
+
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines a cell in HBase.
+	///    Provides a standard base64 codec for HBase.
 	/// </summary>
-	public class Cell
+	public class Base64Codec : ICodec
 	{
 		/// <summary>
-		///    Initializes a new instance of the <see cref="Cell" /> class.
+		///    Encodes the specified text.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="value">The value.</param>
-		public Cell(Identifier identifier, string value)
+		/// <param name="text">The text.</param>
+		public virtual string Encode(string text)
 		{
-			Identifier = identifier;
-			Value = value;
+			return Convert.ToBase64String(GetEncoding().GetBytes(text));
 		}
 
 		/// <summary>
-		///    Gets the identifier.
+		///    Decodes the specified text.
 		/// </summary>
-		/// <value>
-		///    The identifier.
-		/// </value>
-		public Identifier Identifier { get; private set; }
+		/// <param name="text">The text.</param>
+		public virtual string Decode(string text)
+		{
+			using (var reader = new StreamReader(new MemoryStream(Convert.FromBase64String(text)), GetEncoding()))
+			{
+				return reader.ReadToEnd();
+			}
+		}
 
 		/// <summary>
-		///    Gets the value.
+		///    Gets the <see cref="Encoding" /> object to use during <see cref="Encode" /> and <see cref="Decode" /> operations.
 		/// </summary>
-		/// <value>
-		///    The value.
-		/// </value>
-		public string Value { get; private set; }
+		protected virtual Encoding GetEncoding()
+		{
+			return Encoding.UTF8;
+		}
 	}
 }

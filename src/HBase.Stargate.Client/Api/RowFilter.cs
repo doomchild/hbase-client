@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,31 +17,20 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace HBase.Stargate.Client.MimeConversion
+#endregion
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Describes the MIME types supported by HBase Stargate.
+	///    This filter is used to filter based on the key.
 	/// </summary>
-	public static class HBaseMimeTypes
+	public class RowFilter : ComparisonScannerFilterBase
 	{
 		/// <summary>
-		///    The XML MIME type.
+		///    Initializes a new instance of the <see cref="RowFilter" /> class.
 		/// </summary>
-		public const string Xml = "text/xml";
-
-		/// <summary>
-		///    The json MIME type.
-		/// </summary>
-		public const string Json = "application/json";
-
-		/// <summary>
-		///    The protobuf MIME type.
-		/// </summary>
-		public const string Protobuf = "application/x-protobuf";
-
-		/// <summary>
-		///    The binary stream MIME type.
-		/// </summary>
-		public const string Stream = "application/octet-stream";
+		/// <param name="row">The row.</param>
+		/// <param name="comparison">The comparison.</param>
+		public RowFilter(string row, FilterComparisons comparison) : base(row, comparison) {}
 	}
 }

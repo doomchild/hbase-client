@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,10 +17,14 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
+using System;
 using System.Collections.Generic;
 
 using HBase.Stargate.Client;
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 namespace _specs.Models
 {
@@ -26,10 +32,62 @@ namespace _specs.Models
 	{
 		private IMimeConverter _converter;
 
+		public string MimeType { get; private set; }
+
+		public string ConvertCells(IEnumerable<Cell> cells)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCells(cells);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public string ConvertCell(Cell cell)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCell(cell);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Cell> ConvertCells(string data)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCells(data);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public TableSchema ConvertSchema(string data)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertSchema(data);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public string ConvertSchema(TableSchema schema)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertSchema(schema);
+			}
+
+			throw new NotImplementedException();
+		}
+
 		public void SetConversionToXml()
 		{
 			MimeType = HBaseMimeTypes.Xml;
-			_converter = new XmlMimeConverter();
+			_converter = new XmlMimeConverter(new SimpleValueConverter(), new Base64Codec());
 		}
 
 		public void SetConversionToJson()
@@ -48,29 +106,6 @@ namespace _specs.Models
 		{
 			MimeType = HBaseMimeTypes.Stream;
 			//TODO: _converter = new BinaryMimeConverter();
-		}
-
-		public string MimeType { get; private set; }
-
-		public string Convert(IEnumerable<Cell> cells)
-		{
-			if (_converter != null) return _converter.Convert(cells);
-
-			throw new System.NotImplementedException();
-		}
-
-		public string Convert(Cell cell)
-		{
-			if (_converter != null) return _converter.Convert(cell);
-
-			throw new System.NotImplementedException();
-		}
-
-		public IEnumerable<Cell> Convert(string data)
-		{
-			if (_converter != null) return _converter.Convert(data);
-
-			throw new System.NotImplementedException();
 		}
 	}
 }

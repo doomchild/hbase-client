@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,9 +17,13 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using HBase.Stargate.Client;
+#endregion
+
+using System;
+
 using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 using Moq;
 
@@ -55,19 +61,37 @@ namespace _specs.Steps
 			factoryMock.Setup(factory => factory.CreateRequest(It.IsAny<string>(), It.IsAny<Method>()))
 				.Returns<string, Method>((resource, method) => (_rest.Request = new RestRequest(resource, method)));
 
-			Mock<IRestClient> clientMock = _container.Mock<IRestClient>();
+			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
+			//https://github.com/TheTribe/code-patterns/issues/125
+			var clientMock = new Mock<IRestClient>(MockBehavior.Strict);
+
+			IRestResponse response = _container.Mock<IRestResponse>().Object;
 
 			clientMock.Setup(client => client.Execute(It.IsAny<IRestRequest>()))
-				.Returns(() => _container.Mock<IRestResponse>().Object);
+				.Returns(() => response);
+
+			clientMock.Setup(client => client.ExecuteAsync(It.IsAny<IRestRequest>(), It.IsAny<Action<IRestResponse, RestRequestAsyncHandle>>()))
+				.Returns<IRestRequest, Action<IRestResponse, RestRequestAsyncHandle>>((request, action) =>
+				{
+					var handle = new RestRequestAsyncHandle();
+					action(response, handle);
+					return handle;
+				});
 
 			factoryMock.Setup(factory => factory.CreateClient(It.IsAny<string>()))
 				.Returns(() => clientMock.Object);
+
+			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
+			//https://github.com/TheTribe/code-patterns/issues/125
+			_container.Update(clientMock.Object);
 
 			_container.Update<IStargateOptions>(options.CreateInstance<StargateOptions>());
 
 			_container.Update<IMimeConverter, XmlMimeConverter>();
 			_container.Update<IMimeConverterFactory, MimeConverterFactory>();
 			_container.Update<IResourceBuilder, ResourceBuilder>();
+			_container.Update<ISimpleValueConverter, SimpleValueConverter>();
+			_container.Update<ICodec, Base64Codec>();
 
 			_container.Update<IStargate, Stargate>();
 		}
@@ -96,7 +120,7 @@ namespace _specs.Steps
 					Column = column,
 					Qualifier = qualifier
 				},
-				Timestamp = timestamp.ToNullableLong()
+				Timestamp = timestamp.ToNullableInt64()
 			};
 		}
 
@@ -115,8 +139,8 @@ namespace _specs.Steps
 			};
 		}
 
-		[Given(@"I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, and a (.*) timestamp")]
-		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp)
+		[Given(@"I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, a (.*) timestamp, and a (.*) number of results")]
+		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp, string maxResults)
 		{
 			_hBase.Query = new CellQuery
 			{
@@ -130,8 +154,9 @@ namespace _specs.Steps
 						Qualifier = qualifier
 					}
 				},
-				BeginTimestamp = beginTimestamp.ToNullableLong(),
-				EndTimestamp = endTimestamp.ToNullableLong()
+				BeginTimestamp = beginTimestamp.ToNullableInt64(),
+				EndTimestamp = endTimestamp.ToNullableInt64(),
+				MaxResults = maxResults.ToNullableInt32()
 			};
 		}
 	}

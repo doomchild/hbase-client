@@ -19,27 +19,48 @@
 
 #endregion
 
-namespace HBase.Stargate.Client
-{
-	/// <summary>
-	///    Describes a record or set of records in HBase.
-	/// </summary>
-	public class HBaseDescriptor
-	{
-		/// <summary>
-		///    Gets or sets the table.
-		/// </summary>
-		/// <value>
-		///    The table.
-		/// </value>
-		public string Table { get; set; }
+using FluentAssertions;
 
-		/// <summary>
-		///    Gets or sets the row.
-		/// </summary>
-		/// <value>
-		///    The row.
-		/// </value>
-		public string Row { get; set; }
+using HBase.Stargate.Client.Api;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class ScannerSteps
+	{
+		private readonly HBaseContext _hBase;
+
+		public ScannerSteps(HBaseContext hBase)
+		{
+			_hBase = hBase;
+		}
+
+		[Then(@"my scanner should have a resource set to ""(.*)""")]
+		public void CheckScannerResource(string resource)
+		{
+			_hBase.Scanner.Resource.Should().Be(resource);
+		}
+
+		[Given(@"I have a scanner for the ""(.*)"" table named ""(.*)""")]
+		public void ObtainManualScanner(string tableName, string scannerId)
+		{
+			_hBase.Scanner = new Scanner(string.Format("{0}/scanner/{1}", tableName, scannerId), _hBase.Stargate);
+		}
+
+		[When(@"I delete the scanner")]
+		public void DeleteScanner()
+		{
+			_hBase.Stargate.DeleteScanner(_hBase.Scanner);
+		}
+
+		[When(@"I create a scanner for the ""(.*)"" table")]
+		public void CreateScanner(string tableName)
+		{
+			_hBase.Scanner = _hBase.Stargate.CreateScanner(new ScannerOptions { TableName = tableName });
+		}
 	}
 }

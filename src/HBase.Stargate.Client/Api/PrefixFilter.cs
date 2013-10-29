@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,17 +17,37 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace HBase.Stargate.Client.MimeConversion
+#endregion
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Provides easy access to MIME-specific converter creation capabilities.
+	///    Pass results that have same row prefix.
 	/// </summary>
-	public interface IMimeConverterFactory
+	public class PrefixFilter : TypeValueFilterBase
 	{
+		private readonly string _rowPrefix;
+
 		/// <summary>
-		///    Creates the converter appropriate for the specified MIME type.
+		///    Initializes a new instance of the <see cref="PrefixFilter" /> class.
 		/// </summary>
-		/// <param name="mimeType">The MIME type.</param>
-		IMimeConverter CreateConverter(string mimeType);
+		/// <param name="rowPrefix">The row prefix.</param>
+		public PrefixFilter(string rowPrefix)
+		{
+			_rowPrefix = rowPrefix;
+		}
+
+		/// <summary>
+		///    Gets the token to use as the value.
+		/// </summary>
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_rowPrefix));
+		}
 	}
 }

@@ -21,43 +21,52 @@
 
 using System.Collections.Generic;
 
-namespace HBase.Stargate.Client
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines a query targeting one or more cells in HBase.
+	///    Provides HBase data conversion to a specific MIME type.
 	/// </summary>
-	public class CellQuery : HBaseDescriptor
+	public interface IMimeConverter
 	{
 		/// <summary>
-		///    Gets or sets the additional criteria.
+		///    Gets the current MIME type.
 		/// </summary>
 		/// <value>
-		///    The additional criteria.
+		///    The MIME type.
 		/// </value>
-		public IEnumerable<HBaseCellDescriptor> Cells { get; set; }
+		string MimeType { get; }
 
 		/// <summary>
-		///    Gets or sets the begin timestamp (exclusive).
+		///    Converts the specified cells to text according to the current MIME type.
 		/// </summary>
-		/// <value>
-		///    The begin timestamp (exclusive).
-		/// </value>
-		public long? BeginTimestamp { get; set; }
+		/// <param name="cells">The cells.</param>
+		string ConvertCells(IEnumerable<Cell> cells);
 
 		/// <summary>
-		///    Gets or sets the end timestamp (exclusive).
+		///    Converts the specified cell to text according to the current MIME type.
 		/// </summary>
-		/// <value>
-		///    The end timestamp (exclusive).
-		/// </value>
-		public long? EndTimestamp { get; set; }
+		/// <param name="cell"></param>
+		string ConvertCell(Cell cell);
 
 		/// <summary>
-		///    Gets or sets the maximum allowed results.
+		///    Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
-		/// <value>
-		///    The maximum allowed results.
-		/// </value>
-		public int? MaxResults { get; set; }
+		/// <param name="data">The data.</param>
+		IEnumerable<Cell> ConvertCells(string data);
+
+		/// <summary>
+		///    Converts the specified data to a table schema according to the current MIME type.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		TableSchema ConvertSchema(string data);
+
+		/// <summary>
+		/// Converts the specified table schema to text according to the current MIME type.
+		/// </summary>
+		/// <param name="schema">The schema.</param>
+		/// <returns></returns>
+		string ConvertSchema(TableSchema schema);
 	}
 }

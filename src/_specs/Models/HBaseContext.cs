@@ -1,3 +1,5 @@
+#region FreeBSD
+
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
@@ -15,8 +17,12 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using HBase.Stargate.Client;
+#endregion
+
+using System.Collections.Generic;
+
 using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.Models;
 
 namespace _specs.Models
 {
@@ -35,5 +41,11 @@ namespace _specs.Models
 		public string RawContent { get; set; }
 
 		public CellQuery Query { get; set; }
+
+		public TableSchema TableSchema { get; set; }
+
+		public IEnumerable<string> TableNames { get; set; }
+
+		public IScanner Scanner { get; set; }
 	}
 }

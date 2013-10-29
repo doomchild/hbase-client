@@ -129,4 +129,10 @@
 	<data name="ResourceBuilder_MinimumForDeleteItemNotMet" xml:space="preserve">
     <value>Table name and row key must be specified at a minimum for item deletion.</value>
   </data>
+	<data name="ResourceBuilder_MinimumForSchemaUpdateNotMet" xml:space="preserve">
+    <value>Table name must be specified at a minimum for schema update/creation.</value>
+  </data>
+	<data name="ResourceBuilder_MinimumForScannerNotMet" xml:space="preserve">
+    <value>Table name must be specified for scanner access.</value>
+  </data>
 </root>

@@ -22,6 +22,8 @@
 using System.Configuration;
 using System.Linq;
 
+using HBase.Stargate.Client.Models;
+
 namespace HBase.Stargate.Client.Config
 {
 	/// <summary>

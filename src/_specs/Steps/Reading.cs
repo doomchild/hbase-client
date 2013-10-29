@@ -19,6 +19,8 @@
 
 #endregion
 
+using FluentAssertions;
+
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -50,13 +52,16 @@ namespace _specs.Steps
 		[When(@"I read a result from the scanner")]
 		public void ReadScanner()
 		{
-			ScenarioContext.Current.Pending();
+			bool success = _context.Scanner.MoveNext();
+			success.Should().Be(true);
+
+			_context.CellSet = _context.Scanner.Current;
 		}
 
 		[When(@"I read the names of all tables")]
 		public void ReadTableNames()
 		{
-			ScenarioContext.Current.Pending();
+			_context.TableNames = _context.Stargate.GetTableNames();
 		}
 	}
 }

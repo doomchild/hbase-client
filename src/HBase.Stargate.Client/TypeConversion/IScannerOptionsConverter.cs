@@ -19,27 +19,20 @@
 
 #endregion
 
-namespace HBase.Stargate.Client
+using HBase.Stargate.Client.Api;
+
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines an identifier in the HBase system.
+	///    Defines a converter for scanner options.
 	/// </summary>
-	public class Identifier : HBaseDescriptor
+	public interface IScannerOptionsConverter
 	{
 		/// <summary>
-		/// Gets or sets the cell descriptor.
+		///    Converts the specified options to an XML document with
+		///    filter options as embedded JSON.
 		/// </summary>
-		/// <value>
-		/// The cell.
-		/// </value>
-		public HBaseCellDescriptor Cell { get; set; }
-
-		/// <summary>
-		///    Gets or sets the timestamp.
-		/// </summary>
-		/// <value>
-		///    The timestamp.
-		/// </value>
-		public long? Timestamp { get; set; }
+		/// <param name="options">The options.</param>
+		string Convert(ScannerOptions options);
 	}
 }

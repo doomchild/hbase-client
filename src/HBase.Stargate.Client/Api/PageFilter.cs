@@ -19,32 +19,39 @@
 
 #endregion
 
-using System.Collections.Generic;
+using HBase.Stargate.Client.TypeConversion;
 
-namespace HBase.Stargate.Client
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a set of cells associated with a table.
+	///    Implementation of Filter interface that limits results to a specific page size. It terminates
+	///    scanning once the number of filter-passed rows is > the given page size. Note that this filter
+	///    cannot guarantee that the number of results returned to a client are &lt;= page size. This is
+	///    because the filter is applied separately on different region servers. It does however optimize
+	///    the scan of individual HRegions by making sure that the page size is never exceeded locally.
 	/// </summary>
-	public class CellSet : List<Cell>
+	public class PageFilter : TypeValueFilterBase
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CellSet"/> class.
-		/// </summary>
-		public CellSet() {}
+		private readonly long _pageSize;
 
 		/// <summary>
-		///    Initializes a new instance of the <see cref="CellSet" /> class.
+		///    Initializes a new instance of the <see cref="PageFilter" /> class.
 		/// </summary>
-		/// <param name="cells">The cells.</param>
-		public CellSet(IEnumerable<Cell> cells) : base(cells) {}
+		/// <param name="pageSize">Size of the page.</param>
+		public PageFilter(long pageSize)
+		{
+			_pageSize = pageSize;
+		}
 
 		/// <summary>
-		///    Gets or sets the name of the table.
+		/// Gets the token to use as the value.
 		/// </summary>
-		/// <value>
-		///    The name of the table.
-		/// </value>
-		public string Table { get; set; }
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(_pageSize);
+		}
 	}
 }
