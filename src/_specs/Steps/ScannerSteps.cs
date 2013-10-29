@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,35 +17,50 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+#endregion
 
-namespace HBase.Stargate.Client.MimeConversion
+using FluentAssertions;
+
+using HBase.Stargate.Client.Api;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
 {
-	/// <summary>
-	///    Defines an IoC-driven implementation of <see cref="IMimeConverterFactory" />.
-	/// </summary>
-	public class MimeConverterFactory : IMimeConverterFactory
+	[Binding]
+	public class ScannerSteps
 	{
-		private readonly IEnumerable<IMimeConverter> _converters;
+		private readonly HBaseContext _hBase;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MimeConverterFactory"/> class.
-		/// </summary>
-		/// <param name="converters">The converters.</param>
-		public MimeConverterFactory(IEnumerable<IMimeConverter> converters)
+		public ScannerSteps(HBaseContext hBase)
 		{
-			_converters = converters;
+			_hBase = hBase;
 		}
 
-		/// <summary>
-		/// Creates the converter appropriate for the specified MIME type.
-		/// </summary>
-		/// <param name="mimeType">The MIME type.</param>
-		public IMimeConverter CreateConverter(string mimeType)
+		[Then(@"my scanner should have a resource set to ""(.*)""")]
+		public void CheckScannerResource(string resource)
 		{
-			return _converters.FirstOrDefault(converter => StringComparer.OrdinalIgnoreCase.Equals(converter.MimeType, mimeType));
+			_hBase.Scanner.Resource.Should().Be(resource);
+		}
+
+		[Given(@"I have a scanner for the ""(.*)"" table named ""(.*)""")]
+		public void ObtainManualScanner(string tableName, string scannerId)
+		{
+			_hBase.Scanner = new Scanner(string.Format("{0}/scanner/{1}", tableName, scannerId), _hBase.Stargate);
+		}
+
+		[When(@"I delete the scanner")]
+		public void DeleteScanner()
+		{
+			_hBase.Stargate.DeleteScanner(_hBase.Scanner);
+		}
+
+		[When(@"I create a scanner for the ""(.*)"" table")]
+		public void CreateScanner(string tableName)
+		{
+			_hBase.Scanner = _hBase.Stargate.CreateScanner(new ScannerOptions { TableName = tableName });
 		}
 	}
 }

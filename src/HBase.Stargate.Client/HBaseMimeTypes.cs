@@ -1,4 +1,4 @@
-﻿#region FreeBSD
+#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,52 +19,36 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
-
-namespace HBase.Stargate.Client.Api
+namespace HBase.Stargate.Client
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Describes the MIME types supported by HBase Stargate.
 	/// </summary>
-	public interface IResourceBuilder
+	public static class HBaseMimeTypes
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    The plain text MIME type.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		public const string Text = "text/plain";
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    The XML MIME type.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		public const string Xml = "text/xml";
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		///    The json MIME type.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
+		public const string Json = "application/json";
 
 		/// <summary>
-		///    Builds a batch insert URI.
+		///    The protobuf MIME type.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
+		public const string Protobuf = "application/x-protobuf";
 
 		/// <summary>
-		///    Builds a table creation URI.
+		///    The binary stream MIME type.
 		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		public const string Stream = "application/octet-stream";
 	}
 }

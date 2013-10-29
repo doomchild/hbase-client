@@ -19,7 +19,7 @@
 
 #endregion
 
-using System.Collections.Generic;
+using FluentAssertions;
 
 using TechTalk.SpecFlow;
 
@@ -52,7 +52,10 @@ namespace _specs.Steps
 		[When(@"I read a result from the scanner")]
 		public void ReadScanner()
 		{
-			ScenarioContext.Current.Pending();
+			bool success = _context.Scanner.MoveNext();
+			success.Should().Be(true);
+
+			_context.CellSet = _context.Scanner.Current;
 		}
 
 		[When(@"I read the names of all tables")]

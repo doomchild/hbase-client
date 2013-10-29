@@ -88,6 +88,15 @@ namespace HBase.Stargate.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Table name must be specified for scanner access..
+        /// </summary>
+        internal static string ResourceBuilder_MinimumForScannerNotMet {
+            get {
+                return ResourceManager.GetString("ResourceBuilder_MinimumForScannerNotMet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Table name must be specified at a minimum for schema update/creation..
         /// </summary>
         internal static string ResourceBuilder_MinimumForSchemaUpdateNotMet {

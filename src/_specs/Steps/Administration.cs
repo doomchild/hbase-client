@@ -19,9 +19,13 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Net;
 
+using HBase.Stargate.Client.Api;
 using HBase.Stargate.Client.Models;
+
+using Moq;
 
 using Patterns.Testing.Moq;
 
@@ -36,9 +40,9 @@ namespace _specs.Steps
 	[Binding]
 	public class Administration
 	{
+		private readonly IMoqContainer _container;
 		private readonly HBaseContext _hBase;
 		private readonly ResourceContext _resources;
-		private readonly IMoqContainer _container;
 
 		public Administration(HBaseContext hBase, ResourceContext resources, IMoqContainer container)
 		{
@@ -62,7 +66,8 @@ namespace _specs.Steps
 		[Given(@"I have added a column named ""(.*)"" to my table schema")]
 		public void AddColumnSchema(string name)
 		{
-			_hBase.TableSchema.Columns.Add(new ColumnSchema {Name = name});
+			List<ColumnSchema> columns = _hBase.TableSchema.Columns ?? (_hBase.TableSchema.Columns = new List<ColumnSchema>());
+			columns.Add(new ColumnSchema {Name = name});
 		}
 
 		[When(@"I create a table using my table schema")]
@@ -84,12 +89,23 @@ namespace _specs.Steps
 		}
 
 		[Given(@"I will always get a response with a status of ""(.*)"" and content equivalent to the resource called ""(.*)""")]
-		public void SetupFakeResponse(HttpStatusCode responseStatus, string responseContentResource)
+		public void SetupFakeResponseWithContent(HttpStatusCode responseStatus, string responseContentResource)
 		{
 			string content = _resources.GetString(responseContentResource);
-			_container.Mock<IRestResponse>().SetupGet(response => response.StatusCode).Returns(responseStatus);
-			_container.Mock<IRestResponse>().SetupGet(response => response.Content).Returns(content);
+			Mock<IRestResponse> responseMock = _container.Mock<IRestResponse>();
+			responseMock.SetupGet(response => response.StatusCode).Returns(responseStatus);
+			responseMock.SetupGet(response => response.Content).Returns(content);
 		}
 
+		[Given(@"I will always get a response with a status of ""(.*)"" and a location header of ""(.*)""")]
+		public void SetupFakeResponseWithLocation(HttpStatusCode responseStatus, string location)
+		{
+			Mock<IRestResponse> responseMock = _container.Mock<IRestResponse>();
+			responseMock.SetupGet(response => response.StatusCode).Returns(responseStatus);
+			responseMock.SetupGet(response => response.Headers).Returns(new List<Parameter>
+			{
+				new Parameter {Name = RestConstants.LocationHeader, Type = ParameterType.HttpHeader, Value = location}
+			});
+		}
 	}
 }

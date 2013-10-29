@@ -106,29 +106,27 @@ Examples:
 	| test  | 1   | alpha  |           | GET    | test/1/alpha?v=1   |
 	| test  | 1   | alpha  | x         | GET    | test/1/alpha:x?v=1 |
 
-#Scenario: Create a scanner
-#	Given I have set my context to a table called "test"
-#	And I have set my context to a new scanner
-#	When I create the scanner
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource     |
-#		| POST   | test/scanner |
-#
-#Scenario: Read a result from a scanner
-#	Given I have set my context to a table called "test"
-#	And I have set my context to a new scanner
-#	When I read a result from the scanner
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource            |
-#		| GET    | test/scanner/abc123 |
-#
-#Scenario: Delete a scanner
-#	Given I have set my context to a table called "test"
-#	And I have set my context to a new scanner
-#	When I delete the scanner
-#	Then a REST request should have been submitted with the following values:
-#		| method | resource            |
-#		| DELETE | test/scanner/abc123 |
+Scenario: Create a scanner
+	Given I will always get a response with a status of "OK" and a location header of "http://someurl.com/test/scanner/abc123"
+	When I create a scanner for the "test" table
+	Then a REST request should have been submitted with the following values:
+		| method | resource     |
+		| PUT    | test/scanner |
+	And my scanner should have a resource set to "test/scanner/abc123"
+
+Scenario: Read a result from a scanner
+	Given I have a scanner for the "test" table named "abc123"
+	When I read a result from the scanner
+	Then a REST request should have been submitted with the following values:
+		| method | resource            |
+		| GET    | test/scanner/abc123 |
+
+Scenario: Delete a scanner
+	Given I have a scanner for the "test" table named "abc123"
+	When I delete the scanner
+	Then a REST request should have been submitted with the following values:
+		| method | resource            |
+		| DELETE | test/scanner/abc123 |
 
 Scenario: Enumerate all tables
 	When I read the names of all tables

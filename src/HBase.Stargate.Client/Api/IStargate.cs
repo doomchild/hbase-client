@@ -140,5 +140,41 @@ namespace HBase.Stargate.Client.Api
 		/// </summary>
 		/// <param name="tableName">Name of the table.</param>
 		TableSchema GetTableSchema(string tableName);
+
+		/// <summary>
+		/// Creates the scanner.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		Task<IScanner> CreateScannerAsync(ScannerOptions options);
+
+		/// <summary>
+		/// Creates the scanner.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		IScanner CreateScanner(ScannerOptions options);
+
+		/// <summary>
+		/// Deletes the scanner.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		void DeleteScanner(IScanner scanner);
+
+		/// <summary>
+		/// Deletes the scanner.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		Task DeleteScannerAsync(IScanner scanner);
+
+		/// <summary>
+		/// Gets the scanner result.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		CellSet GetScannerResult(IScanner scanner);
+
+		/// <summary>
+		/// Gets the scanner result.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		Task<CellSet> GetScannerResultAsync(IScanner scanner);
 	}
 }

@@ -19,52 +19,44 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using System;
+using System.IO;
+using System.Text;
 
-namespace HBase.Stargate.Client.Api
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Provides a standard base64 codec for HBase.
 	/// </summary>
-	public interface IResourceBuilder
+	public class Base64Codec : ICodec
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    Encodes the specified text.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		/// <param name="text">The text.</param>
+		public virtual string Encode(string text)
+		{
+			return Convert.ToBase64String(GetEncoding().GetBytes(text));
+		}
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Decodes the specified text.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="text">The text.</param>
+		public virtual string Decode(string text)
+		{
+			using (var reader = new StreamReader(new MemoryStream(Convert.FromBase64String(text)), GetEncoding()))
+			{
+				return reader.ReadToEnd();
+			}
+		}
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		///    Gets the <see cref="Encoding" /> object to use during <see cref="Encode" /> and <see cref="Decode" /> operations.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		protected virtual Encoding GetEncoding()
+		{
+			return Encoding.UTF8;
+		}
 	}
 }

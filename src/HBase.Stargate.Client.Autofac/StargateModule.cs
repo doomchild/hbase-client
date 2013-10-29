@@ -26,7 +26,7 @@ using Autofac.Builder;
 using Autofac.Features.Scanning;
 
 using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.MimeConversion;
+using HBase.Stargate.Client.TypeConversion;
 
 using Patterns.Autofac.Configuration;
 using Patterns.Configuration;
@@ -88,6 +88,26 @@ namespace HBase.Stargate.Client.Autofac
 			RegisterSimpleValueConverter(builder);
 			RegisterStargate(builder);
 			RegisterMimeConverters(builder);
+			RegisterScannerOptionsConverter(builder);
+			RegisterCodec(builder);
+		}
+
+		/// <summary>
+		/// Registers the codec.
+		/// </summary>
+		/// <param name="builder">The builder.</param>
+		protected virtual IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterCodec(ContainerBuilder builder)
+		{
+			return builder.RegisterType<Base64Codec>().As<ICodec>();
+		}
+
+		/// <summary>
+		/// Registers the scanner options converter.
+		/// </summary>
+		/// <param name="builder">The builder.</param>
+		protected virtual IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterScannerOptionsConverter(ContainerBuilder builder)
+		{
+			return builder.RegisterType<ScannerOptionsConverter>().As<IScannerOptionsConverter>();
 		}
 
 		/// <summary>

@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,77 +17,56 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 using HBase.Stargate.Client.Models;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Provides a base type for HBase MIME converters.
+	///    Provides HBase data conversion to a specific MIME type.
 	/// </summary>
-	public abstract class MimeConverterBase : IMimeConverter
+	public interface IMimeConverter
 	{
 		/// <summary>
-		/// Gets the current MIME type.
+		///    Gets the current MIME type.
 		/// </summary>
 		/// <value>
-		/// The MIME type.
+		///    The MIME type.
 		/// </value>
-		public abstract string MimeType { get; }
+		string MimeType { get; }
 
 		/// <summary>
-		/// Converts the specified cells to text according to the current MIME type.
+		///    Converts the specified cells to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cells">The cells.</param>
-		public abstract string ConvertCells(IEnumerable<Cell> cells);
+		string ConvertCells(IEnumerable<Cell> cells);
 
 		/// <summary>
-		/// Converts the specified cell to text according to the current MIME type.
+		///    Converts the specified cell to text according to the current MIME type.
 		/// </summary>
 		/// <param name="cell"></param>
-		/// <returns></returns>
-		public abstract string ConvertCell(Cell cell);
+		string ConvertCell(Cell cell);
 
 		/// <summary>
-		/// Converts the specified data to a set of cells according to the current MIME type.
+		///    Converts the specified data to a set of cells according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public abstract IEnumerable<Cell> ConvertCells(string data);
+		IEnumerable<Cell> ConvertCells(string data);
 
 		/// <summary>
-		/// Converts the specified data to a table schema.
+		///    Converts the specified data to a table schema according to the current MIME type.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public abstract TableSchema ConvertSchema(string data);
+		TableSchema ConvertSchema(string data);
 
 		/// <summary>
 		/// Converts the specified table schema to text according to the current MIME type.
 		/// </summary>
 		/// <param name="schema">The schema.</param>
-		public abstract string ConvertSchema(TableSchema schema);
-
-		/// <summary>
-		///    Encodes the specified text.
-		/// </summary>
-		/// <param name="text">The text.</param>
-		protected static string Encode(string text)
-		{
-			return System.Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
-		}
-
-		/// <summary>
-		///    Decodes the specified text.
-		/// </summary>
-		/// <param name="text">The text.</param>
-		protected static string Decode(string text)
-		{
-			using (var reader = new StreamReader(new MemoryStream(System.Convert.FromBase64String(text))))
-			{
-				return reader.ReadToEnd();
-			}
-		}
+		/// <returns></returns>
+		string ConvertSchema(TableSchema schema);
 	}
 }

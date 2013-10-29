@@ -19,52 +19,51 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
-
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Encapsulates the options that can be set at scanner creation.
 	/// </summary>
-	public interface IResourceBuilder
+	public class ScannerOptions
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    Gets or sets the name.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		/// <value>
+		///    The name.
+		/// </value>
+		public string TableName { get; set; }
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Gets or sets the start row.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <value>
+		///    The start row.
+		/// </value>
+		public string StartRow { get; set; }
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		///    Gets or sets the end row.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
+		/// <value>
+		///    The end row.
+		/// </value>
+		public string StopRow { get; set; }
 
 		/// <summary>
-		///    Builds a batch insert URI.
+		///    Gets or sets the batch size.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
+		/// <value>
+		///    The batch size.
+		/// </value>
+		public int? BatchSize { get; set; }
 
 		/// <summary>
-		///    Builds a table creation URI.
+		///    Gets or sets the filter.
 		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <value>
+		///    The filter.
+		/// </value>
+		public IScannerFilter Filter { get; set; }
 	}
 }

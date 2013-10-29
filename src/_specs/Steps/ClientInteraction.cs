@@ -19,11 +19,11 @@
 
 #endregion
 
-using System.Net;
+using System;
 
 using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.MimeConversion;
 using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 using Moq;
 
@@ -61,16 +61,29 @@ namespace _specs.Steps
 			factoryMock.Setup(factory => factory.CreateRequest(It.IsAny<string>(), It.IsAny<Method>()))
 				.Returns<string, Method>((resource, method) => (_rest.Request = new RestRequest(resource, method)));
 
-			Mock<IRestClient> clientMock = _container.Mock<IRestClient>();
+			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
+			//https://github.com/TheTribe/code-patterns/issues/125
+			var clientMock = new Mock<IRestClient>(MockBehavior.Strict);
 
-			Mock<IRestResponse> responseMock = _container.Mock<IRestResponse>();
-			responseMock.SetupGet(response => response.StatusCode).Returns(HttpStatusCode.OK);
+			IRestResponse response = _container.Mock<IRestResponse>().Object;
 
 			clientMock.Setup(client => client.Execute(It.IsAny<IRestRequest>()))
-				.Returns(() => responseMock.Object);
+				.Returns(() => response);
+
+			clientMock.Setup(client => client.ExecuteAsync(It.IsAny<IRestRequest>(), It.IsAny<Action<IRestResponse, RestRequestAsyncHandle>>()))
+				.Returns<IRestRequest, Action<IRestResponse, RestRequestAsyncHandle>>((request, action) =>
+				{
+					var handle = new RestRequestAsyncHandle();
+					action(response, handle);
+					return handle;
+				});
 
 			factoryMock.Setup(factory => factory.CreateClient(It.IsAny<string>()))
 				.Returns(() => clientMock.Object);
+
+			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
+			//https://github.com/TheTribe/code-patterns/issues/125
+			_container.Update(clientMock.Object);
 
 			_container.Update<IStargateOptions>(options.CreateInstance<StargateOptions>());
 
@@ -78,6 +91,7 @@ namespace _specs.Steps
 			_container.Update<IMimeConverterFactory, MimeConverterFactory>();
 			_container.Update<IResourceBuilder, ResourceBuilder>();
 			_container.Update<ISimpleValueConverter, SimpleValueConverter>();
+			_container.Update<ICodec, Base64Codec>();
 
 			_container.Update<IStargate, Stargate>();
 		}

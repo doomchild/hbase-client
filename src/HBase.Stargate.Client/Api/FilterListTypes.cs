@@ -19,52 +19,21 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
-
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Describes the types of <see cref="FilterList" /> that can be created.
 	/// </summary>
-	public interface IResourceBuilder
+	public enum FilterListTypes
 	{
 		/// <summary>
-		///    Builds a cell or row query URI.
+		///    All filters must meet the specified criteria.
 		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		All,
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    At least one filter must meet the specified criteria.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
-
-		/// <summary>
-		///    Builds a delete-item URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		One
 	}
 }

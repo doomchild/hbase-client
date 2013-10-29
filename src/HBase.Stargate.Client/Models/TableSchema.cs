@@ -29,23 +29,6 @@ namespace HBase.Stargate.Client.Models
 	public class TableSchema
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TableSchema"/> class.
-		/// </summary>
-		/// <param name="columns">The columns.</param>
-		public TableSchema(IEnumerable<ColumnSchema> columns)
-		{
-			Columns = new List<ColumnSchema>(columns);
-		}
-
-		/// <summary>
-		///    Initializes a new instance of the <see cref="TableSchema" /> class.
-		/// </summary>
-		public TableSchema()
-		{
-			Columns = new List<ColumnSchema>();
-		}
-
-		/// <summary>
 		///    Gets or sets the name.
 		/// </summary>
 		/// <value>
@@ -75,6 +58,6 @@ namespace HBase.Stargate.Client.Models
 		/// <value>
 		///    The columns.
 		/// </value>
-		public List<ColumnSchema> Columns { get; private set; }
+		public List<ColumnSchema> Columns { get; set; }
 	}
 }

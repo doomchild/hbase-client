@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
@@ -52,15 +55,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\BinaryComparator.cs" />
+    <Compile Include="Api\ColumnPrefixFilter.cs" />
+    <Compile Include="Api\ColumnRangeFilter.cs" />
     <Compile Include="Api\ErrorProvider.cs" />
     <Compile Include="Api\Extensions.cs" />
+    <Compile Include="Api\FamilyFilter.cs" />
+    <Compile Include="Api\FilterList.cs" />
+    <Compile Include="Api\FilterComparisons.cs" />
+    <Compile Include="Api\FilterListBase.cs" />
+    <Compile Include="Api\FilterListTypes.cs" />
+    <Compile Include="Api\FirstKeyOnlyFilter.cs" />
     <Compile Include="Api\IErrorProvider.cs" />
+    <Compile Include="Api\InclusiveStopFilter.cs" />
     <Compile Include="Api\IResourceBuilder.cs" />
+    <Compile Include="Api\IScanner.cs" />
+    <Compile Include="Api\IScannerFilter.cs" />
     <Compile Include="Api\IStargate.cs" />
     <Compile Include="Api\IStargateOptions.cs" />
+    <Compile Include="Api\ComparisonScannerFilterBase.cs" />
+    <Compile Include="Api\MultipleColumnPrefixFilter.cs" />
+    <Compile Include="Api\PageFilter.cs" />
+    <Compile Include="Api\PrefixFilter.cs" />
+    <Compile Include="Api\QualifierFilter.cs" />
     <Compile Include="Api\ResourceBuilder.cs" />
     <Compile Include="Api\RestConstants.cs" />
+    <Compile Include="Api\RowFilter.cs" />
+    <Compile Include="Api\Scanner.cs" />
+    <Compile Include="Api\ScannerFilterBase.cs" />
+    <Compile Include="Api\ScannerOptions.cs" />
+    <Compile Include="Api\SingleColumnValueFilter.cs" />
     <Compile Include="Api\Stargate.cs" />
+    <Compile Include="Api\TimestampsFilter.cs" />
+    <Compile Include="Api\TypeValueFilterBase.cs" />
     <Compile Include="Config\ConfigCellDescriptor.cs" />
     <Compile Include="Config\ConfigCellDescriptorCollection.cs" />
     <Compile Include="Config\ConfigCellQuery.cs" />
@@ -68,14 +95,17 @@
     <Compile Include="Config\ConfigIdentifier.cs" />
     <Compile Include="Config\StargateConfigOptions.cs" />
     <Compile Include="Api\StargateOptions.cs" />
-    <Compile Include="MimeConversion\HBaseMimeTypes.cs" />
-    <Compile Include="MimeConversion\IMimeConverter.cs" />
-    <Compile Include="MimeConversion\IMimeConverterFactory.cs" />
-    <Compile Include="MimeConversion\ISimpleValueConverter.cs" />
-    <Compile Include="MimeConversion\MimeConverterBase.cs" />
-    <Compile Include="MimeConversion\MImeConverterFactory.cs" />
-    <Compile Include="MimeConversion\SimpleValueConverter.cs" />
-    <Compile Include="MimeConversion\XmlMimeConverter.cs" />
+    <Compile Include="HBaseMimeTypes.cs" />
+    <Compile Include="TypeConversion\Base64Codec.cs" />
+    <Compile Include="TypeConversion\ICodec.cs" />
+    <Compile Include="TypeConversion\IMimeConverter.cs" />
+    <Compile Include="TypeConversion\IMimeConverterFactory.cs" />
+    <Compile Include="TypeConversion\IScannerOptionsConverter.cs" />
+    <Compile Include="TypeConversion\ISimpleValueConverter.cs" />
+    <Compile Include="TypeConversion\MImeConverterFactory.cs" />
+    <Compile Include="TypeConversion\ScannerOptionsConverter.cs" />
+    <Compile Include="TypeConversion\SimpleValueConverter.cs" />
+    <Compile Include="TypeConversion\XmlMimeConverter.cs" />
     <Compile Include="Models\BloomFilters.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\CellQuery.cs" />

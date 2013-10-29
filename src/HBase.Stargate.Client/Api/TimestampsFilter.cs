@@ -19,52 +19,28 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    Filter that returns only cells whose timestamp (version) is in the specified list of timestamps (versions).
 	/// </summary>
-	public interface IResourceBuilder
+	public class TimestampsFilter : FilterListBase<long>
 	{
-		/// <summary>
-		///    Builds a cell or row query URI.
-		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		private const string _timestampsPropertyName = "timestamps";
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Converts the filter to its JSON representation.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
-
-		/// <summary>
-		///    Builds a delete-item URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
+			json[_timestampsPropertyName] = ConvertToJsonArray(timestamp => new JValue(timestamp));
+			return json;
+		}
 	}
 }

@@ -38,7 +38,8 @@ namespace HBase.Stargate.Client.Api
 		private const string _appendQualifierFormat = ":{0}";
 		private const string _appendRangeFormat = ",{0}";
 		private const string _appendMaxVersionsFormat = "?v={0}";
-		private const string _schemaInsertName = "schema";
+		private const string _schema = "schema";
+		private const string _scanner = "scanner";
 		private readonly IStargateOptions _options;
 
 		/// <summary>
@@ -105,7 +106,21 @@ namespace HBase.Stargate.Client.Api
 				throw new ArgumentException(Resources.ResourceBuilder_MinimumForSchemaUpdateNotMet);
 			}
 
-			return new StringBuilder(tableSchema.Name).AppendFormat(_appendSegmentFormat, _schemaInsertName).ToString();
+			return new StringBuilder(tableSchema.Name).AppendFormat(_appendSegmentFormat, _schema).ToString();
+		}
+
+		/// <summary>
+		/// Builds a scanner creation URI.
+		/// </summary>
+		/// <param name="scannerOptions">Name of the table.</param>
+		public string BuildScannerCreate(ScannerOptions scannerOptions)
+		{
+			if (scannerOptions == null || string.IsNullOrEmpty(scannerOptions.TableName))
+			{
+				throw new ArgumentException(Resources.ResourceBuilder_MinimumForScannerNotMet);
+			}
+
+			return new StringBuilder(scannerOptions.TableName).AppendFormat(_appendSegmentFormat, _scanner).ToString();
 		}
 
 		/// <summary>

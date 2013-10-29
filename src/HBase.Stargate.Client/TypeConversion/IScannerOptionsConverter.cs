@@ -19,51 +19,20 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.Api;
 
-namespace HBase.Stargate.Client.MimeConversion
+namespace HBase.Stargate.Client.TypeConversion
 {
 	/// <summary>
-	///    Defines a converter for simple HBase-related values.
+	///    Defines a converter for scanner options.
 	/// </summary>
-	public interface ISimpleValueConverter
+	public interface IScannerOptionsConverter
 	{
 		/// <summary>
-		///    Converts the bloom filter.
+		///    Converts the specified options to an XML document with
+		///    filter options as embedded JSON.
 		/// </summary>
-		/// <param name="filter">The filter.</param>
-		/// <returns></returns>
-		string ConvertBloomFilter(BloomFilters? filter);
-
-		/// <summary>
-		///    Converts the bloom filter.
-		/// </summary>
-		/// <param name="filter">The filter.</param>
-		/// <returns></returns>
-		BloomFilters ConvertBloomFilter(string filter);
-
-		/// <summary>
-		///    Converts the type of the compression.
-		/// </summary>
-		/// <param name="compressionType">Type of the compression.</param>
-		string ConvertCompressionType(CompressionTypes? compressionType);
-
-		/// <summary>
-		///    Converts the type of the compression.
-		/// </summary>
-		/// <param name="compressionType">Type of the compression.</param>
-		CompressionTypes ConvertCompressionType(string compressionType);
-
-		/// <summary>
-		///    Converts the data block encoding.
-		/// </summary>
-		/// <param name="encoding">The encoding.</param>
-		string ConvertDataBlockEncoding(DataBlockEncodings? encoding);
-
-		/// <summary>
-		///    Converts the data block encoding.
-		/// </summary>
-		/// <param name="encoding">The encoding.</param>
-		DataBlockEncodings ConvertDataBlockEncoding(string encoding);
+		/// <param name="options">The options.</param>
+		string Convert(ScannerOptions options);
 	}
 }

@@ -173,6 +173,18 @@ namespace HBase.Stargate.Client.Api
 			}
 		}
 
+		/// <summary>
+		/// Executes the request.
+		/// </summary>
+		/// <param name="client">The client.</param>
+		/// <param name="request">The request.</param>
+		public static Task<IRestResponse> ExecuteAsync(this IRestClient client, IRestRequest request)
+		{
+			var completionSource = new TaskCompletionSource<IRestResponse>();
+			client.ExecuteAsync(request, completionSource.SetResult);
+			return completionSource.Task;
+		}
+
 		private static Identifier BuildIdentifier(string table, string row, string column, string qualifier, long? timestamp)
 		{
 			return new Identifier

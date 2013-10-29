@@ -19,14 +19,15 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-using HBase.Stargate.Client.MimeConversion;
 using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
 
 using RestSharp;
 using RestSharp.Injection;
@@ -51,6 +52,7 @@ namespace HBase.Stargate.Client.Api
 		private readonly IRestClient _client;
 		private readonly IMimeConverter _converter;
 		private readonly IErrorProvider _errorProvider;
+		private readonly IScannerOptionsConverter _scannerConverter;
 		private readonly IResourceBuilder _resourceBuilder;
 		private readonly IRestSharpFactory _restSharp;
 
@@ -62,12 +64,14 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="restSharp">The RestSharp factory.</param>
 		/// <param name="converterFactory">The converter factory.</param>
 		/// <param name="errorProvider">The error provider.</param>
+		/// <param name="scannerConverter">The scanner converter.</param>
 		public Stargate(IStargateOptions options, IResourceBuilder resourceBuilder, IRestSharpFactory restSharp, IMimeConverterFactory converterFactory,
-			IErrorProvider errorProvider)
+			IErrorProvider errorProvider, IScannerOptionsConverter scannerConverter)
 		{
 			_resourceBuilder = resourceBuilder;
 			_restSharp = restSharp;
 			_errorProvider = errorProvider;
+			_scannerConverter = scannerConverter;
 			_client = _restSharp.CreateClient(options.ServerUrl);
 			options.ContentType = string.IsNullOrEmpty(options.ContentType) ? DefaultContentType : options.ContentType;
 			_converter = converterFactory.CreateConverter(options.ContentType);
@@ -283,6 +287,70 @@ namespace HBase.Stargate.Client.Api
 		}
 
 		/// <summary>
+		/// Creates the scanner.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		public async Task<IScanner> CreateScannerAsync(ScannerOptions options)
+		{
+			string resource = _resourceBuilder.BuildScannerCreate(options);
+			IRestResponse response = await SendRequest(Method.PUT, resource, HBaseMimeTypes.Xml, content: _scannerConverter.Convert(options));
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.Created);
+			string scannerLocation = response.Headers.Where(header => header.Type == ParameterType.HttpHeader && header.Name == RestConstants.LocationHeader)
+				.Select(header => header.Value.ToString())
+				.FirstOrDefault();
+
+			return string.IsNullOrEmpty(scannerLocation) ? null : new Scanner(new Uri(scannerLocation).PathAndQuery.Trim('/'), this);
+		}
+
+		/// <summary>
+		/// Creates the scanner.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		public IScanner CreateScanner(ScannerOptions options)
+		{
+			return CreateScannerAsync(options).Result;
+		}
+
+		/// <summary>
+		/// Deletes the scanner.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		public void DeleteScanner(IScanner scanner)
+		{
+			DeleteScannerAsync(scanner).Wait();
+		}
+
+		/// <summary>
+		/// Deletes the scanner.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		public async Task DeleteScannerAsync(IScanner scanner)
+		{
+			var response = await SendRequest(Method.DELETE, scanner.Resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
+		}
+
+		/// <summary>
+		/// Gets the scanner result.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		public CellSet GetScannerResult(IScanner scanner)
+		{
+			return GetScannerResultAsync(scanner).Result;
+		}
+
+		/// <summary>
+		/// Gets the scanner result.
+		/// </summary>
+		/// <param name="scanner">The scanner.</param>
+		public async Task<CellSet> GetScannerResultAsync(IScanner scanner)
+		{
+			var response = await SendRequest(Method.GET, scanner.Resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NoContent);
+			return response.StatusCode == HttpStatusCode.NoContent ? null : new CellSet(_converter.ConvertCells(response.Content));
+		}
+
+		/// <summary>
 		///    Creates a new stargate with the specified options.
 		/// </summary>
 		/// <param name="serverUrl">The server URL.</param>
@@ -301,11 +369,13 @@ namespace HBase.Stargate.Client.Api
 		{
 			var resourceBuilder = new ResourceBuilder(options);
 			var restSharp = new RestSharpFactory(url => new RestClient(url), (resource, method) => new RestRequest(resource, method));
+			var codec = new Base64Codec();
 			var mimeConverters = new MimeConverterFactory(new[]
 			{
-				new XmlMimeConverter(new SimpleValueConverter())
+				new XmlMimeConverter(new SimpleValueConverter(), codec)
 			});
 			var errors = new ErrorProvider();
+			var scannerConverter = new ScannerOptionsConverter(codec);
 
 			options.ContentType = string.IsNullOrEmpty(options.ContentType)
 				? DefaultContentType
@@ -315,7 +385,7 @@ namespace HBase.Stargate.Client.Api
 				? DefaultFalseRowKey
 				: options.FalseRowKey;
 
-			return new Stargate(options, resourceBuilder, restSharp, mimeConverters, errors);
+			return new Stargate(options, resourceBuilder, restSharp, mimeConverters, errors, scannerConverter);
 		}
 
 		/// <summary>
@@ -326,21 +396,19 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="acceptType">Type of the accept.</param>
 		/// <param name="contentType">Type of the content.</param>
 		/// <param name="content">The content.</param>
-		protected virtual Task<IRestResponse> SendRequest(Method method, string resource, string acceptType,
+		protected virtual async Task<IRestResponse> SendRequest(Method method, string resource, string acceptType,
 			string contentType = null, string content = null)
 		{
-			return Task.Run(() =>
+			IRestRequest request = _restSharp.CreateRequest(resource, method)
+				.AddHeader(HttpRequestHeader.Accept.ToString(), acceptType);
+
+			if (!string.IsNullOrEmpty(content))
 			{
-				IRestRequest request = _restSharp.CreateRequest(resource, method)
-					.AddHeader(RestConstants.AcceptHeader, acceptType);
+				contentType = string.IsNullOrEmpty(contentType) ? acceptType : contentType;
+				request.AddParameter(contentType, content, ParameterType.RequestBody);
+			}
 
-				if (!string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(contentType))
-				{
-					request.AddParameter(contentType, content, ParameterType.RequestBody);
-				}
-
-				return _client.Execute(request);
-			});
+			return await _client.ExecuteAsync(request);
 		}
 
 		private static IEnumerable<string> ParseLines(string text)

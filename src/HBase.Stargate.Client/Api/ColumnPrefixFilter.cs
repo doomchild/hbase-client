@@ -19,52 +19,37 @@
 
 #endregion
 
-using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// <summary>
-	///    Defines a URI builder for HBase resources.
+	///    This filter is used for selecting only those keys with columns that match a particular prefix.
+	///    For example, if prefix is 'an', it will pass keys with columns like 'and'/'anti' but not keys
+	///    with columns like 'ball'/'act'.
 	/// </summary>
-	public interface IResourceBuilder
+	public class ColumnPrefixFilter : TypeValueFilterBase
 	{
-		/// <summary>
-		///    Builds a cell or row query URI.
-		/// </summary>
-		/// <param name="query"></param>
-		string BuildCellOrRowQuery(CellQuery query);
+		private readonly string _prefix;
 
 		/// <summary>
-		///    Builds a single value storage URI.
+		///    Initializes a new instance of the <see cref="ColumnPrefixFilter" /> class.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		/// <param name="forReading">
-		///    if set to <c>true</c> this resource will be used for reading.
-		/// </param>
-		string BuildSingleValueAccess(Identifier identifier, bool forReading = false);
+		/// <param name="prefix">The prefix.</param>
+		public ColumnPrefixFilter(string prefix)
+		{
+			_prefix = prefix;
+		}
 
 		/// <summary>
-		///    Builds a delete-item URI.
+		/// Gets the token to use as the value.
 		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildDeleteItem(Identifier identifier);
-
-		/// <summary>
-		///    Builds a batch insert URI.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		string BuildBatchInsert(Identifier identifier);
-
-		/// <summary>
-		///    Builds a table creation URI.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		string BuildTableSchemaAccess(TableSchema tableSchema);
-
-		/// <summary>
-		/// Builds a scanner creation URI.
-		/// </summary>
-		/// <param name="scannerOptions">Name of the table.</param>
-		string BuildScannerCreate(ScannerOptions scannerOptions);
+		/// <param name="codec">The codec to use for encoding values.</param>
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_prefix));
+		}
 	}
 }
