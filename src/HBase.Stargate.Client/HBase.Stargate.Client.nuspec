@@ -1,6 +1,4 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #><#@
-assembly name="System.Core" #><#@
-output extension=".nuspec" #><?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
 	<metadata>
 		<version>$version$</version>
@@ -8,9 +6,6 @@ output extension=".nuspec" #><?xml version="1.0"?>
 		<owners>$author$</owners>
 		<licenseUrl>https://github.com/TheTribe/hbase-client/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/TheTribe/hbase-client</projectUrl>
-		<dependencies>
-			<dependency id="HBase.Stargate.Client" version="$version$" />
-		</dependencies>
 		<id>$id$</id>
 		<title>$id$</title>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>

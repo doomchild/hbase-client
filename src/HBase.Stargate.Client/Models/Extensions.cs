@@ -19,6 +19,9 @@
 
 #endregion
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace HBase.Stargate.Client.Models
 {
 	/// <summary>
@@ -139,6 +142,18 @@ namespace HBase.Stargate.Client.Models
 		}
 
 		/// <summary>
+		/// Gets the first value with an identifier matching the one specified.
+		/// </summary>
+		/// <param name="cellSet">The cell set.</param>
+		/// <param name="identifier">The identifier.</param>
+		public static string GetValue(this IEnumerable<Cell> cellSet, Identifier identifier)
+		{
+			return cellSet.Where(cell => cell.Identifier.Matches(identifier))
+				.Select(cell => cell.Value)
+				.FirstOrDefault();
+		}
+
+		/// <summary>
 		///    Gets the first value with the specified identifier values.
 		/// </summary>
 		/// <param name="cellSet">The cell set.</param>
@@ -147,7 +162,7 @@ namespace HBase.Stargate.Client.Models
 		/// <param name="column">The column.</param>
 		/// <param name="qualifier">The qualifier.</param>
 		/// <param name="timestamp">The timestamp.</param>
-		public static string GetValue(this CellSet cellSet, string table = null, string row = null, string column = null, string qualifier = null,
+		public static string GetValue(this IEnumerable<Cell> cellSet, string table = null, string row = null, string column = null, string qualifier = null,
 			long? timestamp = null)
 		{
 			return cellSet.GetValue(new Identifier
