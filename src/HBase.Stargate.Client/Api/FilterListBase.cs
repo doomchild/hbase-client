@@ -146,12 +146,8 @@ namespace HBase.Stargate.Client.Api
 		/// </param>
 		/// <returns>
 		///    true if <paramref name="item" /> was successfully removed from the
-		///    <see
-		///       cref="T:System.Collections.Generic.ICollection`1" />
-		///    ; otherwise, false. This method also returns false if
-		///    <paramref
-		///       name="item" />
-		///    is not found in the original <see cref="T:System.Collections.Generic.ICollection`1" />.
+		///    <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false. This method also returns false if
+		///    <paramref name="item" /> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1" />.
 		/// </returns>
 		public bool Remove(TValue item)
 		{
@@ -227,12 +223,8 @@ namespace HBase.Stargate.Client.Api
 		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
 		///    The default comparer <see cref="P:System.Collections.Generic.Comparer`1.Default" /> cannot find an implementation of the
-		///    <see
-		///       cref="T:System.IComparable`1" />
-		///    generic interface or the <see cref="T:System.IComparable" /> interface for type
-		///    <typeparamref
-		///       name="TValue" />
-		///    .
+		///    <see cref="T:System.IComparable`1" /> generic interface or the <see cref="T:System.IComparable" /> interface for type
+		///    <typeparamref name="TValue" />.
 		/// </exception>
 		public void Sort()
 		{
@@ -241,9 +233,7 @@ namespace HBase.Stargate.Client.Api
 
 		/// <summary>
 		///    Sorts the elements in the entire <see cref="T:System.Collections.Generic.List`1" /> using the specified
-		///    <see
-		///       cref="T:System.Comparison`1" />
-		///    .
+		///    <see cref="T:System.Comparison`1" />.
 		/// </summary>
 		/// <param name="comparison">
 		///    The <see cref="T:System.Comparison`1" /> to use when comparing elements.
@@ -253,9 +243,7 @@ namespace HBase.Stargate.Client.Api
 		/// </exception>
 		/// <exception cref="T:System.ArgumentException">
 		///    The implementation of <paramref name="comparison" /> caused an error during the sort. For example,
-		///    <paramref
-		///       name="comparison" />
-		///    might not return 0 when comparing an item with itself.
+		///    <paramref name="comparison" /> might not return 0 when comparing an item with itself.
 		/// </exception>
 		public void Sort(Comparison<TValue> comparison)
 		{
@@ -267,27 +255,16 @@ namespace HBase.Stargate.Client.Api
 		/// </summary>
 		/// <param name="comparer">
 		///    The <see cref="T:System.Collections.Generic.IComparer`1" /> implementation to use when comparing elements, or null to use the default comparer
-		///    <see
-		///       cref="P:System.Collections.Generic.Comparer`1.Default" />
-		///    .
+		///    <see cref="P:System.Collections.Generic.Comparer`1.Default" />.
 		/// </param>
 		/// <exception cref="T:System.InvalidOperationException">
-		///    <paramref name="comparer" /> is null, and the default comparer
-		///    <see
-		///       cref="P:System.Collections.Generic.Comparer`1.Default" />
-		///    cannot find implementation of the
-		///    <see
-		///       cref="T:System.IComparable`1" />
-		///    generic interface or the <see cref="T:System.IComparable" /> interface for type
-		///    <typeparamref
-		///       name="TValue" />
-		///    .
+		///    <paramref name="comparer" /> is null, and the default comparer <see cref="P:System.Collections.Generic.Comparer`1.Default" />
+		///    cannot find implementation of the <see cref="T:System.IComparable`1" />
+		///    generic interface or the <see cref="T:System.IComparable" /> interface for type <typeparamref name="TValue" />.
 		/// </exception>
 		/// <exception cref="T:System.ArgumentException">
 		///    The implementation of <paramref name="comparer" /> caused an error during the sort. For example,
-		///    <paramref
-		///       name="comparer" />
-		///    might not return 0 when comparing an item with itself.
+		///    <paramref name="comparer" /> might not return 0 when comparing an item with itself.
 		/// </exception>
 		public void Sort(IComparer<TValue> comparer)
 		{
@@ -301,33 +278,23 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="count">The length of the range to sort.</param>
 		/// <param name="comparer">
 		///    The <see cref="T:System.Collections.Generic.IComparer`1" /> implementation to use when comparing elements, or null to use the default comparer
-		///    <see
-		///       cref="P:System.Collections.Generic.Comparer`1.Default" />
-		///    .
+		///    <see cref="P:System.Collections.Generic.Comparer`1.Default" />.
 		/// </param>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">
 		///    <paramref name="index" /> is less than 0.-or-<paramref name="count" /> is less than 0.
 		/// </exception>
 		/// <exception cref="T:System.ArgumentException">
 		///    <paramref name="index" /> and <paramref name="count" /> do not specify a valid range in the
-		///    <see
-		///       cref="T:System.Collections.Generic.List`1" />
+		///    <see cref="T:System.Collections.Generic.List`1" />
 		///    .-or-The implementation of <paramref name="comparer" /> caused an error during the sort. For example,
-		///    <paramref
-		///       name="comparer" />
-		///    might not return 0 when comparing an item with itself.
+		///    <paramref name="comparer" /> might not return 0 when comparing an item with itself.
 		/// </exception>
 		/// <exception cref="T:System.InvalidOperationException">
 		///    <paramref name="comparer" /> is null, and the default comparer
-		///    <see
-		///       cref="P:System.Collections.Generic.Comparer`1.Default" />
-		///    cannot find implementation of the
-		///    <see
-		///       cref="T:System.IComparable`1" />
+		///    <see cref="P:System.Collections.Generic.Comparer`1.Default" />
+		///    cannot find implementation of the <see cref="T:System.IComparable`1" />
 		///    generic interface or the <see cref="T:System.IComparable" /> interface for type
-		///    <typeparamref
-		///       name="TValue" />
-		///    .
+		///    <typeparamref name="TValue" />.
 		/// </exception>
 		public void Sort(int index, int count, IComparer<TValue> comparer)
 		{

@@ -47,16 +47,5 @@ namespace HBase.Stargate.Client.Models
 		///    The name of the table.
 		/// </value>
 		public string Table { get; set; }
-
-		/// <summary>
-		/// Gets the first value with an identifier matching the one specified.
-		/// </summary>
-		/// <param name="identifier">The identifier.</param>
-		public string GetValue(Identifier identifier)
-		{
-			return this.Where(cell => cell.Identifier.Matches(identifier))
-				.Select(cell => cell.Value)
-				.FirstOrDefault();
-		}
 	}
 }
