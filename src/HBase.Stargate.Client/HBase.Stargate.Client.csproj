@@ -131,6 +131,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="HBase.Stargate.Client.nuspec" />
     <None Include="packages.config" />
     <None Include="Properties\SolutionAssemblyInfo.settings.tt" />
     <None Include="Properties\SolutionAssemblyInfo.tt">

@@ -1,4 +1,4 @@
-#region FreeBSD
+﻿#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,33 +19,14 @@
 
 #endregion
 
-using System.Collections.Generic;
-using System.Linq;
-
-namespace HBase.Stargate.Client.Models
+namespace _specs.Models
 {
-	/// <summary>
-	///    Defines a set of cells associated with a table.
-	/// </summary>
-	public class CellSet : List<Cell>
+	public class TestDescriptor
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CellSet"/> class.
-		/// </summary>
-		public CellSet() {}
-
-		/// <summary>
-		///    Initializes a new instance of the <see cref="CellSet" /> class.
-		/// </summary>
-		/// <param name="cells">The cells.</param>
-		public CellSet(IEnumerable<Cell> cells) : base(cells) {}
-
-		/// <summary>
-		///    Gets or sets the name of the table.
-		/// </summary>
-		/// <value>
-		///    The name of the table.
-		/// </value>
 		public string Table { get; set; }
+		public string Row { get; set; }
+		public string Column { get; set; }
+		public string Qualifier { get; set; }
+		public long? Timestamp { get; set; }
 	}
 }

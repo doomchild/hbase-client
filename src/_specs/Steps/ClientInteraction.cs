@@ -102,43 +102,6 @@ namespace _specs.Steps
 			_hBase.Stargate = _container.Create<IStargate>();
 		}
 
-		[Given(@"I have an identifier consisting of a ([^,]*)")]
-		public void SetIdentifier(string table)
-		{
-			_hBase.Identifier = new Identifier {Table = table};
-		}
-
-		[Given(@"I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)")]
-		public void SetIdentifier(string table, string row, string column, string qualifier, string timestamp)
-		{
-			_hBase.Identifier = new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp.ToNullableInt64()
-			};
-		}
-
-		[Given(@"I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)")]
-		public void SetIdentifier(string table, string row, string column, string qualifier)
-		{
-			_hBase.Identifier = new Identifier
-			{
-				Table = table,
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				}
-			};
-		}
-
 		[Given(@"I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, a (.*) timestamp, and a (.*) number of results")]
 		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp, string maxResults)
 		{

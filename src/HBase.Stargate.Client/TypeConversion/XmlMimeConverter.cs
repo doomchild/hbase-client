@@ -248,7 +248,7 @@ namespace HBase.Stargate.Client.TypeConversion
 			return new Cell(new Identifier
 			{
 				Row = row,
-				Cell = new HBaseCellDescriptor
+				CellDescriptor = new HBaseCellDescriptor
 				{
 					Column = parsedColumn.Column,
 					Qualifier = parsedColumn.Qualifier
@@ -296,7 +296,7 @@ namespace HBase.Stargate.Client.TypeConversion
 		private XElement XmlForCell(Cell cell)
 		{
 			Identifier identifier = cell.Identifier;
-			HBaseCellDescriptor cellDescriptor = identifier != null ? identifier.Cell : null;
+			HBaseCellDescriptor cellDescriptor = identifier != null ? identifier.CellDescriptor : null;
 			string column = cellDescriptor != null ? cellDescriptor.Column : null;
 			string qualifier = cellDescriptor != null ? cellDescriptor.Qualifier : null;
 			long? timestamp = identifier != null ? identifier.Timestamp : null;

@@ -32,7 +32,7 @@ namespace HBase.Stargate.Client.Models
 		/// <value>
 		/// The cell.
 		/// </value>
-		public HBaseCellDescriptor Cell { get; set; }
+		public HBaseCellDescriptor CellDescriptor { get; set; }
 
 		/// <summary>
 		///    Gets or sets the timestamp.

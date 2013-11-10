@@ -4,6 +4,7 @@
 		<version>$version$</version>
 		<authors>$author$</authors>
 		<owners>$author$</owners>
+		<licenseUrl>https://github.com/TheTribe/hbase-client/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/TheTribe/hbase-client</projectUrl>
 		<dependencies>
 			<dependency id="HBase.Stargate.Client" version="$version$" />
