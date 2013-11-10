@@ -146,17 +146,17 @@ namespace HBase.Stargate.Client.Api
 			bool hasTimestamp = identifier.Timestamp.HasValue;
 			StringBuilder uriBuilder = BuildFromDescriptor(identifier);
 
-			bool columnMissing = identifier.Cell == null || string.IsNullOrEmpty(identifier.Cell.Column);
+			bool columnMissing = identifier.CellDescriptor == null || string.IsNullOrEmpty(identifier.CellDescriptor.Column);
 			if (columnMissing && !hasTimestamp)
 			{
 				return uriBuilder;
 			}
 
-			uriBuilder.AppendFormat(_appendSegmentFormat, columnMissing ? _wildCard : identifier.Cell.Column);
+			uriBuilder.AppendFormat(_appendSegmentFormat, columnMissing ? _wildCard : identifier.CellDescriptor.Column);
 
-			if (!columnMissing && !string.IsNullOrEmpty(identifier.Cell.Qualifier))
+			if (!columnMissing && !string.IsNullOrEmpty(identifier.CellDescriptor.Qualifier))
 			{
-				uriBuilder.AppendFormat(_appendQualifierFormat, identifier.Cell.Qualifier);
+				uriBuilder.AppendFormat(_appendQualifierFormat, identifier.CellDescriptor.Qualifier);
 			}
 
 			if (hasTimestamp)

@@ -83,7 +83,7 @@ namespace HBase.Stargate.Client.Config
 			{
 				Table = identifier.Table,
 				Row = identifier.Row,
-				Cell = new HBaseCellDescriptor
+				CellDescriptor = new HBaseCellDescriptor
 				{
 					Column = identifier.Column,
 					Qualifier = identifier.Qualifier

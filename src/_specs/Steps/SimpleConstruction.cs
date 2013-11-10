@@ -68,7 +68,7 @@ namespace _specs.Steps
 			_hBase.Cell = new Cell(new Identifier
 			{
 				Row = row,
-				Cell = new HBaseCellDescriptor
+				CellDescriptor = new HBaseCellDescriptor
 				{
 					Column = column,
 					Qualifier = qualifier
@@ -83,7 +83,7 @@ namespace _specs.Steps
 			{
 				Table = testCell.Table,
 				Row = testCell.Row,
-				Cell = new HBaseCellDescriptor
+				CellDescriptor = new HBaseCellDescriptor
 				{
 					Column = testCell.Column,
 					Qualifier = testCell.Qualifier

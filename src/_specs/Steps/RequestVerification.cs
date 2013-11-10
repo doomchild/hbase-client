@@ -91,8 +91,8 @@ namespace _specs.Steps
 			IEnumerable<Cell> row = GetRowFromRequest();
 			var expected = values.CreateInstance<TestCell>();
 			row.SingleOrDefault(cell => cell.Identifier.Row == expected.Row
-				&& cell.Identifier.Cell.Column == expected.Column
-				&& cell.Identifier.Cell.Qualifier == expected.Qualifier
+				&& cell.Identifier.CellDescriptor.Column == expected.Column
+				&& cell.Identifier.CellDescriptor.Qualifier == expected.Qualifier
 				&& cell.Value == expected.Value).Should().NotBeNull();
 		}
 

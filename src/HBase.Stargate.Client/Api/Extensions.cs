@@ -191,7 +191,7 @@ namespace HBase.Stargate.Client.Api
 			{
 				Table = table,
 				Row = row,
-				Cell = new HBaseCellDescriptor
+				CellDescriptor = new HBaseCellDescriptor
 				{
 					Column = column,
 					Qualifier = qualifier

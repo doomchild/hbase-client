@@ -32,6 +32,8 @@ namespace _specs.Models
 
 		public Identifier Identifier { get; set; }
 
+		public Identifier SecondIdentifier { get; set; }
+
 		public CellSet CellSet { get; set; }
 
 		public Cell Cell { get; set; }
@@ -47,5 +49,7 @@ namespace _specs.Models
 		public IEnumerable<string> TableNames { get; set; }
 
 		public IScanner Scanner { get; set; }
+
+		public bool IdentifierMatchResult { get; set; }
 	}
 }

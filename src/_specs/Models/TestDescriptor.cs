@@ -1,4 +1,4 @@
-#region FreeBSD
+﻿#region FreeBSD
 
 // Copyright (c) 2013, The Tribe
 // All rights reserved.
@@ -19,27 +19,14 @@
 
 #endregion
 
-namespace HBase.Stargate.Client.Models
+namespace _specs.Models
 {
-	/// <summary>
-	///    Defines an identifier in the HBase system.
-	/// </summary>
-	public class Identifier : HBaseDescriptor
+	public class TestDescriptor
 	{
-		/// <summary>
-		/// Gets or sets the cell descriptor.
-		/// </summary>
-		/// <value>
-		/// The cell.
-		/// </value>
-		public HBaseCellDescriptor CellDescriptor { get; set; }
-
-		/// <summary>
-		///    Gets or sets the timestamp.
-		/// </summary>
-		/// <value>
-		///    The timestamp.
-		/// </value>
+		public string Table { get; set; }
+		public string Row { get; set; }
+		public string Column { get; set; }
+		public string Qualifier { get; set; }
 		public long? Timestamp { get; set; }
 	}
 }
