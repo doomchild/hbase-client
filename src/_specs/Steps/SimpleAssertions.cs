@@ -68,9 +68,9 @@ namespace _specs.Steps
 		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
 		{
 			return cell.Identifier.Row == testCell.Row
-			       && cell.Identifier.Cell != null
-			       && cell.Identifier.Cell.Column == testCell.Column
-			       && cell.Identifier.Cell.Qualifier == testCell.Qualifier
+			       && cell.Identifier.CellDescriptor != null
+			       && cell.Identifier.CellDescriptor.Column == testCell.Column
+			       && cell.Identifier.CellDescriptor.Qualifier == testCell.Qualifier
 			       && cell.Identifier.Timestamp == testCell.Timestamp
 			       && cell.Value == testCell.Value;
 		}
