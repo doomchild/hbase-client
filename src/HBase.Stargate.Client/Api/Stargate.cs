@@ -97,7 +97,7 @@ namespace HBase.Stargate.Client.Api
 			string contentType = Options.ContentType;
 			string resource = _resourceBuilder.BuildSingleValueAccess(identifier);
 			string content = _converter.ConvertCell(new Cell(identifier, value));
-			IRestResponse response = await SendRequest(Method.POST, resource, contentType, contentType, content);
+			IRestResponse response = await SendRequestAsync(Method.POST, resource, contentType, contentType, content);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
@@ -108,7 +108,11 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="value">The value.</param>
 		public void WriteValue(Identifier identifier, string value)
 		{
-			WriteValueAsync(identifier, value).Wait();
+			string contentType = Options.ContentType;
+			string resource = _resourceBuilder.BuildSingleValueAccess(identifier);
+			string content = _converter.ConvertCell(new Cell(identifier, value));
+			IRestResponse response = SendRequest(Method.POST, resource, contentType, contentType, content);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
 		/// <summary>
@@ -120,7 +124,7 @@ namespace HBase.Stargate.Client.Api
 			string contentType = Options.ContentType;
 			var tableIdentifier = new Identifier {Table = cells.Table};
 			string resource = _resourceBuilder.BuildBatchInsert(tableIdentifier);
-			IRestResponse response = await SendRequest(Method.POST, resource, contentType, contentType, _converter.ConvertCells(cells));
+			IRestResponse response = await SendRequestAsync(Method.POST, resource, contentType, contentType, _converter.ConvertCells(cells));
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
@@ -130,7 +134,11 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="cells">The cells.</param>
 		public void WriteCells(CellSet cells)
 		{
-			WriteCellsAsync(cells).Wait();
+			string contentType = Options.ContentType;
+			var tableIdentifier = new Identifier { Table = cells.Table };
+			string resource = _resourceBuilder.BuildBatchInsert(tableIdentifier);
+			IRestResponse response = SendRequest(Method.POST, resource, contentType, contentType, _converter.ConvertCells(cells));
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
 		/// <summary>
@@ -140,7 +148,7 @@ namespace HBase.Stargate.Client.Api
 		public async Task DeleteItemAsync(Identifier identifier)
 		{
 			string resource = _resourceBuilder.BuildDeleteItem(identifier);
-			IRestResponse response = await SendRequest(Method.DELETE, resource, Options.ContentType);
+			IRestResponse response = await SendRequestAsync(Method.DELETE, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
@@ -150,7 +158,9 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="identifier">The identifier.</param>
 		public void DeleteItem(Identifier identifier)
 		{
-			DeleteItemAsync(identifier).Wait();
+			string resource = _resourceBuilder.BuildDeleteItem(identifier);
+			IRestResponse response = SendRequest(Method.DELETE, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
 		/// <summary>
@@ -163,7 +173,7 @@ namespace HBase.Stargate.Client.Api
 				? _resourceBuilder.BuildCellOrRowQuery(identifier.ToQuery())
 				: _resourceBuilder.BuildSingleValueAccess(identifier, true);
 
-			IRestResponse response = await SendRequest(Method.GET, resource, Options.ContentType);
+			IRestResponse response = await SendRequestAsync(Method.GET, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
 
 			return _converter.ConvertCells(response.Content)
@@ -177,7 +187,16 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="identifier">The identifier.</param>
 		public string ReadValue(Identifier identifier)
 		{
-			return ReadValueAsync(identifier).Result;
+			string resource = identifier.Timestamp.HasValue
+				? _resourceBuilder.BuildCellOrRowQuery(identifier.ToQuery())
+				: _resourceBuilder.BuildSingleValueAccess(identifier, true);
+
+			IRestResponse response = SendRequest(Method.GET, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
+
+			return _converter.ConvertCells(response.Content)
+				.Select(cell => cell.Value)
+				.FirstOrDefault();
 		}
 
 		/// <summary>
@@ -187,7 +206,7 @@ namespace HBase.Stargate.Client.Api
 		public async Task<CellSet> FindCellsAsync(CellQuery query)
 		{
 			string resource = _resourceBuilder.BuildCellOrRowQuery(query);
-			IRestResponse response = await SendRequest(Method.GET, resource, Options.ContentType);
+			IRestResponse response = await SendRequestAsync(Method.GET, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
 
 			return new CellSet(_converter.ConvertCells(response.Content))
@@ -202,7 +221,14 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="query"></param>
 		public CellSet FindCells(CellQuery query)
 		{
-			return FindCellsAsync(query).Result;
+			string resource = _resourceBuilder.BuildCellOrRowQuery(query);
+			IRestResponse response = SendRequest(Method.GET, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
+
+			return new CellSet(_converter.ConvertCells(response.Content))
+			{
+				Table = query.Table
+			};
 		}
 
 		/// <summary>
@@ -211,7 +237,10 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="tableSchema">The table schema.</param>
 		public void CreateTable(TableSchema tableSchema)
 		{
-			CreateTableAsync(tableSchema).Wait();
+			string resource = _resourceBuilder.BuildTableSchemaAccess(tableSchema);
+			string data = _converter.ConvertSchema(tableSchema);
+			IRestResponse response = SendRequest(Method.PUT, resource, Options.ContentType, Options.ContentType, data);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
 		/// <summary>
@@ -222,7 +251,7 @@ namespace HBase.Stargate.Client.Api
 		{
 			string resource = _resourceBuilder.BuildTableSchemaAccess(tableSchema);
 			string data = _converter.ConvertSchema(tableSchema);
-			IRestResponse response = await SendRequest(Method.PUT, resource, Options.ContentType, Options.ContentType, data);
+			IRestResponse response = await SendRequestAsync(Method.PUT, resource, Options.ContentType, Options.ContentType, data);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
@@ -231,7 +260,9 @@ namespace HBase.Stargate.Client.Api
 		/// </summary>
 		public IEnumerable<string> GetTableNames()
 		{
-			return GetTableNamesAsync().Result;
+			IRestResponse response = SendRequest(Method.GET, string.Empty, HBaseMimeTypes.Text);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
+			return ParseLines(response.Content);
 		}
 
 		/// <summary>
@@ -240,7 +271,7 @@ namespace HBase.Stargate.Client.Api
 		/// <returns></returns>
 		public async Task<IEnumerable<string>> GetTableNamesAsync()
 		{
-			IRestResponse response = await SendRequest(Method.GET, string.Empty, HBaseMimeTypes.Text);
+			IRestResponse response = await SendRequestAsync(Method.GET, string.Empty, HBaseMimeTypes.Text);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 			return ParseLines(response.Content);
 		}
@@ -251,7 +282,9 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="tableName">Name of the table.</param>
 		public void DeleteTable(string tableName)
 		{
-			DeleteTableAsync(tableName).Wait();
+			string resource = _resourceBuilder.BuildTableSchemaAccess(new TableSchema { Name = tableName });
+			IRestResponse response = SendRequest(Method.DELETE, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
 		/// <summary>
@@ -261,7 +294,7 @@ namespace HBase.Stargate.Client.Api
 		public async Task DeleteTableAsync(string tableName)
 		{
 			string resource = _resourceBuilder.BuildTableSchemaAccess(new TableSchema {Name = tableName});
-			IRestResponse response = await SendRequest(Method.DELETE, resource, Options.ContentType);
+			IRestResponse response = await SendRequestAsync(Method.DELETE, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
@@ -272,7 +305,7 @@ namespace HBase.Stargate.Client.Api
 		public async Task<TableSchema> GetTableSchemaAsync(string tableName)
 		{
 			string resource = _resourceBuilder.BuildTableSchemaAccess(new TableSchema {Name = tableName});
-			IRestResponse response = await SendRequest(Method.GET, resource, Options.ContentType);
+			IRestResponse response = await SendRequestAsync(Method.GET, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 			return _converter.ConvertSchema(response.Content);
 		}
@@ -283,7 +316,10 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="tableName">Name of the table.</param>
 		public TableSchema GetTableSchema(string tableName)
 		{
-			return GetTableSchemaAsync(tableName).Result;
+			string resource = _resourceBuilder.BuildTableSchemaAccess(new TableSchema { Name = tableName });
+			IRestResponse response = SendRequest(Method.GET, resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
+			return _converter.ConvertSchema(response.Content);
 		}
 
 		/// <summary>
@@ -293,7 +329,7 @@ namespace HBase.Stargate.Client.Api
 		public async Task<IScanner> CreateScannerAsync(ScannerOptions options)
 		{
 			string resource = _resourceBuilder.BuildScannerCreate(options);
-			IRestResponse response = await SendRequest(Method.PUT, resource, HBaseMimeTypes.Xml, content: _scannerConverter.Convert(options));
+			IRestResponse response = await SendRequestAsync(Method.PUT, resource, HBaseMimeTypes.Xml, content: _scannerConverter.Convert(options));
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.Created);
 			string scannerLocation = response.Headers.Where(header => header.Type == ParameterType.HttpHeader && header.Name == RestConstants.LocationHeader)
 				.Select(header => header.Value.ToString())
@@ -308,7 +344,14 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="options">The options.</param>
 		public IScanner CreateScanner(ScannerOptions options)
 		{
-			return CreateScannerAsync(options).Result;
+			string resource = _resourceBuilder.BuildScannerCreate(options);
+			IRestResponse response = SendRequest(Method.PUT, resource, HBaseMimeTypes.Xml, content: _scannerConverter.Convert(options));
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.Created);
+			string scannerLocation = response.Headers.Where(header => header.Type == ParameterType.HttpHeader && header.Name == RestConstants.LocationHeader)
+				.Select(header => header.Value.ToString())
+				.FirstOrDefault();
+
+			return string.IsNullOrEmpty(scannerLocation) ? null : new Scanner(new Uri(scannerLocation).PathAndQuery.Trim('/'), this);
 		}
 
 		/// <summary>
@@ -317,7 +360,8 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="scanner">The scanner.</param>
 		public void DeleteScanner(IScanner scanner)
 		{
-			DeleteScannerAsync(scanner).Wait();
+			var response = SendRequest(Method.DELETE, scanner.Resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
 		/// <summary>
@@ -326,7 +370,7 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="scanner">The scanner.</param>
 		public async Task DeleteScannerAsync(IScanner scanner)
 		{
-			var response = await SendRequest(Method.DELETE, scanner.Resource, Options.ContentType);
+			var response = await SendRequestAsync(Method.DELETE, scanner.Resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
 		}
 
@@ -336,7 +380,9 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="scanner">The scanner.</param>
 		public CellSet GetScannerResult(IScanner scanner)
 		{
-			return GetScannerResultAsync(scanner).Result;
+			var response = SendRequest(Method.GET, scanner.Resource, Options.ContentType);
+			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NoContent);
+			return response.StatusCode == HttpStatusCode.NoContent ? null : new CellSet(_converter.ConvertCells(response.Content));
 		}
 
 		/// <summary>
@@ -345,7 +391,7 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="scanner">The scanner.</param>
 		public async Task<CellSet> GetScannerResultAsync(IScanner scanner)
 		{
-			var response = await SendRequest(Method.GET, scanner.Resource, Options.ContentType);
+			var response = await SendRequestAsync(Method.GET, scanner.Resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NoContent);
 			return response.StatusCode == HttpStatusCode.NoContent ? null : new CellSet(_converter.ConvertCells(response.Content));
 		}
@@ -396,8 +442,31 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="acceptType">Type of the accept.</param>
 		/// <param name="contentType">Type of the content.</param>
 		/// <param name="content">The content.</param>
-		protected virtual async Task<IRestResponse> SendRequest(Method method, string resource, string acceptType,
+		protected virtual async Task<IRestResponse> SendRequestAsync(Method method, string resource, string acceptType,
 			string contentType = null, string content = null)
+		{
+			var request = BuildRequest(method, resource, acceptType, contentType, content);
+
+			return await _client.ExecuteAsync(request);
+		}
+
+		/// <summary>
+		/// Sends the request.
+		/// </summary>
+		/// <param name="method">The method.</param>
+		/// <param name="resource">The resource.</param>
+		/// <param name="acceptType">Type of the accept.</param>
+		/// <param name="contentType">Type of the content.</param>
+		/// <param name="content">The content.</param>
+		protected virtual IRestResponse SendRequest(Method method, string resource, string acceptType,
+			string contentType = null, string content = null)
+		{
+			var request = BuildRequest(method, resource, acceptType, contentType, content);
+
+			return _client.Execute(request);
+		}
+
+		private IRestRequest BuildRequest(Method method, string resource, string acceptType, string contentType, string content)
 		{
 			IRestRequest request = _restSharp.CreateRequest(resource, method)
 				.AddHeader(HttpRequestHeader.Accept.ToString(), acceptType);
@@ -407,8 +476,7 @@ namespace HBase.Stargate.Client.Api
 				contentType = string.IsNullOrEmpty(contentType) ? acceptType : contentType;
 				request.AddParameter(contentType, content, ParameterType.RequestBody);
 			}
-
-			return await _client.ExecuteAsync(request);
+			return request;
 		}
 
 		private static IEnumerable<string> ParseLines(string text)
