@@ -5,6 +5,12 @@ The following changelog details the changes made with each release of hbase-clie
 ## 1.0-beta.3 ##
 Author of this release: [John Batte](https://github.com/jbatte47)
 
+- Updated configuration types to return `false` from `IsReadOnly` ([Issue 42](https://github.com/TheTribe/hbase-client/issues/42))
+- Updated `Stargate` to use all-synchronous calls for its synchronous methods
+
+## 1.0-beta.3 ##
+Author of this release: [John Batte](https://github.com/jbatte47)
+
 - Added ability to perform a "fuzzy match" between `Identifier` instances ([Issue 34](https://github.com/TheTribe/hbase-client/issues/34))
 - Added ability to extract single values from `CellSet` instances ([Issue 35](https://github.com/TheTribe/hbase-client/issues/35))
 - Refactored `Identifier` and model extensions ([Issue 33](https://github.com/TheTribe/hbase-client/issues/33))
