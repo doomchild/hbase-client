@@ -58,5 +58,16 @@ namespace HBase.Stargate.Client.Config
 			get { return this[_rowName] as string; }
 			set { this[_rowName] = value; }
 		}
+
+		/// <summary>
+		///    Gets a value indicating whether the <see cref="T:System.Configuration.ConfigurationElement" /> object is read-only.
+		/// </summary>
+		/// <returns>
+		///    true if the <see cref="T:System.Configuration.ConfigurationElement" /> object is read-only; otherwise, false.
+		/// </returns>
+		public override bool IsReadOnly()
+		{
+			return false;
+		}
 	}
 }
