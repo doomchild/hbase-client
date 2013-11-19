@@ -4,19 +4,33 @@
 
 		</script><script type="text/javascript">
 			RANGES_59 = [
-   [35,3,35,70,'dccv']
-, [36,3,36,4,'dccv']
-, [37,4,37,29,'dccv']
-, [38,3,38,4,'dccv']
-, [45,3,45,4,'dccv']
-, [46,4,46,51,'dccv']
-, [46,120,46,122,'dccv']
-, [47,3,47,4,'dccv']
-, [46,51,46,120,'dccv']
+   [46,8,46,9,'dcuc']
+, [46,10,46,44,'dcuc']
+, [46,45,46,46,'dcuc']
+, [47,8,47,9,'dcuc']
+, [47,10,47,35,'dcuc']
+, [47,36,47,37,'dcuc']
+, [59,8,59,9,'dcuc']
+, [59,10,59,48,'dcuc']
+, [59,49,59,50,'dcuc']
+, [60,8,60,9,'dcuc']
+, [60,10,60,39,'dcuc']
+, [60,40,60,41,'dcuc']
+, [72,8,72,9,'dcuc']
+, [72,10,72,47,'dcuc']
+, [72,48,72,49,'dcuc']
+, [73,8,73,9,'dcuc']
+, [73,10,73,39,'dcuc']
+, [73,40,73,41,'dcuc']
+, [81,3,81,4,'dcuc']
+, [82,4,92,6,'dcuc']
+, [93,3,93,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src59" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+		<code id="src59" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -33,35 +47,79 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+#endregion
 
-namespace HBase.Stargate.Client.TypeConversion
+using System.Configuration;
+
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.Config
 {
 	/// &lt;summary&gt;
-	///    Defines an IoC-driven implementation of &lt;see cref=&quot;IMimeConverterFactory&quot; /&gt;.
+	///    Provides an XML configuration-based &lt;see cref=&quot;Identifier&quot; /&gt;.
 	/// &lt;/summary&gt;
-	public class MimeConverterFactory : IMimeConverterFactory
+	public class ConfigIdentifier : ConfigDescriptor
 	{
-		private readonly IEnumerable&lt;IMimeConverter&gt; _converters;
+		private const string _columName = &quot;column&quot;;
+		private const string _qualifierName = &quot;qualifier&quot;;
+		private const string _timestampName = &quot;timestamp&quot;;
 
 		/// &lt;summary&gt;
-		/// Initializes a new instance of the &lt;see cref=&quot;MimeConverterFactory&quot;/&gt; class.
+		///    Gets or sets the column.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;converters&quot;&gt;The converters.&lt;/param&gt;
-		public MimeConverterFactory(IEnumerable&lt;IMimeConverter&gt; converters)
+		/// &lt;value&gt;
+		///    The column.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_columName, IsRequired = true)]
+		public string Column
 		{
-			_converters = converters;
+			get { return this[_columName] as string; }
+			set { this[_columName] = value; }
 		}
 
 		/// &lt;summary&gt;
-		/// Creates the converter appropriate for the specified MIME type.
+		///    Gets or sets the qualifier.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;mimeType&quot;&gt;The MIME type.&lt;/param&gt;
-		public IMimeConverter CreateConverter(string mimeType)
+		/// &lt;value&gt;
+		///    The qualifier.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_qualifierName, IsRequired = false)]
+		public string Qualifier
 		{
-			return _converters.FirstOrDefault(converter =&gt; StringComparer.OrdinalIgnoreCase.Equals(converter.MimeType, mimeType));
+			get { return this[_qualifierName] as string; }
+			set { this[_qualifierName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the timestamp.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The timestamp.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_timestampName, IsRequired = false)]
+		public long? Timestamp
+		{
+			get { return this[_timestampName] as long?; }
+			set { this[_timestampName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the config-based identifier to a normal one.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static implicit operator Identifier(ConfigIdentifier identifier)
+		{
+			return new Identifier
+			{
+				Table = identifier.Table,
+				Row = identifier.Row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = identifier.Column,
+					Qualifier = identifier.Qualifier
+				},
+				Timestamp = identifier.Timestamp
+			};
 		}
 	}
 }</pre></code><script type="text/javascript">

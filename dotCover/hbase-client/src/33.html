@@ -4,13 +4,14 @@
 
 		</script><script type="text/javascript">
 			RANGES_33 = [
-   [41,3,41,43,'dcuc']
-, [42,3,42,4,'dcuc']
-, [43,4,43,21,'dcuc']
-, [44,3,44,4,'dcuc']
-, [51,3,51,4,'dcuc']
-, [52,4,52,45,'dcuc']
-, [53,3,53,4,'dcuc']
+   [40,3,40,4,'dcuc']
+, [41,4,41,29,'dcuc']
+, [43,4,43,58,'dcuc']
+, [45,4,45,16,'dcuc']
+, [46,3,46,4,'dcuc']
+, [52,3,52,4,'dcuc']
+, [53,4,53,26,'dcuc']
+, [54,3,54,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -42,30 +43,31 @@ using Newtonsoft.Json.Linq;
 namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    This filter is used for selecting only those keys with columns that match a particular prefix.
-	///    For example, if prefix is &#39;an&#39;, it will pass keys with columns like &#39;and&#39;/&#39;anti&#39; but not keys
-	///    with columns like &#39;ball&#39;/&#39;act&#39;.
+	///    Provides base functionality for scanner filters.
 	/// &lt;/summary&gt;
-	public class ColumnPrefixFilter : TypeValueFilterBase
+	public abstract class ScannerFilterBase : IScannerFilter
 	{
-		private readonly string _prefix;
+		private const string _typePropertyName = &quot;type&quot;;
 
 		/// &lt;summary&gt;
-		///    Initializes a new instance of the &lt;see cref=&quot;ColumnPrefixFilter&quot; /&gt; class.
+		/// Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;prefix&quot;&gt;The prefix.&lt;/param&gt;
-		public ColumnPrefixFilter(string prefix)
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public virtual JObject ConvertToJson(ICodec codec)
 		{
-			_prefix = prefix;
+			var json = new JObject();
+
+			json[_typePropertyName] = new JValue(GetFilterType());
+
+			return json;
 		}
 
 		/// &lt;summary&gt;
-		/// Gets the token to use as the value.
+		/// Gets the type of the filter.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
-		protected override JToken GetValueJToken(ICodec codec)
+		protected virtual string GetFilterType()
 		{
-			return new JValue(codec.Encode(_prefix));
+			return GetType().Name;
 		}
 	}
 }</pre></code><script type="text/javascript">

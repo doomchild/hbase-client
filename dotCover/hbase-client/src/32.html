@@ -4,13 +4,19 @@
 
 		</script><script type="text/javascript">
 			RANGES_32 = [
-   [41,3,41,40,'dcuc']
-, [42,3,42,4,'dcuc']
-, [43,4,43,19,'dcuc']
-, [44,3,44,4,'dcuc']
-, [51,3,51,4,'dcuc']
-, [52,4,52,44,'dcuc']
-, [53,3,53,4,'dcuc']
+   [33,3,33,39,'dccv']
+, [34,3,34,4,'dccv']
+, [35,4,35,23,'dccv']
+, [36,3,36,4,'dccv']
+, [40,3,40,4,'dccv']
+, [41,4,41,61,'dccv']
+, [42,3,42,4,'dccv']
+, [46,3,46,4,'dccv']
+, [47,4,47,51,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,54,'dccv']
+, [54,3,54,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -35,37 +41,38 @@
 
 #endregion
 
-using System;
+using TechTalk.SpecFlow;
 
-using HBase.Stargate.Client.TypeConversion;
+using _specs.Models;
 
-using Newtonsoft.Json.Linq;
-
-namespace HBase.Stargate.Client.Api
+namespace _specs.Steps
 {
-	/// &lt;summary&gt;
-	/// Provides a representation of the BinaryComparator filter value.
-	/// &lt;/summary&gt;
-	public class BinaryComparator : TypeValueFilterBase
+	[Binding]
+	public class Writing
 	{
-		private readonly string _value;
+		private readonly HBaseContext _context;
 
-		/// &lt;summary&gt;
-		/// Initializes a new instance of the &lt;see cref=&quot;BinaryComparator&quot;/&gt; class.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
-		public BinaryComparator(string value)
+		public Writing(HBaseContext context)
 		{
-			_value = value;
+			_context = context;
 		}
 
-		/// &lt;summary&gt;
-		/// Gets the token to use as the value.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
-		protected override JToken GetValueJToken(ICodec codec)
+		[When(@&quot;I write the value &quot;&quot;(.*)&quot;&quot; using my identifier&quot;)]
+		public void WriteValue(string value)
 		{
-			return new JValue(codec.Encode(_value));
+			_context.Stargate.WriteValue(_context.Identifier, value);
+		}
+
+		[When(@&quot;I write the set of cells&quot;)]
+		public void WriteCellSet()
+		{
+			_context.Stargate.WriteCells(_context.CellSet);
+		}
+
+		[When(@&quot;I delete an item using my identifier&quot;)]
+		public void DeleteItem()
+		{
+			_context.Stargate.DeleteItem(_context.Identifier);
 		}
 	}
 }</pre></code><script type="text/javascript">

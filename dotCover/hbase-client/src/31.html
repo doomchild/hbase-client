@@ -4,17 +4,34 @@
 
 		</script><script type="text/javascript">
 			RANGES_31 = [
-   [41,3,41,4,'dcuc']
-, [42,4,42,45,'dcuc']
-, [44,4,44,53,'dcuc']
-, [46,4,46,16,'dcuc']
-, [47,3,47,4,'dcuc']
+   [34,3,34,75,'dccv']
+, [35,3,35,4,'dccv']
+, [36,4,36,19,'dccv']
+, [37,4,37,27,'dccv']
+, [38,3,38,4,'dccv']
+, [42,3,42,4,'dccv']
+, [43,4,43,35,'dccv']
+, [44,3,44,4,'dccv']
+, [48,3,48,4,'dccv']
+, [49,4,49,49,'dccv']
+, [50,3,50,4,'dccv']
+, [54,3,54,4,'dccv']
+, [55,4,55,53,'dccv']
+, [56,4,56,48,'dccv']
+, [57,3,57,4,'dccv']
+, [61,3,61,4,'dccv']
+, [62,4,62,59,'dccv']
+, [63,3,63,4,'dccv']
+, [67,3,67,4,'dccv']
+, [68,4,77,14,'dccv']
+, [78,3,78,4,'dccv']
+, [81,3,81,4,'dccv']
+, [82,4,92,23,'dccv']
+, [93,3,93,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src31" class="dotCoverSource"><pre>#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+		<code id="src31" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -31,40 +48,82 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
 
-using HBase.Stargate.Client.TypeConversion;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
-using Newtonsoft.Json.Linq;
+using _specs.Models;
 
-namespace HBase.Stargate.Client.Api
+namespace _specs.Steps
 {
-	/// &lt;summary&gt;
-	///    Provides a base class for scanner filters that will render as
-	///    a &quot;type&quot; property and a &quot;value&quot; property.
-	/// &lt;/summary&gt;
-	public abstract class TypeValueFilterBase : ScannerFilterBase
+	[Binding]
+	public class SimpleConstruction
 	{
-		private const string _valuePropertyName = &quot;value&quot;;
+		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
 
-		/// &lt;summary&gt;
-		///    Converts the filter to its JSON representation.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
-		public override JObject ConvertToJson(ICodec codec)
+		public SimpleConstruction(HBaseContext hBase, ResourceContext resources)
 		{
-			JObject json = base.ConvertToJson(codec);
-
-			json[_valuePropertyName] = GetValueJToken(codec);
-
-			return json;
+			_hBase = hBase;
+			_resources = resources;
 		}
 
-		/// &lt;summary&gt;
-		///    Gets the token to use as the value.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
-		protected abstract JToken GetValueJToken(ICodec codec);
+		[Given(@&quot;I have created a set of cells&quot;)]
+		public void CreateCellSet()
+		{
+			_hBase.CellSet = new CellSet();
+		}
+
+		[Given(@&quot;I have created a set of cells for the &quot;&quot;(.+)&quot;&quot; table&quot;)]
+		public void CreateCellSet(string table)
+		{
+			_hBase.CellSet = new CellSet {Table = table};
+		}
+
+		[Given(@&quot;I have added a cell to my set with the following properties:&quot;)]
+		public void AddToCellSet(Table values)
+		{
+			var testCell = values.CreateInstance&lt;TestCell&gt;();
+			_hBase.CellSet.Add(ConvertToCell(testCell));
+		}
+
+		[Given(@&quot;I have raw content equal to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void SetRawContentToResource(string resourceName)
+		{
+			_hBase.RawContent = _resources.GetString(resourceName);
+		}
+
+		[Given(@&quot;I have a cell with a (.+), (.+), (.*), (.*), and (.*)&quot;)]
+		public void CreateCell(string row, string column, string qualifier, string timestamp, string value)
+		{
+			_hBase.Cell = new Cell(new Identifier
+			{
+				Row = row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
+				Timestamp = timestamp.ToNullableInt64()
+			}, value);
+		}
+
+		private static Cell ConvertToCell(TestCell testCell)
+		{
+			return new Cell(new Identifier
+			{
+				Table = testCell.Table,
+				Row = testCell.Row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = testCell.Column,
+					Qualifier = testCell.Qualifier
+				},
+				Timestamp = testCell.Timestamp
+			}, testCell.Value);
+		}
 	}
 }</pre></code><script type="text/javascript">
 			applyranges('src31', RANGES_31)

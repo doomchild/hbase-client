@@ -4,25 +4,24 @@
 
 		</script><script type="text/javascript">
 			RANGES_29 = [
-   [33,3,33,39,'dccv']
-, [34,3,34,4,'dccv']
-, [35,4,35,23,'dccv']
+   [35,3,35,88,'dccv']
 , [36,3,36,4,'dccv']
+, [37,4,37,19,'dccv']
+, [38,4,38,27,'dccv']
+, [39,4,39,27,'dccv']
 , [40,3,40,4,'dccv']
-, [41,4,41,61,'dccv']
-, [42,3,42,4,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,45,36,'dccv']
 , [46,3,46,4,'dccv']
-, [47,4,47,51,'dccv']
-, [48,3,48,4,'dccv']
-, [52,3,52,4,'dccv']
-, [53,4,53,54,'dccv']
-, [54,3,54,4,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,49,'dccv']
+, [52,4,52,67,'dccv']
+, [54,4,54,50,'dccv']
+, [55,3,55,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src29" class="dotCoverSource"><pre>#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+		<code id="src29" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -39,40 +38,43 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using System.Xml.Linq;
+
+using FluentAssertions;
 
 using TechTalk.SpecFlow;
 
 using _specs.Models;
 
-namespace _specs.Steps
+namespace _specs.Steps.Serialization
 {
 	[Binding]
-	public class Writing
+	public class Xml
 	{
-		private readonly HBaseContext _context;
+		private readonly HBaseContext _hBase;
+		private readonly ResourceContext _resources;
+		private readonly ContentConverter _converter;
 
-		public Writing(HBaseContext context)
+		public Xml(HBaseContext hBase, ResourceContext resources, ContentConverter converter)
 		{
-			_context = context;
+			_hBase = hBase;
+			_resources = resources;
+			_converter = converter;
 		}
 
-		[When(@&quot;I write the value &quot;&quot;(.*)&quot;&quot; using my identifier&quot;)]
-		public void WriteValue(string value)
+		[Given(@&quot;I have everything I need to test a content converter for XML&quot;)]
+		public void SetConversionToXml()
 		{
-			_context.Stargate.WriteValue(_context.Identifier, value);
+			_converter.SetConversionToXml();
 		}
 
-		[When(@&quot;I write the set of cells&quot;)]
-		public void WriteCellSet()
+		[Then(@&quot;my raw XML content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CompareRawXmlToResource(string resourceName)
 		{
-			_context.Stargate.WriteCells(_context.CellSet);
-		}
+			var left = XElement.Parse(_hBase.RawContent);
+			var right = XElement.Parse(_resources.GetString(resourceName));
 
-		[When(@&quot;I delete an item using my identifier&quot;)]
-		public void DeleteItem()
-		{
-			_context.Stargate.DeleteItem(_context.Identifier);
+			left.ToString().Should().Be(right.ToString());
 		}
 	}
 }</pre></code><script type="text/javascript">

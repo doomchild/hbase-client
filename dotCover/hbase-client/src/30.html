@@ -4,20 +4,29 @@
 
 		</script><script type="text/javascript">
 			RANGES_30 = [
-   [40,3,40,4,'dcuc']
-, [41,4,41,29,'dcuc']
-, [43,4,43,58,'dcuc']
-, [45,4,45,16,'dcuc']
-, [46,3,46,4,'dcuc']
-, [52,3,52,4,'dcuc']
-, [53,4,53,26,'dcuc']
-, [54,3,54,4,'dcuc']
+   [37,3,37,46,'dccv']
+, [38,3,38,4,'dccv']
+, [39,4,39,19,'dccv']
+, [40,3,40,4,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,52,25,'dccv']
+, [53,3,53,4,'dccv']
+, [57,3,57,4,'dccv']
+, [58,4,58,45,'dccv']
+, [59,3,59,4,'dccv']
+, [63,3,63,4,'dccv']
+, [64,4,64,53,'dccv']
+, [65,4,65,31,'dccv']
+, [65,67,65,87,'dccv']
+, [66,3,66,4,'dccv']
+, [69,3,69,4,'dccv']
+, [70,4,75,43,'dccv']
+, [76,3,76,4,'dccv']
+, [65,31,65,67,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src30" class="dotCoverSource"><pre>#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+		<code id="src30" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -34,40 +43,64 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using System.Linq;
 
-using HBase.Stargate.Client.TypeConversion;
+using FluentAssertions;
 
-using Newtonsoft.Json.Linq;
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
 
-namespace HBase.Stargate.Client.Api
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
+
+namespace _specs.Steps
 {
-	/// &lt;summary&gt;
-	///    Provides base functionality for scanner filters.
-	/// &lt;/summary&gt;
-	public abstract class ScannerFilterBase : IScannerFilter
+	[Binding]
+	public class SimpleAssertions
 	{
-		private const string _typePropertyName = &quot;type&quot;;
+		private readonly HBaseContext _cells;
 
-		/// &lt;summary&gt;
-		/// Converts the filter to its JSON representation.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
-		public virtual JObject ConvertToJson(ICodec codec)
+		public SimpleAssertions(HBaseContext cells)
 		{
-			var json = new JObject();
-
-			json[_typePropertyName] = new JValue(GetFilterType());
-
-			return json;
+			_cells = cells;
 		}
 
-		/// &lt;summary&gt;
-		/// Gets the type of the filter.
-		/// &lt;/summary&gt;
-		protected virtual string GetFilterType()
+		[Then(@&quot;my cell should have a (.+), (.+), (.*), (.*), and (.*)&quot;)]
+		public void CheckCellContents(string row, string column, string qualifier, string timestamp, string value)
 		{
-			return GetType().Name;
+			CellMatchesTestValue(_cells.Cell, new TestCell
+			{
+				Row = row,
+				Column = column,
+				Qualifier = qualifier,
+				Timestamp = timestamp.ToNullableInt64(),
+				Value = value
+			}).Should().BeTrue();
+		}
+
+		[Then(@&quot;my set should contain (\d+) cells?&quot;)]
+		public void CheckCellSetCount(int count)
+		{
+			_cells.CellSet.Should().HaveCount(count);
+		}
+
+		[Then(@&quot;one of the cells in my set should have the following properties:&quot;)]
+		public void CheckAnyCellInSet(Table values)
+		{
+			var testCell = values.CreateInstance&lt;TestCell&gt;();
+			_cells.CellSet.Any(cell =&gt; CellMatchesTestValue(cell, testCell)).Should().BeTrue();
+		}
+
+		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
+		{
+			return cell.Identifier.Row == testCell.Row
+			       &amp;&amp; cell.Identifier.CellDescriptor != null
+			       &amp;&amp; cell.Identifier.CellDescriptor.Column == testCell.Column
+			       &amp;&amp; cell.Identifier.CellDescriptor.Qualifier == testCell.Qualifier
+			       &amp;&amp; cell.Identifier.Timestamp == testCell.Timestamp
+			       &amp;&amp; cell.Value == testCell.Value;
 		}
 	}
 }</pre></code><script type="text/javascript">

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hbase-client
-   &#160;<span id="projectnumber">1.0-beta.2</span>
+   &#160;<span id="projectnumber">1.0-beta.4</span>
    </div>
    <div id="projectbrief">A simple set of .NET client libraries for HBase</div>
   </td>
@@ -220,15 +220,18 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a816270f210cef790fdd757e997c51836"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a816270f210cef790fdd757e997c51836">DefaultFalseRowKey</a> = &quot;row&quot;</td></tr>
 <tr class="memdesc:a816270f210cef790fdd757e997c51836"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default false row key  <a href="#a816270f210cef790fdd757e997c51836">More...</a><br/></td></tr>
 <tr class="separator:a816270f210cef790fdd757e997c51836"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46c9cbcca9fba910f43ec7298f7cfb65"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a46c9cbcca9fba910f43ec7298f7cfb65">DefaultContentType</a> = HBaseMimeTypes.Xml</td></tr>
+<tr class="memitem:a46c9cbcca9fba910f43ec7298f7cfb65"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a46c9cbcca9fba910f43ec7298f7cfb65">DefaultContentType</a> = <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_h_base_mime_types.html#ad9925541fc6e4093e30d8b6695c94bc5">HBaseMimeTypes.Xml</a></td></tr>
 <tr class="memdesc:a46c9cbcca9fba910f43ec7298f7cfb65"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default content type  <a href="#a46c9cbcca9fba910f43ec7298f7cfb65">More...</a><br/></td></tr>
 <tr class="separator:a46c9cbcca9fba910f43ec7298f7cfb65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ab3e7319cb68bab0588d589d1db5e55b2"><td class="memItemLeft" align="right" valign="top">virtual async Task&lt; IRestResponse &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#ab3e7319cb68bab0588d589d1db5e55b2">SendRequest</a> (Method method, string resource, string acceptType, string contentType=null, string content=null)</td></tr>
-<tr class="memdesc:ab3e7319cb68bab0588d589d1db5e55b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the request.  <a href="#ab3e7319cb68bab0588d589d1db5e55b2">More...</a><br/></td></tr>
-<tr class="separator:ab3e7319cb68bab0588d589d1db5e55b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f25cbb690461cc07aa2c08cddf351c2"><td class="memItemLeft" align="right" valign="top">virtual async Task&lt; IRestResponse &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a2f25cbb690461cc07aa2c08cddf351c2">SendRequestAsync</a> (Method method, string resource, string acceptType, string contentType=null, string content=null)</td></tr>
+<tr class="memdesc:a2f25cbb690461cc07aa2c08cddf351c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the request.  <a href="#a2f25cbb690461cc07aa2c08cddf351c2">More...</a><br/></td></tr>
+<tr class="separator:a2f25cbb690461cc07aa2c08cddf351c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2ef3e8c3b5b219eaf9471bdf3ea90ac"><td class="memItemLeft" align="right" valign="top">virtual IRestResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#af2ef3e8c3b5b219eaf9471bdf3ea90ac">SendRequest</a> (Method method, string resource, string acceptType, string contentType=null, string content=null)</td></tr>
+<tr class="memdesc:af2ef3e8c3b5b219eaf9471bdf3ea90ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the request.  <a href="#af2ef3e8c3b5b219eaf9471bdf3ea90ac">More...</a><br/></td></tr>
+<tr class="separator:af2ef3e8c3b5b219eaf9471bdf3ea90ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -892,7 +895,7 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab3e7319cb68bab0588d589d1db5e55b2"></a>
+<a class="anchor" id="af2ef3e8c3b5b219eaf9471bdf3ea90ac"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -900,7 +903,71 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual async Task&lt;IRestResponse&gt; HBase.Stargate.Client.Api.Stargate.SendRequest </td>
+          <td class="memname">virtual IRestResponse HBase.Stargate.Client.Api.Stargate.SendRequest </td>
+          <td>(</td>
+          <td class="paramtype">Method&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>resource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>acceptType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>contentType</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>content</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends the request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">method</td><td>The method.</td></tr>
+    <tr><td class="paramname">resource</td><td>The resource.</td></tr>
+    <tr><td class="paramname">acceptType</td><td>Type of the accept.</td></tr>
+    <tr><td class="paramname">contentType</td><td>Type of the content.</td></tr>
+    <tr><td class="paramname">content</td><td>The content.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2f25cbb690461cc07aa2c08cddf351c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual async Task&lt;IRestResponse&gt; HBase.Stargate.Client.Api.Stargate.SendRequestAsync </td>
           <td>(</td>
           <td class="paramtype">Method&#160;</td>
           <td class="paramname"><em>method</em>, </td>
@@ -1096,7 +1163,7 @@ Properties</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const string HBase.Stargate.Client.Api.Stargate.DefaultContentType = HBaseMimeTypes.Xml</td>
+          <td class="memname">const string HBase.Stargate.Client.Api.Stargate.DefaultContentType = <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_h_base_mime_types.html#ad9925541fc6e4093e30d8b6695c94bc5">HBaseMimeTypes.Xml</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1149,7 +1216,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_h_base.html">HBase</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate.html">Stargate</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client.html">Client</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client_1_1_api.html">Api</a></li><li class="navelem"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html">Stargate</a></li>
-    <li class="footer">Generated on Tue Oct 29 2013 10:06:12 for hbase-client by
+    <li class="footer">Generated on Tue Nov 19 2013 10:50:05 for hbase-client by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

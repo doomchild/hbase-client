@@ -1,6 +1,8 @@
 var class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate =
 [
     [ "Stargate", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a03180170cda1cae5dff8937acec6e20b", null ],
+    [ "Create", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#af9574534ad6df759e0240cd1026bd9a9", null ],
+    [ "Create", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a72d1c51efa7d38dcb1d02786144fbc67", null ],
     [ "CreateScanner", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a31cf1948a9a522c12ce2afee4281b3b3", null ],
     [ "CreateScannerAsync", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#ad86ad6bde0b66871b3bd5c24ee359d02", null ],
     [ "CreateTable", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#aa8f6bf5c2622390496423c799622dce2", null ],
@@ -21,7 +23,8 @@ var class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate =
     [ "GetTableSchemaAsync", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a0b05ab0bc2036f24b432fb23249f7429", null ],
     [ "ReadValue", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a39b678ed4f189ace2bba8621ed35476f", null ],
     [ "ReadValueAsync", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#ae5aad6de81f772209c37ede5a9cbea52", null ],
-    [ "SendRequest", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#ab3e7319cb68bab0588d589d1db5e55b2", null ],
+    [ "SendRequest", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#af2ef3e8c3b5b219eaf9471bdf3ea90ac", null ],
+    [ "SendRequestAsync", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a2f25cbb690461cc07aa2c08cddf351c2", null ],
     [ "WriteCells", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a4b3d80ffc85b46c947254fea9756ff07", null ],
     [ "WriteCellsAsync", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#abbff510a2ad3ca894b75682e75069ba9", null ],
     [ "WriteValue", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_stargate.html#a973b902e3d7951c548b6cd3f6178859c", null ],

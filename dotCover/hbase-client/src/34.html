@@ -4,21 +4,11 @@
 
 		</script><script type="text/javascript">
 			RANGES_34 = [
-   [58,3,58,127,'dcuc']
-, [59,3,59,4,'dcuc']
-, [60,4,60,27,'dcuc']
-, [61,4,61,27,'dcuc']
-, [62,4,62,45,'dcuc']
-, [63,4,63,45,'dcuc']
-, [64,3,64,4,'dcuc']
-, [71,3,71,4,'dcuc']
-, [72,4,72,45,'dcuc']
-, [74,4,74,114,'dcuc']
-, [75,4,75,114,'dcuc']
-, [76,4,76,64,'dcuc']
-, [77,4,77,64,'dcuc']
-, [79,4,79,16,'dcuc']
-, [80,3,80,4,'dcuc']
+   [41,3,41,4,'dcuc']
+, [42,4,42,45,'dcuc']
+, [44,4,44,53,'dcuc']
+, [46,4,46,16,'dcuc']
+, [47,3,47,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -50,58 +40,31 @@ using Newtonsoft.Json.Linq;
 namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    This filter is used for selecting only those keys with columns that are between a minimum and
-	///    a maximum column. Column values are evaluated as prefixes (see &lt;see cref=&quot;ColumnPrefixFilter&quot; /&gt;).
+	///    Provides a base class for scanner filters that will render as
+	///    a &quot;type&quot; property and a &quot;value&quot; property.
 	/// &lt;/summary&gt;
-	public class ColumnRangeFilter : ScannerFilterBase
+	public abstract class TypeValueFilterBase : ScannerFilterBase
 	{
-		private const string _minColumnPropertyName = &quot;minColumn&quot;;
-		private const string _maxColumnPropertyName = &quot;maxColumn&quot;;
-		private const string _minColumnInclusivePropertyName = &quot;minColumnInclusive&quot;;
-		private const string _maxColumnInclusivePropertyName = &quot;maxColumnInclusive&quot;;
-		private readonly string _maxColumn;
-		private readonly bool _maxColumnInclusive;
-		private readonly string _minColumn;
-		private readonly bool _minColumnInclusive;
+		private const string _valuePropertyName = &quot;value&quot;;
 
 		/// &lt;summary&gt;
-		///    Initializes a new instance of the &lt;see cref=&quot;ColumnRangeFilter&quot; /&gt; class. If &lt;paramref name=&quot;minColumn&quot; /&gt; is &#39;an&#39;,
-		///    and &lt;paramref name=&quot;maxColumn&quot; /&gt; is &#39;be&#39;, it will pass keys with columns like &#39;ana&#39;/&#39;bad&#39;, but not keys with
-		///    columns like &#39;bed&#39;/&#39;eye&#39;. If &lt;paramref name=&quot;minColumn&quot; /&gt; is null, there is no lower bound. If
-		///    &lt;paramref name=&quot;maxColumn&quot; /&gt; is null, there is no upper bound. &lt;paramref name=&quot;minColumnInclusive&quot; /&gt; and
-		///    &lt;paramref name=&quot;maxColumnInclusive&quot; /&gt; specify if the ranges are inclusive or not.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;minColumn&quot;&gt;The min column.&lt;/param&gt;
-		/// &lt;param name=&quot;maxColumn&quot;&gt;The max column.&lt;/param&gt;
-		/// &lt;param name=&quot;minColumnInclusive&quot;&gt;
-		///    if set to &lt;c&gt;true&lt;/c&gt; &lt;paramref name=&quot;minColumn&quot; /&gt; is inclusive. The default is true.
-		/// &lt;/param&gt;
-		/// &lt;param name=&quot;maxColumnInclusive&quot;&gt;
-		///    if set to &lt;c&gt;true&lt;/c&gt; &lt;paramref name=&quot;maxColumn&quot; /&gt; is inclusive. The default is true.
-		/// &lt;/param&gt;
-		public ColumnRangeFilter(string minColumn, string maxColumn, bool minColumnInclusive = true, bool maxColumnInclusive = true)
-		{
-			_minColumn = minColumn;
-			_maxColumn = maxColumn;
-			_minColumnInclusive = minColumnInclusive;
-			_maxColumnInclusive = maxColumnInclusive;
-		}
-
-		/// &lt;summary&gt;
-		/// Converts the filter to its JSON representation.
+		///    Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
 		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
 		public override JObject ConvertToJson(ICodec codec)
 		{
 			JObject json = base.ConvertToJson(codec);
 
-			json[_minColumnPropertyName] = string.IsNullOrEmpty(_minColumn) ? null : new JValue(codec.Encode(_minColumn));
-			json[_maxColumnPropertyName] = string.IsNullOrEmpty(_maxColumn) ? null : new JValue(codec.Encode(_maxColumn));
-			json[_minColumnInclusivePropertyName] = _minColumnInclusive;
-			json[_maxColumnInclusivePropertyName] = _maxColumnInclusive;
+			json[_valuePropertyName] = GetValueJToken(codec);
 
 			return json;
 		}
+
+		/// &lt;summary&gt;
+		///    Gets the token to use as the value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		protected abstract JToken GetValueJToken(ICodec codec);
 	}
 }</pre></code><script type="text/javascript">
 			applyranges('src34', RANGES_34)

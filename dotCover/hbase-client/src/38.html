@@ -4,9 +4,33 @@
 
 		</script><script type="text/javascript">
 			RANGES_38 = [
-   [34,3,34,106,'dcuc']
-, [34,107,34,108,'dcuc']
-, [34,108,34,109,'dcuc']
+   [52,3,52,4,'dcuc']
+, [53,4,55,52,'dcuc']
+, [56,3,56,4,'dcuc']
+, [63,3,63,4,'dcuc']
+, [64,4,64,51,'dcuc']
+, [65,4,65,22,'dcuc']
+, [65,23,65,35,'dcuc']
+, [66,3,66,4,'dcuc']
+, [69,3,69,4,'dcuc']
+, [71,4,71,5,'dcuc']
+, [72,5,72,58,'dcuc']
+, [73,5,73,6,'dcuc']
+, [74,6,74,53,'dcuc']
+, [75,6,75,69,'dcuc']
+, [75,139,75,142,'dcuc']
+, [78,5,78,29,'dcuc']
+, [80,4,80,9,'dcuc']
+, [81,4,81,5,'dcuc']
+, [82,5,82,29,'dcuc']
+, [84,3,84,4,'dcuc']
+, [39,3,42,45,'dcuc']
+, [44,108,45,6,'dcuc']
+, [75,69,75,102,'dcuc']
+, [75,119,75,139,'dcuc']
+, [42,45,42,76,'dcuc']
+, [43,43,43,69,'dcuc']
+, [44,54,44,108,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -31,19 +55,69 @@
 
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using System.Xml;
+using System.Xml.Linq;
+
+using RestSharp;
+
 namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    This filter is used to filter based on the column family.
+	/// Provides a default &lt;see cref=&quot;IErrorProvider&quot;/&gt;.
 	/// &lt;/summary&gt;
-	public class FamilyFilter : ComparisonScannerFilterBase
+	public class ErrorProvider : IErrorProvider
 	{
+		private readonly IDictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt; _cannedErrors
+			= new Dictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt;
+			{
+				{HttpStatusCode.BadRequest, response =&gt; new InvalidOperationException()},
+				{HttpStatusCode.NotFound, response =&gt; new KeyNotFoundException()},
+				{HttpStatusCode.InternalServerError, response =&gt; new ApplicationException(GetResponseContent(response))}
+			};
+
 		/// &lt;summary&gt;
-		///    Initializes a new instance of the &lt;see cref=&quot;FamilyFilter&quot; /&gt; class.
+		/// Creates an exception from the response.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;columnFamily&quot;&gt;The column family.&lt;/param&gt;
-		/// &lt;param name=&quot;comparison&quot;&gt;The comparison.&lt;/param&gt;
-		public FamilyFilter(string columnFamily, FilterComparisons comparison) : base(columnFamily, comparison) {}
+		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
+		public Exception CreateFromResponse(IRestResponse response)
+		{
+			return !_cannedErrors.ContainsKey(response.StatusCode)
+				? null
+				: _cannedErrors[response.StatusCode](response);
+		}
+
+		/// &lt;summary&gt;
+		/// Throws an exception from the response.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
+		public void ThrowFromResponse(IRestResponse response)
+		{
+			Exception error = CreateFromResponse(response);
+			if (error != null) throw error;
+		}
+
+		private static string GetResponseContent(IRestResponse response)
+		{
+			try
+			{
+				if (response.ContentType == MediaTypeNames.Text.Html)
+				{
+					var markup = XDocument.Parse(response.Content);
+					return string.Join(&quot; &quot;, markup.DescendantNodes().Where(node =&gt; node.NodeType == XmlNodeType.Text).Select(node =&gt; ((XText) node).Value));
+				}
+
+				return response.Content;
+			}
+			catch
+			{
+				return response.Content;
+			}
+		}
 	}
 }</pre></code><script type="text/javascript">
 			applyranges('src38', RANGES_38)

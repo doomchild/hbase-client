@@ -4,22 +4,24 @@
 
 		</script><script type="text/javascript">
 			RANGES_22 = [
-   [37,3,37,42,'dccv']
+   [35,3,35,39,'dccv']
+, [36,3,36,4,'dccv']
+, [37,4,37,23,'dccv']
 , [38,3,38,4,'dccv']
-, [39,4,39,19,'dccv']
-, [40,3,40,4,'dccv']
+, [42,3,42,4,'dccv']
+, [43,4,43,74,'dccv']
 , [44,3,44,4,'dccv']
-, [45,4,45,50,'dccv']
-, [46,3,46,4,'dccv']
+, [48,3,48,4,'dccv']
+, [49,4,49,67,'dccv']
 , [50,3,50,4,'dccv']
-, [51,4,51,106,'dccv']
-, [52,3,52,4,'dccv']
-, [56,3,56,4,'dccv']
-, [57,4,57,50,'dccv']
-, [58,3,58,4,'dccv']
-, [62,3,62,4,'dccv']
-, [63,4,63,97,'dccv']
-, [64,3,64,4,'dccv']
+, [54,3,54,4,'dccv']
+, [55,4,55,47,'dccv']
+, [56,4,56,30,'dccv']
+, [58,4,58,48,'dccv']
+, [59,3,59,4,'dccv']
+, [63,3,63,4,'dccv']
+, [64,4,64,60,'dccv']
+, [65,3,65,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -46,8 +48,6 @@
 
 using FluentAssertions;
 
-using HBase.Stargate.Client.Api;
-
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -55,37 +55,40 @@ using _specs.Models;
 namespace _specs.Steps
 {
 	[Binding]
-	public class ScannerSteps
+	public class Reading
 	{
-		private readonly HBaseContext _hBase;
+		private readonly HBaseContext _context;
 
-		public ScannerSteps(HBaseContext hBase)
+		public Reading(HBaseContext context)
 		{
-			_hBase = hBase;
+			_context = context;
 		}
 
-		[Then(@&quot;my scanner should have a resource set to &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void CheckScannerResource(string resource)
+		[When(@&quot;I read a single value using my identifier&quot;)]
+		public void ReadSingleValue()
 		{
-			_hBase.Scanner.Resource.Should().Be(resource);
+			_context.CellValue = _context.Stargate.ReadValue(_context.Identifier);
 		}
 
-		[Given(@&quot;I have a scanner for the &quot;&quot;(.*)&quot;&quot; table named &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void ObtainManualScanner(string tableName, string scannerId)
+		[When(@&quot;I read a row using my query&quot;)]
+		public void ReadRow()
 		{
-			_hBase.Scanner = new Scanner(string.Format(&quot;{0}/scanner/{1}&quot;, tableName, scannerId), _hBase.Stargate);
+			_context.CellSet = _context.Stargate.FindCells(_context.Query);
 		}
 
-		[When(@&quot;I delete the scanner&quot;)]
-		public void DeleteScanner()
+		[When(@&quot;I read a result from the scanner&quot;)]
+		public void ReadScanner()
 		{
-			_hBase.Stargate.DeleteScanner(_hBase.Scanner);
+			bool success = _context.Scanner.MoveNext();
+			success.Should().Be(true);
+
+			_context.CellSet = _context.Scanner.Current;
 		}
 
-		[When(@&quot;I create a scanner for the &quot;&quot;(.*)&quot;&quot; table&quot;)]
-		public void CreateScanner(string tableName)
+		[When(@&quot;I read the names of all tables&quot;)]
+		public void ReadTableNames()
 		{
-			_hBase.Scanner = _hBase.Stargate.CreateScanner(new ScannerOptions { TableName = tableName });
+			_context.TableNames = _context.Stargate.GetTableNames();
 		}
 	}
 }</pre></code><script type="text/javascript">

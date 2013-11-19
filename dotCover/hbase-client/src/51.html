@@ -4,13 +4,52 @@
 
 		</script><script type="text/javascript">
 			RANGES_51 = [
-   [40,3,40,4,'dcuc']
-, [41,4,41,45,'dcuc']
-, [42,4,42,68,'dcuc']
-, [42,89,42,91,'dcuc']
-, [43,4,43,16,'dcuc']
-, [44,3,44,4,'dcuc']
-, [42,68,42,89,'dcuc']
+   [45,3,45,54,'dccv']
+, [46,3,46,4,'dccv']
+, [47,4,47,41,'dccv']
+, [48,4,48,25,'dccv']
+, [49,4,49,24,'dccv']
+, [50,3,50,4,'dccv']
+, [92,3,92,4,'dccv']
+, [93,4,93,24,'dccv']
+, [95,4,95,45,'dccv']
+, [96,4,96,5,'dccv']
+, [97,5,97,25,'dccv']
+, [98,5,98,48,'dccv']
+, [99,4,99,5,'dccv']
+, [105,4,105,19,'dccv']
+, [106,4,106,27,'dccv']
+, [107,3,107,4,'dccv']
+, [136,3,136,4,'dccv']
+, [137,4,137,20,'dccv']
+, [141,3,141,4,'dccv']
+, [64,3,64,4,'dcuc']
+, [65,4,65,20,'dcuc']
+, [65,21,65,28,'dcuc']
+, [67,4,67,34,'dcuc']
+, [68,4,68,20,'dcuc']
+, [69,4,69,23,'dcuc']
+, [70,3,70,4,'dcuc']
+, [76,3,76,4,'dcuc']
+, [77,4,77,16,'dcuc']
+, [78,3,78,4,'dcuc']
+, [84,3,84,4,'dcuc']
+, [85,4,85,27,'dcuc']
+, [86,3,86,4,'dcuc']
+, [97,26,97,54,'dcuc']
+, [100,9,100,31,'dcuc']
+, [101,4,101,5,'dcuc']
+, [102,5,102,44,'dcuc']
+, [103,4,103,5,'dcuc']
+, [113,3,113,4,'dcuc']
+, [114,4,114,24,'dcuc']
+, [116,4,116,21,'dcuc']
+, [117,3,117,4,'dcuc']
+, [129,8,129,9,'dcuc']
+, [129,10,129,25,'dcuc']
+, [129,26,129,27,'dcuc']
+, [138,4,138,5,'dcuc']
+, [139,5,139,55,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -35,28 +74,125 @@
 
 #endregion
 
-using HBase.Stargate.Client.TypeConversion;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
-using Newtonsoft.Json.Linq;
+using HBase.Stargate.Client.Models;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Filter that returns only cells whose timestamp (version) is in the specified list of timestamps (versions).
+	///    Provides a standard implementation of the &lt;see cref=&quot;IScanner&quot; /&gt; interface.
 	/// &lt;/summary&gt;
-	public class TimestampsFilter : FilterListBase&lt;long&gt;
+	public class Scanner : IScanner
 	{
-		private const string _timestampsPropertyName = &quot;timestamps&quot;;
+		private readonly IList&lt;CellSet&gt; _cachedResults;
+		private readonly IStargate _stargate;
+		private int _resultIndex;
+		private bool _isDisposed;
 
 		/// &lt;summary&gt;
-		///    Converts the filter to its JSON representation.
+		///    Initializes a new instance of the &lt;see cref=&quot;Scanner&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
-		public override JObject ConvertToJson(ICodec codec)
+		/// &lt;param name=&quot;resource&quot;&gt;The resource.&lt;/param&gt;
+		/// &lt;param name=&quot;stargate&quot;&gt;The current Stargate.&lt;/param&gt;
+		public Scanner(string resource, IStargate stargate)
 		{
-			JObject json = base.ConvertToJson(codec);
-			json[_timestampsPropertyName] = ConvertToJsonArray(timestamp =&gt; new JValue(timestamp));
-			return json;
+			_cachedResults = new List&lt;CellSet&gt;();
+			_stargate = stargate;
+			Resource = resource;
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the resource.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The resource.
+		/// &lt;/value&gt;
+		public string Resource { get; private set; }
+
+		/// &lt;summary&gt;
+		///    Deletes this scanner and disables it to prevent future use.
+		/// &lt;/summary&gt;
+		public void Dispose()
+		{
+			if (_isDisposed) return;
+
+			_stargate.DeleteScanner(this);
+			Resource = null;
+			_isDisposed = true;
+		}
+
+		/// &lt;summary&gt;
+		///    Returns an enumerator that iterates through the collection.
+		/// &lt;/summary&gt;
+		public IEnumerator&lt;CellSet&gt; GetEnumerator()
+		{
+			return this;
+		}
+
+		/// &lt;summary&gt;
+		///    Returns an enumerator that iterates through a collection.
+		/// &lt;/summary&gt;
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		/// &lt;summary&gt;
+		///    Advances the enumerator to the next element of the collection.
+		/// &lt;/summary&gt;
+		public bool MoveNext()
+		{
+			AssertNotDisposed();
+
+			if (_resultIndex &gt;= _cachedResults.Count)
+			{
+				if (Current != null) _cachedResults.Add(Current);
+				Current = _stargate.GetScannerResult(this);
+			}
+			else if (_resultIndex &gt;= 0)
+			{
+				Current = _cachedResults[_resultIndex];
+			}
+
+			_resultIndex++;
+			return Current != null;
+		}
+
+		/// &lt;summary&gt;
+		///    Sets the enumerator to its initial position, which is before the first element in the collection.
+		/// &lt;/summary&gt;
+		public void Reset()
+		{
+			AssertNotDisposed();
+
+			_resultIndex = 0;
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the element in the collection at the current position of the enumerator.
+		/// &lt;/summary&gt;
+		public CellSet Current { get; private set; }
+
+		/// &lt;summary&gt;
+		///    Gets the element in the collection at the current position of the enumerator.
+		/// &lt;/summary&gt;
+		object IEnumerator.Current
+		{
+			get { return Current; }
+		}
+
+		/// &lt;summary&gt;
+		///    Asserts that this instance is not disposed.
+		/// &lt;/summary&gt;
+		private void AssertNotDisposed()
+		{
+			if (_isDisposed)
+			{
+				throw new ObjectDisposedException(GetType().Name);
+			}
 		}
 	}
 }</pre></code><script type="text/javascript">

@@ -4,27 +4,16 @@
 
 		</script><script type="text/javascript">
 			RANGES_56 = [
-   [46,8,46,9,'dcuc']
-, [46,10,46,44,'dcuc']
-, [46,45,46,46,'dcuc']
-, [47,8,47,9,'dcuc']
-, [47,10,47,35,'dcuc']
-, [47,36,47,37,'dcuc']
-, [59,8,59,9,'dcuc']
-, [59,10,59,48,'dcuc']
-, [59,49,59,50,'dcuc']
-, [60,8,60,9,'dcuc']
-, [60,10,60,39,'dcuc']
-, [60,40,60,41,'dcuc']
-, [72,8,72,9,'dcuc']
-, [72,10,72,47,'dcuc']
-, [72,48,72,49,'dcuc']
-, [73,8,73,9,'dcuc']
-, [73,10,73,39,'dcuc']
-, [73,40,73,41,'dcuc']
-, [81,3,81,4,'dcuc']
-, [82,4,92,6,'dcuc']
-, [93,3,93,4,'dcuc']
+   [35,3,35,4,'dcuc']
+, [36,4,36,38,'dcuc']
+, [37,3,37,4,'dcuc']
+, [46,3,46,4,'dcuc']
+, [47,4,47,53,'dcuc']
+, [49,4,49,113,'dcuc']
+, [50,3,50,4,'dcuc']
+, [59,3,59,4,'dcuc']
+, [60,4,60,17,'dcuc']
+, [61,3,61,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -51,75 +40,43 @@
 
 using System.Configuration;
 
-using HBase.Stargate.Client.Models;
-
 namespace HBase.Stargate.Client.Config
 {
 	/// &lt;summary&gt;
-	///    Provides an XML configuration-based &lt;see cref=&quot;Identifier&quot; /&gt;.
+	///    Provides a collection of &lt;see cref=&quot;ConfigCellDescriptor&quot; /&gt; elements.
 	/// &lt;/summary&gt;
-	public class ConfigIdentifier : ConfigDescriptor
+	public class ConfigCellDescriptorCollection : ConfigurationElementCollection
 	{
-		private const string _columName = &quot;column&quot;;
-		private const string _qualifierName = &quot;qualifier&quot;;
-		private const string _timestampName = &quot;timestamp&quot;;
-
 		/// &lt;summary&gt;
-		///    Gets or sets the column.
+		///    Creates a new &lt;see cref=&quot;ConfigCellDescriptor&quot; /&gt;.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The column.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_columName, IsRequired = true)]
-		public string Column
+		protected override ConfigurationElement CreateNewElement()
 		{
-			get { return this[_columName] as string; }
-			set { this[_columName] = value; }
+			return new ConfigCellDescriptor();
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the qualifier.
+		///    Gets the element key for a specified configuration element.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The qualifier.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_qualifierName, IsRequired = false)]
-		public string Qualifier
+		/// &lt;param name=&quot;element&quot;&gt;
+		///    The &lt;see cref=&quot;ConfigurationElement&quot; /&gt; to return the key for.
+		/// &lt;/param&gt;
+		protected override object GetElementKey(ConfigurationElement element)
 		{
-			get { return this[_qualifierName] as string; }
-			set { this[_qualifierName] = value; }
+			var descriptor = element as ConfigCellDescriptor;
+
+			return descriptor == null ? new object() : string.Format(&quot;{0}:{1}&quot;, descriptor.Column, descriptor.Qualifier);
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the timestamp.
+		///    Indicates whether the &lt;see cref=&quot;T:System.Configuration.ConfigurationElementCollection&quot; /&gt; object is read only.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The timestamp.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_timestampName, IsRequired = false)]
-		public long? Timestamp
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Configuration.ConfigurationElementCollection&quot; /&gt; object is read only; otherwise, false.
+		/// &lt;/returns&gt;
+		public override bool IsReadOnly()
 		{
-			get { return this[_timestampName] as long?; }
-			set { this[_timestampName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Converts the config-based identifier to a normal one.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
-		public static implicit operator Identifier(ConfigIdentifier identifier)
-		{
-			return new Identifier
-			{
-				Table = identifier.Table,
-				Row = identifier.Row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = identifier.Column,
-					Qualifier = identifier.Qualifier
-				},
-				Timestamp = identifier.Timestamp
-			};
+			return false;
 		}
 	}
 }</pre></code><script type="text/javascript">

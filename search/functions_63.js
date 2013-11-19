@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['candescribecell',['CanDescribeCell',['../class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_extensions.html#afc6b08a570720ed0afc606b9728c25a4',1,'HBase::Stargate::Client::Models::Extensions']]],
+  ['candescriberow',['CanDescribeRow',['../class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_extensions.html#aea382d203b63341320f1e35219c1cc1d',1,'HBase::Stargate::Client::Models::Extensions']]],
+  ['candescribetable',['CanDescribeTable',['../class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_extensions.html#aeb23408ea09bda2f2000fbded15846be',1,'HBase::Stargate::Client::Models::Extensions']]],
   ['cell',['Cell',['../class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell.html#adf6aa125535cdc7f9540f6054795ad59',1,'HBase::Stargate::Client::Models::Cell']]],
   ['cellset',['CellSet',['../class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html#a6ef4007f0db85bc7e1549d28f0f3dfc1',1,'HBase.Stargate.Client.Models.CellSet.CellSet()'],['../class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_set.html#aa5cc06ccb35c89b33eaff8d4444b4ecc',1,'HBase.Stargate.Client.Models.CellSet.CellSet(IEnumerable&lt; Cell &gt; cells)']]],
   ['clear',['Clear',['../class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_filter_list_base_3_01_t_value_01_4.html#ae4cff3d835a54c46ca4f3dc7af16bb3e',1,'HBase::Stargate::Client::Api::FilterListBase&lt; TValue &gt;']]],

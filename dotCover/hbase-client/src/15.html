@@ -4,48 +4,18 @@
 
 		</script><script type="text/javascript">
 			RANGES_15 = [
-   [47,3,47,96,'dccv']
-, [48,3,48,4,'dccv']
-, [49,4,49,19,'dccv']
-, [50,4,50,27,'dccv']
-, [51,4,51,27,'dccv']
-, [52,3,52,4,'dccv']
-, [56,3,56,4,'dccv']
-, [57,4,57,43,'dccv']
-, [58,3,58,4,'dccv']
-, [62,3,62,4,'dccv']
-, [63,4,63,35,'dccv']
-, [64,3,64,4,'dccv']
-, [68,3,68,4,'dccv']
-, [69,4,69,119,'dccv']
-, [70,4,70,48,'dccv']
-, [71,3,71,4,'dccv']
-, [75,3,75,4,'dccv']
-, [76,4,76,52,'dccv']
-, [77,3,77,4,'dccv']
-, [81,3,81,4,'dccv']
-, [82,4,82,43,'dccv']
-, [83,3,83,4,'dccv']
-, [87,3,87,4,'dccv']
-, [88,4,88,46,'dccv']
-, [89,3,89,4,'dccv']
-, [93,3,93,4,'dccv']
-, [94,4,94,67,'dccv']
-, [95,4,95,72,'dccv']
-, [96,4,96,83,'dccv']
-, [97,4,97,73,'dccv']
-, [98,3,98,4,'dccv']
-, [102,3,102,4,'dccv']
-, [103,4,103,72,'dccv']
-, [104,4,104,83,'dccv']
-, [105,4,108,7,'dccv']
-, [109,3,109,4,'dccv']
+   [32,3,32,4,'dccv']
+, [33,4,33,25,'dccv']
+, [34,51,34,53,'dccv']
+, [35,3,35,4,'dccv']
+, [28,3,28,96,'dccv']
+, [29,3,29,131,'dccv']
+, [33,25,33,51,'dccv']
+, [34,22,34,51,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src15" class="dotCoverSource"><pre>#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+		<code id="src15" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -62,95 +32,23 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
+using System.Resources;
 
-using System.Collections.Generic;
-using System.Net;
+using Patterns.ExceptionHandling;
 
-using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.Models;
+using _specs.Properties;
 
-using Moq;
-
-using Patterns.Testing.Moq;
-
-using RestSharp;
-
-using TechTalk.SpecFlow;
-
-using _specs.Models;
-
-namespace _specs.Steps
+namespace _specs.Models
 {
-	[Binding]
-	public class Administration
+	public class ResourceContext : IResourceContext
 	{
-		private readonly IMoqContainer _container;
-		private readonly HBaseContext _hBase;
-		private readonly ResourceContext _resources;
+		private static readonly ResourceManager _resources = new ResourceManager(typeof (Resources));
+		private static readonly ResourceManager _appResources = new ResourceManager(typeof(HBase.Stargate.Client.Properties.Resources));
 
-		public Administration(HBaseContext hBase, ResourceContext resources, IMoqContainer container)
+		public string GetString(string name)
 		{
-			_hBase = hBase;
-			_resources = resources;
-			_container = container;
-		}
-
-		[Given(@&quot;I have created a new table schema&quot;)]
-		public void CreateTableSchema()
-		{
-			_hBase.TableSchema = new TableSchema();
-		}
-
-		[Given(@&quot;I have set my table schema&#39;s name to &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void SetTableSchemaName(string name)
-		{
-			_hBase.TableSchema.Name = name;
-		}
-
-		[Given(@&quot;I have added a column named &quot;&quot;(.*)&quot;&quot; to my table schema&quot;)]
-		public void AddColumnSchema(string name)
-		{
-			List&lt;ColumnSchema&gt; columns = _hBase.TableSchema.Columns ?? (_hBase.TableSchema.Columns = new List&lt;ColumnSchema&gt;());
-			columns.Add(new ColumnSchema {Name = name});
-		}
-
-		[When(@&quot;I create a table using my table schema&quot;)]
-		public void CreateTableUsingSchema()
-		{
-			_hBase.Stargate.CreateTable(_hBase.TableSchema);
-		}
-
-		[When(@&quot;I delete the &quot;&quot;(.*)&quot;&quot; table&quot;)]
-		public void DeleteTable(string tableName)
-		{
-			_hBase.Stargate.DeleteTable(tableName);
-		}
-
-		[When(@&quot;I get the schema of the &quot;&quot;(.*)&quot;&quot; table&quot;)]
-		public void GetTableSchema(string tableName)
-		{
-			_hBase.Stargate.GetTableSchema(tableName);
-		}
-
-		[Given(@&quot;I will always get a response with a status of &quot;&quot;(.*)&quot;&quot; and content equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void SetupFakeResponseWithContent(HttpStatusCode responseStatus, string responseContentResource)
-		{
-			string content = _resources.GetString(responseContentResource);
-			Mock&lt;IRestResponse&gt; responseMock = _container.Mock&lt;IRestResponse&gt;();
-			responseMock.SetupGet(response =&gt; response.StatusCode).Returns(responseStatus);
-			responseMock.SetupGet(response =&gt; response.Content).Returns(content);
-		}
-
-		[Given(@&quot;I will always get a response with a status of &quot;&quot;(.*)&quot;&quot; and a location header of &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void SetupFakeResponseWithLocation(HttpStatusCode responseStatus, string location)
-		{
-			Mock&lt;IRestResponse&gt; responseMock = _container.Mock&lt;IRestResponse&gt;();
-			responseMock.SetupGet(response =&gt; response.StatusCode).Returns(responseStatus);
-			responseMock.SetupGet(response =&gt; response.Headers).Returns(new List&lt;Parameter&gt;
-			{
-				new Parameter {Name = RestConstants.LocationHeader, Type = ParameterType.HttpHeader, Value = location}
-			});
+			return Try.Get(() =&gt; _resources.GetString(name))
+				?? Try.Get(() =&gt; _appResources.GetString(name));
 		}
 	}
 }</pre></code><script type="text/javascript">

@@ -4,30 +4,27 @@
 
 		</script><script type="text/javascript">
 			RANGES_60 = [
-   [45,3,45,47,'dcuc']
-, [46,3,46,4,'dcuc']
-, [47,4,47,19,'dcuc']
-, [48,3,48,4,'dcuc']
-, [56,3,56,4,'dcuc']
-, [57,4,57,41,'dcuc']
-, [59,4,59,48,'dcuc']
-, [60,4,60,5,'dcuc']
-, [61,5,61,77,'dcuc']
-, [62,4,62,5,'dcuc']
-, [64,4,64,47,'dcuc']
-, [65,4,65,5,'dcuc']
-, [66,5,66,75,'dcuc']
-, [67,4,67,5,'dcuc']
-, [69,4,69,35,'dcuc']
-, [70,4,70,5,'dcuc']
-, [71,5,71,64,'dcuc']
-, [72,4,72,5,'dcuc']
-, [74,4,74,31,'dcuc']
-, [75,4,75,5,'dcuc']
-, [76,5,79,8,'dcuc']
-, [80,4,80,5,'dcuc']
-, [82,4,82,26,'dcuc']
+   [46,8,46,9,'dcuc']
+, [46,10,46,48,'dcuc']
+, [46,49,46,50,'dcuc']
+, [47,8,47,9,'dcuc']
+, [47,10,47,39,'dcuc']
+, [47,40,47,41,'dcuc']
+, [59,8,59,9,'dcuc']
+, [59,10,59,50,'dcuc']
+, [59,51,59,52,'dcuc']
+, [60,8,60,9,'dcuc']
+, [60,10,60,41,'dcuc']
+, [60,42,60,43,'dcuc']
+, [72,8,72,9,'dcuc']
+, [72,10,72,50,'dcuc']
+, [72,51,72,52,'dcuc']
+, [73,8,73,9,'dcuc']
+, [73,10,73,41,'dcuc']
+, [73,42,73,43,'dcuc']
 , [83,3,83,4,'dcuc']
+, [84,4,84,17,'dcuc']
+, [85,3,85,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -52,67 +49,69 @@
 
 #endregion
 
-using System.Xml.Linq;
+using System.Configuration;
 
 using HBase.Stargate.Client.Api;
 
-namespace HBase.Stargate.Client.TypeConversion
+namespace HBase.Stargate.Client.Config
 {
 	/// &lt;summary&gt;
-	///    Provides a standard implementation of the
-	///    &lt;see cref=&quot;IScannerOptionsConverter&quot; /&gt; interface.
+	///    Provides an XML configuration-based implementation of &lt;see cref=&quot;IStargateOptions&quot; /&gt;.
 	/// &lt;/summary&gt;
-	public class ScannerOptionsConverter : IScannerOptionsConverter
+	public class StargateConfigOptions : ConfigurationElement, IStargateOptions
 	{
-		private const string _scannerName = &quot;Scanner&quot;;
-		private const string _startRowName = &quot;startRow&quot;;
-		private const string _stopRowName = &quot;stopRow&quot;;
-		private const string _batchSizeName = &quot;batch&quot;;
-		private const string _filterName = &quot;filter&quot;;
-		private readonly ICodec _codec;
+		private const string _serverUrlName = &quot;serverUrl&quot;;
+		private const string _contentTypeName = &quot;contentType&quot;;
+		private const string _falseRowKeyName = &quot;falseRowKey&quot;;
 
 		/// &lt;summary&gt;
-		///    Initializes a new instance of the &lt;see cref=&quot;ScannerOptionsConverter&quot; /&gt; class.
+		///    Gets or sets the server URL.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;codec&quot;&gt;The codec to use while encoding values.&lt;/param&gt;
-		public ScannerOptionsConverter(ICodec codec)
+		/// &lt;value&gt;
+		///    The server URL.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_serverUrlName, IsRequired = true)]
+		public string ServerUrl
 		{
-			_codec = codec;
+			get { return this[_serverUrlName] as string; }
+			set { this[_serverUrlName] = value; }
 		}
 
 		/// &lt;summary&gt;
-		///    Converts the specified options to an XML document with
-		///    filter options as embedded JSON.
+		///    Gets or sets the type of the content.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
-		public string Convert(ScannerOptions options)
+		/// &lt;value&gt;
+		///    The type of the content.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_contentTypeName, IsRequired = false, DefaultValue = Api.Stargate.DefaultContentType)]
+		public string ContentType
 		{
-			var xml = new XElement(_scannerName);
+			get { return this[_contentTypeName] as string; }
+			set { this[_contentTypeName] = value; }
+		}
 
-			if (!string.IsNullOrEmpty(options.StartRow))
-			{
-				xml.Add(new XAttribute(_startRowName, _codec.Encode(options.StartRow)));
-			}
+		/// &lt;summary&gt;
+		///    Gets or sets the false row key.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The false row key.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_falseRowKeyName, IsRequired = false, DefaultValue = Api.Stargate.DefaultFalseRowKey)]
+		public string FalseRowKey
+		{
+			get { return this[_falseRowKeyName] as string; }
+			set { this[_falseRowKeyName] = value; }
+		}
 
-			if (!string.IsNullOrEmpty(options.StopRow))
-			{
-				xml.Add(new XAttribute(_stopRowName, _codec.Encode(options.StopRow)));
-			}
-
-			if (options.BatchSize.HasValue)
-			{
-				xml.Add(new XAttribute(_batchSizeName, options.BatchSize));
-			}
-
-			if (options.Filter != null)
-			{
-				xml.Add(new XElement(_filterName)
-				{
-					Value = options.Filter.ConvertToJson(_codec).ToString()
-				});
-			}
-
-			return xml.ToString();
+		/// &lt;summary&gt;
+		///    Gets a value indicating whether the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only; otherwise, false.
+		/// &lt;/returns&gt;
+		public override bool IsReadOnly()
+		{
+			return false;
 		}
 	}
 }</pre></code><script type="text/javascript">

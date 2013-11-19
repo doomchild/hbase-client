@@ -4,24 +4,21 @@
 
 		</script><script type="text/javascript">
 			RANGES_57 = [
-   [46,8,46,9,'dcuc']
-, [46,10,46,48,'dcuc']
-, [46,49,46,50,'dcuc']
-, [47,8,47,9,'dcuc']
-, [47,10,47,39,'dcuc']
-, [47,40,47,41,'dcuc']
+   [45,8,45,9,'dcuc']
+, [45,10,45,44,'dcuc']
+, [45,45,45,46,'dcuc']
+, [46,8,46,9,'dcuc']
+, [46,10,46,35,'dcuc']
+, [46,36,46,37,'dcuc']
+, [58,8,58,9,'dcuc']
+, [58,10,58,42,'dcuc']
+, [58,43,58,44,'dcuc']
 , [59,8,59,9,'dcuc']
-, [59,10,59,50,'dcuc']
-, [59,51,59,52,'dcuc']
-, [60,8,60,9,'dcuc']
-, [60,10,60,41,'dcuc']
-, [60,42,60,43,'dcuc']
-, [72,8,72,9,'dcuc']
-, [72,10,72,50,'dcuc']
-, [72,51,72,52,'dcuc']
-, [73,8,73,9,'dcuc']
-, [73,10,73,41,'dcuc']
-, [73,42,73,43,'dcuc']
+, [59,10,59,33,'dcuc']
+, [59,34,59,35,'dcuc']
+, [69,3,69,4,'dcuc']
+, [70,4,70,17,'dcuc']
+, [71,3,71,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -48,56 +45,53 @@
 
 using System.Configuration;
 
-using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.Models;
 
 namespace HBase.Stargate.Client.Config
 {
 	/// &lt;summary&gt;
-	///    Provides an XML configuration-based implementation of &lt;see cref=&quot;IStargateOptions&quot; /&gt;.
+	///    Provides a base type for XML configuration-based &lt;see cref=&quot;HBaseDescriptor&quot; /&gt; implementations.
 	/// &lt;/summary&gt;
-	public class StargateConfigOptions : ConfigurationElement, IStargateOptions
+	public abstract class ConfigDescriptor : ConfigurationElement
 	{
-		private const string _serverUrlName = &quot;serverUrl&quot;;
-		private const string _contentTypeName = &quot;contentType&quot;;
-		private const string _falseRowKeyName = &quot;falseRowKey&quot;;
+		private const string _tableName = &quot;table&quot;;
+		private const string _rowName = &quot;row&quot;;
 
 		/// &lt;summary&gt;
-		///    Gets or sets the server URL.
+		///    Gets or sets the table.
 		/// &lt;/summary&gt;
 		/// &lt;value&gt;
-		///    The server URL.
+		///    The table.
 		/// &lt;/value&gt;
-		[ConfigurationProperty(_serverUrlName, IsRequired = true)]
-		public string ServerUrl
+		[ConfigurationProperty(_tableName, IsRequired = true)]
+		public string Table
 		{
-			get { return this[_serverUrlName] as string; }
-			set { this[_serverUrlName] = value; }
+			get { return this[_tableName] as string; }
+			set { this[_tableName] = value; }
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the type of the content.
+		///    Gets or sets the row.
 		/// &lt;/summary&gt;
 		/// &lt;value&gt;
-		///    The type of the content.
+		///    The row.
 		/// &lt;/value&gt;
-		[ConfigurationProperty(_contentTypeName, IsRequired = false, DefaultValue = Api.Stargate.DefaultContentType)]
-		public string ContentType
+		[ConfigurationProperty(_rowName, IsRequired = true)]
+		public string Row
 		{
-			get { return this[_contentTypeName] as string; }
-			set { this[_contentTypeName] = value; }
+			get { return this[_rowName] as string; }
+			set { this[_rowName] = value; }
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the false row key.
+		///    Gets a value indicating whether the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The false row key.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_falseRowKeyName, IsRequired = false, DefaultValue = Api.Stargate.DefaultFalseRowKey)]
-		public string FalseRowKey
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only; otherwise, false.
+		/// &lt;/returns&gt;
+		public override bool IsReadOnly()
 		{
-			get { return this[_falseRowKeyName] as string; }
-			set { this[_falseRowKeyName] = value; }
+			return false;
 		}
 	}
 }</pre></code><script type="text/javascript">

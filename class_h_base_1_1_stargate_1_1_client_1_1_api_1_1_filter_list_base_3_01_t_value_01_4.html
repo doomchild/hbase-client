@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hbase-client
-   &#160;<span id="projectnumber">1.0-beta.2</span>
+   &#160;<span id="projectnumber">1.0-beta.4</span>
    </div>
    <div id="projectbrief">A simple set of .NET client libraries for HBase</div>
   </td>
@@ -166,7 +166,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1ad650ec159b21a5c1d0e841e9482d7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the elements in the entire T:System.Collections.Generic.List`1 using the default comparer.  <a href="#a1ad650ec159b21a5c1d0e841e9482d7a">More...</a><br/></td></tr>
 <tr class="separator:a1ad650ec159b21a5c1d0e841e9482d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4303f6fdc0448c8791a0dc543bffcd80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_filter_list_base_3_01_t_value_01_4.html#a4303f6fdc0448c8791a0dc543bffcd80">Sort</a> (Comparison&lt; TValue &gt; comparison)</td></tr>
-<tr class="memdesc:a4303f6fdc0448c8791a0dc543bffcd80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the elements in the entire T:System.Collections.Generic.List`1 using the specified T:System.Comparison`1 <a href="#a4303f6fdc0448c8791a0dc543bffcd80">More...</a><br/></td></tr>
+<tr class="memdesc:a4303f6fdc0448c8791a0dc543bffcd80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the elements in the entire T:System.Collections.Generic.List`1 using the specified T:System.Comparison`1.  <a href="#a4303f6fdc0448c8791a0dc543bffcd80">More...</a><br/></td></tr>
 <tr class="separator:a4303f6fdc0448c8791a0dc543bffcd80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbe58e06d8c34e12fd86ba2abff77c0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_filter_list_base_3_01_t_value_01_4.html#acbe58e06d8c34e12fd86ba2abff77c0c">Sort</a> (IComparer&lt; TValue &gt; comparer)</td></tr>
 <tr class="memdesc:acbe58e06d8c34e12fd86ba2abff77c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorts the elements in the entire T:System.Collections.Generic.List`1 using the specified comparer.  <a href="#acbe58e06d8c34e12fd86ba2abff77c0c">More...</a><br/></td></tr>
@@ -530,7 +530,7 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if <em>item</em>  was successfully removed from the T:System.Collections.Generic.ICollection`1 ; otherwise, false. This method also returns false if <em>item</em>  is not found in the original T:System.Collections.Generic.ICollection`1. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if <em>item</em>  was successfully removed from the T:System.Collections.Generic.ICollection`1; otherwise, false. This method also returns false if <em>item</em>  is not found in the original T:System.Collections.Generic.ICollection`1. </dd></dl>
 
 </div>
 </div>
@@ -574,7 +574,7 @@ Properties</h2></td></tr>
 <p>Sorts the elements in the entire T:System.Collections.Generic.List`1 using the default comparer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">T:System.InvalidOperationException</td><td>The default comparer P:System.Collections.Generic.Comparer`1.Default cannot find an implementation of the T:System.IComparable`1 generic interface or the T:System.IComparable interface for type <em>TValue</em> </td></tr>
+    <tr><td class="paramname">T:System.InvalidOperationException</td><td>The default comparer P:System.Collections.Generic.Comparer`1.Default cannot find an implementation of the T:System.IComparable`1 generic interface or the T:System.IComparable interface for type <em>TValue</em> . </td></tr>
   </table>
   </dd>
 </dl>
@@ -595,7 +595,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sorts the elements in the entire T:System.Collections.Generic.List`1 using the specified T:System.Comparison`1</p>
+<p>Sorts the elements in the entire T:System.Collections.Generic.List`1 using the specified T:System.Comparison`1. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">comparison</td><td>The T:System.Comparison`1 to use when comparing elements. </td></tr>
@@ -629,13 +629,13 @@ Properties</h2></td></tr>
 <p>Sorts the elements in the entire T:System.Collections.Generic.List`1 using the specified comparer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">comparer</td><td>The T:System.Collections.Generic.IComparer`1 implementation to use when comparing elements, or null to use the default comparer P:System.Collections.Generic.Comparer`1.Default</td></tr>
+    <tr><td class="paramname">comparer</td><td>The T:System.Collections.Generic.IComparer`1 implementation to use when comparing elements, or null to use the default comparer P:System.Collections.Generic.Comparer`1.Default. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">T:System.InvalidOperationException</td><td><em>comparer</em>  is null, and the default comparer P:System.Collections.Generic.Comparer`1.Default cannot find implementation of the T:System.IComparable`1 generic interface or the T:System.IComparable interface for type <em>TValue</em> </td></tr>
+    <tr><td class="paramname">T:System.InvalidOperationException</td><td><em>comparer</em>  is null, and the default comparer P:System.Collections.Generic.Comparer`1.Default cannot find implementation of the T:System.IComparable`1 generic interface or the T:System.IComparable interface for type <em>TValue</em> . </td></tr>
     <tr><td class="paramname">T:System.ArgumentException</td><td>The implementation of <em>comparer</em>  caused an error during the sort. For example, <em>comparer</em>  might not return 0 when comparing an item with itself. </td></tr>
   </table>
   </dd>
@@ -678,7 +678,7 @@ Properties</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">index</td><td>The zero-based starting index of the range to sort.</td></tr>
     <tr><td class="paramname">count</td><td>The length of the range to sort.</td></tr>
-    <tr><td class="paramname">comparer</td><td>The T:System.Collections.Generic.IComparer`1 implementation to use when comparing elements, or null to use the default comparer P:System.Collections.Generic.Comparer`1.Default</td></tr>
+    <tr><td class="paramname">comparer</td><td>The T:System.Collections.Generic.IComparer`1 implementation to use when comparing elements, or null to use the default comparer P:System.Collections.Generic.Comparer`1.Default. </td></tr>
   </table>
   </dd>
 </dl>
@@ -686,7 +686,7 @@ Properties</h2></td></tr>
   <table class="exception">
     <tr><td class="paramname">T:System.ArgumentOutOfRangeException</td><td><em>index</em>  is less than 0.-or-<em>count</em>  is less than 0. </td></tr>
     <tr><td class="paramname">T:System.ArgumentException</td><td><em>index</em>  and <em>count</em>  do not specify a valid range in the T:System.Collections.Generic.List`1 .-or-The implementation of <em>comparer</em>  caused an error during the sort. For example, <em>comparer</em>  might not return 0 when comparing an item with itself. </td></tr>
-    <tr><td class="paramname">T:System.InvalidOperationException</td><td><em>comparer</em>  is null, and the default comparer P:System.Collections.Generic.Comparer`1.Default cannot find implementation of the T:System.IComparable`1 generic interface or the T:System.IComparable interface for type <em>TValue</em> </td></tr>
+    <tr><td class="paramname">T:System.InvalidOperationException</td><td><em>comparer</em>  is null, and the default comparer P:System.Collections.Generic.Comparer`1.Default cannot find implementation of the T:System.IComparable`1 generic interface or the T:System.IComparable interface for type <em>TValue</em> . </td></tr>
   </table>
   </dd>
 </dl>
@@ -775,7 +775,7 @@ Properties</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_h_base.html">HBase</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate.html">Stargate</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client.html">Client</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client_1_1_api.html">Api</a></li><li class="navelem"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_filter_list_base_3_01_t_value_01_4.html">FilterListBase< TValue ></a></li>
-    <li class="footer">Generated on Tue Oct 29 2013 10:06:12 for hbase-client by
+    <li class="footer">Generated on Tue Nov 19 2013 10:50:04 for hbase-client by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

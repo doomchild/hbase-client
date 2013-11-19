@@ -4,21 +4,19 @@
 
 		</script><script type="text/javascript">
 			RANGES_52 = [
-   [45,8,45,9,'dcuc']
-, [45,10,45,44,'dcuc']
-, [45,45,45,46,'dcuc']
-, [46,8,46,9,'dcuc']
-, [46,10,46,35,'dcuc']
-, [46,36,46,37,'dcuc']
-, [58,8,58,9,'dcuc']
-, [58,10,58,48,'dcuc']
-, [58,49,58,50,'dcuc']
-, [59,8,59,9,'dcuc']
-, [59,10,59,39,'dcuc']
-, [59,40,59,41,'dcuc']
-, [67,3,67,4,'dcuc']
-, [68,4,72,6,'dcuc']
-, [73,3,73,4,'dcuc']
+   [50,3,51,29,'dcuc']
+, [52,3,52,4,'dcuc']
+, [53,4,53,21,'dcuc']
+, [54,4,54,27,'dcuc']
+, [55,4,55,35,'dcuc']
+, [56,3,56,4,'dcuc']
+, [63,3,63,4,'dcuc']
+, [64,4,64,45,'dcuc']
+, [65,4,65,66,'dcuc']
+, [66,4,66,72,'dcuc']
+, [67,4,67,66,'dcuc']
+, [68,4,68,16,'dcuc']
+, [69,3,69,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -43,57 +41,53 @@
 
 #endregion
 
-using System.Configuration;
+using HBase.Stargate.Client.TypeConversion;
 
-using HBase.Stargate.Client.Models;
+using Newtonsoft.Json.Linq;
 
-namespace HBase.Stargate.Client.Config
+namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	///    Provides an XML configuration-based implementation &lt;see cref=&quot;ConfigurationElement&quot; /&gt;.
+	///    This filter is used to filter cells based on value.
 	/// &lt;/summary&gt;
-	public class ConfigCellDescriptor : ConfigurationElement
+	public class SingleColumnValueFilter : ComparisonScannerFilterBase
 	{
-		private const string _columName = &quot;column&quot;;
-		private const string _qualifierName = &quot;qualifier&quot;;
+		private const string _familyPropertyName = &quot;family&quot;;
+		private const string _qualifierPropertyName = &quot;qualifier&quot;;
+		private const string _latestVersionPropertyName = &quot;latestVersion&quot;;
+		private readonly string _family;
+		private readonly bool _latestVersion;
+		private readonly string _qualifier;
 
 		/// &lt;summary&gt;
-		///    Gets or sets the column.
+		///    Initializes a new instance of the &lt;see cref=&quot;SingleColumnValueFilter&quot; /&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The column.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_columName, IsRequired = true)]
-		public string Column
+		/// &lt;param name=&quot;family&quot;&gt;The family.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;value&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;comparison&quot;&gt;The comparison.&lt;/param&gt;
+		/// &lt;param name=&quot;latestVersion&quot;&gt;
+		///    if set to &lt;c&gt;true&lt;/c&gt;, only return the latest version.
+		/// &lt;/param&gt;
+		public SingleColumnValueFilter(string family, string qualifier, string value, FilterComparisons comparison, bool latestVersion = true)
+			: base(value, comparison)
 		{
-			get { return this[_columName] as string; }
-			set { this[_columName] = value; }
+			_family = family;
+			_qualifier = qualifier;
+			_latestVersion = latestVersion;
 		}
 
 		/// &lt;summary&gt;
-		///    Gets or sets the qualifier.
+		/// Converts the filter to its JSON representation.
 		/// &lt;/summary&gt;
-		/// &lt;value&gt;
-		///    The qualifier.
-		/// &lt;/value&gt;
-		[ConfigurationProperty(_qualifierName, IsRequired = false)]
-		public string Qualifier
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
 		{
-			get { return this[_qualifierName] as string; }
-			set { this[_qualifierName] = value; }
-		}
-
-		/// &lt;summary&gt;
-		///    Converts the config-based cell descriptor to a normal one.
-		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;descriptor&quot;&gt;The cell descriptor.&lt;/param&gt;
-		public static implicit operator HBaseCellDescriptor(ConfigCellDescriptor descriptor)
-		{
-			return new HBaseCellDescriptor
-			{
-				Column = descriptor.Column,
-				Qualifier = descriptor.Qualifier
-			};
+			JObject json = base.ConvertToJson(codec);
+			json[_familyPropertyName] = new JValue(codec.Encode(_family));
+			json[_qualifierPropertyName] = new JValue(codec.Encode(_qualifier));
+			json[_latestVersionPropertyName] = new JValue(_latestVersion);
+			return json;
 		}
 	}
 }</pre></code><script type="text/javascript">

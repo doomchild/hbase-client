@@ -4,85 +4,32 @@
 
 		</script><script type="text/javascript">
 			RANGES_20 = [
-   [48,3,48,72,'dccv']
+   [34,3,34,71,'dccv']
+, [35,3,35,4,'dccv']
+, [36,4,36,21,'dccv']
+, [37,4,37,27,'dccv']
+, [38,3,38,4,'dccv']
+, [42,3,42,4,'dccv']
+, [43,4,43,39,'dccv']
+, [43,40,43,80,'dccv']
+, [44,9,44,52,'dccv']
+, [45,3,45,4,'dccv']
 , [49,3,49,4,'dccv']
-, [50,4,50,17,'dccv']
-, [51,4,51,66,'dccv']
-, [52,3,52,4,'dccv']
-, [56,3,56,4,'dccv']
-, [57,4,57,96,'dccv']
+, [50,4,50,59,'dccv']
+, [50,60,50,67,'dccv']
+, [52,4,52,47,'dccv']
+, [53,4,53,71,'dccv']
+, [54,3,54,4,'dccv']
 , [58,3,58,4,'dccv']
-, [62,3,62,4,'dccv']
-, [63,4,63,84,'dccv']
-, [64,4,64,56,'dccv']
-, [65,4,65,69,'dccv']
-, [66,3,66,4,'dccv']
-, [70,3,70,4,'dccv']
-, [71,4,71,114,'dccv']
-, [72,3,72,4,'dccv']
-, [76,3,76,4,'dccv']
-, [77,4,77,48,'dccv']
-, [78,4,78,34,'dccv']
-, [79,3,79,4,'dccv']
-, [83,3,83,4,'dccv']
-, [84,4,84,48,'dccv']
-, [85,4,85,32,'dccv']
-, [85,51,85,74,'dccv']
-, [86,3,86,4,'dccv']
-, [90,3,90,4,'dccv']
-, [91,4,91,48,'dccv']
-, [92,4,92,53,'dccv']
-, [93,4,93,32,'dccv']
-, [96,36,96,59,'dccv']
-, [97,3,97,4,'dccv']
-, [100,3,100,4,'dccv']
-, [101,4,102,20,'dccv']
-, [103,42,104,23,'dccv']
-, [105,4,105,117,'dccv']
-, [106,4,106,29,'dccv']
-, [107,4,107,15,'dccv']
-, [108,3,108,4,'dccv']
-, [111,3,111,4,'dccv']
-, [112,4,113,25,'dccv']
-, [114,52,115,23,'dccv']
-, [117,4,117,35,'dccv']
-, [119,4,119,78,'dccv']
-, [120,4,120,35,'dccv']
-, [122,4,122,21,'dccv']
-, [123,3,123,4,'dccv']
-, [126,3,126,4,'dccv']
-, [127,4,128,43,'dccv']
-, [129,3,129,4,'dccv']
-, [132,3,132,4,'dccv']
-, [133,4,133,50,'dccv']
-, [134,4,134,54,'dccv']
-, [135,3,135,4,'dccv']
-, [138,3,138,4,'dccv']
-, [139,4,139,55,'dccv']
-, [140,4,140,50,'dccv']
-, [141,4,141,67,'dccv']
-, [142,3,142,4,'dccv']
-, [145,3,145,4,'dccv']
-, [146,4,147,20,'dccv']
-, [148,42,149,23,'dccv']
-, [150,4,150,105,'dccv']
-, [151,4,151,32,'dccv']
-, [152,4,152,18,'dccv']
-, [153,3,153,4,'dccv']
-, [102,20,102,58,'dccv']
-, [103,21,103,42,'dccv']
-, [113,25,113,108,'dccv']
-, [114,26,114,52,'dccv']
-, [147,20,147,58,'dccv']
-, [148,21,148,42,'dccv']
-, [85,32,85,51,'dccv']
-, [93,32,96,36,'dccv']
+, [59,4,59,59,'dccv']
+, [59,60,59,67,'dccv']
+, [61,4,61,47,'dccv']
+, [62,4,62,97,'dccv']
+, [63,3,63,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src20" class="dotCoverSource"><pre>#region FreeBSD
-
-// Copyright (c) 2013, The Tribe
+		<code id="src20" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -99,139 +46,51 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#endregion
-
-using System.Collections.Generic;
 using System.Linq;
 
 using FluentAssertions;
 
-using HBase.Stargate.Client.Api;
-using HBase.Stargate.Client.Models;
-using HBase.Stargate.Client.TypeConversion;
-
-using Patterns.Testing.Moq;
-
-using RestSharp;
-
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
 using _specs.Models;
 
 namespace _specs.Steps
 {
 	[Binding]
-	public class RequestVerification
+	public class ErrorChecking
 	{
-		private readonly IMimeConverterFactory _converterFactory;
-		private readonly RestContext _rest;
+		private readonly ErrorContext _errors;
+		private readonly ResourceContext _resources;
 
-		public RequestVerification(RestContext rest, IMoqContainer container)
+		public ErrorChecking(ErrorContext errors, ResourceContext resources)
 		{
-			_rest = rest;
-			_converterFactory = container.Create&lt;IMimeConverterFactory&gt;();
+			_errors = errors;
+			_resources = resources;
 		}
 
-		[Then(@&quot;a REST request should have been submitted with the following values:&quot;)]
-		public void CheckRequest(Table values)
+		[Then(@&quot;the operation should( not)? have succeeded&quot;)]
+		public void CheckExceptionExists(string modifier)
 		{
-			AssertRequestValuesMatch(_rest.Request, values.CreateInstance&lt;ExpectedRequestProperties&gt;());
+			if (string.IsNullOrEmpty(modifier)) _errors.CaughtErrors.Should().BeEmpty();
+			else _errors.CaughtErrors.Should().NotBeEmpty();
 		}
 
-		[Then(@&quot;a REST request for schema updates should have been submitted with the following values:&quot;)]
-		public void CheckSchemaUpdateRequest(Table values)
+		[Then(@&quot;if there was an exception, it should have been the expected (.*) type&quot;)]
+		public void CheckExceptionType(string type)
 		{
-			var properties = values.CreateInstance&lt;ExpectedSchemaUpdateRequestProperties&gt;();
-			AssertRequestValuesMatch(_rest.Request, properties);
-			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).GetType().Name.Should().Be(type);
 		}
 
-		[Then(@&quot;a REST request should have been submitted with the correct (.+) and (.+)&quot;)]
-		public void CheckRequest(Method method, string resource)
+		[Then(@&quot;if there was an exception, it should have had the expected exception (.*)&quot;)]
+		public void CheckExceptionMessage(string messageResource)
 		{
-			AssertRequestValuesMatch(_rest.Request, new ExpectedRequestProperties {Method = method, Resource = resource});
-		}
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
 
-		[Then(@&quot;the REST request should have contained (.*) cells?&quot;)]
-		public void CheckRequestCellCount(int count)
-		{
-			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
-			row.Should().HaveCount(count);
-		}
-
-		[Then(@&quot;one of the cells in the REST request should have had the value &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void CheckAnyCellValue(string value)
-		{
-			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
-			row.SingleOrDefault(cell =&gt; cell.Value == value).Should().NotBeNull();
-		}
-
-		[Then(@&quot;one of the cells in the REST request should have had the following values:&quot;)]
-		public void CheckAnyCellValues(Table values)
-		{
-			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
-			var expected = values.CreateInstance&lt;TestCell&gt;();
-			row.SingleOrDefault(cell =&gt; cell.Identifier.Row == expected.Row
-				&amp;&amp; cell.Identifier.Cell.Column == expected.Column
-				&amp;&amp; cell.Identifier.Cell.Qualifier == expected.Qualifier
-				&amp;&amp; cell.Value == expected.Value).Should().NotBeNull();
-		}
-
-		private IEnumerable&lt;Cell&gt; GetRowFromRequest()
-		{
-			string content = _rest.Request.Parameters
-				.Where(cell =&gt; cell.Type == ParameterType.RequestBody)
-				.Select(cell =&gt; cell.Value.ToString())
-				.FirstOrDefault();
-			IEnumerable&lt;Cell&gt; row = CreateRequestConverter(_rest.Request, _converterFactory).ConvertCells(content).ToArray();
-			row.Should().NotBeNull();
-			return row;
-		}
-
-		private static IMimeConverter CreateRequestConverter(IRestRequest request, IMimeConverterFactory mimeConverterFactory)
-		{
-			string mimeType = request.Parameters
-				.Where(parameter =&gt; parameter.Type == ParameterType.HttpHeader &amp;&amp; IsAcceptOrContentType(parameter.Name))
-				.Select(parameter =&gt; parameter.Value.ToString())
-				.FirstOrDefault();
-
-			mimeType.Should().NotBeEmpty();
-
-			IMimeConverter converter = mimeConverterFactory.CreateConverter(mimeType);
-			converter.Should().NotBeNull();
-
-			return converter;
-		}
-
-		private static bool IsAcceptOrContentType(string name)
-		{
-			return name == RestConstants.ContentTypeHeader
-				|| name == RestConstants.AcceptHeader;
-		}
-
-		private static void AssertRequestValuesMatch(IRestRequest request, ExpectedRequestProperties properties)
-		{
-			request.Method.Should().Be(properties.Method);
-			request.Resource.Should().Be(properties.Resource);
-		}
-
-		private static void AssertSchemaValuesMatch(TableSchema requestedSchema, ExpectedSchemaUpdateRequestProperties properties)
-		{
-			requestedSchema.Name.Should().Be(properties.Table);
-			requestedSchema.Columns.Should().HaveCount(1);
-			requestedSchema.Columns[0].Name.Should().Be(properties.Column);
-		}
-
-		private TableSchema GetTableSchemaFromRequest()
-		{
-			string content = _rest.Request.Parameters
-				.Where(cell =&gt; cell.Type == ParameterType.RequestBody)
-				.Select(cell =&gt; cell.Value.ToString())
-				.FirstOrDefault();
-			TableSchema schema = CreateRequestConverter(_rest.Request, _converterFactory).ConvertSchema(content);
-			schema.Should().NotBeNull();
-			return schema;
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).Message.Should().Be(_resources.GetString(messageResource));
 		}
 	}
 }</pre></code><script type="text/javascript">

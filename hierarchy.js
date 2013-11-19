@@ -13,11 +13,14 @@ var hierarchy =
     [ "ConfigurationElementCollection", null, [
       [ "HBase.Stargate.Client.Config.ConfigCellDescriptorCollection", "class_h_base_1_1_stargate_1_1_client_1_1_config_1_1_config_cell_descriptor_collection.html", null ]
     ] ],
+    [ "HBase.Stargate.Client.Models.Extensions", "class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_extensions.html", null ],
+    [ "HBase.Stargate.Client.Api.Extensions", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_extensions.html", null ],
     [ "HBase.Stargate.Client.Models.HBaseCellDescriptor", "class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_h_base_cell_descriptor.html", null ],
     [ "HBase.Stargate.Client.Models.HBaseDescriptor", "class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_h_base_descriptor.html", [
       [ "HBase.Stargate.Client.Models.CellQuery", "class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_cell_query.html", null ],
       [ "HBase.Stargate.Client.Models.Identifier", "class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_identifier.html", null ]
     ] ],
+    [ "HBase.Stargate.Client.HBaseMimeTypes", "class_h_base_1_1_stargate_1_1_client_1_1_h_base_mime_types.html", null ],
     [ "HBase.Stargate.Client.TypeConversion.ICodec", "interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_codec.html", [
       [ "HBase.Stargate.Client.TypeConversion.Base64Codec", "class_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_base64_codec.html", null ]
     ] ],
@@ -87,6 +90,7 @@ var hierarchy =
     [ "Module", null, [
       [ "HBase.Stargate.Client.Autofac.StargateModule", "class_h_base_1_1_stargate_1_1_client_1_1_autofac_1_1_stargate_module.html", null ]
     ] ],
+    [ "HBase.Stargate.Client.Api.RestConstants", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_rest_constants.html", null ],
     [ "HBase.Stargate.Client.Api.ScannerOptions", "class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html", null ],
     [ "HBase.Stargate.Client.Models.TableSchema", "class_h_base_1_1_stargate_1_1_client_1_1_models_1_1_table_schema.html", null ]
 ];

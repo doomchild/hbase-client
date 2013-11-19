@@ -4,20 +4,25 @@
 
 		</script><script type="text/javascript">
 			RANGES_26 = [
-   [35,3,35,88,'dccv']
-, [36,3,36,4,'dccv']
-, [37,4,37,19,'dccv']
-, [38,4,38,27,'dccv']
-, [39,4,39,27,'dccv']
-, [40,3,40,4,'dccv']
-, [44,3,44,4,'dccv']
-, [45,4,45,36,'dccv']
+   [38,3,38,75,'dccv']
+, [39,3,39,4,'dccv']
+, [40,4,40,19,'dccv']
+, [41,4,41,27,'dccv']
+, [42,3,42,4,'dccv']
 , [46,3,46,4,'dccv']
-, [50,3,50,4,'dccv']
-, [51,4,51,49,'dccv']
-, [52,4,52,67,'dccv']
-, [54,4,54,50,'dccv']
-, [55,3,55,4,'dccv']
+, [47,4,47,77,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,74,'dccv']
+, [54,4,54,30,'dccv']
+, [55,4,55,25,'dccv']
+, [56,3,56,4,'dccv']
+, [60,3,60,4,'dccv']
+, [61,4,61,64,'dccv']
+, [62,3,62,4,'dccv']
+, [66,3,66,4,'dccv']
+, [67,4,67,60,'dccv']
+, [68,3,68,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -38,9 +43,13 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 using FluentAssertions;
+
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
 
@@ -49,32 +58,41 @@ using _specs.Models;
 namespace _specs.Steps.Serialization
 {
 	[Binding]
-	public class Xml
+	public class ContentConversion
 	{
 		private readonly HBaseContext _hBase;
-		private readonly ResourceContext _resources;
 		private readonly ContentConverter _converter;
 
-		public Xml(HBaseContext hBase, ResourceContext resources, ContentConverter converter)
+		public ContentConversion(HBaseContext hBase, ContentConverter converter)
 		{
 			_hBase = hBase;
-			_resources = resources;
 			_converter = converter;
 		}
 
-		[Given(@&quot;I have everything I need to test a content converter for XML&quot;)]
-		public void SetConversionToXml()
+		[When(@&quot;I convert my raw content to a set of cells&quot;)]
+		public void ConvertRawContentToCellSet()
 		{
-			_converter.SetConversionToXml();
+			_hBase.CellSet = new CellSet(_converter.ConvertCells(_hBase.RawContent));
 		}
 
-		[Then(@&quot;my raw XML content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void CompareRawXmlToResource(string resourceName)
+		[When(@&quot;I convert my raw content to a cell&quot;)]
+		public void ConvertRawContentToCell()
 		{
-			var left = XElement.Parse(_hBase.RawContent);
-			var right = XElement.Parse(_resources.GetString(resourceName));
+			IList&lt;Cell&gt; set = _converter.ConvertCells(_hBase.RawContent).ToList();
+			set.Should().HaveCount(1);
+			_hBase.Cell = set[0];
+		}
 
-			left.ToString().Should().Be(right.ToString());
+		[When(@&quot;I convert my set of cells to raw content&quot;)]
+		public void ConvertCellSetToRawContent()
+		{
+			_hBase.RawContent = _converter.ConvertCells(_hBase.CellSet);
+		}
+
+		[When(@&quot;I convert my cell to raw content&quot;)]
+		public void ConvertCellToRawContent()
+		{
+			_hBase.RawContent = _converter.ConvertCell(_hBase.Cell);
 		}
 	}
 }</pre></code><script type="text/javascript">

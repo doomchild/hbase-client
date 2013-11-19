@@ -4,30 +4,17 @@
 
 		</script><script type="text/javascript">
 			RANGES_28 = [
-   [34,3,34,75,'dccv']
-, [35,3,35,4,'dccv']
-, [36,4,36,19,'dccv']
-, [37,4,37,27,'dccv']
-, [38,3,38,4,'dccv']
+   [29,3,29,46,'dccv']
+, [30,3,30,4,'dccv']
+, [31,4,31,27,'dccv']
+, [32,3,32,4,'dccv']
 , [42,3,42,4,'dccv']
-, [43,4,43,35,'dccv']
-, [44,3,44,4,'dccv']
-, [48,3,48,4,'dccv']
-, [49,4,49,49,'dccv']
-, [50,3,50,4,'dccv']
-, [54,3,54,4,'dccv']
-, [55,4,55,53,'dccv']
-, [56,4,56,48,'dccv']
-, [57,3,57,4,'dccv']
-, [61,3,61,4,'dccv']
-, [62,4,62,59,'dccv']
-, [63,3,63,4,'dccv']
-, [67,3,67,4,'dccv']
-, [68,4,77,14,'dccv']
-, [78,3,78,4,'dccv']
-, [81,3,81,4,'dccv']
-, [82,4,92,23,'dccv']
-, [93,3,93,4,'dccv']
+, [43,4,43,41,'dccv']
+, [46,4,46,38,'dccv']
+, [36,3,36,4,'dcuc']
+, [37,4,37,38,'dcuc']
+, [38,3,38,4,'dcuc']
+, [47,3,47,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -48,81 +35,35 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using HBase.Stargate.Client;
-using HBase.Stargate.Client.Models;
-
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
 using _specs.Models;
 
-namespace _specs.Steps
+namespace _specs.Steps.Serialization
 {
 	[Binding]
-	public class SimpleConstruction
+	public class Protobuf
 	{
-		private readonly HBaseContext _hBase;
-		private readonly ResourceContext _resources;
+		private readonly ContentConverter _converter;
 
-		public SimpleConstruction(HBaseContext hBase, ResourceContext resources)
+		public Protobuf(ContentConverter converter)
 		{
-			_hBase = hBase;
-			_resources = resources;
+			_converter = converter;
 		}
 
-		[Given(@&quot;I have created a set of cells&quot;)]
-		public void CreateCellSet()
+		[Then(@&quot;my raw protobuf content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CompareProtobufToResource(string resourceName)
 		{
-			_hBase.CellSet = new CellSet();
+			ScenarioContext.Current.Pending();
 		}
 
-		[Given(@&quot;I have created a set of cells for the &quot;&quot;(.+)&quot;&quot; table&quot;)]
-		public void CreateCellSet(string table)
+		[Given(@&quot;I have everything I need to test a content converter for protobuf&quot;)]
+		public void SetConversionToProtobuf()
 		{
-			_hBase.CellSet = new CellSet {Table = table};
-		}
+			_converter.SetConversionToProtobuf();
 
-		[Given(@&quot;I have added a cell to my set with the following properties:&quot;)]
-		public void AddToCellSet(Table values)
-		{
-			var testCell = values.CreateInstance&lt;TestCell&gt;();
-			_hBase.CellSet.Add(ConvertToCell(testCell));
-		}
-
-		[Given(@&quot;I have raw content equal to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void SetRawContentToResource(string resourceName)
-		{
-			_hBase.RawContent = _resources.GetString(resourceName);
-		}
-
-		[Given(@&quot;I have a cell with a (.+), (.+), (.*), (.*), and (.*)&quot;)]
-		public void CreateCell(string row, string column, string qualifier, string timestamp, string value)
-		{
-			_hBase.Cell = new Cell(new Identifier
-			{
-				Row = row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp.ToNullableInt64()
-			}, value);
-		}
-
-		private static Cell ConvertToCell(TestCell testCell)
-		{
-			return new Cell(new Identifier
-			{
-				Table = testCell.Table,
-				Row = testCell.Row,
-				Cell = new HBaseCellDescriptor
-				{
-					Column = testCell.Column,
-					Qualifier = testCell.Qualifier
-				},
-				Timestamp = testCell.Timestamp
-			}, testCell.Value);
+			//TODO: remove the next line once protobuf is plugged in
+			ScenarioContext.Current.Pending();
 		}
 	}
 }</pre></code><script type="text/javascript">

@@ -4,33 +4,13 @@
 
 		</script><script type="text/javascript">
 			RANGES_35 = [
-   [52,3,52,4,'dcuc']
-, [53,4,55,52,'dcuc']
-, [56,3,56,4,'dcuc']
-, [63,3,63,4,'dcuc']
-, [64,4,64,51,'dcuc']
-, [65,4,65,22,'dcuc']
-, [65,23,65,35,'dcuc']
-, [66,3,66,4,'dcuc']
-, [69,3,69,4,'dcuc']
-, [71,4,71,5,'dcuc']
-, [72,5,72,58,'dcuc']
-, [73,5,73,6,'dcuc']
-, [74,6,74,53,'dcuc']
-, [75,6,75,69,'dcuc']
-, [75,139,75,142,'dcuc']
-, [78,5,78,29,'dcuc']
-, [80,4,80,9,'dcuc']
-, [81,4,81,5,'dcuc']
-, [82,5,82,29,'dcuc']
-, [84,3,84,4,'dcuc']
-, [39,3,42,45,'dcuc']
-, [44,108,45,6,'dcuc']
-, [75,69,75,102,'dcuc']
-, [75,119,75,139,'dcuc']
-, [42,45,42,76,'dcuc']
-, [43,43,43,69,'dcuc']
-, [44,54,44,108,'dcuc']
+   [41,3,41,40,'dcuc']
+, [42,3,42,4,'dcuc']
+, [43,4,43,19,'dcuc']
+, [44,3,44,4,'dcuc']
+, [51,3,51,4,'dcuc']
+, [52,4,52,44,'dcuc']
+, [53,3,53,4,'dcuc']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
@@ -56,67 +36,36 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Xml;
-using System.Xml.Linq;
 
-using RestSharp;
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
 
 namespace HBase.Stargate.Client.Api
 {
 	/// &lt;summary&gt;
-	/// Provides a default &lt;see cref=&quot;IErrorProvider&quot;/&gt;.
+	/// Provides a representation of the BinaryComparator filter value.
 	/// &lt;/summary&gt;
-	public class ErrorProvider : IErrorProvider
+	public class BinaryComparator : TypeValueFilterBase
 	{
-		private readonly IDictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt; _cannedErrors
-			= new Dictionary&lt;HttpStatusCode, Func&lt;IRestResponse, Exception&gt;&gt;
-			{
-				{HttpStatusCode.BadRequest, response =&gt; new InvalidOperationException()},
-				{HttpStatusCode.NotFound, response =&gt; new KeyNotFoundException()},
-				{HttpStatusCode.InternalServerError, response =&gt; new ApplicationException(GetResponseContent(response))}
-			};
+		private readonly string _value;
 
 		/// &lt;summary&gt;
-		/// Creates an exception from the response.
+		/// Initializes a new instance of the &lt;see cref=&quot;BinaryComparator&quot;/&gt; class.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
-		public Exception CreateFromResponse(IRestResponse response)
+		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
+		public BinaryComparator(string value)
 		{
-			return !_cannedErrors.ContainsKey(response.StatusCode)
-				? null
-				: _cannedErrors[response.StatusCode](response);
+			_value = value;
 		}
 
 		/// &lt;summary&gt;
-		/// Throws an exception from the response.
+		/// Gets the token to use as the value.
 		/// &lt;/summary&gt;
-		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
-		public void ThrowFromResponse(IRestResponse response)
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		protected override JToken GetValueJToken(ICodec codec)
 		{
-			Exception error = CreateFromResponse(response);
-			if (error != null) throw error;
-		}
-
-		private static string GetResponseContent(IRestResponse response)
-		{
-			try
-			{
-				if (response.ContentType == MediaTypeNames.Text.Html)
-				{
-					var markup = XDocument.Parse(response.Content);
-					return string.Join(&quot; &quot;, markup.DescendantNodes().Where(node =&gt; node.NodeType == XmlNodeType.Text).Select(node =&gt; ((XText) node).Value));
-				}
-
-				return response.Content;
-			}
-			catch
-			{
-				return response.Content;
-			}
+			return new JValue(codec.Encode(_value));
 		}
 	}
 }</pre></code><script type="text/javascript">

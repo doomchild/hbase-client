@@ -4,21 +4,28 @@
 
 		</script><script type="text/javascript">
 			RANGES_25 = [
-   [29,3,29,46,'dccv']
-, [30,3,30,4,'dccv']
-, [31,4,31,27,'dccv']
-, [32,3,32,4,'dccv']
-, [42,3,42,4,'dccv']
-, [43,4,43,41,'dccv']
-, [46,4,46,38,'dccv']
-, [36,3,36,4,'dcuc']
-, [37,4,37,38,'dcuc']
-, [38,3,38,4,'dcuc']
-, [47,3,47,4,'dcuc']
+   [37,3,37,42,'dccv']
+, [38,3,38,4,'dccv']
+, [39,4,39,19,'dccv']
+, [40,3,40,4,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,45,50,'dccv']
+, [46,3,46,4,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,106,'dccv']
+, [52,3,52,4,'dccv']
+, [56,3,56,4,'dccv']
+, [57,4,57,50,'dccv']
+, [58,3,58,4,'dccv']
+, [62,3,62,4,'dccv']
+, [63,4,63,97,'dccv']
+, [64,3,64,4,'dccv']
 ];
 		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
 	</head><body>
-		<code id="src25" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+		<code id="src25" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -35,35 +42,50 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Api;
+
 using TechTalk.SpecFlow;
 
 using _specs.Models;
 
-namespace _specs.Steps.Serialization
+namespace _specs.Steps
 {
 	[Binding]
-	public class Protobuf
+	public class ScannerSteps
 	{
-		private readonly ContentConverter _converter;
+		private readonly HBaseContext _hBase;
 
-		public Protobuf(ContentConverter converter)
+		public ScannerSteps(HBaseContext hBase)
 		{
-			_converter = converter;
+			_hBase = hBase;
 		}
 
-		[Then(@&quot;my raw protobuf content should be equivalent to the resource called &quot;&quot;(.*)&quot;&quot;&quot;)]
-		public void CompareProtobufToResource(string resourceName)
+		[Then(@&quot;my scanner should have a resource set to &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CheckScannerResource(string resource)
 		{
-			ScenarioContext.Current.Pending();
+			_hBase.Scanner.Resource.Should().Be(resource);
 		}
 
-		[Given(@&quot;I have everything I need to test a content converter for protobuf&quot;)]
-		public void SetConversionToProtobuf()
+		[Given(@&quot;I have a scanner for the &quot;&quot;(.*)&quot;&quot; table named &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void ObtainManualScanner(string tableName, string scannerId)
 		{
-			_converter.SetConversionToProtobuf();
+			_hBase.Scanner = new Scanner(string.Format(&quot;{0}/scanner/{1}&quot;, tableName, scannerId), _hBase.Stargate);
+		}
 
-			//TODO: remove the next line once protobuf is plugged in
-			ScenarioContext.Current.Pending();
+		[When(@&quot;I delete the scanner&quot;)]
+		public void DeleteScanner()
+		{
+			_hBase.Stargate.DeleteScanner(_hBase.Scanner);
+		}
+
+		[When(@&quot;I create a scanner for the &quot;&quot;(.*)&quot;&quot; table&quot;)]
+		public void CreateScanner(string tableName)
+		{
+			_hBase.Scanner = _hBase.Stargate.CreateScanner(new ScannerOptions { TableName = tableName });
 		}
 	}
 }</pre></code><script type="text/javascript">
