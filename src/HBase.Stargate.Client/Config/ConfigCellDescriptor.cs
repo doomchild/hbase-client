@@ -71,5 +71,16 @@ namespace HBase.Stargate.Client.Config
 				Qualifier = descriptor.Qualifier
 			};
 		}
+
+		/// <summary>
+		///    Gets a value indicating whether the <see cref="T:System.Configuration.ConfigurationElement" /> object is read-only.
+		/// </summary>
+		/// <returns>
+		///    true if the <see cref="T:System.Configuration.ConfigurationElement" /> object is read-only; otherwise, false.
+		/// </returns>
+		public override bool IsReadOnly()
+		{
+			return false;
+		}
 	}
 }
