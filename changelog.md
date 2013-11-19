@@ -2,7 +2,7 @@
 
 The following changelog details the changes made with each release of hbase-client.
 
-## 1.0-beta.3 ##
+## 1.0-beta.4 ##
 Author of this release: [John Batte](https://github.com/jbatte47)
 
 - Updated configuration types to return `false` from `IsReadOnly` ([Issue 42](https://github.com/TheTribe/hbase-client/issues/42))
