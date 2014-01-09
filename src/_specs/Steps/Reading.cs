@@ -21,6 +21,8 @@
 
 using FluentAssertions;
 
+using HBase.Stargate.Client.Models;
+
 using TechTalk.SpecFlow;
 
 using _specs.Models;
@@ -49,6 +51,12 @@ namespace _specs.Steps
 			_context.CellSet = _context.Stargate.FindCells(_context.Query);
 		}
 
+		[When(@"I read all cells from any table")]
+		public void ReadTable()
+		{
+			_context.CellSet = _context.Stargate.FindCells(new CellQuery { Table = "any-table" });
+		}
+		
 		[When(@"I read a result from the scanner")]
 		public void ReadScanner()
 		{

@@ -158,3 +158,8 @@ Scenario: Delete a table
 	Then a REST request should have been submitted with the following values:
 		| method | resource    |
 		| DELETE | test/schema |
+
+Scenario: Find cells with an empty table
+	Given I will always get a response with a status of "NotFound" and content equivalent to the resource called "HBaseXml_FindCellsEmptyResponse"
+	When I read all cells from any table
+	Then my set should contain 0 cells
