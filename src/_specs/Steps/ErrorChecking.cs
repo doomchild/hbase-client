@@ -38,11 +38,13 @@ namespace _specs.Steps
 			_resources = resources;
 		}
 
-		[Then(@"the operation should( not)? have succeeded")]
-		public void CheckExceptionExists(string modifier)
+		[Then(@"the operation (should|should not) have succeeded")]
+		public void CheckExceptionExists(bool success)
 		{
-			if (string.IsNullOrEmpty(modifier)) _errors.CaughtErrors.Should().BeEmpty();
+			if (success) _errors.CaughtErrors.Should().BeEmpty();
 			else _errors.CaughtErrors.Should().NotBeEmpty();
+
+			_errors.OutcomeViewedAsSuccessful = success;
 		}
 
 		[Then(@"if there was an exception, it should have been the expected (.*) type")]

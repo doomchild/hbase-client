@@ -248,6 +248,7 @@ namespace HBase.Stargate.Client.Api
 		public void CreateTable(TableSchema tableSchema)
 		{
 			string resource = _resourceBuilder.BuildTableSchemaAccess(tableSchema);
+			_errorProvider.ThrowIfSchemaInvalid(tableSchema);
 			string data = _converter.ConvertSchema(tableSchema);
 			IRestResponse response = SendRequest(Method.PUT, resource, Options.ContentType, Options.ContentType, data);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
@@ -260,6 +261,7 @@ namespace HBase.Stargate.Client.Api
 		public async Task CreateTableAsync(TableSchema tableSchema)
 		{
 			string resource = _resourceBuilder.BuildTableSchemaAccess(tableSchema);
+			_errorProvider.ThrowIfSchemaInvalid(tableSchema);
 			string data = _converter.ConvertSchema(tableSchema);
 			IRestResponse response = await SendRequestAsync(Method.PUT, resource, Options.ContentType, Options.ContentType, data);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK);
@@ -459,7 +461,15 @@ namespace HBase.Stargate.Client.Api
 
 			IRestResponse response = await _client.ExecuteAsync(request);
 
-			if (response.ResponseStatus == ResponseStatus.Error && response.ErrorException != null) throw response.ErrorException;
+			return GetValidatedResponse(response);
+		}
+
+		private static IRestResponse GetValidatedResponse(IRestResponse response)
+		{
+			if (response.ResponseStatus == ResponseStatus.Error && response.ErrorException != null)
+			{
+				throw response.ErrorException;
+			}
 
 			return response;
 		}
@@ -479,9 +489,7 @@ namespace HBase.Stargate.Client.Api
 
 			IRestResponse response = _client.Execute(request);
 
-			if (response.ResponseStatus == ResponseStatus.Error && response.ErrorException != null) throw response.ErrorException;
-
-			return response;
+			return GetValidatedResponse(response);
 		}
 
 		private IRestRequest BuildRequest(Method method, string resource, string acceptType, string contentType, string content)

@@ -21,33 +21,29 @@
 
 using System;
 
-using HBase.Stargate.Client.Models;
+using Patterns.Text.RegularExpressions;
 
-using RestSharp;
+using TechTalk.SpecFlow;
 
-namespace HBase.Stargate.Client.Api
+using _specs.Models;
+
+namespace _specs.Steps
 {
-	/// <summary>
-	///    Defines a provider for <see cref="Exception" /> instances based on <see cref="IRestResponse" /> instances.
-	/// </summary>
-	public interface IErrorProvider
+	[Binding]
+	public class Transforms
 	{
-		/// <summary>
-		///    Creates an exception from the response.
-		/// </summary>
-		/// <param name="response">The response.</param>
-		Exception CreateFromResponse(IRestResponse response);
+		private static readonly CompiledRegex _nullStringPattern = @"(?i)\{null\}";
 
-		/// <summary>
-		///    Throws an exception from the response.
-		/// </summary>
-		/// <param name="response">The response.</param>
-		void ThrowFromResponse(IRestResponse response);
+		[StepArgumentTransformation]
+		public TestString NullSensitiveStringAssignment(string value)
+		{
+			return _nullStringPattern.IsMatch(value) ? null : new TestString(value);
+		}
 
-		/// <summary>
-		///    Throws an exception if the schema is invalid.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		void ThrowIfSchemaInvalid(TableSchema tableSchema);
+		[StepArgumentTransformation(@"(?:should|does|is|will|have|are|has|did)( not)?")]
+		public bool SuccessFlagAssignment(string modifier)
+		{
+			return string.IsNullOrWhiteSpace(modifier);
+		}
 	}
 }

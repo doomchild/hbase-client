@@ -19,35 +19,20 @@
 
 #endregion
 
-using System;
-
-using HBase.Stargate.Client.Models;
-
-using RestSharp;
-
-namespace HBase.Stargate.Client.Api
+namespace _specs.Models
 {
-	/// <summary>
-	///    Defines a provider for <see cref="Exception" /> instances based on <see cref="IRestResponse" /> instances.
-	/// </summary>
-	public interface IErrorProvider
+	public class TestString
 	{
-		/// <summary>
-		///    Creates an exception from the response.
-		/// </summary>
-		/// <param name="response">The response.</param>
-		Exception CreateFromResponse(IRestResponse response);
+		private readonly string _value;
 
-		/// <summary>
-		///    Throws an exception from the response.
-		/// </summary>
-		/// <param name="response">The response.</param>
-		void ThrowFromResponse(IRestResponse response);
+		public TestString(string value)
+		{
+			_value = value;
+		}
 
-		/// <summary>
-		///    Throws an exception if the schema is invalid.
-		/// </summary>
-		/// <param name="tableSchema">The table schema.</param>
-		void ThrowIfSchemaInvalid(TableSchema tableSchema);
+		public static implicit operator string(TestString instance)
+		{
+			return instance == null ? null : instance._value;
+		}
 	}
 }

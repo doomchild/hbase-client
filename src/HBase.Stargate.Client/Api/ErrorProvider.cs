@@ -27,6 +27,9 @@ using System.Net.Mime;
 using System.Xml;
 using System.Xml.Linq;
 
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.Properties;
+
 using RestSharp;
 
 namespace HBase.Stargate.Client.Api
@@ -65,6 +68,15 @@ namespace HBase.Stargate.Client.Api
 			if (error != null) throw error;
 		}
 
+		/// <summary>
+		/// Throws an exception if the schema is invalid.
+		/// </summary>
+		/// <param name="tableSchema">The table schema.</param>
+		public void ThrowIfSchemaInvalid(TableSchema tableSchema)
+		{
+			if(tableSchema.Columns.Any(column => string.IsNullOrEmpty(column.Name))) throw new ArgumentException(Resources.ErrorProvider_ColumnNameMissing);
+		}
+
 		private static string GetResponseContent(IRestResponse response)
 		{
 			try
@@ -75,12 +87,17 @@ namespace HBase.Stargate.Client.Api
 					return string.Join(" ", markup.DescendantNodes().Where(node => node.NodeType == XmlNodeType.Text).Select(node => ((XText) node).Value));
 				}
 
-				return response.Content;
+				return GetRawResponseContent(response);
 			}
 			catch
 			{
-				return response.Content;
+				return GetRawResponseContent(response);
 			}
+		}
+
+		private static string GetRawResponseContent(IRestResponse response)
+		{
+			return string.IsNullOrEmpty(response.Content) ? response.StatusDescription : response.Content;
 		}
 	}
 }

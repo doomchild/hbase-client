@@ -92,7 +92,7 @@ namespace _specs.Steps
 			_container.Update<IResourceBuilder, ResourceBuilder>();
 			_container.Update<ISimpleValueConverter, SimpleValueConverter>();
 			_container.Update<ICodec, Base64Codec>();
-
+			_container.Update<IErrorProvider, ErrorProvider>();
 			_container.Update<IStargate, Stargate>();
 		}
 
