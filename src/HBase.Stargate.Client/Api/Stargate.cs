@@ -457,7 +457,11 @@ namespace HBase.Stargate.Client.Api
 		{
 			var request = BuildRequest(method, resource, acceptType, contentType, content);
 
-			return await _client.ExecuteAsync(request);
+			IRestResponse response = await _client.ExecuteAsync(request);
+
+			if (response.ResponseStatus == ResponseStatus.Error && response.ErrorException != null) throw response.ErrorException;
+
+			return response;
 		}
 
 		/// <summary>
@@ -473,7 +477,11 @@ namespace HBase.Stargate.Client.Api
 		{
 			var request = BuildRequest(method, resource, acceptType, contentType, content);
 
-			return _client.Execute(request);
+			IRestResponse response = _client.Execute(request);
+
+			if (response.ResponseStatus == ResponseStatus.Error && response.ErrorException != null) throw response.ErrorException;
+
+			return response;
 		}
 
 		private IRestRequest BuildRequest(Method method, string resource, string acceptType, string contentType, string content)
