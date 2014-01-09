@@ -209,10 +209,15 @@ namespace HBase.Stargate.Client.Api
 			IRestResponse response = await SendRequestAsync(Method.GET, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
 
-			return new CellSet(_converter.ConvertCells(response.Content))
+			var set = new CellSet
 			{
 				Table = query.Table
 			};
+
+			if (response.StatusCode == HttpStatusCode.OK)
+				set.AddRange(_converter.ConvertCells(response.Content));
+
+			return set;
 		}
 
 		/// <summary>
@@ -225,10 +230,15 @@ namespace HBase.Stargate.Client.Api
 			IRestResponse response = SendRequest(Method.GET, resource, Options.ContentType);
 			_errorProvider.ThrowIfStatusMismatch(response, HttpStatusCode.OK, HttpStatusCode.NotFound);
 
-			return new CellSet(_converter.ConvertCells(response.Content))
+			var set = new CellSet
 			{
 				Table = query.Table
 			};
+
+			if (response.StatusCode == HttpStatusCode.OK)
+				set.AddRange(_converter.ConvertCells(response.Content));
+
+			return set;
 		}
 
 		/// <summary>
