@@ -61,13 +61,13 @@ namespace _specs.Steps
 		}
 
 		[Given(@"I have set my table schema's name to ""(.*)""")]
-		public void SetTableSchemaName(string name)
+		public void SetTableSchemaName(TestString name)
 		{
 			_hBase.TableSchema.Name = name;
 		}
 
 		[Given(@"I have added a column named ""(.*)"" to my table schema")]
-		public void AddColumnSchema(string name)
+		public void AddColumnSchema(TestString name)
 		{
 			List<ColumnSchema> columns = _hBase.TableSchema.Columns ?? (_hBase.TableSchema.Columns = new List<ColumnSchema>());
 			columns.Add(new ColumnSchema {Name = name});
@@ -76,7 +76,14 @@ namespace _specs.Steps
 		[When(@"I create a table using my table schema")]
 		public void CreateTableUsingSchema()
 		{
-			_hBase.Stargate.CreateTable(_hBase.TableSchema);
+			try
+			{
+				_hBase.Stargate.CreateTable(_hBase.TableSchema);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] {error};
+			}
 		}
 
 		[When(@"I delete the ""(.*)"" table")]

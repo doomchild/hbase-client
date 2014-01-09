@@ -44,10 +44,12 @@ namespace _specs.Steps
 	{
 		private readonly IMimeConverterFactory _converterFactory;
 		private readonly RestContext _rest;
+		private readonly ErrorContext _errors;
 
-		public RequestVerification(RestContext rest, IMoqContainer container)
+		public RequestVerification(RestContext rest, ErrorContext errors, IMoqContainer container)
 		{
 			_rest = rest;
+			_errors = errors;
 			_converterFactory = container.Create<IMimeConverterFactory>();
 		}
 
@@ -60,9 +62,21 @@ namespace _specs.Steps
 		[Then(@"a REST request for schema updates should have been submitted with the following values:")]
 		public void CheckSchemaUpdateRequest(Table values)
 		{
-			var properties = values.CreateInstance<ExpectedSchemaUpdateRequestProperties>();
-			AssertRequestValuesMatch(_rest.Request, properties);
-			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
+			CheckSchemaUpdateProperties(values.CreateInstance<ExpectedSchemaUpdateRequestProperties>());
+		}
+
+		[Then(@"if the operation succeeded, a REST request for schema updates should have been submitted with the correct (.*), (.*), (.*), and (.*)")]
+		public void CheckSchemaUpdateRequest(Method method, string resource, string table, string column)
+		{
+			if (!_errors.OutcomeViewedAsSuccessful) return;
+
+			CheckSchemaUpdateProperties(new ExpectedSchemaUpdateRequestProperties
+			{
+				Column = column,
+				Method = method,
+				Resource = resource,
+				Table = table
+			});
 		}
 
 		[Then(@"a REST request should have been submitted with the correct (.+) and (.+)")]
@@ -150,6 +164,12 @@ namespace _specs.Steps
 			TableSchema schema = CreateRequestConverter(_rest.Request, _converterFactory).ConvertSchema(content);
 			schema.Should().NotBeNull();
 			return schema;
+		}
+
+		private void CheckSchemaUpdateProperties(ExpectedSchemaUpdateRequestProperties properties)
+		{
+			AssertRequestValuesMatch(_rest.Request, properties);
+			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
 		}
 	}
 }

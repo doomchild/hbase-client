@@ -35,5 +35,7 @@ namespace _specs.Models
 		public bool HasErrors { get { return CaughtErrors != null && CaughtErrors.Any(); } }
 
 		public IEnumerable<Exception> CaughtErrors { get; set; }
+
+		public bool OutcomeViewedAsSuccessful { get; set; }
 	}
 }

@@ -10,14 +10,22 @@ Background:
 	And I have everything I need to test a content converter for XML
 	And I have an HBase client
 
-Scenario: Create a table
+Scenario Outline: Create a table
 	Given I have created a new table schema
-	And I have set my table schema's name to "test"
-	And I have added a column named "alpha" to my table schema
+	And I have set my table schema's name to "<table>"
+	And I have added a column named "<column>" to my table schema
 	When I create a table using my table schema
-	Then a REST request for schema updates should have been submitted with the following values:
-		| method | resource    | table | column |
-		| PUT    | test/schema | test  | alpha  |
+	Then the operation <should or should not> have succeeded
+	And if the operation succeeded, a REST request for schema updates should have been submitted with the correct <method>, <resource>, <table>, and <column>
+	And if there was an exception, it should have been the expected <exception> type
+	And if there was an exception, it should have had the expected exception <message>
+Examples:
+	| table  | column | method | resource    | should or should not | exception         | message                                      |
+	| {null} | {null} | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	| {null} |        | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	|        | {null} | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	|        |        | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	| test   |        | PUT    | test/schema | should not           | ArgumentException | ErrorProvider_ColumnNameMissing              |
 
 Scenario Outline: Write a single value
 	Given I have an identifier consisting of a <table>, a <row>, a <column>, a <qualifier>, and a <timestamp>

@@ -135,4 +135,7 @@
 	<data name="ResourceBuilder_MinimumForScannerNotMet" xml:space="preserve">
     <value>Table name must be specified for scanner access.</value>
   </data>
+	<data name="ErrorProvider_ColumnNameMissing" xml:space="preserve">
+    <value>All columns must have a name.</value>
+  </data>
 </root>

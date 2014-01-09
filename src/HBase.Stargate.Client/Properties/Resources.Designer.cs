@@ -61,6 +61,15 @@ namespace HBase.Stargate.Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All columns must have a name..
+        /// </summary>
+        internal static string ErrorProvider_ColumnNameMissing {
+            get {
+                return ResourceManager.GetString("ErrorProvider_ColumnNameMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Table name must be specified at a minimum for batch insert..
         /// </summary>
         internal static string ResourceBuilder_MinimumForBatchInsertNotMet {
