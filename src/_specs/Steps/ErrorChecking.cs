@@ -15,6 +15,7 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using System;
 using System.Linq;
 
 using FluentAssertions;
@@ -60,6 +61,17 @@ namespace _specs.Steps
 
 			_errors.CaughtErrors.Should().HaveCount(1);
 			_errors.CaughtErrors.ElementAt(0).Message.Should().Be(_resources.GetString(messageResource));
+		}
+
+		[Then(@"there should have been an? (.*)Exception with a message equivalent to the resource called ""(.+)""")]
+		public void CheckAssumedExceptionType(string modifier, string resource)
+		{
+			string expectedTypeName = string.Format("{0}Exception", modifier);
+			_errors.HasErrors.Should().BeTrue("I expected an error to be thrown");
+			_errors.CaughtErrors.Count().Should().Be(1);
+			Exception exception = _errors.CaughtErrors.Single();
+			exception.GetType().Name.Should().Be(expectedTypeName);
+			exception.Message.Should().Be(_resources.GetString(resource));
 		}
 	}
 }

@@ -242,5 +242,14 @@ namespace _specs.Properties {
                 return ResourceManager.GetString("HBaseXml_TableSchema1", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The remote name could not be resolved: &apos;test-server&apos;.
+        /// </summary>
+        internal static string NoServerResponse {
+            get {
+                return ResourceManager.GetString("NoServerResponse", resourceCulture);
+            }
+        }
     }
 }
