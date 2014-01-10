@@ -2,6 +2,15 @@
 
 The following changelog details the changes made with each release of hbase-client.
 
+## 1.0-beta.5 ##
+Authors of this release: [John Batte](https://github.com/jbatte47), [Christoper Wade](https://github.com/chrislwade)
+
+- Fixed exception when `FindCells` is called on an empty table ([Issue 47](https://github.com/TheTribe/hbase-client/issues/47))
+- Fixed hidden connection errors ([Issue 41](https://github.com/TheTribe/hbase-client/issues/41))
+- Fixed failure with `CreateTable` + empty `ColumnSchema.Name` ([Issue 48](https://github.com/TheTribe/hbase-client/issues/48))
+- Updated 3rd party dependencies ([Issue 49](https://github.com/TheTribe/hbase-client/issues/49))
+- Added table name to cells in results ([Issue 46](https://github.com/TheTribe/hbase-client/issues/46))
+
 ## 1.0-beta.4 ##
 Author of this release: [John Batte](https://github.com/jbatte47)
 

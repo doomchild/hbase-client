@@ -17,7 +17,6 @@
 
 using System.Linq;
 
-using HBase.Stargate.Client;
 using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
@@ -54,7 +53,7 @@ namespace _specs.Steps
 		[Given(@"I have added (?:a cell|cells) to my set with the following properties:")]
 		public void AddToCellSet(Table values)
 		{
-			_hBase.CellSet.AddRange(values.CreateSet<TestCell>().Select(ConvertToCell));
+			_hBase.CellSet.AddRange(values.CreateSet<TestCell>().Select(cell => (Cell) cell));
 		}
 
 		[Given(@"I have raw content equal to the resource called ""(.*)""")]
@@ -66,31 +65,7 @@ namespace _specs.Steps
 		[Given(@"I have a cell with a (.+), (.+), (.*), (.*), and (.*)")]
 		public void CreateCell(string row, string column, string qualifier, string timestamp, string value)
 		{
-			_hBase.Cell = new Cell(new Identifier
-			{
-				Row = row,
-				CellDescriptor = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp.ToNullableInt64()
-			}, value);
-		}
-
-		public static Cell ConvertToCell(TestCell testCell)
-		{
-			return new Cell(new Identifier
-			{
-				Table = testCell.Table,
-				Row = testCell.Row,
-				CellDescriptor = new HBaseCellDescriptor
-				{
-					Column = testCell.Column,
-					Qualifier = testCell.Qualifier
-				},
-				Timestamp = testCell.Timestamp
-			}, testCell.Value);
+			_hBase.Cell = new TestCell(row, column, qualifier, timestamp, value);
 		}
 	}
 }
