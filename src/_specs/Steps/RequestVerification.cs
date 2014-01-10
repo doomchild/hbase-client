@@ -102,7 +102,7 @@ namespace _specs.Steps
 		[Then(@"(?:one of )?the cells in the REST request should have had the following values:")]
 		public void CheckAnyCellValues(Table values)
 		{
-			values.CompareToSet(GetRowFromRequest().Select(SimpleAssertions.ConvertToTestCell));
+			values.CompareToSet(GetRowFromRequest().Select(cell => (TestCell) cell));
 		}
 
 		private IEnumerable<Cell> GetRowFromRequest()

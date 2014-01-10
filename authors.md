@@ -1,2 +1,2 @@
-## John Batte and David Brandon ##
-[![jbatte47](https://gravatar.com/avatar/b1899db8787beae16722d2e482808fe7?s=200)](https://github.com/jbatte47) [![binaryberserker](https://gravatar.com/avatar/7a22c79f12b1da23ef8c1aaef07733a9?s=200)](https://github.com/binaryberserker)
+## John Batte, David Brandon, and Christopher Wade ##
+[![jbatte47](https://gravatar.com/avatar/b1899db8787beae16722d2e482808fe7?s=200)](https://github.com/jbatte47) [![binaryberserker](https://gravatar.com/avatar/7a22c79f12b1da23ef8c1aaef07733a9?s=200)](https://github.com/binaryberserker) [![chrislwade](https://2.gravatar.com/avatar/f8ad08fcc4037b9389d7008729f2fbcf?s=200)](https://github.com/chrislwade)
