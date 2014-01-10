@@ -1,6 +1,6 @@
 ﻿#region FreeBSD
 
-// Copyright (c) 2013, The Tribe
+// Copyright (c) 2014, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -21,6 +21,8 @@
 
 using System;
 
+using HBase.Stargate.Client.Models;
+
 using RestSharp;
 
 namespace HBase.Stargate.Client.Api
@@ -37,9 +39,15 @@ namespace HBase.Stargate.Client.Api
 		Exception CreateFromResponse(IRestResponse response);
 
 		/// <summary>
-		/// Throws an exception from the response.
+		///    Throws an exception from the response.
 		/// </summary>
 		/// <param name="response">The response.</param>
 		void ThrowFromResponse(IRestResponse response);
+
+		/// <summary>
+		///    Throws an exception if the schema is invalid.
+		/// </summary>
+		/// <param name="tableSchema">The table schema.</param>
+		void ThrowIfSchemaInvalid(TableSchema tableSchema);
 	}
 }

@@ -1,6 +1,6 @@
 ﻿#region FreeBSD
 
-// Copyright (c) 2013, The Tribe
+// Copyright (c) 2014, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -19,31 +19,31 @@
 
 #endregion
 
-using System.Collections.Generic;
+using System;
 
-using HBase.Stargate.Client.Models;
+using Patterns.Text.RegularExpressions;
 
-namespace HBase.Stargate.Client.Api
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
 {
-	/// <summary>
-	///    Defines a scanner for HBase tables.
-	/// </summary>
-	public interface IScanner : IEnumerable<CellSet>, IEnumerator<CellSet>
+	[Binding]
+	public class Transforms
 	{
-		/// <summary>
-		///    Gets the table name.
-		/// </summary>
-		/// <value>
-		///    The table name.
-		/// </value>
-		string Table { get; }
+		private static readonly CompiledRegex _nullStringPattern = @"(?i)\{null\}";
 
-		/// <summary>
-		///    Gets the resource.
-		/// </summary>
-		/// <value>
-		///    The resource.
-		/// </value>
-		string Resource { get; }
+		[StepArgumentTransformation]
+		public TestString NullSensitiveStringAssignment(string value)
+		{
+			return _nullStringPattern.IsMatch(value) ? null : new TestString(value);
+		}
+
+		[StepArgumentTransformation(@"(?:should|does|is|will|have|are|has|did)( not)?")]
+		public bool SuccessFlagAssignment(string modifier)
+		{
+			return string.IsNullOrWhiteSpace(modifier);
+		}
 	}
 }

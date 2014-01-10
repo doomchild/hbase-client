@@ -4,7 +4,7 @@ Settings.Initialize(
 	majorNumber: 1,
 	minorNumber: 0,
 	patchNumber: 0,
-	buildNumber: 4,
+	buildNumber: 5,
 	buildLevel: BuildLevels.Beta
 );
 #><#+

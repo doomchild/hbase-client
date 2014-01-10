@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -42,11 +43,13 @@ namespace _specs.Steps
 	{
 		private readonly IMoqContainer _container;
 		private readonly HBaseContext _hBase;
+		private readonly ErrorContext _errors;
 		private readonly ResourceContext _resources;
 
-		public Administration(HBaseContext hBase, ResourceContext resources, IMoqContainer container)
+		public Administration(HBaseContext hBase, ErrorContext errors, ResourceContext resources, IMoqContainer container)
 		{
 			_hBase = hBase;
+			_errors = errors;
 			_resources = resources;
 			_container = container;
 		}
@@ -58,13 +61,13 @@ namespace _specs.Steps
 		}
 
 		[Given(@"I have set my table schema's name to ""(.*)""")]
-		public void SetTableSchemaName(string name)
+		public void SetTableSchemaName(TestString name)
 		{
 			_hBase.TableSchema.Name = name;
 		}
 
 		[Given(@"I have added a column named ""(.*)"" to my table schema")]
-		public void AddColumnSchema(string name)
+		public void AddColumnSchema(TestString name)
 		{
 			List<ColumnSchema> columns = _hBase.TableSchema.Columns ?? (_hBase.TableSchema.Columns = new List<ColumnSchema>());
 			columns.Add(new ColumnSchema {Name = name});
@@ -73,7 +76,14 @@ namespace _specs.Steps
 		[When(@"I create a table using my table schema")]
 		public void CreateTableUsingSchema()
 		{
-			_hBase.Stargate.CreateTable(_hBase.TableSchema);
+			try
+			{
+				_hBase.Stargate.CreateTable(_hBase.TableSchema);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] {error};
+			}
 		}
 
 		[When(@"I delete the ""(.*)"" table")]
@@ -85,7 +95,14 @@ namespace _specs.Steps
 		[When(@"I get the schema of the ""(.*)"" table")]
 		public void GetTableSchema(string tableName)
 		{
-			_hBase.Stargate.GetTableSchema(tableName);
+			try
+			{
+				_hBase.Stargate.GetTableSchema(tableName);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] {error};
+			}
 		}
 
 		[Given(@"I will always get a response with a status of ""(.*)"" and content equivalent to the resource called ""(.*)""")]
@@ -106,6 +123,15 @@ namespace _specs.Steps
 			{
 				new Parameter {Name = RestConstants.LocationHeader, Type = ParameterType.HttpHeader, Value = location}
 			});
+		}
+
+		[Given(@"I will always get a response with a response status of ""(.*)"" and error message equivalent to the resource called ""(.*)""")]
+		public void SetupFakeResponseWithError(ResponseStatus status, string messageResource)
+		{
+			string message = _resources.GetString(messageResource);
+			Mock<IRestResponse> responseMock = _container.Mock<IRestResponse>();
+			responseMock.SetupGet(response => response.ResponseStatus).Returns(status);
+			responseMock.SetupGet(response => response.ErrorException).Returns(new WebException(message));
 		}
 	}
 }

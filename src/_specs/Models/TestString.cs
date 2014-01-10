@@ -1,6 +1,6 @@
 ﻿#region FreeBSD
 
-// Copyright (c) 2013, The Tribe
+// Copyright (c) 2014, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -19,31 +19,20 @@
 
 #endregion
 
-using System.Collections.Generic;
-
-using HBase.Stargate.Client.Models;
-
-namespace HBase.Stargate.Client.Api
+namespace _specs.Models
 {
-	/// <summary>
-	///    Defines a scanner for HBase tables.
-	/// </summary>
-	public interface IScanner : IEnumerable<CellSet>, IEnumerator<CellSet>
+	public class TestString
 	{
-		/// <summary>
-		///    Gets the table name.
-		/// </summary>
-		/// <value>
-		///    The table name.
-		/// </value>
-		string Table { get; }
+		private readonly string _value;
 
-		/// <summary>
-		///    Gets the resource.
-		/// </summary>
-		/// <value>
-		///    The resource.
-		/// </value>
-		string Resource { get; }
+		public TestString(string value)
+		{
+			_value = value;
+		}
+
+		public static implicit operator string(TestString instance)
+		{
+			return instance == null ? null : instance._value;
+		}
 	}
 }

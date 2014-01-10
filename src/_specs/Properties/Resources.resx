@@ -160,10 +160,16 @@
   <data name="HBaseXml_1Alpha_HelloWorld" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HBaseXml_1Alpha_HelloWorld.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="HBaseXml_FindCellsEmptyResponse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HBaseXml_FindCellsEmptyResponse.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="HBaseXml_Set_HelloWorld" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HBaseXml_Set_HelloWorld.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="HBaseXml_TableSchema1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HBaseXml_TableSchema1.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="NoServerResponse" xml:space="preserve">
+    <value>The remote name could not be resolved: 'test-server'</value>
   </data>
 </root>

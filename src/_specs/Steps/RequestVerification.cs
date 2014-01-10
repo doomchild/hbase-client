@@ -44,10 +44,12 @@ namespace _specs.Steps
 	{
 		private readonly IMimeConverterFactory _converterFactory;
 		private readonly RestContext _rest;
+		private readonly ErrorContext _errors;
 
-		public RequestVerification(RestContext rest, IMoqContainer container)
+		public RequestVerification(RestContext rest, ErrorContext errors, IMoqContainer container)
 		{
 			_rest = rest;
+			_errors = errors;
 			_converterFactory = container.Create<IMimeConverterFactory>();
 		}
 
@@ -60,9 +62,21 @@ namespace _specs.Steps
 		[Then(@"a REST request for schema updates should have been submitted with the following values:")]
 		public void CheckSchemaUpdateRequest(Table values)
 		{
-			var properties = values.CreateInstance<ExpectedSchemaUpdateRequestProperties>();
-			AssertRequestValuesMatch(_rest.Request, properties);
-			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
+			CheckSchemaUpdateProperties(values.CreateInstance<ExpectedSchemaUpdateRequestProperties>());
+		}
+
+		[Then(@"if the operation succeeded, a REST request for schema updates should have been submitted with the correct (.*), (.*), (.*), and (.*)")]
+		public void CheckSchemaUpdateRequest(Method method, string resource, string table, string column)
+		{
+			if (!_errors.OutcomeViewedAsSuccessful) return;
+
+			CheckSchemaUpdateProperties(new ExpectedSchemaUpdateRequestProperties
+			{
+				Column = column,
+				Method = method,
+				Resource = resource,
+				Table = table
+			});
 		}
 
 		[Then(@"a REST request should have been submitted with the correct (.+) and (.+)")]
@@ -85,15 +99,10 @@ namespace _specs.Steps
 			row.SingleOrDefault(cell => cell.Value == value).Should().NotBeNull();
 		}
 
-		[Then(@"one of the cells in the REST request should have had the following values:")]
+		[Then(@"(?:one of )?the cells in the REST request should have had the following values:")]
 		public void CheckAnyCellValues(Table values)
 		{
-			IEnumerable<Cell> row = GetRowFromRequest();
-			var expected = values.CreateInstance<TestCell>();
-			row.SingleOrDefault(cell => cell.Identifier.Row == expected.Row
-				&& cell.Identifier.CellDescriptor.Column == expected.Column
-				&& cell.Identifier.CellDescriptor.Qualifier == expected.Qualifier
-				&& cell.Value == expected.Value).Should().NotBeNull();
+			values.CompareToSet(GetRowFromRequest().Select(cell => (TestCell) cell));
 		}
 
 		private IEnumerable<Cell> GetRowFromRequest()
@@ -102,7 +111,7 @@ namespace _specs.Steps
 				.Where(cell => cell.Type == ParameterType.RequestBody)
 				.Select(cell => cell.Value.ToString())
 				.FirstOrDefault();
-			IEnumerable<Cell> row = CreateRequestConverter(_rest.Request, _converterFactory).ConvertCells(content).ToArray();
+			IEnumerable<Cell> row = CreateRequestConverter(_rest.Request, _converterFactory).ConvertCells(content, string.Empty).ToArray();
 			row.Should().NotBeNull();
 			return row;
 		}
@@ -150,6 +159,12 @@ namespace _specs.Steps
 			TableSchema schema = CreateRequestConverter(_rest.Request, _converterFactory).ConvertSchema(content);
 			schema.Should().NotBeNull();
 			return schema;
+		}
+
+		private void CheckSchemaUpdateProperties(ExpectedSchemaUpdateRequestProperties properties)
+		{
+			AssertRequestValuesMatch(_rest.Request, properties);
+			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
 		}
 	}
 }

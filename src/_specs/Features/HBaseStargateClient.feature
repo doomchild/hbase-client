@@ -10,14 +10,22 @@ Background:
 	And I have everything I need to test a content converter for XML
 	And I have an HBase client
 
-Scenario: Create a table
+Scenario Outline: Create a table
 	Given I have created a new table schema
-	And I have set my table schema's name to "test"
-	And I have added a column named "alpha" to my table schema
+	And I have set my table schema's name to "<table>"
+	And I have added a column named "<column>" to my table schema
 	When I create a table using my table schema
-	Then a REST request for schema updates should have been submitted with the following values:
-		| method | resource    | table | column |
-		| PUT    | test/schema | test  | alpha  |
+	Then the operation <should or should not> have succeeded
+	And if the operation succeeded, a REST request for schema updates should have been submitted with the correct <method>, <resource>, <table>, and <column>
+	And if there was an exception, it should have been the expected <exception> type
+	And if there was an exception, it should have had the expected exception <message>
+Examples:
+	| table  | column | method | resource    | should or should not | exception         | message                                      |
+	| {null} | {null} | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	| {null} |        | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	|        | {null} | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	|        |        | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	| test   |        | PUT    | test/schema | should not           | ArgumentException | ErrorProvider_ColumnNameMissing              |
 
 Scenario Outline: Write a single value
 	Given I have an identifier consisting of a <table>, a <row>, a <column>, a <qualifier>, and a <timestamp>
@@ -34,28 +42,20 @@ Examples:
 
 Scenario: Write multiple values
 	Given I have created a set of cells for the "test" table
-	And I have added a cell to my set with the following properties:
+	And I have added cells to my set with the following properties:
 		| row | column | qualifier | value       |
 		| 1   | beta   | x         | hello world |
-	And I have added a cell to my set with the following properties:
-		| row | column | qualifier | value       |
 		| 1   | beta   | y         | dlrow olleh |
-	And I have added a cell to my set with the following properties:
-		| row | column | qualifier | value       |
 		| 1   | beta   | z         | lorum ipsum |
 	When I write the set of cells
 	Then a REST request should have been submitted with the following values:
 		| method | resource |
 		| POST   | test/row |
 	And the REST request should have contained 3 cells
-	And one of the cells in the REST request should have had the following values:
+	And the cells in the REST request should have had the following values:
 		| row | column | qualifier | value       |
 		| 1   | beta   | x         | hello world |
-	And one of the cells in the REST request should have had the following values:
-		| row | column | qualifier | value       |
 		| 1   | beta   | y         | dlrow olleh |
-	And one of the cells in the REST request should have had the following values:
-		| row | column | qualifier | value       |
 		| 1   | beta   | z         | lorum ipsum |
 
 Scenario Outline: Read a row
@@ -106,6 +106,13 @@ Examples:
 	| test  | 1   | alpha  |           | GET    | test/1/alpha?v=1   |
 	| test  | 1   | alpha  | x         | GET    | test/1/alpha:x?v=1 |
 
+Scenario: Read a row with expected data
+	Given I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_1Alpha_HelloWorld"
+	When I read all cells from the "test" table
+	Then one of the cells in my set should have the following properties:
+        | table | row | column | qualifier | value       |
+        | test  | 1   | alpha  |           | hello world |
+
 Scenario: Create a scanner
 	Given I will always get a response with a status of "OK" and a location header of "http://someurl.com/test/scanner/abc123"
 	When I create a scanner for the "test" table
@@ -116,10 +123,14 @@ Scenario: Create a scanner
 
 Scenario: Read a result from a scanner
 	Given I have a scanner for the "test" table named "abc123"
+	And I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_1Alpha_HelloWorld"
 	When I read a result from the scanner
 	Then a REST request should have been submitted with the following values:
 		| method | resource            |
 		| GET    | test/scanner/abc123 |
+	And one of the cells in my set should have the following properties:
+        | table |
+        | test  |
 
 Scenario: Delete a scanner
 	Given I have a scanner for the "test" table named "abc123"
@@ -158,3 +169,16 @@ Scenario: Delete a table
 	Then a REST request should have been submitted with the following values:
 		| method | resource    |
 		| DELETE | test/schema |
+
+Scenario: Find cells with an empty table
+	Given I will always get a response with a status of "NotFound" and content equivalent to the resource called "HBaseXml_FindCellsEmptyResponse"
+	When I read all cells from the "test" table
+	Then my set should contain 0 cells
+
+Scenario: No Server Response
+	Given I will always get a response with a response status of "Error" and error message equivalent to the resource called "NoServerResponse"
+	When I get the schema of the "test" table
+	Then a REST request should have been submitted with the following values:
+		| method | resource    |
+		| GET    | test/schema |
+	And there should have been a WebException with a message equivalent to the resource called "NoServerResponse"

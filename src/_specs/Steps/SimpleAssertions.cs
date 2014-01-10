@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013, The Tribe
+﻿#region FreeBSD
+
+// Copyright (c) 2014, The Tribe
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,11 +17,12 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#endregion
+
 using System.Linq;
 
 using FluentAssertions;
 
-using HBase.Stargate.Client;
 using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
@@ -58,21 +61,20 @@ namespace _specs.Steps
 			_cells.CellSet.Should().HaveCount(count);
 		}
 
-		[Then(@"one of the cells in my set should have the following properties:")]
+		[Then(@"(?:one of )?the cells in my set should have the following properties:")]
 		public void CheckAnyCellInSet(Table values)
 		{
-			var testCell = values.CreateInstance<TestCell>();
-			_cells.CellSet.Any(cell => CellMatchesTestValue(cell, testCell)).Should().BeTrue();
+			values.CompareToSet(_cells.CellSet.Select(cell => (TestCell) cell));
 		}
 
 		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
 		{
 			return cell.Identifier.Row == testCell.Row
-			       && cell.Identifier.CellDescriptor != null
-			       && cell.Identifier.CellDescriptor.Column == testCell.Column
-			       && cell.Identifier.CellDescriptor.Qualifier == testCell.Qualifier
-			       && cell.Identifier.Timestamp == testCell.Timestamp
-			       && cell.Value == testCell.Value;
+				&& cell.Identifier.CellDescriptor != null
+				&& cell.Identifier.CellDescriptor.Column == testCell.Column
+				&& cell.Identifier.CellDescriptor.Qualifier == testCell.Qualifier
+				&& cell.Identifier.Timestamp == testCell.Timestamp
+				&& cell.Value == testCell.Value;
 		}
 	}
 }

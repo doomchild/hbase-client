@@ -15,7 +15,8 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using HBase.Stargate.Client;
+using System.Linq;
+
 using HBase.Stargate.Client.Models;
 
 using TechTalk.SpecFlow;
@@ -49,11 +50,10 @@ namespace _specs.Steps
 			_hBase.CellSet = new CellSet {Table = table};
 		}
 
-		[Given(@"I have added a cell to my set with the following properties:")]
+		[Given(@"I have added (?:a cell|cells) to my set with the following properties:")]
 		public void AddToCellSet(Table values)
 		{
-			var testCell = values.CreateInstance<TestCell>();
-			_hBase.CellSet.Add(ConvertToCell(testCell));
+			_hBase.CellSet.AddRange(values.CreateSet<TestCell>().Select(cell => (Cell) cell));
 		}
 
 		[Given(@"I have raw content equal to the resource called ""(.*)""")]
@@ -65,31 +65,7 @@ namespace _specs.Steps
 		[Given(@"I have a cell with a (.+), (.+), (.*), (.*), and (.*)")]
 		public void CreateCell(string row, string column, string qualifier, string timestamp, string value)
 		{
-			_hBase.Cell = new Cell(new Identifier
-			{
-				Row = row,
-				CellDescriptor = new HBaseCellDescriptor
-				{
-					Column = column,
-					Qualifier = qualifier
-				},
-				Timestamp = timestamp.ToNullableInt64()
-			}, value);
-		}
-
-		private static Cell ConvertToCell(TestCell testCell)
-		{
-			return new Cell(new Identifier
-			{
-				Table = testCell.Table,
-				Row = testCell.Row,
-				CellDescriptor = new HBaseCellDescriptor
-				{
-					Column = testCell.Column,
-					Qualifier = testCell.Qualifier
-				},
-				Timestamp = testCell.Timestamp
-			}, testCell.Value);
+			_hBase.Cell = new TestCell(row, column, qualifier, timestamp, value);
 		}
 	}
 }
