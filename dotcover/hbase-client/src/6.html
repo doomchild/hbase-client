@@ -1,0 +1,293 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_6 = [
+   [7,2,8,69,'dccv']
+, [10,2,10,142,'dccv']
+, [11,2,11,104,'dccv']
+, [13,1,13,34,'dccv']
+, [6,1,6,26,'dccv']
+, [14,2,14,119,'dccv']
+, [15,2,15,149,'dccv']
+, [16,2,16,159,'dccv']
+, [17,2,17,122,'dccv']
+, [18,2,18,150,'dccv']
+, [19,2,20,2,'dccv']
+, [20,2,20,176,'dccv']
+, [21,2,21,178,'dccv']
+, [30,1,30,34,'dccv']
+, [6,1,6,26,'dccv']
+, [31,2,31,215,'dccv']
+, [32,2,32,137,'dccv']
+, [33,2,33,187,'dccv']
+, [34,2,34,127,'dccv']
+, [35,2,35,160,'dccv']
+, [43,1,43,34,'dccv']
+, [6,1,6,26,'dccv']
+, [44,2,44,138,'dccv']
+, [45,2,45,114,'dccv']
+, [50,2,50,108,'dccv']
+, [51,2,51,125,'dccv']
+, [54,2,54,128,'dccv']
+, [55,2,55,122,'dccv']
+, [61,1,61,34,'dccv']
+, [6,1,6,26,'dccv']
+, [62,2,63,2,'dccv']
+, [63,111,63,183,'dccv']
+, [63,2,63,111,'dccv']
+, [64,2,64,187,'dccv']
+, [100,1,100,34,'dccv']
+, [6,1,6,26,'dccv']
+, [101,2,101,197,'dccv']
+, [102,2,102,125,'dccv']
+, [103,2,103,187,'dccv']
+, [109,1,109,34,'dccv']
+, [6,1,6,26,'dccv']
+, [110,2,111,2,'dccv']
+, [111,124,111,134,'dccv']
+, [111,2,111,124,'dccv']
+, [112,2,112,121,'dccv']
+, [116,1,116,34,'dccv']
+, [6,1,6,26,'dccv']
+, [117,2,118,2,'dccv']
+, [118,2,118,125,'dccv']
+, [119,2,119,125,'dccv']
+, [122,2,122,146,'dccv']
+, [124,1,124,34,'dccv']
+, [6,1,6,26,'dccv']
+, [125,2,125,142,'dccv']
+, [126,2,127,2,'dccv']
+, [127,116,127,132,'dccv']
+, [127,2,127,116,'dccv']
+, [128,2,128,125,'dccv']
+, [131,2,131,119,'dccv']
+, [135,1,135,34,'dccv']
+, [6,1,6,26,'dccv']
+, [136,2,136,142,'dccv']
+, [137,2,137,104,'dccv']
+, [138,2,138,125,'dccv']
+, [142,1,142,34,'dccv']
+, [6,1,6,26,'dccv']
+, [143,2,143,114,'dccv']
+, [144,2,144,126,'dccv']
+, [148,1,148,34,'dccv']
+, [6,1,6,26,'dccv']
+, [149,2,150,2,'dccv']
+, [150,122,150,129,'dccv']
+, [150,2,150,122,'dccv']
+, [151,2,151,126,'dccv']
+, [155,1,155,34,'dccv']
+, [6,1,6,26,'dccv']
+, [156,2,156,211,'dccv']
+, [157,2,157,120,'dccv']
+, [158,2,158,187,'dccv']
+, [167,1,167,34,'dccv']
+, [6,1,6,26,'dccv']
+, [168,2,168,111,'dccv']
+, [169,2,169,126,'dccv']
+, [173,1,173,34,'dccv']
+, [6,1,6,26,'dccv']
+, [174,2,175,2,'dccv']
+, [175,124,175,145,'dccv']
+, [175,2,175,124,'dccv']
+, [176,2,176,113,'dccv']
+, [178,1,178,34,'dccv']
+, [6,1,6,26,'dccv']
+, [179,2,180,2,'dccv']
+, [180,122,180,142,'dccv']
+, [180,2,180,122,'dccv']
+, [181,2,181,126,'dccv']
+, [184,2,185,112,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src6" class="dotCoverSource"><pre>Feature: HBase Stargate Client
+	In order to read and write HBase data
+	As an application developer
+	I want access to all available REST operations on HBase Stargate via a managed client API
+
+Background:
+	Given I have everything I need to test a disconnected HBase client, with the following options:
+		| server URL              | content type | false row key |
+		| http://test-server:9999 | text/xml     | row           |
+	And I have everything I need to test a content converter for XML
+	And I have an HBase client
+
+Scenario Outline: Create a table
+	Given I have created a new table schema
+	And I have set my table schema&#39;s name to &quot;&lt;table&gt;&quot;
+	And I have added a column named &quot;&lt;column&gt;&quot; to my table schema
+	When I create a table using my table schema
+	Then the operation &lt;should or should not&gt; have succeeded
+	And if the operation succeeded, a REST request for schema updates should have been submitted with the correct &lt;method&gt;, &lt;resource&gt;, &lt;table&gt;, and &lt;column&gt;
+	And if there was an exception, it should have been the expected &lt;exception&gt; type
+	And if there was an exception, it should have had the expected exception &lt;message&gt;
+Examples:
+	| table  | column | method | resource    | should or should not | exception         | message                                      |
+	| {null} | {null} | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	| {null} |        | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	|        | {null} | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	|        |        | PUT    |             | should not           | ArgumentException | ResourceBuilder_MinimumForSchemaUpdateNotMet |
+	| test   |        | PUT    | test/schema | should not           | ArgumentException | ErrorProvider_ColumnNameMissing              |
+
+Scenario Outline: Write a single value
+	Given I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;
+	When I write the value &quot;hello world&quot; using my identifier
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+	And the REST request should have contained 1 cell
+	And one of the cells in the REST request should have had the value &quot;hello world&quot;
+Examples:
+	| table | row | column | qualifier | timestamp | method | resource         |
+	| test  | 1   | alpha  |           |           | POST   | test/1/alpha     |
+	| test  | 1   | alpha  | x         |           | POST   | test/1/alpha:x   |
+	| test  | 1   | alpha  |           | 4         | POST   | test/1/alpha/4   |
+	| test  | 1   | alpha  | x         | 4         | POST   | test/1/alpha:x/4 |
+
+Scenario: Write multiple values
+	Given I have created a set of cells for the &quot;test&quot; table
+	And I have added cells to my set with the following properties:
+		| row | column | qualifier | value       |
+		| 1   | beta   | x         | hello world |
+		| 1   | beta   | y         | dlrow olleh |
+		| 1   | beta   | z         | lorum ipsum |
+	When I write the set of cells
+	Then a REST request should have been submitted with the following values:
+		| method | resource |
+		| POST   | test/row |
+	And the REST request should have contained 3 cells
+	And the cells in the REST request should have had the following values:
+		| row | column | qualifier | value       |
+		| 1   | beta   | x         | hello world |
+		| 1   | beta   | y         | dlrow olleh |
+		| 1   | beta   | z         | lorum ipsum |
+
+Scenario Outline: Read a row
+	Given I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, a &lt;end&gt; timestamp, and a &lt;max&gt; number of results
+	When I read a row using my query
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+Examples:
+	| table | row | column | qualifier | begin | end | max | method | resource               |
+	| test  | 1   |        |           |       |     |     | GET    | test/1                 |
+	| test  | 1   |        |           |       |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        |           |       | 5   |     | GET    | test/1/*/5             |
+	| test  | 1   |        |           |       | 5   | 2   | GET    | test/1/*/5?v=2         |
+	| test  | 1   |        |           | 4     |     |     | GET    | test/1                 |
+	| test  | 1   |        |           | 4     |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        |           | 4     | 5   |     | GET    | test/1/*/4,5           |
+	| test  | 1   |        |           | 4     | 5   | 2   | GET    | test/1/*/4,5?v=2       |
+	| test  | 1   |        | x         |       |     |     | GET    | test/1                 |
+	| test  | 1   |        | x         |       |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        | x         |       | 5   |     | GET    | test/1/*/5             |
+	| test  | 1   |        | x         |       | 5   | 2   | GET    | test/1/*/5?v=2         |
+	| test  | 1   |        | x         | 4     |     |     | GET    | test/1                 |
+	| test  | 1   |        | x         | 4     |     | 2   | GET    | test/1?v=2             |
+	| test  | 1   |        | x         | 4     | 5   |     | GET    | test/1/*/4,5           |
+	| test  | 1   |        | x         | 4     | 5   | 2   | GET    | test/1/*/4,5?v=2       |
+	| test  | 1   | alpha  |           |       |     |     | GET    | test/1/alpha           |
+	| test  | 1   | alpha  |           |       |     | 2   | GET    | test/1/alpha?v=2       |
+	| test  | 1   | alpha  |           |       | 5   |     | GET    | test/1/alpha/5         |
+	| test  | 1   | alpha  |           |       | 5   | 2   | GET    | test/1/alpha/5?v=2     |
+	| test  | 1   | alpha  |           | 4     |     |     | GET    | test/1/alpha           |
+	| test  | 1   | alpha  |           | 4     |     | 2   | GET    | test/1/alpha?v=2       |
+	| test  | 1   | alpha  |           | 4     | 5   |     | GET    | test/1/alpha/4,5       |
+	| test  | 1   | alpha  |           | 4     | 5   | 2   | GET    | test/1/alpha/4,5?v=2   |
+	| test  | 1   | alpha  | x         |       |     |     | GET    | test/1/alpha:x         |
+	| test  | 1   | alpha  | x         |       |     | 2   | GET    | test/1/alpha:x?v=2     |
+	| test  | 1   | alpha  | x         |       | 5   |     | GET    | test/1/alpha:x/5       |
+	| test  | 1   | alpha  | x         |       | 5   | 2   | GET    | test/1/alpha:x/5?v=2   |
+	| test  | 1   | alpha  | x         | 4     |     |     | GET    | test/1/alpha:x         |
+	| test  | 1   | alpha  | x         | 4     |     | 2   | GET    | test/1/alpha:x?v=2     |
+	| test  | 1   | alpha  | x         | 4     | 5   |     | GET    | test/1/alpha:x/4,5     |
+	| test  | 1   | alpha  | x         | 4     | 5   | 2   | GET    | test/1/alpha:x/4,5?v=2 |
+	
+Scenario Outline: Read a single value
+	Given I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, and a &lt;qualifier&gt;
+	When I read a single value using my identifier
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+Examples:
+	| table | row | column | qualifier | method | resource           |
+	| test  | 1   | alpha  |           | GET    | test/1/alpha?v=1   |
+	| test  | 1   | alpha  | x         | GET    | test/1/alpha:x?v=1 |
+
+Scenario: Read a row with expected data
+	Given I will always get a response with a status of &quot;OK&quot; and content equivalent to the resource called &quot;HBaseXml_1Alpha_HelloWorld&quot;
+	When I read all cells from the &quot;test&quot; table
+	Then one of the cells in my set should have the following properties:
+        | table | row | column | qualifier | value       |
+        | test  | 1   | alpha  |           | hello world |
+
+Scenario: Create a scanner
+	Given I will always get a response with a status of &quot;OK&quot; and a location header of &quot;http://someurl.com/test/scanner/abc123&quot;
+	When I create a scanner for the &quot;test&quot; table
+	Then a REST request should have been submitted with the following values:
+		| method | resource     |
+		| PUT    | test/scanner |
+	And my scanner should have a resource set to &quot;test/scanner/abc123&quot;
+
+Scenario: Read a result from a scanner
+	Given I have a scanner for the &quot;test&quot; table named &quot;abc123&quot;
+	And I will always get a response with a status of &quot;OK&quot; and content equivalent to the resource called &quot;HBaseXml_1Alpha_HelloWorld&quot;
+	When I read a result from the scanner
+	Then a REST request should have been submitted with the following values:
+		| method | resource            |
+		| GET    | test/scanner/abc123 |
+	And one of the cells in my set should have the following properties:
+        | table |
+        | test  |
+
+Scenario: Delete a scanner
+	Given I have a scanner for the &quot;test&quot; table named &quot;abc123&quot;
+	When I delete the scanner
+	Then a REST request should have been submitted with the following values:
+		| method | resource            |
+		| DELETE | test/scanner/abc123 |
+
+Scenario: Enumerate all tables
+	When I read the names of all tables
+	Then a REST request should have been submitted with the following values:
+		| method | resource |
+		| GET    |          |
+
+Scenario: Get table schema
+	Given I will always get a response with a status of &quot;OK&quot; and content equivalent to the resource called &quot;HBaseXml_TableSchema1&quot;
+	When I get the schema of the &quot;test&quot; table
+	Then a REST request should have been submitted with the following values:
+		| method | resource    |
+		| GET    | test/schema |
+
+Scenario Outline: Delete a row, columm, or cell
+	And I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;
+	When I delete an item using my identifier
+	Then a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;
+Examples:
+	| table | row | column | qualifier | timestamp | method | resource         |
+	| test  | 1   |        |           |           | DELETE | test/1           |
+	| test  | 1   | alpha  |           |           | DELETE | test/1/alpha     |
+	| test  | 1   | alpha  | x         |           | DELETE | test/1/alpha:x   |
+	| test  | 1   | alpha  |           | 4         | DELETE | test/1/alpha/4   |
+	| test  | 1   | alpha  | x         | 4         | DELETE | test/1/alpha:x/4 |
+
+Scenario: Delete a table
+	When I delete the &quot;test&quot; table
+	Then a REST request should have been submitted with the following values:
+		| method | resource    |
+		| DELETE | test/schema |
+
+Scenario: Find cells with an empty table
+	Given I will always get a response with a status of &quot;NotFound&quot; and content equivalent to the resource called &quot;HBaseXml_FindCellsEmptyResponse&quot;
+	When I read all cells from the &quot;test&quot; table
+	Then my set should contain 0 cells
+
+Scenario: No Server Response
+	Given I will always get a response with a response status of &quot;Error&quot; and error message equivalent to the resource called &quot;NoServerResponse&quot;
+	When I get the schema of the &quot;test&quot; table
+	Then a REST request should have been submitted with the following values:
+		| method | resource    |
+		| GET    | test/schema |
+	And there should have been a WebException with a message equivalent to the resource called &quot;NoServerResponse&quot;</pre></code><script type="text/javascript">
+			applyranges('src6', RANGES_6)
+		</script>
+	</body>
+</html>

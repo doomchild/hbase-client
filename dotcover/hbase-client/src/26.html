@@ -1,0 +1,181 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_26 = [
+   [40,3,40,131,'dccv']
+, [41,3,41,4,'dccv']
+, [42,4,42,37,'dccv']
+, [43,4,43,19,'dccv']
+, [44,4,44,21,'dccv']
+, [45,4,45,27,'dccv']
+, [46,3,46,4,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,89,'dccv']
+, [52,4,52,59,'dccv']
+, [53,3,53,4,'dccv']
+, [57,3,57,4,'dccv']
+, [59,4,59,5,'dccv']
+, [60,5,60,107,'dccv']
+, [61,4,61,5,'dccv']
+, [62,4,62,27,'dccv']
+, [63,4,63,5,'dccv']
+, [64,5,64,42,'dccv']
+, [65,4,65,5,'dccv']
+, [66,3,66,4,'dccv']
+, [70,3,70,4,'dccv']
+, [72,4,72,5,'dccv']
+, [73,5,73,115,'dccv']
+, [74,4,74,5,'dccv']
+, [75,4,75,27,'dccv']
+, [76,4,76,5,'dccv']
+, [77,5,77,42,'dccv']
+, [78,4,78,5,'dccv']
+, [79,3,79,4,'dccv']
+, [83,3,83,4,'dccv']
+, [85,4,85,5,'dccv']
+, [86,5,86,109,'dccv']
+, [87,4,87,5,'dccv']
+, [88,4,88,27,'dccv']
+, [89,4,89,5,'dccv']
+, [90,5,90,44,'dccv']
+, [91,4,91,5,'dccv']
+, [92,3,92,4,'dccv']
+, [96,3,96,4,'dccv']
+, [98,4,98,5,'dccv']
+, [99,5,99,108,'dccv']
+, [100,4,100,5,'dccv']
+, [101,4,101,27,'dccv']
+, [102,4,102,5,'dccv']
+, [103,5,103,44,'dccv']
+, [104,4,104,5,'dccv']
+, [105,3,105,4,'dccv']
+, [109,3,109,4,'dccv']
+, [110,4,110,102,'dccv']
+, [111,4,111,59,'dccv']
+, [113,4,113,28,'dccv']
+, [114,3,114,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src26" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+using System;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Api;
+
+using Patterns.Testing.Moq;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class ResourceBuilding
+	{
+		private readonly ResourceBuilderContext _builderContext;
+		private readonly HBaseContext _hBase;
+		private readonly ErrorContext _errors;
+		private readonly IMoqContainer _container;
+
+		public ResourceBuilding(ResourceBuilderContext builderContext, HBaseContext hBase, ErrorContext errors, IMoqContainer container)
+		{
+			_builderContext = builderContext;
+			_hBase = hBase;
+			_errors = errors;
+			_container = container;
+		}
+
+		[Given(@&quot;I have everything I need to test a resource builder in isolation, assuming a false-row-key of &quot;&quot;(.+)&quot;&quot;&quot;)]
+		public void SetupResourceBuilder(string falseRowKey)
+		{
+			_container.Update&lt;IStargateOptions&gt;(new StargateOptions {FalseRowKey = falseRowKey});
+			_container.Update&lt;IResourceBuilder, ResourceBuilder&gt;();
+		}
+
+		[When(@&quot;I build a resource name for Cell or Row queries using my query&quot;)]
+		public void BuildCellOrRowQuery()
+		{
+			try
+			{
+				_builderContext.ResourceUri = _container.Create&lt;IResourceBuilder&gt;().BuildCellOrRowQuery(_hBase.Query);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] {error};
+			}
+		}
+
+		[When(@&quot;I build a resource name for storing single values using my identifier&quot;)]
+		public void BuildSingleValueStorage()
+		{
+			try
+			{
+				_builderContext.ResourceUri = _container.Create&lt;IResourceBuilder&gt;().BuildSingleValueAccess(_hBase.Identifier);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] {error};
+			}
+		}
+
+		[When(@&quot;I build a resource name for storing multiple values using my identifier&quot;)]
+		public void BuildMultipleValueStorage()
+		{
+			try
+			{
+				_builderContext.ResourceUri = _container.Create&lt;IResourceBuilder&gt;().BuildBatchInsert(_hBase.Identifier);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] { error };
+			}
+		}
+
+		[When(@&quot;I build a resource name for deleting items using my identifier&quot;)]
+		public void BuildDeleteItem()
+		{
+			try
+			{
+				_builderContext.ResourceUri = _container.Create&lt;IResourceBuilder&gt;().BuildDeleteItem(_hBase.Identifier);
+			}
+			catch (Exception error)
+			{
+				_errors.CaughtErrors = new[] { error };
+			}
+		}
+
+		[Then(@&quot;the resulting resource name should match the expected (.*)&quot;)]
+		public void CheckBuiltResourceMatches(string value)
+		{
+			var left = string.IsNullOrEmpty(_builderContext.ResourceUri) ? null : _builderContext.ResourceUri;
+			var right = string.IsNullOrEmpty(value) ? null : value;
+
+			left.Should().Be(right);
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src26', RANGES_26)
+		</script>
+	</body>
+</html>

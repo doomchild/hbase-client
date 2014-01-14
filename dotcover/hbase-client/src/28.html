@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_28 = [
+   [38,3,38,75,'dccv']
+, [39,3,39,4,'dccv']
+, [40,4,40,19,'dccv']
+, [41,4,41,27,'dccv']
+, [42,3,42,4,'dccv']
+, [46,3,46,4,'dccv']
+, [47,4,47,91,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,88,'dccv']
+, [54,4,54,30,'dccv']
+, [55,4,55,25,'dccv']
+, [56,3,56,4,'dccv']
+, [60,3,60,4,'dccv']
+, [61,4,61,64,'dccv']
+, [62,3,62,4,'dccv']
+, [66,3,66,4,'dccv']
+, [67,4,67,60,'dccv']
+, [68,3,68,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src28" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+using System.Collections.Generic;
+using System.Linq;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps.Serialization
+{
+	[Binding]
+	public class ContentConversion
+	{
+		private readonly HBaseContext _hBase;
+		private readonly ContentConverter _converter;
+
+		public ContentConversion(HBaseContext hBase, ContentConverter converter)
+		{
+			_hBase = hBase;
+			_converter = converter;
+		}
+
+		[When(@&quot;I convert my raw content to a set of cells&quot;)]
+		public void ConvertRawContentToCellSet()
+		{
+			_hBase.CellSet = new CellSet(_converter.ConvertCells(_hBase.RawContent, string.Empty));
+		}
+
+		[When(@&quot;I convert my raw content to a cell&quot;)]
+		public void ConvertRawContentToCell()
+		{
+			IList&lt;Cell&gt; set = _converter.ConvertCells(_hBase.RawContent, string.Empty).ToList();
+			set.Should().HaveCount(1);
+			_hBase.Cell = set[0];
+		}
+
+		[When(@&quot;I convert my set of cells to raw content&quot;)]
+		public void ConvertCellSetToRawContent()
+		{
+			_hBase.RawContent = _converter.ConvertCells(_hBase.CellSet);
+		}
+
+		[When(@&quot;I convert my cell to raw content&quot;)]
+		public void ConvertCellToRawContent()
+		{
+			_hBase.RawContent = _converter.ConvertCell(_hBase.Cell);
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src28', RANGES_28)
+		</script>
+	</body>
+</html>

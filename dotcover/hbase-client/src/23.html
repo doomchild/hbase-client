@@ -1,0 +1,165 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_23 = [
+   [38,3,38,44,'dccv']
+, [39,3,39,4,'dccv']
+, [40,4,40,19,'dccv']
+, [41,3,41,4,'dccv']
+, [45,3,45,4,'dccv']
+, [46,4,46,55,'dccv']
+, [47,3,47,4,'dccv']
+, [51,3,51,4,'dccv']
+, [52,4,62,6,'dccv']
+, [63,3,63,4,'dccv']
+, [67,3,67,4,'dccv']
+, [68,4,77,6,'dccv']
+, [78,3,78,4,'dccv']
+, [82,3,82,4,'dccv']
+, [83,4,83,47,'dccv']
+, [84,3,84,4,'dccv']
+, [88,3,88,4,'dccv']
+, [89,4,89,53,'dccv']
+, [90,3,90,4,'dccv']
+, [94,3,94,4,'dccv']
+, [95,4,95,86,'dccv']
+, [96,3,96,4,'dccv']
+, [100,3,100,4,'dccv']
+, [101,4,101,85,'dccv']
+, [102,3,102,4,'dccv']
+, [105,3,105,4,'dccv']
+, [106,4,106,62,'dccv']
+, [108,4,118,6,'dccv']
+, [119,4,119,22,'dccv']
+, [120,3,120,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src23" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Models;
+
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class Identification
+	{
+		private readonly HBaseContext _hBase;
+
+		public Identification(HBaseContext hBase)
+		{
+			_hBase = hBase;
+		}
+
+		[Given(@&quot;I have an identifier consisting of a ([^,]*)&quot;)]
+		public void SetIdentifier(string table)
+		{
+			_hBase.Identifier = new Identifier {Table = table};
+		}
+
+		[Given(@&quot;I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)&quot;)]
+		public void SetIdentifier(string table, string row, string column, string qualifier, string timestamp)
+		{
+			_hBase.Identifier = new Identifier
+			{
+				Table = table,
+				Row = row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
+				Timestamp = timestamp.ToNullableInt64()
+			};
+		}
+
+		[Given(@&quot;I have an identifier consisting of a ([^,]*), a ([^,]*), a ([^,]*), and a ([^,]*)&quot;)]
+		public void SetIdentifier(string table, string row, string column, string qualifier)
+		{
+			_hBase.Identifier = new Identifier
+			{
+				Table = table,
+				Row = row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				}
+			};
+		}
+
+		[Given(@&quot;I have an identifier consisting of the following values:&quot;)]
+		public void SetIdentifier(Table options)
+		{
+			_hBase.Identifier = GetIdentifier(options);
+		}
+
+		[Given(@&quot;I have a second identifier consisting of the following values:&quot;)]
+		public void SetSecondIdentifier(Table options)
+		{
+			_hBase.SecondIdentifier = GetIdentifier(options);
+		}
+
+		[When(@&quot;I match the second identifier to the first one&quot;)]
+		public void MatchIdentifiers()
+		{
+			_hBase.IdentifierMatchResult = _hBase.Identifier.Matches(_hBase.SecondIdentifier);
+		}
+
+		[Then(@&quot;the identifier match should( not)? have succeeded&quot;)]
+		public void AssertMatchResults(string negativeModifier)
+		{
+			_hBase.IdentifierMatchResult.Should().Be(string.IsNullOrEmpty(negativeModifier));
+		}
+
+		private static Identifier GetIdentifier(Table options)
+		{
+			var descriptor = options.CreateInstance&lt;TestDescriptor&gt;();
+
+			var identifier = new Identifier
+			{
+				Table = descriptor.Table,
+				Row = descriptor.Row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = descriptor.Column,
+					Qualifier = descriptor.Qualifier
+				},
+				Timestamp = descriptor.Timestamp
+			};
+			return identifier;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src23', RANGES_23)
+		</script>
+	</body>
+</html>

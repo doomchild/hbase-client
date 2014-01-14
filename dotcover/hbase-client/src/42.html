@@ -1,0 +1,280 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_42 = [
+   [168,3,168,4,'dccv']
+, [169,4,169,48,'dccv']
+, [169,77,169,79,'dccv']
+, [170,4,170,17,'dccv']
+, [171,4,171,5,'dccv']
+, [172,5,172,47,'dccv']
+, [173,4,173,5,'dccv']
+, [174,3,174,4,'dccv']
+, [169,48,169,77,'dccv']
+, [49,3,49,4,'dcuc']
+, [50,4,50,98,'dcuc']
+, [51,3,51,4,'dcuc']
+, [65,3,65,4,'dcuc']
+, [66,4,66,86,'dcuc']
+, [67,3,67,4,'dcuc']
+, [80,3,80,4,'dcuc']
+, [81,4,81,91,'dcuc']
+, [82,3,82,4,'dcuc']
+, [94,3,94,4,'dcuc']
+, [95,4,95,79,'dcuc']
+, [96,3,96,4,'dcuc']
+, [109,3,109,4,'dcuc']
+, [110,4,110,90,'dcuc']
+, [111,3,111,4,'dcuc']
+, [123,3,123,4,'dcuc']
+, [124,4,124,85,'dcuc']
+, [125,3,125,4,'dcuc']
+, [140,3,140,4,'dcuc']
+, [141,4,141,116,'dcuc']
+, [142,3,142,4,'dcuc']
+, [157,3,157,4,'dcuc']
+, [158,4,158,111,'dcuc']
+, [159,3,159,4,'dcuc']
+, [182,3,182,4,'dcuc']
+, [183,4,183,69,'dcuc']
+, [184,4,184,61,'dcuc']
+, [185,4,185,33,'dcuc']
+, [186,3,186,4,'dcuc']
+, [189,3,189,4,'dcuc']
+, [190,4,200,6,'dcuc']
+, [201,3,201,4,'dcuc']
+, [204,3,204,4,'dcuc']
+, [205,4,220,6,'dcuc']
+, [221,3,221,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src42" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+
+using HBase.Stargate.Client.Models;
+
+using RestSharp;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Provides Stargate API extensions.
+	/// &lt;/summary&gt;
+	public static class Extensions
+	{
+		/// &lt;summary&gt;
+		///    Writes the value to HBase using the identifier values.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static Task WriteValueAsync(this IStargate gate, string value, string table, string row, string column, string qualifier = null,
+			long? timestamp = null)
+		{
+			return gate.WriteValueAsync(BuildIdentifier(table, row, column, qualifier, timestamp), value);
+		}
+
+		/// &lt;summary&gt;
+		///    Writes the value to HBase using the identifier values.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;value&quot;&gt;The value.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static void WriteValue(this IStargate gate, string value, string table, string row, string column, string qualifier = null,
+			long? timestamp = null)
+		{
+			gate.WriteValue(BuildIdentifier(table, row, column, qualifier, timestamp), value);
+		}
+
+		/// &lt;summary&gt;
+		///    Deletes the item with matching values from HBase.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static Task DeleteItemAsync(this IStargate gate, string table, string row, string column = null, string qualifier = null,
+			long? timestamp = null)
+		{
+			return gate.DeleteItemAsync(BuildIdentifier(table, row, column, qualifier, timestamp));
+		}
+
+		/// &lt;summary&gt;
+		///    Deletes the item with matching values from HBase.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static void DeleteItem(this IStargate gate, string table, string row, string column = null, string qualifier = null, long? timestamp = null)
+		{
+			gate.DeleteItem(BuildIdentifier(table, row, column, qualifier, timestamp));
+		}
+
+		/// &lt;summary&gt;
+		///    Reads the value at the matching location.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static Task&lt;string&gt; ReadValueAsync(this IStargate gate, string table, string row, string column, string qualifier = null,
+			long? timestamp = null)
+		{
+			return gate.ReadValueAsync(BuildIdentifier(table, row, column, qualifier, timestamp));
+		}
+
+		/// &lt;summary&gt;
+		///    Reads the value at the matching location.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static string ReadValue(this IStargate gate, string table, string row, string column, string qualifier = null, long? timestamp = null)
+		{
+			return gate.ReadValue(BuildIdentifier(table, row, column, qualifier, timestamp));
+		}
+
+		/// &lt;summary&gt;
+		/// Finds the cells with the matching attributes.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;beginTimestamp&quot;&gt;The begin timestamp (inclusive).&lt;/param&gt;
+		/// &lt;param name=&quot;endTimestamp&quot;&gt;The end timestamp (exclusive).&lt;/param&gt;
+		/// &lt;param name=&quot;maxResults&quot;&gt;The maximum number of results to return.&lt;/param&gt;
+		public static Task&lt;CellSet&gt; FindCellsAsync(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
+			long? beginTimestamp = null, long? endTimestamp = null, int? maxResults = null)
+		{
+			return gate.FindCellsAsync(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxResults));
+		}
+
+		/// &lt;summary&gt;
+		/// Finds the cells with the matching attributes.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;gate&quot;&gt;The gate.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;beginTimestamp&quot;&gt;The begin timestamp (exclusive).&lt;/param&gt;
+		/// &lt;param name=&quot;endTimestamp&quot;&gt;The end timestamp (exclusive).&lt;/param&gt;
+		/// &lt;param name=&quot;maxResults&quot;&gt;The maximum versions to return.&lt;/param&gt;
+		public static CellSet FindCells(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
+			long? beginTimestamp = null, long? endTimestamp = null, int? maxResults = null)
+		{
+			return gate.FindCells(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxResults));
+		}
+
+		/// &lt;summary&gt;
+		///    Throws an exception for the response if none of the statuses match.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;errorProvider&quot;&gt;The error provider.&lt;/param&gt;
+		/// &lt;param name=&quot;response&quot;&gt;The response.&lt;/param&gt;
+		/// &lt;param name=&quot;validStatuses&quot;&gt;The valid statuses.&lt;/param&gt;
+		public static void ThrowIfStatusMismatch(this IErrorProvider errorProvider, IRestResponse response, params HttpStatusCode[] validStatuses)
+		{
+			bool mismatch = validStatuses.All(status =&gt; response.StatusCode != status);
+			if (mismatch)
+			{
+				errorProvider.ThrowFromResponse(response);
+			}
+		}
+
+		/// &lt;summary&gt;
+		/// Executes the request.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;client&quot;&gt;The client.&lt;/param&gt;
+		/// &lt;param name=&quot;request&quot;&gt;The request.&lt;/param&gt;
+		public static Task&lt;IRestResponse&gt; ExecuteAsync(this IRestClient client, IRestRequest request)
+		{
+			var completionSource = new TaskCompletionSource&lt;IRestResponse&gt;();
+			client.ExecuteAsync(request, completionSource.SetResult);
+			return completionSource.Task;
+		}
+
+		private static Identifier BuildIdentifier(string table, string row, string column, string qualifier, long? timestamp)
+		{
+			return new Identifier
+			{
+				Table = table,
+				Row = row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
+				Timestamp = timestamp
+			};
+		}
+
+		private static CellQuery BuildQuery(string table, string row, string column, string qualifier, long? beginTimestamp, long? endTimestamp, int? maxResults)
+		{
+			return new CellQuery
+			{
+				Table = table,
+				Row = row,
+				Cells = new[]
+				{
+					new HBaseCellDescriptor
+					{
+						Column = column,
+						Qualifier = qualifier
+					}
+				},
+				BeginTimestamp = beginTimestamp,
+				EndTimestamp = endTimestamp,
+				MaxResults = maxResults
+			};
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src42', RANGES_42)
+		</script>
+	</body>
+</html>

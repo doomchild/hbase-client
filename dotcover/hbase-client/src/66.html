@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_66 = [
+   [45,3,45,47,'dcuc']
+, [46,3,46,4,'dcuc']
+, [47,4,47,19,'dcuc']
+, [48,3,48,4,'dcuc']
+, [56,3,56,4,'dcuc']
+, [57,4,57,41,'dcuc']
+, [59,4,59,48,'dcuc']
+, [60,4,60,5,'dcuc']
+, [61,5,61,77,'dcuc']
+, [62,4,62,5,'dcuc']
+, [64,4,64,47,'dcuc']
+, [65,4,65,5,'dcuc']
+, [66,5,66,75,'dcuc']
+, [67,4,67,5,'dcuc']
+, [69,4,69,35,'dcuc']
+, [70,4,70,5,'dcuc']
+, [71,5,71,64,'dcuc']
+, [72,4,72,5,'dcuc']
+, [74,4,74,31,'dcuc']
+, [75,4,75,5,'dcuc']
+, [76,5,79,8,'dcuc']
+, [80,4,80,5,'dcuc']
+, [82,4,82,26,'dcuc']
+, [83,3,83,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src66" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Xml.Linq;
+
+using HBase.Stargate.Client.Api;
+
+namespace HBase.Stargate.Client.TypeConversion
+{
+	/// &lt;summary&gt;
+	///    Provides a standard implementation of the
+	///    &lt;see cref=&quot;IScannerOptionsConverter&quot; /&gt; interface.
+	/// &lt;/summary&gt;
+	public class ScannerOptionsConverter : IScannerOptionsConverter
+	{
+		private const string _scannerName = &quot;Scanner&quot;;
+		private const string _startRowName = &quot;startRow&quot;;
+		private const string _stopRowName = &quot;stopRow&quot;;
+		private const string _batchSizeName = &quot;batch&quot;;
+		private const string _filterName = &quot;filter&quot;;
+		private readonly ICodec _codec;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;ScannerOptionsConverter&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use while encoding values.&lt;/param&gt;
+		public ScannerOptionsConverter(ICodec codec)
+		{
+			_codec = codec;
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the specified options to an XML document with
+		///    filter options as embedded JSON.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;options&quot;&gt;The options.&lt;/param&gt;
+		public string Convert(ScannerOptions options)
+		{
+			var xml = new XElement(_scannerName);
+
+			if (!string.IsNullOrEmpty(options.StartRow))
+			{
+				xml.Add(new XAttribute(_startRowName, _codec.Encode(options.StartRow)));
+			}
+
+			if (!string.IsNullOrEmpty(options.StopRow))
+			{
+				xml.Add(new XAttribute(_stopRowName, _codec.Encode(options.StopRow)));
+			}
+
+			if (options.BatchSize.HasValue)
+			{
+				xml.Add(new XAttribute(_batchSizeName, options.BatchSize));
+			}
+
+			if (options.Filter != null)
+			{
+				xml.Add(new XElement(_filterName)
+				{
+					Value = options.Filter.ConvertToJson(_codec).ToString()
+				});
+			}
+
+			return xml.ToString();
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src66', RANGES_66)
+		</script>
+	</body>
+</html>

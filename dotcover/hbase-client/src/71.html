@@ -1,0 +1,247 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_71 = [
+   [37,3,37,4,'dccv']
+, [38,4,38,40,'dccv']
+, [39,4,39,5,'dccv']
+, [40,5,40,17,'dccv']
+, [44,4,44,63,'dccv']
+, [45,3,45,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,40,'dccv']
+, [54,4,54,5,'dccv']
+, [55,5,55,17,'dccv']
+, [59,4,59,65,'dccv']
+, [60,3,60,4,'dccv']
+, [67,3,67,4,'dccv']
+, [68,4,68,73,'dccv']
+, [69,3,69,4,'dccv']
+, [76,3,76,4,'dccv']
+, [77,4,77,82,'dccv']
+, [78,3,78,4,'dccv']
+, [85,3,85,4,'dccv']
+, [86,4,86,135,'dccv']
+, [87,3,87,4,'dccv']
+, [114,3,114,4,'dccv']
+, [115,4,115,78,'dccv']
+, [116,4,116,5,'dccv']
+, [117,5,117,18,'dccv']
+, [120,4,120,72,'dccv']
+, [121,4,121,5,'dccv']
+, [122,5,122,18,'dccv']
+, [125,4,125,57,'dccv']
+, [126,4,126,64,'dccv']
+, [128,4,128,49,'dccv']
+, [129,4,129,5,'dccv']
+, [130,5,130,91,'dccv']
+, [131,5,131,6,'dccv']
+, [132,6,132,19,'dccv']
+, [135,5,135,100,'dccv']
+, [136,5,136,6,'dccv']
+, [137,6,137,19,'dccv']
+, [139,4,139,5,'dccv']
+, [141,4,141,80,'dccv']
+, [142,3,142,4,'dccv']
+, [94,3,94,4,'dcuc']
+, [95,4,103,6,'dcuc']
+, [104,3,104,4,'dcuc']
+, [150,3,150,4,'dcuc']
+, [151,4,151,33,'dcuc']
+, [152,31,153,23,'dcuc']
+, [154,3,154,4,'dcuc']
+, [167,3,167,4,'dcuc']
+, [168,4,178,7,'dcuc']
+, [179,3,179,4,'dcuc']
+, [152,21,152,31,'dcuc']
+, [151,33,151,68,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src71" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Collections.Generic;
+using System.Linq;
+
+namespace HBase.Stargate.Client.Models
+{
+	/// &lt;summary&gt;
+	///    Provides general extensions for Stargate Client components.
+	/// &lt;/summary&gt;
+	public static class Extensions
+	{
+		/// &lt;summary&gt;
+		///    Converts the text to a nullable 32-bit integer value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		public static int? ToNullableInt32(this string text)
+		{
+			if (string.IsNullOrWhiteSpace(text))
+			{
+				return null;
+			}
+
+			int value;
+			return int.TryParse(text, out value) ? value : (int?) null;
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the text to a nullable 64-bit integer value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		public static long? ToNullableInt64(this string text)
+		{
+			if (string.IsNullOrWhiteSpace(text))
+			{
+				return null;
+			}
+
+			long value;
+			return long.TryParse(text, out value) ? value : (long?) null;
+		}
+
+		/// &lt;summary&gt;
+		///    Determines whether the descriptor can describe a table.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;descriptor&quot;&gt;The descriptor.&lt;/param&gt;
+		public static bool CanDescribeTable(this HBaseDescriptor descriptor)
+		{
+			return descriptor != null &amp;&amp; !string.IsNullOrEmpty(descriptor.Table);
+		}
+
+		/// &lt;summary&gt;
+		///    Determines whether the descriptor can describe a row.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;descriptor&quot;&gt;The descriptor.&lt;/param&gt;
+		public static bool CanDescribeRow(this HBaseDescriptor descriptor)
+		{
+			return descriptor.CanDescribeTable() &amp;&amp; !string.IsNullOrEmpty(descriptor.Row);
+		}
+
+		/// &lt;summary&gt;
+		///    Determines whether the identifier can describe a cell.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static bool CanDescribeCell(this Identifier identifier)
+		{
+			return identifier.CanDescribeRow() &amp;&amp; identifier.CellDescriptor != null &amp;&amp; !string.IsNullOrEmpty(identifier.CellDescriptor.Column);
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the identifier into a cell query.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static CellQuery ToQuery(this Identifier identifier)
+		{
+			return new CellQuery
+			{
+				Table = identifier.Table,
+				Row = identifier.Row,
+				Cells = new[] {identifier.CellDescriptor},
+				BeginTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp : null,
+				EndTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp + 1 : null,
+				MaxResults = 1
+			};
+		}
+
+		/// &lt;summary&gt;
+		///    Returns a value indicating whether or not the two identifiers match.
+		///    If a property has not been set on the other identifier, it will not be included
+		///    in the evaluation.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		/// &lt;param name=&quot;other&quot;&gt;The other identifier.&lt;/param&gt;
+		public static bool Matches(this Identifier identifier, Identifier other)
+		{
+			if (!string.IsNullOrEmpty(other.Table) &amp;&amp; other.Table != identifier.Table)
+			{
+				return false;
+			}
+
+			if (!string.IsNullOrEmpty(other.Row) &amp;&amp; other.Row != identifier.Row)
+			{
+				return false;
+			}
+
+			HBaseCellDescriptor otherCell = other.CellDescriptor;
+			HBaseCellDescriptor currentCell = identifier.CellDescriptor;
+
+			if (otherCell != null &amp;&amp; currentCell != null)
+			{
+				if (!string.IsNullOrEmpty(otherCell.Column) &amp;&amp; otherCell.Column != currentCell.Column)
+				{
+					return false;
+				}
+
+				if (!string.IsNullOrEmpty(otherCell.Qualifier) &amp;&amp; otherCell.Qualifier != currentCell.Qualifier)
+				{
+					return false;
+				}
+			}
+
+			return !other.Timestamp.HasValue || other.Timestamp == identifier.Timestamp;
+		}
+
+		/// &lt;summary&gt;
+		/// Gets the first value with an identifier matching the one specified.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;cellSet&quot;&gt;The cell set.&lt;/param&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static string GetValue(this IEnumerable&lt;Cell&gt; cellSet, Identifier identifier)
+		{
+			return cellSet.Where(cell =&gt; cell.Identifier.Matches(identifier))
+				.Select(cell =&gt; cell.Value)
+				.FirstOrDefault();
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the first value with the specified identifier values.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;cellSet&quot;&gt;The cell set.&lt;/param&gt;
+		/// &lt;param name=&quot;table&quot;&gt;The table.&lt;/param&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		/// &lt;param name=&quot;column&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;timestamp&quot;&gt;The timestamp.&lt;/param&gt;
+		public static string GetValue(this IEnumerable&lt;Cell&gt; cellSet, string table = null, string row = null, string column = null, string qualifier = null,
+			long? timestamp = null)
+		{
+			return cellSet.GetValue(new Identifier
+			{
+				Table = table,
+				Row = row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = column,
+					Qualifier = qualifier
+				},
+				Timestamp = timestamp
+			});
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src71', RANGES_71)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_40 = [
+   [58,3,58,127,'dcuc']
+, [59,3,59,4,'dcuc']
+, [60,4,60,27,'dcuc']
+, [61,4,61,27,'dcuc']
+, [62,4,62,45,'dcuc']
+, [63,4,63,45,'dcuc']
+, [64,3,64,4,'dcuc']
+, [71,3,71,4,'dcuc']
+, [72,4,72,45,'dcuc']
+, [74,4,74,114,'dcuc']
+, [75,4,75,114,'dcuc']
+, [76,4,76,64,'dcuc']
+, [77,4,77,64,'dcuc']
+, [79,4,79,16,'dcuc']
+, [80,3,80,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src40" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    This filter is used for selecting only those keys with columns that are between a minimum and
+	///    a maximum column. Column values are evaluated as prefixes (see &lt;see cref=&quot;ColumnPrefixFilter&quot; /&gt;).
+	/// &lt;/summary&gt;
+	public class ColumnRangeFilter : ScannerFilterBase
+	{
+		private const string _minColumnPropertyName = &quot;minColumn&quot;;
+		private const string _maxColumnPropertyName = &quot;maxColumn&quot;;
+		private const string _minColumnInclusivePropertyName = &quot;minColumnInclusive&quot;;
+		private const string _maxColumnInclusivePropertyName = &quot;maxColumnInclusive&quot;;
+		private readonly string _maxColumn;
+		private readonly bool _maxColumnInclusive;
+		private readonly string _minColumn;
+		private readonly bool _minColumnInclusive;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;ColumnRangeFilter&quot; /&gt; class. If &lt;paramref name=&quot;minColumn&quot; /&gt; is &#39;an&#39;,
+		///    and &lt;paramref name=&quot;maxColumn&quot; /&gt; is &#39;be&#39;, it will pass keys with columns like &#39;ana&#39;/&#39;bad&#39;, but not keys with
+		///    columns like &#39;bed&#39;/&#39;eye&#39;. If &lt;paramref name=&quot;minColumn&quot; /&gt; is null, there is no lower bound. If
+		///    &lt;paramref name=&quot;maxColumn&quot; /&gt; is null, there is no upper bound. &lt;paramref name=&quot;minColumnInclusive&quot; /&gt; and
+		///    &lt;paramref name=&quot;maxColumnInclusive&quot; /&gt; specify if the ranges are inclusive or not.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;minColumn&quot;&gt;The min column.&lt;/param&gt;
+		/// &lt;param name=&quot;maxColumn&quot;&gt;The max column.&lt;/param&gt;
+		/// &lt;param name=&quot;minColumnInclusive&quot;&gt;
+		///    if set to &lt;c&gt;true&lt;/c&gt; &lt;paramref name=&quot;minColumn&quot; /&gt; is inclusive. The default is true.
+		/// &lt;/param&gt;
+		/// &lt;param name=&quot;maxColumnInclusive&quot;&gt;
+		///    if set to &lt;c&gt;true&lt;/c&gt; &lt;paramref name=&quot;maxColumn&quot; /&gt; is inclusive. The default is true.
+		/// &lt;/param&gt;
+		public ColumnRangeFilter(string minColumn, string maxColumn, bool minColumnInclusive = true, bool maxColumnInclusive = true)
+		{
+			_minColumn = minColumn;
+			_maxColumn = maxColumn;
+			_minColumnInclusive = minColumnInclusive;
+			_maxColumnInclusive = maxColumnInclusive;
+		}
+
+		/// &lt;summary&gt;
+		/// Converts the filter to its JSON representation.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
+
+			json[_minColumnPropertyName] = string.IsNullOrEmpty(_minColumn) ? null : new JValue(codec.Encode(_minColumn));
+			json[_maxColumnPropertyName] = string.IsNullOrEmpty(_maxColumn) ? null : new JValue(codec.Encode(_maxColumn));
+			json[_minColumnInclusivePropertyName] = _minColumnInclusive;
+			json[_maxColumnInclusivePropertyName] = _maxColumnInclusive;
+
+			return json;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src40', RANGES_40)
+		</script>
+	</body>
+</html>

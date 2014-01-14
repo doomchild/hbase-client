@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_55 = [
+   [50,3,51,29,'dcuc']
+, [52,3,52,4,'dcuc']
+, [53,4,53,21,'dcuc']
+, [54,4,54,27,'dcuc']
+, [55,4,55,35,'dcuc']
+, [56,3,56,4,'dcuc']
+, [63,3,63,4,'dcuc']
+, [64,4,64,45,'dcuc']
+, [65,4,65,66,'dcuc']
+, [66,4,66,72,'dcuc']
+, [67,4,67,66,'dcuc']
+, [68,4,68,16,'dcuc']
+, [69,3,69,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src55" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    This filter is used to filter cells based on value.
+	/// &lt;/summary&gt;
+	public class SingleColumnValueFilter : ComparisonScannerFilterBase
+	{
+		private const string _familyPropertyName = &quot;family&quot;;
+		private const string _qualifierPropertyName = &quot;qualifier&quot;;
+		private const string _latestVersionPropertyName = &quot;latestVersion&quot;;
+		private readonly string _family;
+		private readonly bool _latestVersion;
+		private readonly string _qualifier;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;SingleColumnValueFilter&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;family&quot;&gt;The family.&lt;/param&gt;
+		/// &lt;param name=&quot;qualifier&quot;&gt;The qualifier.&lt;/param&gt;
+		/// &lt;param name=&quot;value&quot;&gt;The column.&lt;/param&gt;
+		/// &lt;param name=&quot;comparison&quot;&gt;The comparison.&lt;/param&gt;
+		/// &lt;param name=&quot;latestVersion&quot;&gt;
+		///    if set to &lt;c&gt;true&lt;/c&gt;, only return the latest version.
+		/// &lt;/param&gt;
+		public SingleColumnValueFilter(string family, string qualifier, string value, FilterComparisons comparison, bool latestVersion = true)
+			: base(value, comparison)
+		{
+			_family = family;
+			_qualifier = qualifier;
+			_latestVersion = latestVersion;
+		}
+
+		/// &lt;summary&gt;
+		/// Converts the filter to its JSON representation.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
+			json[_familyPropertyName] = new JValue(codec.Encode(_family));
+			json[_qualifierPropertyName] = new JValue(codec.Encode(_qualifier));
+			json[_latestVersionPropertyName] = new JValue(_latestVersion);
+			return json;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src55', RANGES_55)
+		</script>
+	</body>
+</html>

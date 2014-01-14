@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_27 = [
+   [37,3,37,42,'dccv']
+, [38,3,38,4,'dccv']
+, [39,4,39,19,'dccv']
+, [40,3,40,4,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,45,50,'dccv']
+, [46,3,46,4,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,117,'dccv']
+, [52,3,52,4,'dccv']
+, [56,3,56,4,'dccv']
+, [57,4,57,50,'dccv']
+, [58,3,58,4,'dccv']
+, [62,3,62,4,'dccv']
+, [63,4,63,97,'dccv']
+, [64,3,64,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src27" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Api;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class ScannerSteps
+	{
+		private readonly HBaseContext _hBase;
+
+		public ScannerSteps(HBaseContext hBase)
+		{
+			_hBase = hBase;
+		}
+
+		[Then(@&quot;my scanner should have a resource set to &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CheckScannerResource(string resource)
+		{
+			_hBase.Scanner.Resource.Should().Be(resource);
+		}
+
+		[Given(@&quot;I have a scanner for the &quot;&quot;(.*)&quot;&quot; table named &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void ObtainManualScanner(string tableName, string scannerId)
+		{
+			_hBase.Scanner = new Scanner(tableName, string.Format(&quot;{0}/scanner/{1}&quot;, tableName, scannerId), _hBase.Stargate);
+		}
+
+		[When(@&quot;I delete the scanner&quot;)]
+		public void DeleteScanner()
+		{
+			_hBase.Stargate.DeleteScanner(_hBase.Scanner);
+		}
+
+		[When(@&quot;I create a scanner for the &quot;&quot;(.*)&quot;&quot; table&quot;)]
+		public void CreateScanner(string tableName)
+		{
+			_hBase.Scanner = _hBase.Stargate.CreateScanner(new ScannerOptions { TableName = tableName });
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src27', RANGES_27)
+		</script>
+	</body>
+</html>

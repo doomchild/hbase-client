@@ -1,0 +1,123 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_22 = [
+   [35,3,35,71,'dccv']
+, [36,3,36,4,'dccv']
+, [37,4,37,21,'dccv']
+, [38,4,38,27,'dccv']
+, [39,3,39,4,'dccv']
+, [43,3,43,4,'dccv']
+, [44,4,44,16,'dccv']
+, [44,17,44,57,'dccv']
+, [45,9,45,52,'dccv']
+, [47,4,47,48,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,59,'dccv']
+, [53,60,53,67,'dccv']
+, [55,4,55,47,'dccv']
+, [56,4,56,71,'dccv']
+, [57,3,57,4,'dccv']
+, [61,3,61,4,'dccv']
+, [62,4,62,59,'dccv']
+, [62,60,62,67,'dccv']
+, [64,4,64,47,'dccv']
+, [65,4,65,97,'dccv']
+, [66,3,66,4,'dccv']
+, [70,3,70,4,'dccv']
+, [71,4,71,70,'dccv']
+, [72,4,72,74,'dccv']
+, [73,4,73,48,'dccv']
+, [74,4,74,56,'dccv']
+, [75,4,75,59,'dccv']
+, [76,4,76,66,'dccv']
+, [77,3,77,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src22" class="dotCoverSource"><pre>// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+using System;
+using System.Linq;
+
+using FluentAssertions;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class ErrorChecking
+	{
+		private readonly ErrorContext _errors;
+		private readonly ResourceContext _resources;
+
+		public ErrorChecking(ErrorContext errors, ResourceContext resources)
+		{
+			_errors = errors;
+			_resources = resources;
+		}
+
+		[Then(@&quot;the operation (should|should not) have succeeded&quot;)]
+		public void CheckExceptionExists(bool success)
+		{
+			if (success) _errors.CaughtErrors.Should().BeEmpty();
+			else _errors.CaughtErrors.Should().NotBeEmpty();
+
+			_errors.OutcomeViewedAsSuccessful = success;
+		}
+
+		[Then(@&quot;if there was an exception, it should have been the expected (.*) type&quot;)]
+		public void CheckExceptionType(string type)
+		{
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).GetType().Name.Should().Be(type);
+		}
+
+		[Then(@&quot;if there was an exception, it should have had the expected exception (.*)&quot;)]
+		public void CheckExceptionMessage(string messageResource)
+		{
+			if (_errors.CaughtErrors == null || !_errors.HasErrors) return;
+
+			_errors.CaughtErrors.Should().HaveCount(1);
+			_errors.CaughtErrors.ElementAt(0).Message.Should().Be(_resources.GetString(messageResource));
+		}
+
+		[Then(@&quot;there should have been an? (.*)Exception with a message equivalent to the resource called &quot;&quot;(.+)&quot;&quot;&quot;)]
+		public void CheckAssumedExceptionType(string modifier, string resource)
+		{
+			string expectedTypeName = string.Format(&quot;{0}Exception&quot;, modifier);
+			_errors.HasErrors.Should().BeTrue(&quot;I expected an error to be thrown&quot;);
+			_errors.CaughtErrors.Count().Should().Be(1);
+			Exception exception = _errors.CaughtErrors.Single();
+			exception.GetType().Name.Should().Be(expectedTypeName);
+			exception.Message.Should().Be(_resources.GetString(resource));
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src22', RANGES_22)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,262 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_25 = [
+   [49,3,49,93,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,17,'dccv']
+, [52,4,52,21,'dccv']
+, [53,4,53,66,'dccv']
+, [54,3,54,4,'dccv']
+, [58,3,58,4,'dccv']
+, [59,4,59,96,'dccv']
+, [60,3,60,4,'dccv']
+, [70,3,70,4,'dccv']
+, [71,4,71,43,'dccv']
+, [71,44,71,51,'dccv']
+, [80,3,80,4,'dccv']
+, [84,3,84,4,'dccv']
+, [85,4,85,114,'dccv']
+, [86,3,86,4,'dccv']
+, [90,3,90,4,'dccv']
+, [91,4,91,48,'dccv']
+, [92,4,92,34,'dccv']
+, [93,3,93,4,'dccv']
+, [97,3,97,4,'dccv']
+, [98,4,98,48,'dccv']
+, [99,4,99,32,'dccv']
+, [99,51,99,74,'dccv']
+, [100,3,100,4,'dccv']
+, [104,3,104,4,'dccv']
+, [105,4,105,59,'dccv']
+, [105,74,105,77,'dccv']
+, [106,3,106,4,'dccv']
+, [109,3,109,4,'dccv']
+, [110,4,111,20,'dccv']
+, [112,42,113,23,'dccv']
+, [114,4,114,131,'dccv']
+, [115,4,115,29,'dccv']
+, [116,4,116,15,'dccv']
+, [117,3,117,4,'dccv']
+, [120,3,120,4,'dccv']
+, [121,4,122,25,'dccv']
+, [123,52,124,23,'dccv']
+, [126,4,126,35,'dccv']
+, [128,4,128,78,'dccv']
+, [129,4,129,35,'dccv']
+, [131,4,131,21,'dccv']
+, [132,3,132,4,'dccv']
+, [135,3,135,4,'dccv']
+, [136,4,137,43,'dccv']
+, [138,3,138,4,'dccv']
+, [141,3,141,4,'dccv']
+, [142,4,142,50,'dccv']
+, [143,4,143,54,'dccv']
+, [144,3,144,4,'dccv']
+, [105,59,105,74,'dccv']
+, [111,20,111,58,'dccv']
+, [112,21,112,42,'dccv']
+, [122,25,122,108,'dccv']
+, [123,26,123,52,'dccv']
+, [99,32,99,51,'dccv']
+, [64,3,64,4,'dcuc']
+, [65,4,65,96,'dcuc']
+, [66,3,66,4,'dcuc']
+, [73,4,79,7,'dcuc']
+, [147,3,147,4,'dcuc']
+, [148,4,148,55,'dcuc']
+, [149,4,149,50,'dcuc']
+, [150,4,150,67,'dcuc']
+, [151,3,151,4,'dcuc']
+, [154,3,154,4,'dcuc']
+, [155,4,156,20,'dcuc']
+, [157,42,158,23,'dcuc']
+, [159,4,159,105,'dcuc']
+, [160,4,160,32,'dcuc']
+, [161,4,161,18,'dcuc']
+, [162,3,162,4,'dcuc']
+, [165,3,165,4,'dcuc']
+, [166,4,166,56,'dcuc']
+, [167,4,167,69,'dcuc']
+, [168,3,168,4,'dcuc']
+, [156,20,156,58,'dcuc']
+, [157,21,157,42,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src25" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Collections.Generic;
+using System.Linq;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Api;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
+
+using Patterns.Testing.Moq;
+
+using RestSharp;
+
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class RequestVerification
+	{
+		private readonly IMimeConverterFactory _converterFactory;
+		private readonly RestContext _rest;
+		private readonly ErrorContext _errors;
+
+		public RequestVerification(RestContext rest, ErrorContext errors, IMoqContainer container)
+		{
+			_rest = rest;
+			_errors = errors;
+			_converterFactory = container.Create&lt;IMimeConverterFactory&gt;();
+		}
+
+		[Then(@&quot;a REST request should have been submitted with the following values:&quot;)]
+		public void CheckRequest(Table values)
+		{
+			AssertRequestValuesMatch(_rest.Request, values.CreateInstance&lt;ExpectedRequestProperties&gt;());
+		}
+
+		[Then(@&quot;a REST request for schema updates should have been submitted with the following values:&quot;)]
+		public void CheckSchemaUpdateRequest(Table values)
+		{
+			CheckSchemaUpdateProperties(values.CreateInstance&lt;ExpectedSchemaUpdateRequestProperties&gt;());
+		}
+
+		[Then(@&quot;if the operation succeeded, a REST request for schema updates should have been submitted with the correct (.*), (.*), (.*), and (.*)&quot;)]
+		public void CheckSchemaUpdateRequest(Method method, string resource, string table, string column)
+		{
+			if (!_errors.OutcomeViewedAsSuccessful) return;
+
+			CheckSchemaUpdateProperties(new ExpectedSchemaUpdateRequestProperties
+			{
+				Column = column,
+				Method = method,
+				Resource = resource,
+				Table = table
+			});
+		}
+
+		[Then(@&quot;a REST request should have been submitted with the correct (.+) and (.+)&quot;)]
+		public void CheckRequest(Method method, string resource)
+		{
+			AssertRequestValuesMatch(_rest.Request, new ExpectedRequestProperties {Method = method, Resource = resource});
+		}
+
+		[Then(@&quot;the REST request should have contained (.*) cells?&quot;)]
+		public void CheckRequestCellCount(int count)
+		{
+			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
+			row.Should().HaveCount(count);
+		}
+
+		[Then(@&quot;one of the cells in the REST request should have had the value &quot;&quot;(.*)&quot;&quot;&quot;)]
+		public void CheckAnyCellValue(string value)
+		{
+			IEnumerable&lt;Cell&gt; row = GetRowFromRequest();
+			row.SingleOrDefault(cell =&gt; cell.Value == value).Should().NotBeNull();
+		}
+
+		[Then(@&quot;(?:one of )?the cells in the REST request should have had the following values:&quot;)]
+		public void CheckAnyCellValues(Table values)
+		{
+			values.CompareToSet(GetRowFromRequest().Select(cell =&gt; (TestCell) cell));
+		}
+
+		private IEnumerable&lt;Cell&gt; GetRowFromRequest()
+		{
+			string content = _rest.Request.Parameters
+				.Where(cell =&gt; cell.Type == ParameterType.RequestBody)
+				.Select(cell =&gt; cell.Value.ToString())
+				.FirstOrDefault();
+			IEnumerable&lt;Cell&gt; row = CreateRequestConverter(_rest.Request, _converterFactory).ConvertCells(content, string.Empty).ToArray();
+			row.Should().NotBeNull();
+			return row;
+		}
+
+		private static IMimeConverter CreateRequestConverter(IRestRequest request, IMimeConverterFactory mimeConverterFactory)
+		{
+			string mimeType = request.Parameters
+				.Where(parameter =&gt; parameter.Type == ParameterType.HttpHeader &amp;&amp; IsAcceptOrContentType(parameter.Name))
+				.Select(parameter =&gt; parameter.Value.ToString())
+				.FirstOrDefault();
+
+			mimeType.Should().NotBeEmpty();
+
+			IMimeConverter converter = mimeConverterFactory.CreateConverter(mimeType);
+			converter.Should().NotBeNull();
+
+			return converter;
+		}
+
+		private static bool IsAcceptOrContentType(string name)
+		{
+			return name == RestConstants.ContentTypeHeader
+				|| name == RestConstants.AcceptHeader;
+		}
+
+		private static void AssertRequestValuesMatch(IRestRequest request, ExpectedRequestProperties properties)
+		{
+			request.Method.Should().Be(properties.Method);
+			request.Resource.Should().Be(properties.Resource);
+		}
+
+		private static void AssertSchemaValuesMatch(TableSchema requestedSchema, ExpectedSchemaUpdateRequestProperties properties)
+		{
+			requestedSchema.Name.Should().Be(properties.Table);
+			requestedSchema.Columns.Should().HaveCount(1);
+			requestedSchema.Columns[0].Name.Should().Be(properties.Column);
+		}
+
+		private TableSchema GetTableSchemaFromRequest()
+		{
+			string content = _rest.Request.Parameters
+				.Where(cell =&gt; cell.Type == ParameterType.RequestBody)
+				.Select(cell =&gt; cell.Value.ToString())
+				.FirstOrDefault();
+			TableSchema schema = CreateRequestConverter(_rest.Request, _converterFactory).ConvertSchema(content);
+			schema.Should().NotBeNull();
+			return schema;
+		}
+
+		private void CheckSchemaUpdateProperties(ExpectedSchemaUpdateRequestProperties properties)
+		{
+			AssertRequestValuesMatch(_rest.Request, properties);
+			AssertSchemaValuesMatch(GetTableSchemaFromRequest(), properties);
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src25', RANGES_25)
+		</script>
+	</body>
+</html>

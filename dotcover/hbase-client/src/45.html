@@ -1,0 +1,407 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_45 = [
+   [40,3,40,29,'dcuc']
+, [41,3,41,4,'dcuc']
+, [42,4,42,36,'dcuc']
+, [43,3,43,4,'dcuc']
+, [49,3,49,56,'dcuc']
+, [50,3,50,4,'dcuc']
+, [51,4,51,43,'dcuc']
+, [52,3,52,4,'dcuc']
+, [62,8,62,9,'dcuc']
+, [62,10,62,34,'dcuc']
+, [62,35,62,36,'dcuc']
+, [73,8,73,9,'dcuc']
+, [73,10,73,23,'dcuc']
+, [73,24,73,25,'dcuc']
+, [83,3,83,4,'dcuc']
+, [84,4,84,38,'dcuc']
+, [85,3,85,4,'dcuc']
+, [94,3,94,4,'dcuc']
+, [95,4,95,27,'dcuc']
+, [96,3,96,4,'dcuc']
+, [105,3,105,4,'dcuc']
+, [106,4,106,25,'dcuc']
+, [107,3,107,4,'dcuc']
+, [113,3,113,4,'dcuc']
+, [114,4,114,23,'dcuc']
+, [115,3,115,4,'dcuc']
+, [127,3,127,4,'dcuc']
+, [128,4,128,37,'dcuc']
+, [129,3,129,4,'dcuc']
+, [137,3,137,4,'dcuc']
+, [138,4,138,41,'dcuc']
+, [139,3,139,4,'dcuc']
+, [153,3,153,4,'dcuc']
+, [154,4,154,35,'dcuc']
+, [155,3,155,4,'dcuc']
+, [167,3,167,4,'dcuc']
+, [168,4,168,36,'dcuc']
+, [169,3,169,4,'dcuc']
+, [181,3,181,4,'dcuc']
+, [182,4,182,35,'dcuc']
+, [183,3,183,4,'dcuc']
+, [190,3,190,4,'dcuc']
+, [191,4,191,31,'dcuc']
+, [192,3,192,4,'dcuc']
+, [201,8,201,9,'dcuc']
+, [201,10,201,35,'dcuc']
+, [201,36,201,37,'dcuc']
+, [202,8,202,9,'dcuc']
+, [202,10,202,36,'dcuc']
+, [202,37,202,38,'dcuc']
+, [217,3,217,4,'dcuc']
+, [218,4,218,31,'dcuc']
+, [219,3,219,4,'dcuc']
+, [230,3,230,4,'dcuc']
+, [231,4,231,22,'dcuc']
+, [232,3,232,4,'dcuc']
+, [249,3,249,4,'dcuc']
+, [250,4,250,32,'dcuc']
+, [251,3,251,4,'dcuc']
+, [270,3,270,4,'dcuc']
+, [271,4,271,30,'dcuc']
+, [272,3,272,4,'dcuc']
+, [300,3,300,4,'dcuc']
+, [301,4,301,44,'dcuc']
+, [302,3,302,4,'dcuc']
+, [309,3,309,4,'dcuc']
+, [310,4,310,35,'dcuc']
+, [311,4,311,11,'dcuc']
+, [311,29,311,33,'dcuc']
+, [311,13,311,25,'dcuc']
+, [312,4,312,5,'dcuc']
+, [313,5,313,37,'dcuc']
+, [314,4,314,5,'dcuc']
+, [311,26,311,28,'dcuc']
+, [315,4,315,23,'dcuc']
+, [316,3,316,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src45" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Provides a base type for scanner filters that are also lists of values.
+	/// &lt;/summary&gt;
+	public abstract class FilterListBase&lt;TValue&gt; : ScannerFilterBase, IList&lt;TValue&gt;
+	{
+		private readonly List&lt;TValue&gt; _innerList;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;FilterListBase{TValue}&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		protected FilterListBase()
+		{
+			_innerList = new List&lt;TValue&gt;();
+		}
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;FilterListBase{TValue}&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;filters&quot;&gt;The filters.&lt;/param&gt;
+		protected FilterListBase(IEnumerable&lt;TValue&gt; filters)
+		{
+			_innerList = new List&lt;TValue&gt;(filters);
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the number of elements contained in the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    The number of elements contained in the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/returns&gt;
+		public int Count
+		{
+			get { return _innerList.Count; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets a value indicating whether the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt; is read-only.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt; is read-only; otherwise, false.
+		/// &lt;/returns&gt;
+		public bool IsReadOnly
+		{
+			get { return false; }
+		}
+
+		/// &lt;summary&gt;
+		///    Returns an enumerator that iterates through the collection.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    A &lt;see cref=&quot;T:System.Collections.Generic.IEnumerator`1&quot; /&gt; that can be used to iterate through the collection.
+		/// &lt;/returns&gt;
+		public IEnumerator&lt;TValue&gt; GetEnumerator()
+		{
+			return _innerList.GetEnumerator();
+		}
+
+		/// &lt;summary&gt;
+		///    Returns an enumerator that iterates through a collection.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    An &lt;see cref=&quot;T:System.Collections.IEnumerator&quot; /&gt; object that can be used to iterate through the collection.
+		/// &lt;/returns&gt;
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		/// &lt;summary&gt;
+		///    Adds an item to the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;item&quot;&gt;
+		///    The object to add to the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/param&gt;
+		public void Add(TValue item)
+		{
+			_innerList.Add(item);
+		}
+
+		/// &lt;summary&gt;
+		///    Removes all items from the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		public void Clear()
+		{
+			_innerList.Clear();
+		}
+
+		/// &lt;summary&gt;
+		///    Determines whether the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt; contains a specific value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;item&quot;&gt;
+		///    The object to locate in the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/param&gt;
+		/// &lt;returns&gt;
+		///    true if &lt;paramref name=&quot;item&quot; /&gt; is found in the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;; otherwise, false.
+		/// &lt;/returns&gt;
+		public bool Contains(TValue item)
+		{
+			return _innerList.Contains(item);
+		}
+
+		/// &lt;summary&gt;
+		///    Copies to.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;array&quot;&gt;The array.&lt;/param&gt;
+		/// &lt;param name=&quot;arrayIndex&quot;&gt;Index of the array.&lt;/param&gt;
+		public void CopyTo(TValue[] array, int arrayIndex)
+		{
+			_innerList.CopyTo(array, arrayIndex);
+		}
+
+		/// &lt;summary&gt;
+		///    Removes the first occurrence of a specific object from the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;item&quot;&gt;
+		///    The object to remove from the &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/param&gt;
+		/// &lt;returns&gt;
+		///    true if &lt;paramref name=&quot;item&quot; /&gt; was successfully removed from the
+		///    &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;; otherwise, false. This method also returns false if
+		///    &lt;paramref name=&quot;item&quot; /&gt; is not found in the original &lt;see cref=&quot;T:System.Collections.Generic.ICollection`1&quot; /&gt;.
+		/// &lt;/returns&gt;
+		public bool Remove(TValue item)
+		{
+			return _innerList.Remove(item);
+		}
+
+		/// &lt;summary&gt;
+		///    Determines the index of a specific item in the &lt;see cref=&quot;T:System.Collections.Generic.IList`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;item&quot;&gt;
+		///    The object to locate in the &lt;see cref=&quot;T:System.Collections.Generic.IList`1&quot; /&gt;.
+		/// &lt;/param&gt;
+		/// &lt;returns&gt;
+		///    The index of &lt;paramref name=&quot;item&quot; /&gt; if found in the list; otherwise, -1.
+		/// &lt;/returns&gt;
+		public int IndexOf(TValue item)
+		{
+			return _innerList.IndexOf(item);
+		}
+
+		/// &lt;summary&gt;
+		///    Inserts an item to the &lt;see cref=&quot;T:System.Collections.Generic.IList`1&quot; /&gt; at the specified index.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;index&quot;&gt;
+		///    The zero-based index at which &lt;paramref name=&quot;item&quot; /&gt; should be inserted.
+		/// &lt;/param&gt;
+		/// &lt;param name=&quot;item&quot;&gt;
+		///    The object to insert into the &lt;see cref=&quot;T:System.Collections.Generic.IList`1&quot; /&gt;.
+		/// &lt;/param&gt;
+		public void Insert(int index, TValue item)
+		{
+			_innerList.Insert(index, item);
+		}
+
+		/// &lt;summary&gt;
+		///    Removes the &lt;see cref=&quot;T:System.Collections.Generic.IList`1&quot; /&gt; item at the specified index.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;index&quot;&gt;The zero-based index of the item to remove.&lt;/param&gt;
+		public void RemoveAt(int index)
+		{
+			_innerList.RemoveAt(index);
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the element at the specified index.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;index&quot;&gt;The index.&lt;/param&gt;
+		/// &lt;returns&gt;&lt;/returns&gt;
+		public TValue this[int index]
+		{
+			get { return _innerList[index]; }
+			set { _innerList[index] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Adds the elements of the specified collection to the end of the &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;items&quot;&gt;
+		///    The collection whose elements should be added to the end of the
+		///    &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt;. The collection itself cannot be null, but it can contain
+		///    elements that are null, if type &lt;typeparamref name=&quot;TValue&quot; /&gt; is a reference type.
+		/// &lt;/param&gt;
+		/// &lt;exception cref=&quot;T:System.ArgumentNullException&quot;&gt;
+		///    &lt;paramref name=&quot;items&quot; /&gt; is null.
+		/// &lt;/exception&gt;
+		public void AddRange(IEnumerable&lt;TValue&gt; items)
+		{
+			_innerList.AddRange(items);
+		}
+
+		/// &lt;summary&gt;
+		///    Sorts the elements in the entire &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt; using the default comparer.
+		/// &lt;/summary&gt;
+		/// &lt;exception cref=&quot;T:System.InvalidOperationException&quot;&gt;
+		///    The default comparer &lt;see cref=&quot;P:System.Collections.Generic.Comparer`1.Default&quot; /&gt; cannot find an implementation of the
+		///    &lt;see cref=&quot;T:System.IComparable`1&quot; /&gt; generic interface or the &lt;see cref=&quot;T:System.IComparable&quot; /&gt; interface for type
+		///    &lt;typeparamref name=&quot;TValue&quot; /&gt;.
+		/// &lt;/exception&gt;
+		public void Sort()
+		{
+			_innerList.Sort();
+		}
+
+		/// &lt;summary&gt;
+		///    Sorts the elements in the entire &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt; using the specified
+		///    &lt;see cref=&quot;T:System.Comparison`1&quot; /&gt;.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;comparison&quot;&gt;
+		///    The &lt;see cref=&quot;T:System.Comparison`1&quot; /&gt; to use when comparing elements.
+		/// &lt;/param&gt;
+		/// &lt;exception cref=&quot;T:System.ArgumentNullException&quot;&gt;
+		///    &lt;paramref name=&quot;comparison&quot; /&gt; is null.
+		/// &lt;/exception&gt;
+		/// &lt;exception cref=&quot;T:System.ArgumentException&quot;&gt;
+		///    The implementation of &lt;paramref name=&quot;comparison&quot; /&gt; caused an error during the sort. For example,
+		///    &lt;paramref name=&quot;comparison&quot; /&gt; might not return 0 when comparing an item with itself.
+		/// &lt;/exception&gt;
+		public void Sort(Comparison&lt;TValue&gt; comparison)
+		{
+			_innerList.Sort(comparison);
+		}
+
+		/// &lt;summary&gt;
+		///    Sorts the elements in the entire &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt; using the specified comparer.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;comparer&quot;&gt;
+		///    The &lt;see cref=&quot;T:System.Collections.Generic.IComparer`1&quot; /&gt; implementation to use when comparing elements, or null to use the default comparer
+		///    &lt;see cref=&quot;P:System.Collections.Generic.Comparer`1.Default&quot; /&gt;.
+		/// &lt;/param&gt;
+		/// &lt;exception cref=&quot;T:System.InvalidOperationException&quot;&gt;
+		///    &lt;paramref name=&quot;comparer&quot; /&gt; is null, and the default comparer &lt;see cref=&quot;P:System.Collections.Generic.Comparer`1.Default&quot; /&gt;
+		///    cannot find implementation of the &lt;see cref=&quot;T:System.IComparable`1&quot; /&gt;
+		///    generic interface or the &lt;see cref=&quot;T:System.IComparable&quot; /&gt; interface for type &lt;typeparamref name=&quot;TValue&quot; /&gt;.
+		/// &lt;/exception&gt;
+		/// &lt;exception cref=&quot;T:System.ArgumentException&quot;&gt;
+		///    The implementation of &lt;paramref name=&quot;comparer&quot; /&gt; caused an error during the sort. For example,
+		///    &lt;paramref name=&quot;comparer&quot; /&gt; might not return 0 when comparing an item with itself.
+		/// &lt;/exception&gt;
+		public void Sort(IComparer&lt;TValue&gt; comparer)
+		{
+			_innerList.Sort(comparer);
+		}
+
+		/// &lt;summary&gt;
+		///    Sorts the elements in a range of elements in &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt; using the specified comparer.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;index&quot;&gt;The zero-based starting index of the range to sort.&lt;/param&gt;
+		/// &lt;param name=&quot;count&quot;&gt;The length of the range to sort.&lt;/param&gt;
+		/// &lt;param name=&quot;comparer&quot;&gt;
+		///    The &lt;see cref=&quot;T:System.Collections.Generic.IComparer`1&quot; /&gt; implementation to use when comparing elements, or null to use the default comparer
+		///    &lt;see cref=&quot;P:System.Collections.Generic.Comparer`1.Default&quot; /&gt;.
+		/// &lt;/param&gt;
+		/// &lt;exception cref=&quot;T:System.ArgumentOutOfRangeException&quot;&gt;
+		///    &lt;paramref name=&quot;index&quot; /&gt; is less than 0.-or-&lt;paramref name=&quot;count&quot; /&gt; is less than 0.
+		/// &lt;/exception&gt;
+		/// &lt;exception cref=&quot;T:System.ArgumentException&quot;&gt;
+		///    &lt;paramref name=&quot;index&quot; /&gt; and &lt;paramref name=&quot;count&quot; /&gt; do not specify a valid range in the
+		///    &lt;see cref=&quot;T:System.Collections.Generic.List`1&quot; /&gt;
+		///    .-or-The implementation of &lt;paramref name=&quot;comparer&quot; /&gt; caused an error during the sort. For example,
+		///    &lt;paramref name=&quot;comparer&quot; /&gt; might not return 0 when comparing an item with itself.
+		/// &lt;/exception&gt;
+		/// &lt;exception cref=&quot;T:System.InvalidOperationException&quot;&gt;
+		///    &lt;paramref name=&quot;comparer&quot; /&gt; is null, and the default comparer
+		///    &lt;see cref=&quot;P:System.Collections.Generic.Comparer`1.Default&quot; /&gt;
+		///    cannot find implementation of the &lt;see cref=&quot;T:System.IComparable`1&quot; /&gt;
+		///    generic interface or the &lt;see cref=&quot;T:System.IComparable&quot; /&gt; interface for type
+		///    &lt;typeparamref name=&quot;TValue&quot; /&gt;.
+		/// &lt;/exception&gt;
+		public void Sort(int index, int count, IComparer&lt;TValue&gt; comparer)
+		{
+			_innerList.Sort(index, count, comparer);
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the values in the list to a JSON array.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;convert&quot;&gt;The convert method to use on each item.&lt;/param&gt;
+		protected JArray ConvertToJsonArray(Func&lt;TValue, JToken&gt; convert)
+		{
+			var filterArray = new JArray();
+			foreach (TValue value in this)
+			{
+				filterArray.Add(convert(value));
+			}
+			return filterArray;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src45', RANGES_45)
+		</script>
+	</body>
+</html>

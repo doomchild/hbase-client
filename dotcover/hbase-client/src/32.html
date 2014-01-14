@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_32 = [
+   [40,3,40,46,'dccv']
+, [41,3,41,4,'dccv']
+, [42,4,42,19,'dccv']
+, [43,3,43,4,'dccv']
+, [47,3,47,4,'dccv']
+, [48,4,55,25,'dccv']
+, [56,3,56,4,'dccv']
+, [60,3,60,4,'dccv']
+, [61,4,61,45,'dccv']
+, [62,3,62,4,'dccv']
+, [66,3,66,4,'dccv']
+, [67,4,67,54,'dccv']
+, [67,69,67,72,'dccv']
+, [68,3,68,4,'dccv']
+, [71,3,71,4,'dccv']
+, [72,4,77,37,'dccv']
+, [78,3,78,4,'dccv']
+, [67,54,67,69,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src32" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2014, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Linq;
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Models;
+
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class SimpleAssertions
+	{
+		private readonly HBaseContext _cells;
+
+		public SimpleAssertions(HBaseContext cells)
+		{
+			_cells = cells;
+		}
+
+		[Then(@&quot;my cell should have a (.+), (.+), (.*), (.*), and (.*)&quot;)]
+		public void CheckCellContents(string row, string column, string qualifier, string timestamp, string value)
+		{
+			CellMatchesTestValue(_cells.Cell, new TestCell
+			{
+				Row = row,
+				Column = column,
+				Qualifier = qualifier,
+				Timestamp = timestamp.ToNullableInt64(),
+				Value = value
+			}).Should().BeTrue();
+		}
+
+		[Then(@&quot;my set should contain (\d+) cells?&quot;)]
+		public void CheckCellSetCount(int count)
+		{
+			_cells.CellSet.Should().HaveCount(count);
+		}
+
+		[Then(@&quot;(?:one of )?the cells in my set should have the following properties:&quot;)]
+		public void CheckAnyCellInSet(Table values)
+		{
+			values.CompareToSet(_cells.CellSet.Select(cell =&gt; (TestCell) cell));
+		}
+
+		private static bool CellMatchesTestValue(Cell cell, TestCell testCell)
+		{
+			return cell.Identifier.Row == testCell.Row
+				&amp;&amp; cell.Identifier.CellDescriptor != null
+				&amp;&amp; cell.Identifier.CellDescriptor.Column == testCell.Column
+				&amp;&amp; cell.Identifier.CellDescriptor.Qualifier == testCell.Qualifier
+				&amp;&amp; cell.Identifier.Timestamp == testCell.Timestamp
+				&amp;&amp; cell.Value == testCell.Value;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src32', RANGES_32)
+		</script>
+	</body>
+</html>

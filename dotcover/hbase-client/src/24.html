@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_24 = [
+   [37,3,37,39,'dccv']
+, [38,3,38,4,'dccv']
+, [39,4,39,23,'dccv']
+, [40,3,40,4,'dccv']
+, [44,3,44,4,'dccv']
+, [45,4,45,74,'dccv']
+, [46,3,46,4,'dccv']
+, [50,3,50,4,'dccv']
+, [51,4,51,67,'dccv']
+, [52,3,52,4,'dccv']
+, [56,3,56,4,'dccv']
+, [57,4,57,88,'dccv']
+, [58,3,58,4,'dccv']
+, [62,3,62,4,'dccv']
+, [63,4,63,47,'dccv']
+, [64,4,64,30,'dccv']
+, [66,4,66,48,'dccv']
+, [67,3,67,4,'dccv']
+, [71,3,71,4,'dccv']
+, [72,4,72,60,'dccv']
+, [73,3,73,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src24" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using FluentAssertions;
+
+using HBase.Stargate.Client.Models;
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class Reading
+	{
+		private readonly HBaseContext _context;
+
+		public Reading(HBaseContext context)
+		{
+			_context = context;
+		}
+
+		[When(@&quot;I read a single value using my identifier&quot;)]
+		public void ReadSingleValue()
+		{
+			_context.CellValue = _context.Stargate.ReadValue(_context.Identifier);
+		}
+
+		[When(@&quot;I read a row using my query&quot;)]
+		public void ReadRow()
+		{
+			_context.CellSet = _context.Stargate.FindCells(_context.Query);
+		}
+
+		[When(@&quot;I read all cells from the &quot;&quot;(.*?)&quot;&quot; table&quot;)]
+		public void ReadTable(string tableName)
+		{
+			_context.CellSet = _context.Stargate.FindCells(new CellQuery { Table = tableName });
+		}
+		
+		[When(@&quot;I read a result from the scanner&quot;)]
+		public void ReadScanner()
+		{
+			bool success = _context.Scanner.MoveNext();
+			success.Should().Be(true);
+
+			_context.CellSet = _context.Scanner.Current;
+		}
+
+		[When(@&quot;I read the names of all tables&quot;)]
+		public void ReadTableNames()
+		{
+			_context.TableNames = _context.Stargate.GetTableNames();
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src24', RANGES_24)
+		</script>
+	</body>
+</html>

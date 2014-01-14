@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_44 = [
+   [34,3,34,106,'dcuc']
+, [34,107,34,108,'dcuc']
+, [34,108,34,109,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src44" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    This filter is used to filter based on the column family.
+	/// &lt;/summary&gt;
+	public class FamilyFilter : ComparisonScannerFilterBase
+	{
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;FamilyFilter&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;columnFamily&quot;&gt;The column family.&lt;/param&gt;
+		/// &lt;param name=&quot;comparison&quot;&gt;The comparison.&lt;/param&gt;
+		public FamilyFilter(string columnFamily, FilterComparisons comparison) : base(columnFamily, comparison) {}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src44', RANGES_44)
+		</script>
+	</body>
+</html>

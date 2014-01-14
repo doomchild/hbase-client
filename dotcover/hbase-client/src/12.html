@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_12 = [
+   [6,1,6,34,'dccv']
+, [7,2,7,115,'dccv']
+, [10,2,10,117,'dccv']
+, [13,2,13,130,'dccv']
+, [14,2,14,126,'dccv']
+, [16,1,16,34,'dccv']
+, [17,2,17,115,'dccv']
+, [20,2,20,117,'dccv']
+, [23,2,23,130,'dccv']
+, [24,2,24,130,'dccv']
+, [26,1,26,34,'dccv']
+, [27,2,27,115,'dccv']
+, [30,2,30,117,'dccv']
+, [33,2,33,130,'dccv']
+, [34,2,34,126,'dccv']
+, [36,1,36,34,'dccv']
+, [37,2,37,115,'dccv']
+, [40,2,40,117,'dccv']
+, [43,2,43,130,'dccv']
+, [44,2,44,130,'dccv']
+, [46,1,46,34,'dccv']
+, [47,2,47,115,'dccv']
+, [50,2,50,118,'dccv']
+, [53,2,53,130,'dccv']
+, [54,2,54,126,'dccv']
+, [56,1,56,34,'dccv']
+, [57,2,57,116,'dccv']
+, [60,2,60,118,'dccv']
+, [63,2,63,130,'dccv']
+, [64,2,64,130,'dccv']
+, [66,1,66,34,'dccv']
+, [67,2,67,116,'dccv']
+, [70,2,70,118,'dccv']
+, [73,2,73,130,'dccv']
+, [74,2,74,126,'dccv']
+, [76,1,76,34,'dccv']
+, [77,2,77,116,'dccv']
+, [80,2,80,118,'dccv']
+, [83,2,83,130,'dccv']
+, [84,2,84,130,'dccv']
+, [86,1,86,34,'dccv']
+, [87,2,87,116,'dccv']
+, [90,2,90,118,'dccv']
+, [93,2,93,130,'dccv']
+, [94,2,94,126,'dccv']
+, [96,1,96,34,'dccv']
+, [97,2,97,116,'dccv']
+, [100,2,100,118,'dccv']
+, [103,2,103,130,'dccv']
+, [104,2,104,130,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src12" class="dotCoverSource"><pre>Feature: Identifier Matching
+	In order to determine whether two identifiers are similar
+	As an hbase-client consumer
+	I want to compare full identifiers with partial ones and get predictable results
+
+Scenario: Successful Match; Table Only
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table |
+		| test  |
+	When I match the second identifier to the first one
+	Then the identifier match should have succeeded
+
+Scenario: Failed Match; Table Only
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table |
+		| foo   |
+	When I match the second identifier to the first one
+	Then the identifier match should not have succeeded
+
+Scenario: Successful Match; Table and Row
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  |
+		| test  | row1 |
+	When I match the second identifier to the first one
+	Then the identifier match should have succeeded
+
+Scenario: Failed Match; Table and Row
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row |
+		| test  | foo |
+	When I match the second identifier to the first one
+	Then the identifier match should not have succeeded
+
+Scenario: Successful Match; Table, Row, and Column
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  | column  |
+		| test  | row1 | column1 |
+	When I match the second identifier to the first one
+	Then the identifier match should have succeeded
+
+Scenario: Failed Match; Table, Row, and Column
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  | column |
+		| test  | row1 | foo    |
+	When I match the second identifier to the first one
+	Then the identifier match should not have succeeded
+
+Scenario: Successful Match; Table, Row, Column, and Qualifier
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  | column  | qualifier  |
+		| test  | row1 | column1 | qualifier1 |
+	When I match the second identifier to the first one
+	Then the identifier match should have succeeded
+
+Scenario: Failed Match; Table, Row, Column, and Qualifier
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  | column  | qualifier |
+		| test  | row1 | column1 | foo       |
+	When I match the second identifier to the first one
+	Then the identifier match should not have succeeded
+
+Scenario: Successful Match; Table, Row, Column, Qualifier, and Timestamp
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	When I match the second identifier to the first one
+	Then the identifier match should have succeeded
+
+Scenario: Failed Match; Table, Row, Column, Qualifier, and Timestamp
+	Given I have an identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 100       |
+	And I have a second identifier consisting of the following values:
+		| table | row  | column  | qualifier  | timestamp |
+		| test  | row1 | column1 | qualifier1 | 200       |
+	When I match the second identifier to the first one
+	Then the identifier match should not have succeeded</pre></code><script type="text/javascript">
+			applyranges('src12', RANGES_12)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_64 = [
+   [38,3,38,4,'dccv']
+, [39,4,39,64,'dccv']
+, [40,3,40,4,'dccv']
+, [47,3,47,4,'dccv']
+, [48,11,48,105,'dccv']
+, [49,4,49,5,'dccv']
+, [50,5,50,31,'dccv']
+, [52,3,52,4,'dccv']
+, [58,3,58,4,'dccv']
+, [59,4,59,25,'dccv']
+, [60,3,60,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src64" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System;
+using System.IO;
+using System.Text;
+
+namespace HBase.Stargate.Client.TypeConversion
+{
+	/// &lt;summary&gt;
+	///    Provides a standard base64 codec for HBase.
+	/// &lt;/summary&gt;
+	public class Base64Codec : ICodec
+	{
+		/// &lt;summary&gt;
+		///    Encodes the specified text.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		public virtual string Encode(string text)
+		{
+			return Convert.ToBase64String(GetEncoding().GetBytes(text));
+		}
+
+		/// &lt;summary&gt;
+		///    Decodes the specified text.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;text&quot;&gt;The text.&lt;/param&gt;
+		public virtual string Decode(string text)
+		{
+			using (var reader = new StreamReader(new MemoryStream(Convert.FromBase64String(text)), GetEncoding()))
+			{
+				return reader.ReadToEnd();
+			}
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the &lt;see cref=&quot;Encoding&quot; /&gt; object to use during &lt;see cref=&quot;Encode&quot; /&gt; and &lt;see cref=&quot;Decode&quot; /&gt; operations.
+		/// &lt;/summary&gt;
+		protected virtual Encoding GetEncoding()
+		{
+			return Encoding.UTF8;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src64', RANGES_64)
+		</script>
+	</body>
+</html>

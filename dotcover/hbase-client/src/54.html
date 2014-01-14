@@ -1,0 +1,213 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_54 = [
+   [46,3,46,72,'dccv']
+, [47,3,47,4,'dccv']
+, [48,4,48,41,'dccv']
+, [49,4,49,25,'dccv']
+, [50,4,50,22,'dccv']
+, [51,4,51,24,'dccv']
+, [52,3,52,4,'dccv']
+, [102,3,102,4,'dccv']
+, [103,4,103,24,'dccv']
+, [105,4,105,45,'dccv']
+, [106,4,106,5,'dccv']
+, [107,5,107,25,'dccv']
+, [108,5,108,48,'dccv']
+, [109,4,109,5,'dccv']
+, [115,4,115,19,'dccv']
+, [116,4,116,27,'dccv']
+, [117,3,117,4,'dccv']
+, [146,3,146,4,'dccv']
+, [147,4,147,20,'dccv']
+, [151,3,151,4,'dccv']
+, [74,3,74,4,'dcuc']
+, [75,4,75,20,'dcuc']
+, [75,21,75,28,'dcuc']
+, [77,4,77,34,'dcuc']
+, [78,4,78,20,'dcuc']
+, [79,4,79,23,'dcuc']
+, [80,3,80,4,'dcuc']
+, [86,3,86,4,'dcuc']
+, [87,4,87,16,'dcuc']
+, [88,3,88,4,'dcuc']
+, [94,3,94,4,'dcuc']
+, [95,4,95,27,'dcuc']
+, [96,3,96,4,'dcuc']
+, [107,26,107,54,'dcuc']
+, [110,9,110,31,'dcuc']
+, [111,4,111,5,'dcuc']
+, [112,5,112,44,'dcuc']
+, [113,4,113,5,'dcuc']
+, [123,3,123,4,'dcuc']
+, [124,4,124,24,'dcuc']
+, [126,4,126,21,'dcuc']
+, [127,3,127,4,'dcuc']
+, [139,8,139,9,'dcuc']
+, [139,10,139,25,'dcuc']
+, [139,26,139,27,'dcuc']
+, [148,4,148,5,'dcuc']
+, [149,5,149,55,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src54" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Provides a standard implementation of the &lt;see cref=&quot;IScanner&quot; /&gt; interface.
+	/// &lt;/summary&gt;
+	public class Scanner : IScanner
+	{
+		private readonly IList&lt;CellSet&gt; _cachedResults;
+		private readonly IStargate _stargate;
+		private int _resultIndex;
+		private bool _isDisposed;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;Scanner&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;tableName&quot;&gt;The HBase table name.&lt;/param&gt;
+		/// &lt;param name=&quot;resource&quot;&gt;The resource.&lt;/param&gt;
+		/// &lt;param name=&quot;stargate&quot;&gt;The current Stargate.&lt;/param&gt;
+		public Scanner(string tableName, string resource, IStargate stargate)
+		{
+			_cachedResults = new List&lt;CellSet&gt;();
+			_stargate = stargate;
+			Table = tableName;
+			Resource = resource;
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the table name.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The table name.
+		/// &lt;/value&gt;
+		public string Table { get; private set; }
+
+		/// &lt;summary&gt;
+		///    Gets the resource.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The resource.
+		/// &lt;/value&gt;
+		public string Resource { get; private set; }
+
+		/// &lt;summary&gt;
+		///    Deletes this scanner and disables it to prevent future use.
+		/// &lt;/summary&gt;
+		public void Dispose()
+		{
+			if (_isDisposed) return;
+
+			_stargate.DeleteScanner(this);
+			Resource = null;
+			_isDisposed = true;
+		}
+
+		/// &lt;summary&gt;
+		///    Returns an enumerator that iterates through the collection.
+		/// &lt;/summary&gt;
+		public IEnumerator&lt;CellSet&gt; GetEnumerator()
+		{
+			return this;
+		}
+
+		/// &lt;summary&gt;
+		///    Returns an enumerator that iterates through a collection.
+		/// &lt;/summary&gt;
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		/// &lt;summary&gt;
+		///    Advances the enumerator to the next element of the collection.
+		/// &lt;/summary&gt;
+		public bool MoveNext()
+		{
+			AssertNotDisposed();
+
+			if (_resultIndex &gt;= _cachedResults.Count)
+			{
+				if (Current != null) _cachedResults.Add(Current);
+				Current = _stargate.GetScannerResult(this);
+			}
+			else if (_resultIndex &gt;= 0)
+			{
+				Current = _cachedResults[_resultIndex];
+			}
+
+			_resultIndex++;
+			return Current != null;
+		}
+
+		/// &lt;summary&gt;
+		///    Sets the enumerator to its initial position, which is before the first element in the collection.
+		/// &lt;/summary&gt;
+		public void Reset()
+		{
+			AssertNotDisposed();
+
+			_resultIndex = 0;
+		}
+
+		/// &lt;summary&gt;
+		///    Gets the element in the collection at the current position of the enumerator.
+		/// &lt;/summary&gt;
+		public CellSet Current { get; private set; }
+
+		/// &lt;summary&gt;
+		///    Gets the element in the collection at the current position of the enumerator.
+		/// &lt;/summary&gt;
+		object IEnumerator.Current
+		{
+			get { return Current; }
+		}
+
+		/// &lt;summary&gt;
+		///    Asserts that this instance is not disposed.
+		/// &lt;/summary&gt;
+		private void AssertNotDisposed()
+		{
+			if (_isDisposed)
+			{
+				throw new ObjectDisposedException(GetType().Name);
+			}
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src54', RANGES_54)
+		</script>
+	</body>
+</html>

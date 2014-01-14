@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_10 = [
+   [7,2,7,146,'dccv']
+, [9,1,9,34,'dccv']
+, [6,1,6,26,'dccv']
+, [10,2,10,191,'dccv']
+, [11,2,11,116,'dccv']
+, [12,2,12,182,'dccv']
+, [20,1,20,34,'dccv']
+, [6,1,6,26,'dccv']
+, [21,2,21,168,'dccv']
+, [22,2,22,118,'dccv']
+, [23,2,23,190,'dccv']
+, [31,1,31,34,'dccv']
+, [6,1,6,26,'dccv']
+, [32,2,32,115,'dccv']
+, [33,2,33,114,'dccv']
+, [39,2,39,124,'dccv']
+, [40,2,41,95,'dccv']
+, [42,1,42,34,'dccv']
+, [6,1,6,26,'dccv']
+, [43,2,43,161,'dccv']
+, [44,2,44,126,'dccv']
+, [45,2,45,113,'dccv']
+, [46,2,46,112,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src10" class="dotCoverSource"><pre>Feature: HBase XML
+	In order to work with HBase content in the XML format
+	As an application developer
+	I want to be able to create and parse HBase XML content using basic information
+
+Background: 
+	Given I have everything I need to test a content converter for XML
+
+Scenario Outline: Create XML for single cell
+	Given I have a cell with a &lt;row&gt;, &lt;column&gt;, &lt;qualifier&gt;, &lt;timestamp&gt;, and &lt;value&gt;
+	When I convert my cell to raw content
+	Then my raw XML content should be equivalent to the resource called &quot;&lt;expected xml&gt;&quot;
+Examples:
+	| row | column | qualifier | timestamp | value       | expected xml                 |
+	| 1   | alpha  |           |           | hello world | HBaseXml_1Alpha_HelloWorld   |
+	| 1   | alpha  | x         |           | hello world | HBaseXml_1AlphaX_HelloWorld  |
+	| 1   | alpha  |           | 4         | hello world | HBaseXml_1Alpha4_HelloWorld  |
+	| 1   | alpha  | x         | 4         | hello world | HBaseXml_1AlphaX4_HelloWorld |
+
+Scenario Outline: Parse XML for single cell
+	Given I have raw content equal to the resource called &quot;&lt;initial xml&gt;&quot;
+	When I convert my raw content to a cell
+	Then my cell should have a &lt;row&gt;, &lt;column&gt;, &lt;qualifier&gt;, &lt;timestamp&gt;, and &lt;value&gt;
+Examples:
+	| initial xml                  | row | column | qualifier | timestamp | value       |
+	| HBaseXml_1Alpha_HelloWorld   | 1   | alpha  |           |           | hello world |
+	| HBaseXml_1AlphaX_HelloWorld  | 1   | alpha  | x         |           | hello world |
+	| HBaseXml_1Alpha4_HelloWorld  | 1   | alpha  |           | 4         | hello world |
+	| HBaseXml_1AlphaX4_HelloWorld | 1   | alpha  | x         | 4         | hello world |
+
+Scenario: Create XML for a set of cells
+	Given I have created a set of cells
+	And I have added cells to my set with the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  |           |           | hello world |
+		| 1   | alpha  | x         |           | hello world |
+		| 1   | alpha  |           | 4         | hello world |
+		| 1   | alpha  | x         | 4         | hello world |
+	When I convert my set of cells to raw content
+	Then my raw XML content should be equivalent to the resource called &quot;HBaseXml_Set_HelloWorld&quot;
+
+Scenario: Parse XML for a set of cells
+	Given I have raw content equal to the resource called &quot;HBaseXml_Set_HelloWorld&quot;
+	When I convert my raw content to a set of cells
+	Then my set should contain 4 cells
+	And the cells in my set should have the following properties:
+		| row | column | qualifier | timestamp | value       |
+		| 1   | alpha  |           |           | hello world |
+		| 1   | alpha  | x         |           | hello world |
+		| 1   | alpha  |           | 4         | hello world |
+		| 1   | alpha  | x         | 4         | hello world |</pre></code><script type="text/javascript">
+			applyranges('src10', RANGES_10)
+		</script>
+	</body>
+</html>

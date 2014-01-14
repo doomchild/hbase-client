@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_46 = [
+   [52,3,52,68,'dcuc']
+, [53,3,53,4,'dcuc']
+, [54,4,54,25,'dcuc']
+, [55,3,55,4,'dcuc']
+, [62,3,62,121,'dcuc']
+, [63,3,63,4,'dcuc']
+, [64,4,64,25,'dcuc']
+, [65,3,65,4,'dcuc']
+, [72,3,72,4,'dcuc']
+, [73,4,73,45,'dcuc']
+, [74,4,74,71,'dcuc']
+, [76,4,76,20,'dcuc']
+, [77,4,77,5,'dcuc']
+, [78,5,78,17,'dcuc']
+, [81,4,81,62,'dcuc']
+, [81,89,81,91,'dcuc']
+, [83,4,83,16,'dcuc']
+, [84,3,84,4,'dcuc']
+, [39,3,44,6,'dcuc']
+, [81,62,81,89,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src46" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Collections.Generic;
+using System.Linq;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Represents a list of filters.
+	/// &lt;/summary&gt;
+	public class FilterList : FilterListBase&lt;IScannerFilter&gt;
+	{
+		private const string _operationPropertyName = &quot;op&quot;;
+		private const string _filtersPropertyName = &quot;filters&quot;;
+
+		private static readonly IDictionary&lt;FilterListTypes, string&gt; _filterTypes
+			= new Dictionary&lt;FilterListTypes, string&gt;
+			{
+				{FilterListTypes.All, &quot;MUST_PASS_ALL&quot;},
+				{FilterListTypes.One, &quot;MUST_PASS_ONE&quot;}
+			};
+
+		private readonly FilterListTypes _listType;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;FilterList&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;listType&quot;&gt;Type of the list.&lt;/param&gt;
+		public FilterList(FilterListTypes listType = FilterListTypes.All)
+		{
+			_listType = listType;
+		}
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;FilterList&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;filters&quot;&gt;The filters.&lt;/param&gt;
+		/// &lt;param name=&quot;listType&quot;&gt;Type of the list.&lt;/param&gt;
+		public FilterList(IEnumerable&lt;IScannerFilter&gt; filters, FilterListTypes listType = FilterListTypes.All) : base(filters)
+		{
+			_listType = listType;
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the filter to its JSON representation.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
+			json[_operationPropertyName] = new JValue(_filterTypes[_listType]);
+
+			if (!this.Any())
+			{
+				return json;
+			}
+
+			json[_filtersPropertyName] = ConvertToJsonArray(filter =&gt; filter.ConvertToJson(codec));
+
+			return json;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src46', RANGES_46)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,129 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_62 = [
+   [46,8,46,9,'dcuc']
+, [46,10,46,44,'dcuc']
+, [46,45,46,46,'dcuc']
+, [47,8,47,9,'dcuc']
+, [47,10,47,35,'dcuc']
+, [47,36,47,37,'dcuc']
+, [59,8,59,9,'dcuc']
+, [59,10,59,48,'dcuc']
+, [59,49,59,50,'dcuc']
+, [60,8,60,9,'dcuc']
+, [60,10,60,39,'dcuc']
+, [60,40,60,41,'dcuc']
+, [72,8,72,9,'dcuc']
+, [72,10,72,47,'dcuc']
+, [72,48,72,49,'dcuc']
+, [73,8,73,9,'dcuc']
+, [73,10,73,39,'dcuc']
+, [73,40,73,41,'dcuc']
+, [81,3,81,4,'dcuc']
+, [82,4,92,6,'dcuc']
+, [93,3,93,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src62" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Configuration;
+
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.Config
+{
+	/// &lt;summary&gt;
+	///    Provides an XML configuration-based &lt;see cref=&quot;Identifier&quot; /&gt;.
+	/// &lt;/summary&gt;
+	public class ConfigIdentifier : ConfigDescriptor
+	{
+		private const string _columName = &quot;column&quot;;
+		private const string _qualifierName = &quot;qualifier&quot;;
+		private const string _timestampName = &quot;timestamp&quot;;
+
+		/// &lt;summary&gt;
+		///    Gets or sets the column.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The column.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_columName, IsRequired = true)]
+		public string Column
+		{
+			get { return this[_columName] as string; }
+			set { this[_columName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the qualifier.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The qualifier.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_qualifierName, IsRequired = false)]
+		public string Qualifier
+		{
+			get { return this[_qualifierName] as string; }
+			set { this[_qualifierName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the timestamp.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The timestamp.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_timestampName, IsRequired = false)]
+		public long? Timestamp
+		{
+			get { return this[_timestampName] as long?; }
+			set { this[_timestampName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the config-based identifier to a normal one.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;identifier&quot;&gt;The identifier.&lt;/param&gt;
+		public static implicit operator Identifier(ConfigIdentifier identifier)
+		{
+			return new Identifier
+			{
+				Table = identifier.Table,
+				Row = identifier.Row,
+				CellDescriptor = new HBaseCellDescriptor
+				{
+					Column = identifier.Column,
+					Qualifier = identifier.Qualifier
+				},
+				Timestamp = identifier.Timestamp
+			};
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src62', RANGES_62)
+		</script>
+	</body>
+</html>

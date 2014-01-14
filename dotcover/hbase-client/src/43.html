@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_43 = [
+   [56,3,56,84,'dcuc']
+, [57,3,57,4,'dcuc']
+, [58,4,58,29,'dcuc']
+, [59,4,59,19,'dcuc']
+, [60,3,60,4,'dcuc']
+, [67,3,67,4,'dcuc']
+, [68,4,68,45,'dcuc']
+, [70,4,70,77,'dcuc']
+, [71,4,71,86,'dcuc']
+, [73,4,73,16,'dcuc']
+, [74,3,74,4,'dcuc']
+, [38,3,48,6,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src43" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Collections.Generic;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    Provides base functionality for scanner filters that represent comparisons.
+	/// &lt;/summary&gt;
+	public abstract class ComparisonScannerFilterBase : ScannerFilterBase
+	{
+		private const string _operationPropertyName = &quot;op&quot;;
+		private const string _comparatorPropertyName = &quot;comparator&quot;;
+
+		private static readonly IDictionary&lt;FilterComparisons, string&gt; _comparisonTypes
+			= new Dictionary&lt;FilterComparisons, string&gt;
+			{
+				{FilterComparisons.Equal, &quot;EQUAL&quot;},
+				{FilterComparisons.NotEqual, &quot;NOT_EQUAL&quot;},
+				{FilterComparisons.GreaterThan, &quot;GREATER&quot;},
+				{FilterComparisons.GreaterThanOrEqual, &quot;GREATER_OR_EQUAL&quot;},
+				{FilterComparisons.LessThan, &quot;LESS&quot;},
+				{FilterComparisons.LessThanOrEqual, &quot;LESS_OR_EQUAL&quot;},
+				{FilterComparisons.None, &quot;NO_OP&quot;}
+			};
+
+		private readonly FilterComparisons _comparison;
+		private readonly string _value;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;ComparisonScannerFilterBase&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		protected ComparisonScannerFilterBase(string value, FilterComparisons comparison)
+		{
+			_comparison = comparison;
+			_value = value;
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the filter to its JSON representation.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
+
+			json[_operationPropertyName] = new JValue(_comparisonTypes[_comparison]);
+			json[_comparatorPropertyName] = new BinaryComparator(_value).ConvertToJson(codec);
+
+			return json;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src43', RANGES_43)
+		</script>
+	</body>
+</html>

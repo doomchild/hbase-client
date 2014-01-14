@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_63 = [
+   [46,8,46,9,'dcuc']
+, [46,10,46,48,'dcuc']
+, [46,49,46,50,'dcuc']
+, [47,8,47,9,'dcuc']
+, [47,10,47,39,'dcuc']
+, [47,40,47,41,'dcuc']
+, [59,8,59,9,'dcuc']
+, [59,10,59,50,'dcuc']
+, [59,51,59,52,'dcuc']
+, [60,8,60,9,'dcuc']
+, [60,10,60,41,'dcuc']
+, [60,42,60,43,'dcuc']
+, [72,8,72,9,'dcuc']
+, [72,10,72,50,'dcuc']
+, [72,51,72,52,'dcuc']
+, [73,8,73,9,'dcuc']
+, [73,10,73,41,'dcuc']
+, [73,42,73,43,'dcuc']
+, [83,3,83,4,'dcuc']
+, [84,4,84,17,'dcuc']
+, [85,3,85,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src63" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Configuration;
+
+using HBase.Stargate.Client.Api;
+
+namespace HBase.Stargate.Client.Config
+{
+	/// &lt;summary&gt;
+	///    Provides an XML configuration-based implementation of &lt;see cref=&quot;IStargateOptions&quot; /&gt;.
+	/// &lt;/summary&gt;
+	public class StargateConfigOptions : ConfigurationElement, IStargateOptions
+	{
+		private const string _serverUrlName = &quot;serverUrl&quot;;
+		private const string _contentTypeName = &quot;contentType&quot;;
+		private const string _falseRowKeyName = &quot;falseRowKey&quot;;
+
+		/// &lt;summary&gt;
+		///    Gets or sets the server URL.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The server URL.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_serverUrlName, IsRequired = true)]
+		public string ServerUrl
+		{
+			get { return this[_serverUrlName] as string; }
+			set { this[_serverUrlName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the type of the content.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The type of the content.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_contentTypeName, IsRequired = false, DefaultValue = Api.Stargate.DefaultContentType)]
+		public string ContentType
+		{
+			get { return this[_contentTypeName] as string; }
+			set { this[_contentTypeName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the false row key.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The false row key.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_falseRowKeyName, IsRequired = false, DefaultValue = Api.Stargate.DefaultFalseRowKey)]
+		public string FalseRowKey
+		{
+			get { return this[_falseRowKeyName] as string; }
+			set { this[_falseRowKeyName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets a value indicating whether the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only; otherwise, false.
+		/// &lt;/returns&gt;
+		public override bool IsReadOnly()
+		{
+			return false;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src63', RANGES_63)
+		</script>
+	</body>
+</html>

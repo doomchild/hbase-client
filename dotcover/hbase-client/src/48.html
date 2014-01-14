@@ -1,0 +1,75 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_48 = [
+   [44,3,44,4,'dcuc']
+, [45,4,45,45,'dcuc']
+, [47,4,47,11,'dcuc']
+, [49,4,49,63,'dcuc']
+, [49,95,49,97,'dcuc']
+, [51,4,51,16,'dcuc']
+, [52,3,52,4,'dcuc']
+, [49,63,49,95,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src48" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Linq;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    This filter is used for selecting only those keys with columns that matches a particular
+	///    prefix. For example, if prefix is &#39;an&#39;, it will pass keys will columns like &#39;and&#39;/&#39;anti&#39;
+	///    but not keys with columns like &#39;ball&#39;/&#39;act&#39;.
+	/// &lt;/summary&gt;
+	public class MultipleColumnPrefixFilter : FilterListBase&lt;string&gt;
+	{
+		private const string _prefixesPropertyName = &quot;prefixes&quot;;
+
+		/// &lt;summary&gt;
+		///    Converts the filter to its JSON representation.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		public override JObject ConvertToJson(ICodec codec)
+		{
+			JObject json = base.ConvertToJson(codec);
+
+			Sort();
+
+			json[_prefixesPropertyName] = ConvertToJsonArray(prefix =&gt; new JValue(codec.Encode(prefix)));
+
+			return json;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src48', RANGES_48)
+		</script>
+	</body>
+</html>

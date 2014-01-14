@@ -1,0 +1,155 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_61 = [
+   [51,8,51,9,'dcuc']
+, [51,10,51,52,'dcuc']
+, [51,53,51,54,'dcuc']
+, [52,8,52,9,'dcuc']
+, [52,10,52,44,'dcuc']
+, [52,45,52,46,'dcuc']
+, [64,8,64,9,'dcuc']
+, [64,10,64,50,'dcuc']
+, [64,51,64,52,'dcuc']
+, [65,8,65,9,'dcuc']
+, [65,10,65,42,'dcuc']
+, [65,43,65,44,'dcuc']
+, [77,8,77,9,'dcuc']
+, [77,10,77,47,'dcuc']
+, [77,48,77,49,'dcuc']
+, [78,8,78,9,'dcuc']
+, [78,10,78,40,'dcuc']
+, [78,41,78,42,'dcuc']
+, [92,8,92,9,'dcuc']
+, [92,10,92,68,'dcuc']
+, [92,69,92,70,'dcuc']
+, [93,8,93,9,'dcuc']
+, [93,10,93,35,'dcuc']
+, [93,36,93,37,'dcuc']
+, [101,3,101,4,'dcuc']
+, [102,4,109,69,'dcuc']
+, [109,95,110,6,'dcuc']
+, [111,3,111,4,'dcuc']
+, [109,69,109,95,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src61" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Configuration;
+using System.Linq;
+
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.Config
+{
+	/// &lt;summary&gt;
+	///    Provides an XML configuration-based &lt;see cref=&quot;CellQuery&quot; /&gt; implementation.
+	/// &lt;/summary&gt;
+	public class ConfigCellQuery : ConfigDescriptor
+	{
+		private const string _beginTimestampName = &quot;beginTimestamp&quot;;
+		private const string _endTimestampName = &quot;endTimestamp&quot;;
+		private const string _maxResultsName = &quot;maxResults&quot;;
+		private const string _cellsName = &quot;filters&quot;;
+		private const string _addCellName = &quot;filter&quot;;
+		private const string _removeCellName = &quot;remove&quot;;
+		private const string _clearCellsName = &quot;clear&quot;;
+
+		/// &lt;summary&gt;
+		///    Gets or sets the begin timestamp (exclusive).
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The timestamp.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_beginTimestampName, IsRequired = false)]
+		public long? BeginTimestamp
+		{
+			get { return this[_beginTimestampName] as long?; }
+			set { this[_beginTimestampName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the end timestamp (exclusive).
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The timestamp.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_endTimestampName, IsRequired = false)]
+		public long? EndTimestamp
+		{
+			get { return this[_endTimestampName] as long?; }
+			set { this[_endTimestampName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the max results.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The max results.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_endTimestampName, IsRequired = false)]
+		public int? MaxResults
+		{
+			get { return this[_maxResultsName] as int?; }
+			set { this[_maxResultsName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the cells used as filters in the query.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The cells to use as filters in the query.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_cellsName)]
+		[ConfigurationCollection(typeof (ConfigCellDescriptor), AddItemName = _addCellName, RemoveItemName = _removeCellName,
+			ClearItemsName = _clearCellsName)]
+		public ConfigCellDescriptorCollection Cells
+		{
+			get { return this[_cellsName] as ConfigCellDescriptorCollection; }
+			set { this[_cellsName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the config-based cell query to a normal one.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;query&quot;&gt;The query.&lt;/param&gt;
+		public static implicit operator CellQuery(ConfigCellQuery query)
+		{
+			return new CellQuery
+			{
+				Table = query.Table,
+				Row = query.Row,
+				BeginTimestamp = query.BeginTimestamp,
+				EndTimestamp = query.EndTimestamp,
+				MaxResults = query.MaxResults,
+				Cells = query.Cells.Cast&lt;ConfigCellDescriptor&gt;().Select(cell =&gt; (HBaseCellDescriptor) cell)
+			};
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src61', RANGES_61)
+		</script>
+	</body>
+</html>

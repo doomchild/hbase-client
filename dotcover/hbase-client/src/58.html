@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_58 = [
+   [45,8,45,9,'dcuc']
+, [45,10,45,44,'dcuc']
+, [45,45,45,46,'dcuc']
+, [46,8,46,9,'dcuc']
+, [46,10,46,35,'dcuc']
+, [46,36,46,37,'dcuc']
+, [58,8,58,9,'dcuc']
+, [58,10,58,48,'dcuc']
+, [58,49,58,50,'dcuc']
+, [59,8,59,9,'dcuc']
+, [59,10,59,39,'dcuc']
+, [59,40,59,41,'dcuc']
+, [67,3,67,4,'dcuc']
+, [68,4,72,6,'dcuc']
+, [73,3,73,4,'dcuc']
+, [82,3,82,4,'dcuc']
+, [83,4,83,17,'dcuc']
+, [84,3,84,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src58" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Configuration;
+
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.Config
+{
+	/// &lt;summary&gt;
+	///    Provides an XML configuration-based implementation &lt;see cref=&quot;ConfigurationElement&quot; /&gt;.
+	/// &lt;/summary&gt;
+	public class ConfigCellDescriptor : ConfigurationElement
+	{
+		private const string _columName = &quot;column&quot;;
+		private const string _qualifierName = &quot;qualifier&quot;;
+
+		/// &lt;summary&gt;
+		///    Gets or sets the column.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The column.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_columName, IsRequired = true)]
+		public string Column
+		{
+			get { return this[_columName] as string; }
+			set { this[_columName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the qualifier.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The qualifier.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_qualifierName, IsRequired = false)]
+		public string Qualifier
+		{
+			get { return this[_qualifierName] as string; }
+			set { this[_qualifierName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Converts the config-based cell descriptor to a normal one.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;descriptor&quot;&gt;The cell descriptor.&lt;/param&gt;
+		public static implicit operator HBaseCellDescriptor(ConfigCellDescriptor descriptor)
+		{
+			return new HBaseCellDescriptor
+			{
+				Column = descriptor.Column,
+				Qualifier = descriptor.Qualifier
+			};
+		}
+
+		/// &lt;summary&gt;
+		///    Gets a value indicating whether the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only; otherwise, false.
+		/// &lt;/returns&gt;
+		public override bool IsReadOnly()
+		{
+			return false;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src58', RANGES_58)
+		</script>
+	</body>
+</html>

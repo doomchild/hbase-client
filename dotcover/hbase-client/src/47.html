@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_47 = [
+   [42,3,42,41,'dcuc']
+, [43,3,43,4,'dcuc']
+, [44,4,44,15,'dcuc']
+, [45,3,45,4,'dcuc']
+, [52,3,52,4,'dcuc']
+, [53,4,53,42,'dcuc']
+, [54,3,54,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src47" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System;
+
+using HBase.Stargate.Client.TypeConversion;
+
+using Newtonsoft.Json.Linq;
+
+namespace HBase.Stargate.Client.Api
+{
+	/// &lt;summary&gt;
+	///    A Filter that stops after the given row. There is no &quot;RowStopFilter&quot; because
+	///    &lt;see cref=&quot;ScannerOptions&quot; /&gt; allows you to specify a stop row.
+	/// &lt;/summary&gt;
+	public class InclusiveStopFilter : TypeValueFilterBase
+	{
+		private readonly string _row;
+
+		/// &lt;summary&gt;
+		///    Initializes a new instance of the &lt;see cref=&quot;InclusiveStopFilter&quot; /&gt; class.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;row&quot;&gt;The row.&lt;/param&gt;
+		public InclusiveStopFilter(string row)
+		{
+			_row = row;
+		}
+
+		/// &lt;summary&gt;
+		/// Gets the token to use as the value.
+		/// &lt;/summary&gt;
+		/// &lt;param name=&quot;codec&quot;&gt;The codec to use for encoding values.&lt;/param&gt;
+		protected override JToken GetValueJToken(ICodec codec)
+		{
+			return new JValue(codec.Encode(_row));
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src47', RANGES_47)
+		</script>
+	</body>
+</html>

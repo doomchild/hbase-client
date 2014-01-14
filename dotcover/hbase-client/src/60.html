@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_60 = [
+   [45,8,45,9,'dcuc']
+, [45,10,45,44,'dcuc']
+, [45,45,45,46,'dcuc']
+, [46,8,46,9,'dcuc']
+, [46,10,46,35,'dcuc']
+, [46,36,46,37,'dcuc']
+, [58,8,58,9,'dcuc']
+, [58,10,58,42,'dcuc']
+, [58,43,58,44,'dcuc']
+, [59,8,59,9,'dcuc']
+, [59,10,59,33,'dcuc']
+, [59,34,59,35,'dcuc']
+, [69,3,69,4,'dcuc']
+, [70,4,70,17,'dcuc']
+, [71,3,71,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src60" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System.Configuration;
+
+using HBase.Stargate.Client.Models;
+
+namespace HBase.Stargate.Client.Config
+{
+	/// &lt;summary&gt;
+	///    Provides a base type for XML configuration-based &lt;see cref=&quot;HBaseDescriptor&quot; /&gt; implementations.
+	/// &lt;/summary&gt;
+	public abstract class ConfigDescriptor : ConfigurationElement
+	{
+		private const string _tableName = &quot;table&quot;;
+		private const string _rowName = &quot;row&quot;;
+
+		/// &lt;summary&gt;
+		///    Gets or sets the table.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The table.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_tableName, IsRequired = true)]
+		public string Table
+		{
+			get { return this[_tableName] as string; }
+			set { this[_tableName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets or sets the row.
+		/// &lt;/summary&gt;
+		/// &lt;value&gt;
+		///    The row.
+		/// &lt;/value&gt;
+		[ConfigurationProperty(_rowName, IsRequired = true)]
+		public string Row
+		{
+			get { return this[_rowName] as string; }
+			set { this[_rowName] = value; }
+		}
+
+		/// &lt;summary&gt;
+		///    Gets a value indicating whether the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only.
+		/// &lt;/summary&gt;
+		/// &lt;returns&gt;
+		///    true if the &lt;see cref=&quot;T:System.Configuration.ConfigurationElement&quot; /&gt; object is read-only; otherwise, false.
+		/// &lt;/returns&gt;
+		public override bool IsReadOnly()
+		{
+			return false;
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src60', RANGES_60)
+		</script>
+	</body>
+</html>

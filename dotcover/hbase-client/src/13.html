@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_13 = [
+   [38,3,38,4,'dccv']
+, [39,4,39,27,'dccv']
+, [40,4,40,5,'dccv']
+, [41,5,41,43,'dccv']
+, [45,3,45,4,'dccv']
+, [48,3,48,4,'dccv']
+, [49,4,49,27,'dccv']
+, [50,4,50,5,'dccv']
+, [51,5,51,41,'dccv']
+, [55,3,55,4,'dccv']
+, [58,3,58,4,'dccv']
+, [59,4,59,27,'dccv']
+, [60,4,60,5,'dccv']
+, [61,5,61,53,'dccv']
+, [65,3,65,4,'dccv']
+, [88,3,88,4,'dccv']
+, [89,4,89,34,'dccv']
+, [90,4,90,85,'dccv']
+, [91,3,91,4,'dccv']
+, [94,3,94,4,'dccv']
+, [95,4,95,35,'dccv']
+, [97,3,97,4,'dccv']
+, [100,3,100,4,'dccv']
+, [101,4,101,39,'dccv']
+, [103,3,103,4,'dccv']
+, [44,4,44,40,'dcuc']
+, [54,4,54,40,'dcuc']
+, [64,4,64,40,'dcuc']
+, [68,3,68,4,'dcuc']
+, [69,4,69,27,'dcuc']
+, [70,4,70,5,'dcuc']
+, [71,5,71,43,'dcuc']
+, [74,4,74,40,'dcuc']
+, [75,3,75,4,'dcuc']
+, [78,3,78,4,'dcuc']
+, [79,4,79,27,'dcuc']
+, [80,4,80,5,'dcuc']
+, [81,5,81,45,'dcuc']
+, [84,4,84,40,'dcuc']
+, [85,3,85,4,'dcuc']
+, [106,3,106,4,'dcuc']
+, [107,4,107,37,'dcuc']
+, [109,3,109,4,'dcuc']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src13" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using System;
+using System.Collections.Generic;
+
+using HBase.Stargate.Client;
+using HBase.Stargate.Client.Models;
+using HBase.Stargate.Client.TypeConversion;
+
+namespace _specs.Models
+{
+	public class ContentConverter : IMimeConverter
+	{
+		private IMimeConverter _converter;
+
+		public string MimeType { get; private set; }
+
+		public string ConvertCells(IEnumerable&lt;Cell&gt; cells)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCells(cells);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public string ConvertCell(Cell cell)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCell(cell);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable&lt;Cell&gt; ConvertCells(string data, string tableName)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertCells(data, tableName);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public TableSchema ConvertSchema(string data)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertSchema(data);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public string ConvertSchema(TableSchema schema)
+		{
+			if (_converter != null)
+			{
+				return _converter.ConvertSchema(schema);
+			}
+
+			throw new NotImplementedException();
+		}
+
+		public void SetConversionToXml()
+		{
+			MimeType = HBaseMimeTypes.Xml;
+			_converter = new XmlMimeConverter(new SimpleValueConverter(), new Base64Codec());
+		}
+
+		public void SetConversionToJson()
+		{
+			MimeType = HBaseMimeTypes.Json;
+			//TODO: _converter = new JsonMimeConverter();
+		}
+
+		public void SetConversionToProtobuf()
+		{
+			MimeType = HBaseMimeTypes.Protobuf;
+			//TODO: _converter = new ProtobufMimeConverter();
+		}
+
+		public void SetConversionToBinary()
+		{
+			MimeType = HBaseMimeTypes.Stream;
+			//TODO: _converter = new BinaryMimeConverter();
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src13', RANGES_13)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../js/coverreport.js">
+
+		</script><script type="text/javascript">
+			RANGES_35 = [
+   [33,3,33,39,'dccv']
+, [34,3,34,4,'dccv']
+, [35,4,35,23,'dccv']
+, [36,3,36,4,'dccv']
+, [40,3,40,4,'dccv']
+, [41,4,41,61,'dccv']
+, [42,3,42,4,'dccv']
+, [46,3,46,4,'dccv']
+, [47,4,47,51,'dccv']
+, [48,3,48,4,'dccv']
+, [52,3,52,4,'dccv']
+, [53,4,53,54,'dccv']
+, [54,3,54,4,'dccv']
+];
+		</script><link rel="stylesheet" type="text/css" href="../css/coverreport.css" />
+	</head><body>
+		<code id="src35" class="dotCoverSource"><pre>#region FreeBSD
+
+// Copyright (c) 2013, The Tribe
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+//  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+// 
+//  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#endregion
+
+using TechTalk.SpecFlow;
+
+using _specs.Models;
+
+namespace _specs.Steps
+{
+	[Binding]
+	public class Writing
+	{
+		private readonly HBaseContext _context;
+
+		public Writing(HBaseContext context)
+		{
+			_context = context;
+		}
+
+		[When(@&quot;I write the value &quot;&quot;(.*)&quot;&quot; using my identifier&quot;)]
+		public void WriteValue(string value)
+		{
+			_context.Stargate.WriteValue(_context.Identifier, value);
+		}
+
+		[When(@&quot;I write the set of cells&quot;)]
+		public void WriteCellSet()
+		{
+			_context.Stargate.WriteCells(_context.CellSet);
+		}
+
+		[When(@&quot;I delete an item using my identifier&quot;)]
+		public void DeleteItem()
+		{
+			_context.Stargate.DeleteItem(_context.Identifier);
+		}
+	}
+}</pre></code><script type="text/javascript">
+			applyranges('src35', RANGES_35)
+		</script>
+	</body>
+</html>
