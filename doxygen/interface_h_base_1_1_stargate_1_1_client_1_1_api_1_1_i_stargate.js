@@ -1,0 +1,27 @@
+var interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate =
+[
+    [ "CreateScanner", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a67dca74090d545add0bcc473f757841b", null ],
+    [ "CreateScannerAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#af503c969367309b86337d201a9ef00d8", null ],
+    [ "CreateTable", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#ace76530004b0b060c63b84d18ff53ee6", null ],
+    [ "CreateTableAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#adc19b60aa0024203a7d3fd85588c4db0", null ],
+    [ "DeleteItem", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a2949a47c3206fad545c23f71cccc86e3", null ],
+    [ "DeleteItemAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a1267f61e97df56427c1b120b93bf9681", null ],
+    [ "DeleteScanner", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#ab5f809c6c06c0c8ab1b99495db722ad6", null ],
+    [ "DeleteScannerAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a55b574ab40fdf01fa38038239cc05eb7", null ],
+    [ "DeleteTable", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a515d56f3750636b2c2ad5e4c5d2c83b9", null ],
+    [ "DeleteTableAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a06f456515e535dec152b5f52519e5f56", null ],
+    [ "FindCells", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a127c877c7f482a455430e1cb6ed9334d", null ],
+    [ "FindCellsAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#afa76daeb819c3c511a5b850f1cccccb0", null ],
+    [ "GetScannerResult", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a5f60e5f3146a4b7052698be41cb388b4", null ],
+    [ "GetScannerResultAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a0f3c2639c2b40c8a5f6c7130413d9fde", null ],
+    [ "GetTableNames", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a86fdaeba781d2ecf5816334e2adda5ac", null ],
+    [ "GetTableNamesAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a33d71b613971d8aadb4a5c62a58fb06d", null ],
+    [ "GetTableSchema", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#ad191a7fe9ab3d51309ea32cae6cd0758", null ],
+    [ "GetTableSchemaAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a5b8321f6e31efa0a572917c54942d6b5", null ],
+    [ "ReadValue", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a2624cdba224d828e28c017efd87dcf7a", null ],
+    [ "ReadValueAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a91bc5a8838e9e6dc887fa78420eabac5", null ],
+    [ "WriteCells", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a0fc33b2347fda46c1dbbf4e11067e9e3", null ],
+    [ "WriteCellsAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#abd8794c180e5417341462890d6eab582", null ],
+    [ "WriteValue", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#a1efd7ac14907dec7eb75be392cd57697", null ],
+    [ "WriteValueAsync", "interface_h_base_1_1_stargate_1_1_client_1_1_api_1_1_i_stargate.html#aef480c9c5c4b7940c712b19aa6a03a26", null ]
+];

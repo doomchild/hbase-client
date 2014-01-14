@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>hbase-client: Main Page</title>
+<title>hbase-client: HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter Interface Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Packages</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -66,6 +66,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -78,7 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('index.html','');});
+$(document).ready(function(){initNavTree('interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_scanner_options_converter.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -96,15 +104,67 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_scanner_options_converter-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">hbase-client Documentation</div>  </div>
+<div class="title">HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Defines a converter for scanner options.  
+ <a href="interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_scanner_options_converter.html#details">More...</a></p>
+<div class="dynheader">
+Inheritance diagram for HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_scanner_options_converter.png" usemap="#HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter_map" alt=""/>
+  <map id="HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter_map" name="HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter_map">
+<area href="class_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_scanner_options_converter.html" title="Provides a standard implementation of the IScannerOptionsConverter interface. " alt="HBase.Stargate.Client.TypeConversion.ScannerOptionsConverter" shape="rect" coords="0,56,388,80"/>
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a674d220ef3f63d759b93e1a8da6b9868"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_scanner_options_converter.html#a674d220ef3f63d759b93e1a8da6b9868">Convert</a> (<a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html">ScannerOptions</a> options)</td></tr>
+<tr class="memdesc:a674d220ef3f63d759b93e1a8da6b9868"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the specified options to an XML document with filter options as embedded JSON.  <a href="#a674d220ef3f63d759b93e1a8da6b9868">More...</a><br/></td></tr>
+<tr class="separator:a674d220ef3f63d759b93e1a8da6b9868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Defines a converter for scanner options. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a674d220ef3f63d759b93e1a8da6b9868"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string HBase.Stargate.Client.TypeConversion.IScannerOptionsConverter.Convert </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_api_1_1_scanner_options.html">ScannerOptions</a>&#160;</td>
+          <td class="paramname"><em>options</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts the specified options to an XML document with filter options as embedded JSON. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options</td><td>The options.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_scanner_options_converter.html#a4412cc018a99fe5d02669f049719d1c1">HBase.Stargate.Client.TypeConversion.ScannerOptionsConverter</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="namespace_h_base.html">HBase</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate.html">Stargate</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client.html">Client</a></li><li class="navelem"><a class="el" href="namespace_h_base_1_1_stargate_1_1_client_1_1_type_conversion.html">TypeConversion</a></li><li class="navelem"><a class="el" href="interface_h_base_1_1_stargate_1_1_client_1_1_type_conversion_1_1_i_scanner_options_converter.html">IScannerOptionsConverter</a></li>
     <li class="footer">Generated on Tue Jan 14 2014 06:06:40 for hbase-client by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
