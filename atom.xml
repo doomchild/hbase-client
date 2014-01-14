@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[hbase-client]]></title>
+  <link href="http://thetribe.github.io/hbase-client//atom.xml" rel="self"/>
+  <link href="http://thetribe.github.io/hbase-client//"/>
+  <updated>2014-01-14T07:15:03-06:00</updated>
+  <id>http://thetribe.github.io/hbase-client//</id>
+  <author>
+    <name><![CDATA[John Batte]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
