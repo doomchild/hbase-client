@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"[]>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Identifier Matching</title>
+    <link rel="stylesheet" href="master.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print" />
+    <script src="scripts/jquery.js" type="text/javascript"></script>
+    <script src="scripts/scripts.js" type="text/javascript"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+  initializeToc();
+});
+</script>
+    <!-- We are using Font Awesome - http://fortawesome.github.com/Font-Awesome - licensed under CC BY 3.0 -->
+  </head>
+  <body>
+    <div id="container">
+      <div id="top" />
+      <div id="toc">
+        <p class="tocCollapser" title="Collapse Table of Content">«</p>
+        <ul class="features">
+          <li class="file" id="root">
+            <a href="index.html">Home</a>
+          </li>
+          <li class="file">
+            <a href="HBaseJson.html">HBase JSON</a>
+            <span class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseProtocolBuffers.html">HBase Protocol Buffers (protobuf)</a>
+            <span class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseStargateClient.html">HBase Stargate Client</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseStargateResourceBuilder.html">HBase Stargate Resource Builder</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseXml.html">HBase XML</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <span class="current">Identifier Matching</span>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div id="feature">
+        <div class="float-right">
+          <i class="icon-ok passed" title="Successful"> </i>
+        </div>
+        <h1>Identifier Matching</h1>
+        <div class="description">
+          <p>In order to determine whether two identifiers are similar
+As an hbase-client consumer
+I want to compare full identifiers with partial ones and get predictable results</p>
+        </div>
+        <ul id="scenarios">
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Successful Match; Table Only</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th></tr></thead><tbody><tr><td>test</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Failed Match; Table Only</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th></tr></thead><tbody><tr><td>foo</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should not have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Successful Match; Table and Row</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th></tr></thead><tbody><tr><td>test</td><td>row1</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Failed Match; Table and Row</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th></tr></thead><tbody><tr><td>test</td><td>foo</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should not have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Successful Match; Table, Row, and Column</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Failed Match; Table, Row, and Column</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>foo</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should not have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Successful Match; Table, Row, Column, and Qualifier</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Failed Match; Table, Row, Column, and Qualifier</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>foo</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should not have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Successful Match; Table, Row, Column, Qualifier, and Timestamp</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should have succeeded</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Failed Match; Table, Row, Column, Qualifier, and Timestamp</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>100</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have a second identifier consisting of the following values:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th></tr></thead><tbody><tr><td>test</td><td>row1</td><td>column1</td><td>qualifier1</td><td>200</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I match the second identifier to the first one</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the identifier match should not have succeeded</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="footer">
+        <p>Pickled on: 14 January 2014 10:33:24</p>
+        <p>Produced by Pickles, version 0.11.0.0</p>
+      </div>
+    </div>
+  </body>
+</html>

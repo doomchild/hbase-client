@@ -1,0 +1,1000 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"[]>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>HBase Stargate Client</title>
+    <link rel="stylesheet" href="master.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print" />
+    <script src="scripts/jquery.js" type="text/javascript"></script>
+    <script src="scripts/scripts.js" type="text/javascript"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+  initializeToc();
+});
+</script>
+    <!-- We are using Font Awesome - http://fortawesome.github.com/Font-Awesome - licensed under CC BY 3.0 -->
+  </head>
+  <body>
+    <div id="container">
+      <div id="top" />
+      <div id="toc">
+        <p class="tocCollapser" title="Collapse Table of Content">«</p>
+        <ul class="features">
+          <li class="file" id="root">
+            <a href="index.html">Home</a>
+          </li>
+          <li class="file">
+            <a href="HBaseJson.html">HBase JSON</a>
+            <span class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseProtocolBuffers.html">HBase Protocol Buffers (protobuf)</a>
+            <span class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <span class="current">HBase Stargate Client</span>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseStargateResourceBuilder.html">HBase Stargate Resource Builder</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseXml.html">HBase XML</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="IdentifierMatching.html">Identifier Matching</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div id="feature">
+        <div class="float-right">
+          <i class="icon-ok passed" title="Successful"> </i>
+        </div>
+        <h1>HBase Stargate Client</h1>
+        <div class="description">
+          <p>In order to read and write HBase data
+As an application developer
+I want access to all available REST operations on HBase Stargate via a managed client API</p>
+        </div>
+        <ul id="scenarios">
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2></h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have everything I need to test a disconnected HBase client, with the following options:<div class="table_container"><table class="datatable"><thead><tr><th>server URL</th><th>content type</th><th>false row key</th></tr></thead><tbody><tr><td>http://test-server:9999</td><td>text/xml</td><td>row</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>I have everything I need to test a content converter for XML</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have an HBase client</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Create a table</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have created a new table schema</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have set my table schema's name to "&lt;table&gt;"</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have added a column named "&lt;column&gt;" to my table schema</li>
+                <li class="step">
+                  <span class="keyword">When </span>I create a table using my table schema</li>
+                <li class="step">
+                  <span class="keyword">Then </span>the operation &lt;should or should not&gt; have succeeded</li>
+                <li class="step">
+                  <span class="keyword">And </span>if the operation succeeded, a REST request for schema updates should have been submitted with the correct &lt;method&gt;, &lt;resource&gt;, &lt;table&gt;, and &lt;column&gt;</li>
+                <li class="step">
+                  <span class="keyword">And </span>if there was an exception, it should have been the expected &lt;exception&gt; type</li>
+                <li class="step">
+                  <span class="keyword">And </span>if there was an exception, it should have had the expected exception &lt;message&gt;</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>table</th>
+                        <th>column</th>
+                        <th>method</th>
+                        <th>resource</th>
+                        <th>should or should not</th>
+                        <th>exception</th>
+                        <th>message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{null}</td>
+                        <td>{null}</td>
+                        <td>PUT</td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForSchemaUpdateNotMet</td>
+                      </tr>
+                      <tr>
+                        <td>{null}</td>
+                        <td></td>
+                        <td>PUT</td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForSchemaUpdateNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>{null}</td>
+                        <td>PUT</td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForSchemaUpdateNotMet</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>PUT</td>
+                        <td></td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ResourceBuilder_MinimumForSchemaUpdateNotMet</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td></td>
+                        <td>PUT</td>
+                        <td>test/schema</td>
+                        <td>should not</td>
+                        <td>ArgumentException</td>
+                        <td>ErrorProvider_ColumnNameMissing</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Write a single value</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;</li>
+                <li class="step">
+                  <span class="keyword">When </span>I write the value "hello world" using my identifier</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;</li>
+                <li class="step">
+                  <span class="keyword">And </span>the REST request should have contained 1 cell</li>
+                <li class="step">
+                  <span class="keyword">And </span>one of the cells in the REST request should have had the value "hello world"</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>table</th>
+                        <th>row</th>
+                        <th>column</th>
+                        <th>qualifier</th>
+                        <th>timestamp</th>
+                        <th>method</th>
+                        <th>resource</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>POST</td>
+                        <td>test/1/alpha</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>POST</td>
+                        <td>test/1/alpha:x</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>POST</td>
+                        <td>test/1/alpha/4</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>POST</td>
+                        <td>test/1/alpha:x/4</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Write multiple values</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have created a set of cells for the "test" table</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have added cells to my set with the following properties:<div class="table_container"><table class="datatable"><thead><tr><th>row</th><th>column</th><th>qualifier</th><th>value</th></tr></thead><tbody><tr><td>1</td><td>beta</td><td>x</td><td>hello world</td></tr><tr><td>1</td><td>beta</td><td>y</td><td>dlrow olleh</td></tr><tr><td>1</td><td>beta</td><td>z</td><td>lorum ipsum</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I write the set of cells</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>POST</td><td>test/row</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>the REST request should have contained 3 cells</li>
+                <li class="step">
+                  <span class="keyword">And </span>the cells in the REST request should have had the following values:<div class="table_container"><table class="datatable"><thead><tr><th>row</th><th>column</th><th>qualifier</th><th>value</th></tr></thead><tbody><tr><td>1</td><td>beta</td><td>x</td><td>hello world</td></tr><tr><td>1</td><td>beta</td><td>y</td><td>dlrow olleh</td></tr><tr><td>1</td><td>beta</td><td>z</td><td>lorum ipsum</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Read a row</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a cell query consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, a &lt;begin&gt; timestamp, a &lt;end&gt; timestamp, and a &lt;max&gt; number of results</li>
+                <li class="step">
+                  <span class="keyword">When </span>I read a row using my query</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>table</th>
+                        <th>row</th>
+                        <th>column</th>
+                        <th>qualifier</th>
+                        <th>begin</th>
+                        <th>end</th>
+                        <th>max</th>
+                        <th>method</th>
+                        <th>resource</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/*/5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/*/4,5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/4,5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/*/5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/*/4,5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/*/4,5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha/5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha/4,5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha/4,5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x/5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x/5?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td></td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x?v=2</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x/4,5</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x/4,5?v=2</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Read a single value</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, and a &lt;qualifier&gt;</li>
+                <li class="step">
+                  <span class="keyword">When </span>I read a single value using my identifier</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>table</th>
+                        <th>row</th>
+                        <th>column</th>
+                        <th>qualifier</th>
+                        <th>method</th>
+                        <th>resource</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>GET</td>
+                        <td>test/1/alpha?v=1</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>GET</td>
+                        <td>test/1/alpha:x?v=1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Read a row with expected data</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_1Alpha_HelloWorld"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I read all cells from the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>one of the cells in my set should have the following properties:<div class="table_container"><table class="datatable"><thead><tr><th>table</th><th>row</th><th>column</th><th>qualifier</th><th>value</th></tr></thead><tbody><tr><td>test</td><td>1</td><td>alpha</td><td></td><td>hello world</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Create a scanner</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a status of "OK" and a location header of "http://someurl.com/test/scanner/abc123"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I create a scanner for the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>PUT</td><td>test/scanner</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>my scanner should have a resource set to "test/scanner/abc123"</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Read a result from a scanner</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a scanner for the "test" table named "abc123"</li>
+                <li class="step">
+                  <span class="keyword">And </span>I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_1Alpha_HelloWorld"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I read a result from the scanner</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td>test/scanner/abc123</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>one of the cells in my set should have the following properties:<div class="table_container"><table class="datatable"><thead><tr><th>table</th></tr></thead><tbody><tr><td>test</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Delete a scanner</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a scanner for the "test" table named "abc123"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I delete the scanner</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>DELETE</td><td>test/scanner/abc123</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Enumerate all tables</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">When </span>I read the names of all tables</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td></td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Get table schema</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a status of "OK" and content equivalent to the resource called "HBaseXml_TableSchema1"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I get the schema of the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td>test/schema</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Delete a row, columm, or cell</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">And </span>I have an identifier consisting of a &lt;table&gt;, a &lt;row&gt;, a &lt;column&gt;, a &lt;qualifier&gt;, and a &lt;timestamp&gt;</li>
+                <li class="step">
+                  <span class="keyword">When </span>I delete an item using my identifier</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the correct &lt;method&gt; and &lt;resource&gt;</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>table</th>
+                        <th>row</th>
+                        <th>column</th>
+                        <th>qualifier</th>
+                        <th>timestamp</th>
+                        <th>method</th>
+                        <th>resource</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>DELETE</td>
+                        <td>test/1</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>DELETE</td>
+                        <td>test/1/alpha</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>DELETE</td>
+                        <td>test/1/alpha:x</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>DELETE</td>
+                        <td>test/1/alpha/4</td>
+                      </tr>
+                      <tr>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>DELETE</td>
+                        <td>test/1/alpha:x/4</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Delete a table</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">When </span>I delete the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>DELETE</td><td>test/schema</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Find cells with an empty table</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a status of "NotFound" and content equivalent to the resource called "HBaseXml_FindCellsEmptyResponse"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I read all cells from the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>my set should contain 0 cells</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>No Server Response</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I will always get a response with a response status of "Error" and error message equivalent to the resource called "NoServerResponse"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I get the schema of the "test" table</li>
+                <li class="step">
+                  <span class="keyword">Then </span>a REST request should have been submitted with the following values:<div class="table_container"><table class="datatable"><thead><tr><th>method</th><th>resource</th></tr></thead><tbody><tr><td>GET</td><td>test/schema</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">And </span>there should have been a WebException with a message equivalent to the resource called "NoServerResponse"</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="footer">
+        <p>Pickled on: 14 January 2014 10:33:24</p>
+        <p>Produced by Pickles, version 0.11.0.0</p>
+      </div>
+    </div>
+  </body>
+</html>

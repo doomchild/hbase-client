@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"[]>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>HBase XML</title>
+    <link rel="stylesheet" href="master.css" type="text/css" />
+    <link rel="stylesheet" href="print.css" type="text/css" media="print" />
+    <script src="scripts/jquery.js" type="text/javascript"></script>
+    <script src="scripts/scripts.js" type="text/javascript"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+  initializeToc();
+});
+</script>
+    <!-- We are using Font Awesome - http://fortawesome.github.com/Font-Awesome - licensed under CC BY 3.0 -->
+  </head>
+  <body>
+    <div id="container">
+      <div id="top" />
+      <div id="toc">
+        <p class="tocCollapser" title="Collapse Table of Content">«</p>
+        <ul class="features">
+          <li class="file" id="root">
+            <a href="index.html">Home</a>
+          </li>
+          <li class="file">
+            <a href="HBaseJson.html">HBase JSON</a>
+            <span class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseProtocolBuffers.html">HBase Protocol Buffers (protobuf)</a>
+            <span class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseStargateClient.html">HBase Stargate Client</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="HBaseStargateResourceBuilder.html">HBase Stargate Resource Builder</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <span class="current">HBase XML</span>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+          <li class="file">
+            <a href="IdentifierMatching.html">Identifier Matching</a>
+            <span class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div id="feature">
+        <div class="float-right">
+          <i class="icon-ok passed" title="Successful"> </i>
+        </div>
+        <h1>HBase XML</h1>
+        <div class="description">
+          <p>In order to work with HBase content in the XML format
+As an application developer
+I want to be able to create and parse HBase XML content using basic information</p>
+        </div>
+        <ul id="scenarios">
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-warning-sign inconclusive" title="Inconclusive"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2></h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have everything I need to test a content converter for XML</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Create XML for single cell</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a cell with a &lt;row&gt;, &lt;column&gt;, &lt;qualifier&gt;, &lt;timestamp&gt;, and &lt;value&gt;</li>
+                <li class="step">
+                  <span class="keyword">When </span>I convert my cell to raw content</li>
+                <li class="step">
+                  <span class="keyword">Then </span>my raw XML content should be equivalent to the resource called "&lt;expected xml&gt;"</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>row</th>
+                        <th>column</th>
+                        <th>qualifier</th>
+                        <th>timestamp</th>
+                        <th>value</th>
+                        <th>expected xml</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>hello world</td>
+                        <td>HBaseXml_1Alpha_HelloWorld</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>hello world</td>
+                        <td>HBaseXml_1AlphaX_HelloWorld</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>hello world</td>
+                        <td>HBaseXml_1Alpha4_HelloWorld</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>hello world</td>
+                        <td>HBaseXml_1AlphaX4_HelloWorld</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Parse XML for single cell</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have raw content equal to the resource called "&lt;initial xml&gt;"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I convert my raw content to a cell</li>
+                <li class="step">
+                  <span class="keyword">Then </span>my cell should have a &lt;row&gt;, &lt;column&gt;, &lt;qualifier&gt;, &lt;timestamp&gt;, and &lt;value&gt;</li>
+              </ul>
+            </div>
+            <div>
+              <div class="examples">
+                <h3>Examples: </h3>
+                <div class="table_container">
+                  <table class="datatable">
+                    <thead>
+                      <tr>
+                        <th>initial xml</th>
+                        <th>row</th>
+                        <th>column</th>
+                        <th>qualifier</th>
+                        <th>timestamp</th>
+                        <th>value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>HBaseXml_1Alpha_HelloWorld</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td></td>
+                        <td>hello world</td>
+                      </tr>
+                      <tr>
+                        <td>HBaseXml_1AlphaX_HelloWorld</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>hello world</td>
+                      </tr>
+                      <tr>
+                        <td>HBaseXml_1Alpha4_HelloWorld</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td></td>
+                        <td>4</td>
+                        <td>hello world</td>
+                      </tr>
+                      <tr>
+                        <td>HBaseXml_1AlphaX4_HelloWorld</td>
+                        <td>1</td>
+                        <td>alpha</td>
+                        <td>x</td>
+                        <td>4</td>
+                        <td>hello world</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Create XML for a set of cells</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have created a set of cells</li>
+                <li class="step">
+                  <span class="keyword">And </span>I have added cells to my set with the following properties:<div class="table_container"><table class="datatable"><thead><tr><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th><th>value</th></tr></thead><tbody><tr><td>1</td><td>alpha</td><td></td><td></td><td>hello world</td></tr><tr><td>1</td><td>alpha</td><td>x</td><td></td><td>hello world</td></tr><tr><td>1</td><td>alpha</td><td></td><td>4</td><td>hello world</td></tr><tr><td>1</td><td>alpha</td><td>x</td><td>4</td><td>hello world</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I convert my set of cells to raw content</li>
+                <li class="step">
+                  <span class="keyword">Then </span>my raw XML content should be equivalent to the resource called "HBaseXml_Set_HelloWorld"</li>
+              </ul>
+            </div>
+          </li>
+          <li class="scenario">
+            <div class="float-right">
+              <i class="icon-ok passed" title="Successful"> </i>
+            </div>
+            <div class="scenario-heading">
+              <h2>Parse XML for a set of cells</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have raw content equal to the resource called "HBaseXml_Set_HelloWorld"</li>
+                <li class="step">
+                  <span class="keyword">When </span>I convert my raw content to a set of cells</li>
+                <li class="step">
+                  <span class="keyword">Then </span>my set should contain 4 cells</li>
+                <li class="step">
+                  <span class="keyword">And </span>the cells in my set should have the following properties:<div class="table_container"><table class="datatable"><thead><tr><th>row</th><th>column</th><th>qualifier</th><th>timestamp</th><th>value</th></tr></thead><tbody><tr><td>1</td><td>alpha</td><td></td><td></td><td>hello world</td></tr><tr><td>1</td><td>alpha</td><td>x</td><td></td><td>hello world</td></tr><tr><td>1</td><td>alpha</td><td></td><td>4</td><td>hello world</td></tr><tr><td>1</td><td>alpha</td><td>x</td><td>4</td><td>hello world</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="footer">
+        <p>Pickled on: 14 January 2014 10:33:24</p>
+        <p>Produced by Pickles, version 0.11.0.0</p>
+      </div>
+    </div>
+  </body>
+</html>
