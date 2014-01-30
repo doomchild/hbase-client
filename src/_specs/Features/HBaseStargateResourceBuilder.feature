@@ -7,7 +7,7 @@ Background:
 	Given I have everything I need to test a resource builder in isolation, assuming a false-row-key of "newRow"
 
 Scenario Outline: Cell or Row query
-	Given I have a cell query consisting of a <table>, a <row>, a <column>, a <qualifier>, a <begin> timestamp, a <end> timestamp, and a <max> number of results
+	Given I have a cell query consisting of a <table>, a <row>, a <column>, a <qualifier>, a <begin> timestamp, a <end> timestamp, and a <max> number of versions
 	When I build a resource name for Cell or Row queries using my query
 	Then the resulting resource name should match the expected <resource>
 	And the operation <should or should not> have succeeded

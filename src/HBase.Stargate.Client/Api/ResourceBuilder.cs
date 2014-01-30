@@ -138,7 +138,7 @@ namespace HBase.Stargate.Client.Api
 			}
 
 			StringBuilder builder = BuildFromIdentifier(identifier);
-			return (forReading ? SetMaxResults(1, builder) : builder).ToString();
+			return (forReading ? SetMaxVersions(1, builder) : builder).ToString();
 		}
 
 		private static StringBuilder BuildFromIdentifier(Identifier identifier)
@@ -177,7 +177,7 @@ namespace HBase.Stargate.Client.Api
 			bool columnsMissing = query.Cells == null || query.Cells.All(cell => string.IsNullOrEmpty(cell.Column));
 			if (columnsMissing && !hasTimestamp)
 			{
-				return SetMaxResults(query.MaxResults, uriBuilder);
+				return SetMaxVersions(query.MaxVersions, uriBuilder);
 			}
 
 			if (!columnsMissing)
@@ -219,14 +219,14 @@ namespace HBase.Stargate.Client.Api
 				}
 			}
 
-			return SetMaxResults(query.MaxResults, uriBuilder);
+			return SetMaxVersions(query.MaxVersions, uriBuilder);
 		}
 
-		private static StringBuilder SetMaxResults(int? maxResults, StringBuilder uriBuilder)
+		private static StringBuilder SetMaxVersions(int? maxVersions, StringBuilder uriBuilder)
 		{
-			if (maxResults.HasValue)
+			if (maxVersions.HasValue)
 			{
-				uriBuilder.AppendFormat(_appendMaxVersionsFormat, maxResults);
+				uriBuilder.AppendFormat(_appendMaxVersionsFormat, maxVersions);
 			}
 
 			return uriBuilder;

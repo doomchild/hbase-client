@@ -134,11 +134,11 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="qualifier">The qualifier.</param>
 		/// <param name="beginTimestamp">The begin timestamp (inclusive).</param>
 		/// <param name="endTimestamp">The end timestamp (exclusive).</param>
-		/// <param name="maxResults">The maximum number of results to return.</param>
+		/// <param name="maxVersions">The maximum number of versions to return.</param>
 		public static Task<CellSet> FindCellsAsync(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
-			long? beginTimestamp = null, long? endTimestamp = null, int? maxResults = null)
+			long? beginTimestamp = null, long? endTimestamp = null, int? maxVersions = null)
 		{
-			return gate.FindCellsAsync(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxResults));
+			return gate.FindCellsAsync(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxVersions));
 		}
 
 		/// <summary>
@@ -151,11 +151,11 @@ namespace HBase.Stargate.Client.Api
 		/// <param name="qualifier">The qualifier.</param>
 		/// <param name="beginTimestamp">The begin timestamp (exclusive).</param>
 		/// <param name="endTimestamp">The end timestamp (exclusive).</param>
-		/// <param name="maxResults">The maximum versions to return.</param>
+		/// <param name="maxVersions">The maximum versions to return.</param>
 		public static CellSet FindCells(this IStargate gate, string table, string row = null, string column = null, string qualifier = null,
-			long? beginTimestamp = null, long? endTimestamp = null, int? maxResults = null)
+			long? beginTimestamp = null, long? endTimestamp = null, int? maxVersions = null)
 		{
-			return gate.FindCells(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxResults));
+			return gate.FindCells(BuildQuery(table, row, column, qualifier, beginTimestamp, endTimestamp, maxVersions));
 		}
 
 		/// <summary>
@@ -200,7 +200,7 @@ namespace HBase.Stargate.Client.Api
 			};
 		}
 
-		private static CellQuery BuildQuery(string table, string row, string column, string qualifier, long? beginTimestamp, long? endTimestamp, int? maxResults)
+		private static CellQuery BuildQuery(string table, string row, string column, string qualifier, long? beginTimestamp, long? endTimestamp, int? maxVersions)
 		{
 			return new CellQuery
 			{
@@ -216,7 +216,7 @@ namespace HBase.Stargate.Client.Api
 				},
 				BeginTimestamp = beginTimestamp,
 				EndTimestamp = endTimestamp,
-				MaxResults = maxResults
+				MaxVersions = maxVersions
 			};
 		}
 	}

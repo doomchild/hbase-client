@@ -33,7 +33,7 @@ namespace HBase.Stargate.Client.Config
 	{
 		private const string _beginTimestampName = "beginTimestamp";
 		private const string _endTimestampName = "endTimestamp";
-		private const string _maxResultsName = "maxResults";
+		private const string _maxVersionsName = "maxVersions";
 		private const string _cellsName = "filters";
 		private const string _addCellName = "filter";
 		private const string _removeCellName = "remove";
@@ -66,16 +66,16 @@ namespace HBase.Stargate.Client.Config
 		}
 
 		/// <summary>
-		///    Gets or sets the max results.
+		///    Gets or sets the max versions.
 		/// </summary>
 		/// <value>
-		///    The max results.
+		///    The max versions.
 		/// </value>
-		[ConfigurationProperty(_endTimestampName, IsRequired = false)]
-		public int? MaxResults
+		[ConfigurationProperty(_maxVersionsName, IsRequired = false)]
+		public int? MaxVersions
 		{
-			get { return this[_maxResultsName] as int?; }
-			set { this[_maxResultsName] = value; }
+			get { return this[_maxVersionsName] as int?; }
+			set { this[_maxVersionsName] = value; }
 		}
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace HBase.Stargate.Client.Config
 				Row = query.Row,
 				BeginTimestamp = query.BeginTimestamp,
 				EndTimestamp = query.EndTimestamp,
-				MaxResults = query.MaxResults,
+				MaxVersions = query.MaxVersions,
 				Cells = query.Cells.Cast<ConfigCellDescriptor>().Select(cell => (HBaseCellDescriptor) cell)
 			};
 		}
