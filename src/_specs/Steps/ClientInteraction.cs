@@ -61,11 +61,9 @@ namespace _specs.Steps
 			factoryMock.Setup(factory => factory.CreateRequest(It.IsAny<string>(), It.IsAny<Method>()))
 				.Returns<string, Method>((resource, method) => (_rest.Request = new RestRequest(resource, method)));
 
-			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
-			//https://github.com/TheTribe/code-patterns/issues/125
-			var clientMock = new Mock<IRestClient>(MockBehavior.Strict);
-
 			IRestResponse response = _container.Mock<IRestResponse>().Object;
+
+			var clientMock = _container.Mock<IRestClient>(MockBehavior.Strict);
 
 			clientMock.Setup(client => client.Execute(It.IsAny<IRestRequest>()))
 				.Returns(() => response);
@@ -80,10 +78,6 @@ namespace _specs.Steps
 
 			factoryMock.Setup(factory => factory.CreateClient(It.IsAny<string>()))
 				.Returns(() => clientMock.Object);
-
-			//TODO: switch back to pure container references once code-patterns issue #125 is fixed
-			//https://github.com/TheTribe/code-patterns/issues/125
-			_container.Update(clientMock.Object);
 
 			_container.Update<IStargateOptions>(options.CreateInstance<StargateOptions>());
 
