@@ -99,7 +99,7 @@ namespace HBase.Stargate.Client.Models
 				Cells = new[] {identifier.CellDescriptor},
 				BeginTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp : null,
 				EndTimestamp = identifier.Timestamp.HasValue ? identifier.Timestamp + 1 : null,
-				MaxResults = 1
+				MaxVersions = 1
 			};
 		}
 

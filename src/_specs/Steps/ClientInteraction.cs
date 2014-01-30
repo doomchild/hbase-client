@@ -102,8 +102,8 @@ namespace _specs.Steps
 			_hBase.Stargate = _container.Create<IStargate>();
 		}
 
-		[Given(@"I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, a (.*) timestamp, and a (.*) number of results")]
-		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp, string maxResults)
+		[Given(@"I have a cell query consisting of a (.*), a (.*), a (.*), a (.*), a (.*) timestamp, a (.*) timestamp, and a (.*) number of versions")]
+		public void SetQuery(string table, string row, string column, string qualifier, string beginTimestamp, string endTimestamp, string maxVersions)
 		{
 			_hBase.Query = new CellQuery
 			{
@@ -119,7 +119,7 @@ namespace _specs.Steps
 				},
 				BeginTimestamp = beginTimestamp.ToNullableInt64(),
 				EndTimestamp = endTimestamp.ToNullableInt64(),
-				MaxResults = maxResults.ToNullableInt32()
+				MaxVersions = maxVersions.ToNullableInt32()
 			};
 		}
 	}
