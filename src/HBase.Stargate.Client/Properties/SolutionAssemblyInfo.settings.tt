@@ -3,9 +3,7 @@ Settings.Initialize(
 	product: "hbase-client",
 	majorNumber: 1,
 	minorNumber: 0,
-	patchNumber: 0,
-	buildNumber: 5,
-	buildLevel: BuildLevels.Beta
+	patchNumber: 0
 );
 #><#+
 public enum BuildLevels

@@ -59,7 +59,7 @@ Scenario: Write multiple values
 		| 1   | beta   | z         | lorum ipsum |
 
 Scenario Outline: Read a row
-	Given I have a cell query consisting of a <table>, a <row>, a <column>, a <qualifier>, a <begin> timestamp, a <end> timestamp, and a <max> number of results
+	Given I have a cell query consisting of a <table>, a <row>, a <column>, a <qualifier>, a <begin> timestamp, a <end> timestamp, and a <max> number of versions
 	When I read a row using my query
 	Then a REST request should have been submitted with the correct <method> and <resource>
 Examples:

@@ -266,7 +266,7 @@ this.ScenarioSetup(scenarioInfo);
 this.FeatureBackground();
 #line 62
  testRunner.Given(string.Format("I have a cell query consisting of a {0}, a {1}, a {2}, a {3}, a {4} timestamp, a " +
-                        "{5} timestamp, and a {6} number of results", table, row, column, qualifier, begin, end, max), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                        "{5} timestamp, and a {6} number of versions", table, row, column, qualifier, begin, end, max), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 63
  testRunner.When("I read a row using my query", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 64

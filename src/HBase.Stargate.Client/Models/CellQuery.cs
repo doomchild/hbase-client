@@ -53,11 +53,11 @@ namespace HBase.Stargate.Client.Models
 		public long? EndTimestamp { get; set; }
 
 		/// <summary>
-		///    Gets or sets the maximum allowed results.
+		///    Gets or sets the maximum allowed versions.
 		/// </summary>
 		/// <value>
-		///    The maximum allowed results.
+		///    The maximum allowed versions.
 		/// </value>
-		public int? MaxResults { get; set; }
+		public int? MaxVersions { get; set; }
 	}
 }
