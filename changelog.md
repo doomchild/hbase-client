@@ -2,6 +2,15 @@
 
 The following changelog details the changes made with each release of hbase-client.
 
+## 1.0.0 ##
+Authors of this release: [John Batte](https://github.com/jbatte47), [Christoper Wade](https://github.com/chrislwade)
+
+- Update references to RestSharp.Injection ([Issue 68](https://github.com/TheTribe/hbase-client/issues/68))
+- Switch to pure container references ([Issue 52](https://github.com/TheTribe/hbase-client/issues/52))
+- Change MaxResults to the correct name: MaxVersions ([Issue 63](https://github.com/TheTribe/hbase-client/issues/63))
+- Update references to Autofac ([Issue 61](https://github.com/TheTribe/hbase-client/issues/61))
+
+
 ## 1.0-beta.5 ##
 Authors of this release: [John Batte](https://github.com/jbatte47), [Christoper Wade](https://github.com/chrislwade)
 
