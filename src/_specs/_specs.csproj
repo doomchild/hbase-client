@@ -79,7 +79,7 @@
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp.Injection">
-      <HintPath>..\packages\RestSharp.Injection.1.1.0-beta1\lib\net45\RestSharp.Injection.dll</HintPath>
+      <HintPath>..\packages\RestSharp.Injection.1.1.0\lib\net45\RestSharp.Injection.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
